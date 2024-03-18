@@ -3,7 +3,7 @@ skinparam monochrome true
 skinparam packageStyle rectangle
 skinparam shadowing false
 
-title System Sequence Diagram (SSD) - Alternative 2a
+title System Sequence Diagram (SSD) - Alternative Two
 
 autonumber
 
@@ -15,7 +15,7 @@ activate Manager
     Manager -> System : asks to list vehicles requiring check-up
     activate System
 
-        System --> Manager : presents message indicating no such\nvehicles were found
+        System --> Manager : presents error message and respective\nerror code
     deactivate System
 
 @enduml
