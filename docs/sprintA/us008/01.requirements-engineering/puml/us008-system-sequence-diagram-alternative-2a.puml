@@ -1,0 +1,21 @@
+@startuml
+skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+
+title System Sequence Diagram (SSD) - Alternative 2a
+
+autonumber
+
+actor "Fleet\nManager" as Manager
+participant ":System" as System
+
+activate Manager
+
+    Manager -> System : asks to list vehicles requiring check-up
+    activate System
+
+        System --> Manager : presents message indicating no such\nvehicles were found
+    deactivate System
+
+@enduml
