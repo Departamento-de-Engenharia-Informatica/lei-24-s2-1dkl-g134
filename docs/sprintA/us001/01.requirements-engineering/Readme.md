@@ -23,6 +23,10 @@ As a Human Resources Manager (HRM), I want to register skills that may be appoin
 >
 > **Answer:** All, it's up to HRM to decide. (special characters or algarisms should not be allowed in the skill name).
 
+### 1.3. Acceptance Criteria
+
+* **AC1:** The skill name must not have special characters.
+
 ### 1.4. Found out Dependencies
 
 * None
