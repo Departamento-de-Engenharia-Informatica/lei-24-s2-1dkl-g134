@@ -3,7 +3,7 @@
 
 ## 1. Requirements Engineering
 
-### 1.1. User Story Descriptionc
+### 1.1. User Story Description
 
 As an HRM, I want to register a collaborator with a job and fundamental
 characteristics.
