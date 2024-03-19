@@ -3,7 +3,7 @@ skinparam monochrome true
 skinparam packageStyle rectangle
 skinparam shadowing false
 
-title System Sequence Diagram (SSD) - Alternative One
+title System Sequence Diagram (SSD) - Main Solution
 
 autonumber
 
@@ -12,19 +12,13 @@ participant ":System" as System
 
 activate Employee
 
-    Employee -> System : Asks to add a skill to a collaborator
+    Employee -> System : asks to add a skill to a collaborator
     activate System
 
-        System --> Employee : requests data (i.e. )
+        System --> Employee : requests data (i.e. collaborator id, skill)
     deactivate System
 
     Employee -> System : types requested data
-    activate System
-
-        System --> Employee : shows task category list and asks to select one
-    deactivate System
-
-    Employee -> System : selects a task category
     activate System
 
         System --> Employee : shows all data and requests confirmation
