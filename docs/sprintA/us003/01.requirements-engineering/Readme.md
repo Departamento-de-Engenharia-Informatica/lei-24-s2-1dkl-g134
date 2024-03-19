@@ -51,13 +51,10 @@ installation of an irrigation system; installation of a lighting system.
     * a contact info (mobile and email)
     * an ID doc type
     * a respective number
-	
-* Selected data:
-    * a task category 
+	 
 
 **Output Data:**
 
-* List of existing task categories
 * (In)Success of the operation
 
 ### 1.6. System Sequence Diagram (SSD)
