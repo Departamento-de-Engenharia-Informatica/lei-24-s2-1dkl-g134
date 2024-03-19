@@ -1,4 +1,4 @@
-# US004 - Create a Task 
+# US004 - Assign a skill to colabotaror
 
 
 ## 1. Requirements Engineering
@@ -47,3 +47,6 @@ As a Human Resources Manager (HRM), I want to assign skills to collaborators in 
 
 
 ![System Sequence Diagram - Alternative One](svg/us004-system-sequence-diagram-alternative-one.svg)
+
+### 1.7 Other Relevant Remarks
+* None
