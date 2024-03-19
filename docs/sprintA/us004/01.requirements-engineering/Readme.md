@@ -1,4 +1,4 @@
-# US006 - Create a Task 
+# US004 - Create a Task 
 
 
 ## 1. Requirements Engineering
@@ -46,6 +46,4 @@ As a Human Resources Manager (HRM), I want to assign skills to collaborators in 
 ### 1.6. System Sequence Diagram (SSD)
 
 
-#### Main Solution
-
-![System Sequence Diagram - Alternative One](svg/us006-system-sequence-diagram-alternative-one.svg)
+![System Sequence Diagram - Alternative One](svg/us004-system-sequence-diagram-alternative-one.svg)
