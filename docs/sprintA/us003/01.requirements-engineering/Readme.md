@@ -33,7 +33,6 @@ installation of an irrigation system; installation of a lighting system.
 
 * **AC1:** The collaborator must be registered in the system
 
- 
 
 ### 1.4. Found out Dependencies
 
@@ -58,16 +57,8 @@ installation of an irrigation system; installation of a lighting system.
 * (In)Success of the operation
 
 ### 1.6. System Sequence Diagram (SSD)
+![System Sequence Diagram - Alternative One](svg/us003-system-sequence-diagram-Main-Solution.svg)
 
-**_Other alternatives might exist._**
-
-#### Alternative One
-
-![System Sequence Diagram - Alternative One](svg/us006-system-sequence-diagram-alternative-one.svg)
-
-#### Alternative Two
-
-![System Sequence Diagram - Alternative Two](svg/us006-system-sequence-diagram-alternative-two.svg)
 
 ### 1.7 Other Relevant Remarks
 

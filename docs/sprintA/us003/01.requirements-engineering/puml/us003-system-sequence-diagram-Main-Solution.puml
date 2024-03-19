@@ -1,0 +1,37 @@
+@startuml
+skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+
+title System Sequence Diagram (SSD) - Main Scenario
+
+autonumber
+
+actor "Human Resources\nManager" as Employee
+participant ":System" as System
+
+activate Employee
+
+    Employee -> System : 1.ask to add a collaborator
+
+    activate System
+
+        System --> Employee : requests data (i.e. name, birthdate, admission \ndate, address, contact info (mobile and email) and respective number
+
+    deactivate System
+
+    Employee -> System : types requested data
+    activate System
+
+        System --> Employee :  shows all data and requests confirmation
+    deactivate System
+
+    Employee -> System : confirms data
+    activate System
+
+
+
+        System --> Employee : displays operation success
+    deactivate System
+
+@enduml
