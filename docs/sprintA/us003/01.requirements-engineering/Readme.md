@@ -7,7 +7,7 @@
 
 As an HRM, I want to register a collaborator with a job and fundamental
 characteristics.
-### 1.2. Customer Specifications and Clarifications 
+### 1.2. Customer Specifications and Clarifications  
 
 **From the specifications document:**
 
