@@ -1,0 +1,39 @@
+@startuml
+skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+
+title System Sequence Diagram (SSD)
+
+
+autonumber
+
+actor "Human Resources\nManager" as Employee
+participant ":System" as System
+
+activate Employee
+
+    Employee -> System : asks to generate a new team
+    activate System
+
+        System --> Employee : requests data (i.e. maximum team members, \nset of quantified skills)
+    deactivate System
+
+    Employee -> System : inputs requested data
+    activate System
+
+        System --> Employee : shows all data and requests confirmation
+    deactivate System
+
+    Employee -> System : confirms data
+    activate System
+
+        System --> Employee : displays team proposal
+    deactivate System
+    Employee -> System : confirms team creation
+        activate System
+
+            System --> Employee : creates new team
+        deactivate System
+
+@enduml

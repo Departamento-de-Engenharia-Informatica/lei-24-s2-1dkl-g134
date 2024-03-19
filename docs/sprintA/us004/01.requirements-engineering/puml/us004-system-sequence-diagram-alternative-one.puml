@@ -3,28 +3,22 @@ skinparam monochrome true
 skinparam packageStyle rectangle
 skinparam shadowing false
 
-title System Sequence Diagram (SSD) - Alternative One
+title System Sequence Diagram (SSD) - Main Solution
 
 autonumber
 
-actor "Organization\nEmployee" as Employee
+actor "Human Resources \n Manager" as Employee
 participant ":System" as System
 
 activate Employee
 
-    Employee -> System : asks to create a new task
+    Employee -> System : asks to add a skill to a collaborator
     activate System
 
-        System --> Employee : requests data (i.e. reference, designation, informal\ndescription, technical description, duration, cost)
+        System --> Employee : requests data (i.e. collaborator id, skill)
     deactivate System
 
     Employee -> System : types requested data
-    activate System
-
-        System --> Employee : shows task category list and asks to select one
-    deactivate System
-
-    Employee -> System : selects a task category
     activate System
 
         System --> Employee : shows all data and requests confirmation

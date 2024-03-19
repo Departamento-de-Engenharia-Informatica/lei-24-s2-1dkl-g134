@@ -1,0 +1,27 @@
+@startuml
+skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+
+title System Sequence Diagram (SSD) - Main Solution
+
+autonumber
+
+actor "Fleet\nManager" as Employee
+participant ":System" as System
+
+activate Employee
+
+    Employee -> System : begins vehicle registry process
+    activate System
+
+        System --> Employee : requests data (i.e. brand, plate id, model, type, \ntare, gross weight, current km, registry date,\nacquisition date, check-up frequency)
+    deactivate System
+
+    Employee -> System : inputs requested data
+    activate System
+
+        System --> Employee : processes input, records the new vehicle, and\ndisplays operation success message
+    deactivate System
+
+@enduml

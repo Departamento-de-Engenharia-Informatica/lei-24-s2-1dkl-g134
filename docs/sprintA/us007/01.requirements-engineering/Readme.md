@@ -53,7 +53,7 @@ As an FM, I wish to register a vehicle including Brand, Model, Type, Tare, Gross
 
 ### 1.6. System Sequence Diagram (SSD)
 
-![System Sequence Diagram](svg/us006-system-sequence-diagram-main-solution.svg)
+![System Sequence Diagram](svg/us007-system-sequence-diagram-main-solution.svg)
 
 ### 1.7 Other Relevant Remarks
 
