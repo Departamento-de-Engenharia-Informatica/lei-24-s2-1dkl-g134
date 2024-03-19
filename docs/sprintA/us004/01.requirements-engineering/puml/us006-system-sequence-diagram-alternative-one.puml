@@ -7,15 +7,15 @@ title System Sequence Diagram (SSD) - Alternative One
 
 autonumber
 
-actor "Organization\nEmployee" as Employee
+actor "Human Resources \n Manager" as Employee
 participant ":System" as System
 
 activate Employee
 
-    Employee -> System : ADeus fixe
+    Employee -> System : Asks to add a skill to a collaborator
     activate System
 
-        System --> Employee : requests data (i.e. reference, designation, informal\ndescription, technical description, duration, cost)
+        System --> Employee : requests data (i.e. )
     deactivate System
 
     Employee -> System : types requested data
