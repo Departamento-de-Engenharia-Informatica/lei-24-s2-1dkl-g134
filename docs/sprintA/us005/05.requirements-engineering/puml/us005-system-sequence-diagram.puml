@@ -5,6 +5,7 @@ skinparam shadowing false
 
 title System Sequence Diagram (SSD)
 
+
 autonumber
 
 actor "Human Resources\nManager" as Employee

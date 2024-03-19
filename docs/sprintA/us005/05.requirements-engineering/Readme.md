@@ -54,7 +54,7 @@ The customer provide the max size of the team and a set of skills.
 
 #### Main Path
 
-![System Sequence Diagram - Alternative One](svg/us001-system-sequence-diagram.svg)
+![System Sequence Diagram - Alternative One](svg/us005-system-sequence-diagram.svg)
 
 
 ### 1.7 Other Relevant Remarks
