@@ -11,9 +11,12 @@ characteristics.
 
 **From the specifications document:**
 
->	Each task is characterized by having a unique reference per organization, a designation, an informal and a technical description, an estimated duration and cost, as well as a task category. 
+> Some job examples are designer, budgetist,gardener, electrician or bricklayer. Thus, an employee has a main occupation (job) and  a set of skills that enable him to perform/take on certain tasks/responsibilities, for example, driving vehicles of different types (e.g. light, or heavy), operating machines such
+as backhoes or tractors; tree pruning; application of agriculture phytopharmaceuticals.
 
->	As long as it is not published, access to the task is exclusive to the employees of the respective organization. 
+
+> Tasks are carried out on an occasional or regular basis in one or more green spaces, for example: tree pruning; 
+installation of an irrigation system; installation of a lighting system.
 
 **From the client clarifications:**
 
@@ -21,17 +24,16 @@ characteristics.
 >
 > **Answer:** Name, birthdate, admission date, address, contact info (mobile and email), taxpayer number, ID doc type and respective number
 
-> **Question:** When creating a collaborator with an existing name ... What the system do?
+> **Question:** When creating a collaborator with an existing name ... What does the system do?
 >
 > **Answer:** It's not common and most improbable to have different individual with same name in the same context, however it’s ID documentation number should be unique for sure.       
 
 
 ### 1.3. Acceptance Criteria
 
-* **AC1:** name, birthdate, admission date, address, contact info (mobile and
-  email), ID doc type and respective number should be provided by HRM
-* **AC2:** 
-* **AC3:** 
+* **AC1:** The collaborator must be registered in the system
+
+ 
 
 ### 1.4. Found out Dependencies
 
@@ -42,12 +44,13 @@ characteristics.
 **Input Data:**
 
 * Typed data:
-    * a reference
-    * a designation 
-    * an informal description
-    * a technical description
-    * an estimated duration
-    * an estimated cost
+    * a name
+    * a birthdate 
+    * an admission date
+    * an address
+    * a contact info (mobile and email)
+    * an ID doc type
+    * a respective number
 	
 * Selected data:
     * a task category 
