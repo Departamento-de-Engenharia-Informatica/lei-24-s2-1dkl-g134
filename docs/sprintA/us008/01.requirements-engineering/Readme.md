@@ -11,19 +11,19 @@ As a Fleet Manager, I want to list the vehicles needing the check-up.
 
 **From the specifications document:**
 
->	Each task is characterized by having a unique reference per organization, a designation, an informal and a technical description, an estimated duration and cost, as well as a task category. 
+> Vehicles are needed to carry out the tasks assigned to the teams as well as to transport machines and equipment. This type of vehicle can be only for passengers or mixed, light or heavy, open box or closed vans or trucks.
 
->	As long as it is not published, access to the task is exclusive to the employees of the respective organization. 
+> As for machines, MS has tractors, backhoe loaders and rotating machines, lawn-mowers, among others. The equipment can be greatly diverse, such as sprayers, lifting platforms, chainsaws, brush cutters, blowers, ladders, cisterns and the various elements that can be attached to tractors, such as disc harrows, weeders, aerators and scarifiers
 
 **From the client clarifications:**
 
-> **Question:** Which is the unit of measurement used to estimate duration?
+> **Question:** What information must be presented about each vehicle in the list?
 >
-> **Answer:** Duration is estimated in days.
+> **Answer:** Plate number, brand, model, current km, checkup frequency, and kms at last checkup.
 
-> **Question:** Monetary data is expressed in any particular currency?
+> **Question:** What is the criteria for a vehicle to be on the list?
 >
-> **Answer:** Monetary data (e.g. estimated cost of a task) is indicated in POT (virtual currency internal to the platform).
+> **Answer:** The difference between its current kms and its kms at last checkup must have either exceeded the checkup frequency or have a difference with it lower than 5%.
 
 ### 1.3. Acceptance Criteria
 
@@ -42,20 +42,13 @@ As a Fleet Manager, I want to list the vehicles needing the check-up.
 **Output Data:**
 
 * List of vehicles requiring check-up
+* Plate number, brand, model, current km, checkup frequency, km at last checkup of every vehicle in the list
 * (In)Success of the operation
 
 ### 1.6. System Sequence Diagram (SSD)
 
-**_Other alternatives might exist._**
-
-#### Alternative One
-
-![System Sequence Diagram - Alternative One](svg/us008-system-sequence-diagram-alternative-one.svg)
-
-#### Alternative Two
-
-![System Sequence Diagram - Alternative Two](svg/us008-system-sequence-diagram-alternative-two.svg)
+![System Sequence Diagram](svg/us008-system-sequence-diagram-main-solution.svg)
 
 ### 1.7 Other Relevant Remarks
 
-* The created task stays in a "not published" state in order to distinguish from "published" tasks.
+* There may be an alternative to this approach whereby the Fleet Manager inputs a certain amount of data to act as filters for the search, but this is unclear.
