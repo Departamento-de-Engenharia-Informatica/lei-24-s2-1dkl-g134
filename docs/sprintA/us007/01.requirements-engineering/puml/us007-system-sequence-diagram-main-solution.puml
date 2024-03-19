@@ -12,16 +12,16 @@ participant ":System" as System
 
 activate Employee
 
-    Employee -> System : begins vehicle registry process
+    Employee -> System : begins vehicle check-up registry
     activate System
 
-        System --> Employee : requests data (i.e. brand, plate id, model, type, \ntare, gross weight, current km, registry date,\nacquisition date, check-up frequency)
+        System --> Employee : requests data (i.e.  current km)
     deactivate System
 
     Employee -> System : inputs requested data
     activate System
 
-        System --> Employee : processes input, records the new vehicle, and\ndisplays operation success message
+        System --> Employee : processes input, and\ndisplays operation success message
     deactivate System
 
 @enduml

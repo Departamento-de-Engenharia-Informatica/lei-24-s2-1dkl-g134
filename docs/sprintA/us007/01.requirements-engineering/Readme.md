@@ -1,55 +1,49 @@
-# US006 - Register a Vehicle 
+# US007 - Register Vehicle Check-up
 
 
 ## 1. Requirements Engineering
 
 ### 1.1. User Story Description
 
-As an FM, I wish to register a vehicle including Brand, Model, Type, Tare, Gross Weight, Current Km, Register Date, Acquisition Date, Maintenance/Check-up Frequency (in Kms).
+As a Facilities Manager (FM), I wish to register a vehicle's check-up to ensure timely maintenance and adherence to safety standards.
+
+
 
 ### 1.2. Customer Specifications and Clarifications 
 
 **From the specifications document:**
 
-> Vehicles are needed to carry out the tasks assigned to the teams as well as to transport machines and equipment. This type of vehicle can be only for passengers or mixed, light or heavy, open box or closed vans or trucks.
-
-> As for machines, MS has tractors, backhoe loaders and rotating machines, lawn-mowers, among others. The equipment can be greatly diverse, such as sprayers, lifting platforms, chainsaws, brush cutters, blowers, ladders, cisterns and the various elements that can be attached to tractors, such as disc harrows, weeders, aerators and scarifiers
+> Each vehicle check-up registration involves recording details such as vehicle identification, date of check-up, maintenance tasks performed, and any notes related to the vehicle's condition.
 
 **From the client clarifications:**
 
-> **Question:** Should the application identify a registered vehicle by a serial number or another attribute?
+> **Question:** What permissions are required for the FM to register a vehicle's check-up?
 >
-> **Answer:** By Plate ID.
+> **Answer:** The FM must have appropriate permissions to access and utilize the vehicle check-up registration feature.
 
 ### 1.3. Acceptance Criteria
 
-* **AC1:** The vehicle is successfully recorded and saved in the system.
+* **AC1:** The FM must be logged into the management system.
+* **AC2:** Vehicles must already be registered within the system.
+* **AC3:** The FM must have the necessary permissions to register vehicle check-ups.
+* **AC4:** Upon registration, the system must record details including vehicle identification, date of check-up, maintenance tasks performed, and any additional notes.
+* **AC5:** he system must provide feedback confirming the successful registration of the vehicle check-up.
 
 ### 1.4. Found out Dependencies
 
-* None
+* There is a dependency on "US006 - Register a Vehicle" as vehicles need to be registered in the system before their check-ups can be recorded.
 
 ### 1.5 Input and Output Data
 
 **Input Data:**
-
-* Typed data:
-    * Brand
-    * Model 
-    * Tare
-    * Gross Weight
-    * Current Km
-    * Register Date
-    * Acquisition Date
-    * Maintenance/Check-up Frequency
-    * Plate Number
 	
 * Selected or typed data:
-    * Type
+    * Vehicle identification
+    * Date of check-up
 
 **Output Data:**
 
-* (In)Success of the operation
+* Success or failure message indicating the outcome of the registration operation
 
 ### 1.6. System Sequence Diagram (SSD)
 
@@ -57,4 +51,4 @@ As an FM, I wish to register a vehicle including Brand, Model, Type, Tare, Gross
 
 ### 1.7 Other Relevant Remarks
 
-* It's unclear whether or not the Type is a form of selected or typed data. This is because the vehicle's type may be restricted to a select few categories as the specification documentation implies, but more clarification is needed.
+* None
