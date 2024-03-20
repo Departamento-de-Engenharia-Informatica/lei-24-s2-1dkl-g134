@@ -16,7 +16,7 @@ activate Employee
 
     activate System
 
-        System --> Employee : requests data (i.e. name, birthdate, admission \ndate, address, contact info (mobile and email) and respective number
+        System --> Employee : requests data (i.e. name, birthdate, admission \ndate, address, contact info (mobile and email),\n ID doc type and respective number
 
     deactivate System
 

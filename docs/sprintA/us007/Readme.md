@@ -1,4 +1,4 @@
-# US006 - Register a Vehicle
+# US007 - Register Vehicle Check-up
 
 [Requirements Engineering](01.requirements-engineering/Readme.md)
 

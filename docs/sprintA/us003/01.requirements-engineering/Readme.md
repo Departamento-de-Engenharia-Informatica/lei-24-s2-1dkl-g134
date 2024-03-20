@@ -7,16 +7,14 @@
 
 As an HRM, I want to register a collaborator with a job and fundamental
 characteristics.
+
 ### 1.2. Customer Specifications and Clarifications  
 
 **From the specifications document:**
 
-> Some job examples are designer, budgetist,gardener, electrician or bricklayer. Thus, an employee has a main occupation (job) and  a set of skills that enable him to perform/take on certain tasks/responsibilities, for example, driving vehicles of different types (e.g. light, or heavy), operating machines such
-as backhoes or tractors; tree pruning; application of agriculture phytopharmaceuticals.
+> Some job examples are designer, budgetist,gardener, electrician or bricklayer. Thus, an employee has a main occupation (job) and  a set of skills that enable him to perform/take on certain tasks/responsibilities, for example, driving vehicles of different types (e.g. light, or heavy), operating machines such as backhoes or tractors; tree pruning; application of agriculture phytopharmaceuticals.
 
-
-> Tasks are carried out on an occasional or regular basis in one or more green spaces, for example: tree pruning; 
-installation of an irrigation system; installation of a lighting system.
+> Tasks are carried out on an occasional or regular basis in one or more green spaces, for example: tree pruning; installation of an irrigation system; installation of a lighting system.
 
 **From the client clarifications:**
 
@@ -33,7 +31,6 @@ installation of an irrigation system; installation of a lighting system.
 
 * **AC1:** The collaborator must be registered in the system
 
-
 ### 1.4. Found out Dependencies
 
 * There is a dependency on "US002 - Register a job" as there must be a job registered to be associated with the collaborator
@@ -47,10 +44,12 @@ installation of an irrigation system; installation of a lighting system.
     * a birthdate 
     * an admission date
     * an address
-    * a contact info (mobile and email)
+    * contact info (mobile and email)
     * an ID doc type
-    * a respective number
-	 
+    * an ID doc number
+
+* Selected data:
+  * Job
 
 **Output Data:**
 
@@ -62,4 +61,4 @@ installation of an irrigation system; installation of a lighting system.
 
 ### 1.7 Other Relevant Remarks
 
-* The created task stays in a "not published" state in order to distinguish from "published" tasks.
+* None

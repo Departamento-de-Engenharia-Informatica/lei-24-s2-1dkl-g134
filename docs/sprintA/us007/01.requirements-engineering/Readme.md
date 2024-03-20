@@ -5,29 +5,24 @@
 
 ### 1.1. User Story Description
 
-As a Facilities Manager (FM), I wish to register a vehicle's check-up to ensure timely maintenance and adherence to safety standards.
-
-
+As a Fleet Manager (FM), I wish to register a vehicle’s check-up.
 
 ### 1.2. Customer Specifications and Clarifications 
 
 **From the specifications document:**
 
-> Each vehicle check-up registration involves recording details such as vehicle identification, date of check-up, maintenance tasks performed, and any notes related to the vehicle's condition.
+> Vehicles are needed to carry out the tasks assigned to the teams as well as to transport machines and equipment. This type of vehicle can be only for passengers or mixed, light or heavy, open box or closed vans or trucks.
 
 **From the client clarifications:**
 
-> **Question:** What permissions are required for the FM to register a vehicle's check-up?
+> **Question:** What information is necessary when registering a vehicle's checkup?
 >
-> **Answer:** The FM must have appropriate permissions to access and utilize the vehicle check-up registration feature.
+> **Answer:** Plate number, date, and kms at checkup.
 
 ### 1.3. Acceptance Criteria
 
-* **AC1:** The FM must be logged into the management system.
-* **AC2:** Vehicles must already be registered within the system.
-* **AC3:** The FM must have the necessary permissions to register vehicle check-ups.
-* **AC4:** Upon registration, the system must record details including vehicle identification, date of check-up, maintenance tasks performed, and any additional notes.
-* **AC5:** he system must provide feedback confirming the successful registration of the vehicle check-up.
+* **AC1:** Checkup is successfully registered
+* **AC2:** Count of kms at last checkup of the specified vehicle is updated.
 
 ### 1.4. Found out Dependencies
 
@@ -37,9 +32,10 @@ As a Facilities Manager (FM), I wish to register a vehicle's check-up to ensure 
 
 **Input Data:**
 	
-* Selected or typed data:
-    * Vehicle identification
-    * Date of check-up
+* Typed data:
+    * Plate number
+    * Date
+    * Kms at checkup
 
 **Output Data:**
 

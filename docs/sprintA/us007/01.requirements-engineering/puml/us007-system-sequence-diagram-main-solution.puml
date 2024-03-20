@@ -15,13 +15,19 @@ activate Employee
     Employee -> System : begins vehicle check-up registry
     activate System
 
-        System --> Employee : requests data (i.e.  current km)
+        System --> Employee : requests data (i.e.  plate number, date,\ncurrent km)
     deactivate System
 
     Employee -> System : inputs requested data
     activate System
 
-        System --> Employee : processes input, and\ndisplays operation success message
+        System --> Employee : displays data and requests confirmation
+    deactivate System
+
+    Employee -> System : inputs confirmation
+    activate System
+
+        System --> Employee : processes input, registers check-up,\nand displays operation success
     deactivate System
 
 @enduml

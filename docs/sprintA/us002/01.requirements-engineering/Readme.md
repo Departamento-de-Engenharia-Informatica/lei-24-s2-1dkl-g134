@@ -11,12 +11,7 @@ As a human resources manager, I want to create a new profession to expand our co
 
 **From the specifications document:**
 
->	Some job examples are designer, budgetist,
-gardener, electrician or bricklayer. Thus, an employee has a main occupation (job) and
-a set of skills that enable him to perform/take on certain tasks/responsibilities, for example, driving vehicles of different types (e.g. light, or heavy), operating machines such
-as backhoes or tractors; tree pruning; application of agriculture phytopharmaceuticals. 
-
-
+>	Some job examples are designer, budgetist, gardener, electrician or bricklayer. Thus, an employee has a main occupation (job) and a set of skills that enable him to perform/take on certain tasks/responsibilities, for example, driving vehicles of different types (e.g. light, or heavy), operating machines such as backhoes or tractors; tree pruning; application of agriculture phytopharmaceuticals. 
 
 **From the client clarifications:**
 
@@ -29,6 +24,7 @@ as backhoes or tractors; tree pruning; application of agriculture phytopharmaceu
 > **Answer:**  It is not essential, as there are no User Stories indicating the need for this association at the moment.
 
 ### 1.3. Acceptance Criteria
+
 * **AC1:** A job is registered successfully.
 
 ### 1.4. Found out Dependencies
@@ -49,8 +45,6 @@ as backhoes or tractors; tree pruning; application of agriculture phytopharmaceu
 ### 1.6. System Sequence Diagram (SSD)
 
 ![System Sequence Diagram - Main Solution](svg/us002-system-sequence-diagram-Main-solution.svg)
-
-
 
 ### 1.7 Other Relevant Remarks
 

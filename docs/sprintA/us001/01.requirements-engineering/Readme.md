@@ -25,7 +25,8 @@ As a Human Resources Manager (HRM), I want to register skills that may be appoin
 
 ### 1.3. Acceptance Criteria
 
-* **AC1:** The skill name must not have special characters.
+* **AC1:** The skill must be successfully registered and recorded in the system.
+* **AC2:** The skill name must not have special characters.
 
 ### 1.4. Found out Dependencies
 
@@ -40,7 +41,6 @@ As a Human Resources Manager (HRM), I want to register skills that may be appoin
 
 **Output Data:**
 
-* List of existing skills
 * (In)Success of the operation
 
 ### 1.6. System Sequence Diagram (SSD)
@@ -52,4 +52,4 @@ As a Human Resources Manager (HRM), I want to register skills that may be appoin
 
 ### 1.7 Other Relevant Remarks
 
-* The created task stays in a "not published" state in order to distinguish from "published" tasks.
+* None

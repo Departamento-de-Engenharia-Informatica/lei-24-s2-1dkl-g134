@@ -18,7 +18,7 @@ activate Employee
         System --> Employee : requests data (i.e. collaborator id, skill)
     deactivate System
 
-    Employee -> System : types requested data
+    Employee -> System : inputs requested data
     activate System
 
         System --> Employee : shows all data and requests confirmation
