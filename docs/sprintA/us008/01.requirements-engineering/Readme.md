@@ -51,4 +51,4 @@ As a Fleet Manager, I want to list the vehicles needing the check-up.
 
 ### 1.7 Other Relevant Remarks
 
-* There may be an alternative to this approach whereby the Fleet Manager inputs a certain amount of data to act as filters for the search, but this is unclear.
+* None

@@ -1,4 +1,4 @@
-# US006 - Create a Task 
+# US006 - Register a Vehicle 
 
 ## 2. Analysis
 
