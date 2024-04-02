@@ -47,27 +47,12 @@ class Collaborator {
     phone
 }
 
-class ID {
-    type
-    number
-}
-
-class Job {
-    name
-}
-
-class Skill {
-    name
-}
-
 Organization "1" - "*" Collaborator : has >
 Organization "1" - "1" FleetManager : has >
 Organization "1" - "*" Vehicle: owns >
 Vehicle "1" - "*" Checkup: undergoes >
 Collaborator "1" -- "0..*" Vehicle : uses >
-Collaborator "1" -- "*" Skill : has >
-Collaborator "1" -- "1" Job : has >
-Collaborator "1" -- "1" ID : has >
+FleetManager "1" -- "*" Checkup : orders >
 FleetManager "1" -- "*" Vehicle : maintains >
 
 @enduml
