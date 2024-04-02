@@ -8,6 +8,14 @@ skinparam classAttributeIconSize 0
 hide circle
 hide methods
 
+class Organization {
+    name
+    vatNumber
+    website
+    phoneNumber
+    email
+}
+
 class HumanResourcesManager {
     name
     email
@@ -36,6 +44,8 @@ class Task {
     description
 }
 
+Organization "1" - "1" HumanResourcesManager : has >
+Collaborator "*" - "1" Organization : has <
 HumanResourcesManager "1" - "*" Collaborator : manages >
 HumanResourcesManager "1" -- "*" Skill : registers >
 Collaborator "1" -- "*" Skill : has >
