@@ -1,0 +1,63 @@
+@startuml
+skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+
+'left to right direction
+
+skinparam classAttributeIconSize 0
+
+hide circle
+hide methods
+
+
+class Organization {
+    name
+    vatNumber
+    website
+    phoneNumber
+    email
+}
+
+class Job {
+    name
+}
+
+
+
+class Collaborator {
+    name
+    birthdate
+    admission date
+    address
+    email
+    phone
+}
+
+class HumanResourcesManager {
+    name
+    email
+    phone
+}
+
+
+
+Organization "1" -- "1" HumanResourcesManager: has >
+HumanResourcesManager "1" -- "*" Collaborator: manages >
+HumanResourcesManager "1" -- "*" Job : registers >
+Collaborator "1" -- "1" Job : has >
+
+@enduml
+
+
+
+
+
+
+
+
+
+
+
+
+
