@@ -95,14 +95,14 @@ Organization "1" - "*" Collaborator : has >
 Organization "1" - "1" FleetManager : has >
 Organization "1" - "1" HumanResourcesManager : has >
 Organization "1" - "1" GreenSpaceManager : has >
-Organization "1" - "*" GreenSpace : owns >
+Organization "1" -up- "*" GreenSpace : owns >
 GreenSpaceManager "1" - "1" GreenSpace : manages >
-GreenSpaceManager "1" - "1" FleetManager : employs >
+GreenSpaceManager "1" -down- "1" FleetManager : employs >
 GreenSpaceManager "1" - "1" HumanResourcesManager : employs >
 GreenSpaceUser "*" - "1" GreenSpace : uses >
 Organization "1" - "*" Vehicle: owns >
 Vehicle "1" - "*" Checkup: undergoes >
-HumanResourcesManager "1" - "*" Collaborator : manages >
+HumanResourcesManager "1" -down- "*" Collaborator : manages >
 Collaborator "1" -- "0..*" Vehicle : uses >
 HumanResourcesManager "1" -- "*" Skill : registers >
 HumanResourcesManager "1" -- "*" Job : registers >
