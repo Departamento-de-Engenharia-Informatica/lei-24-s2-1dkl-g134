@@ -35,7 +35,7 @@ As a Fleet Manager (FM), I wish to register a vehicle’s check-up.
 * Typed data:
     * Plate number
     * Date
-    * Kms at checkup
+    * Current kms
 
 **Output Data:**
 

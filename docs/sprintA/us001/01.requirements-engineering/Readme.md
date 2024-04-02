@@ -45,8 +45,6 @@ As a Human Resources Manager (HRM), I want to register skills that may be appoin
 
 ### 1.6. System Sequence Diagram (SSD)
 
-#### Main Path
-
 ![System Sequence Diagram - Alternative One](svg/us001-system-sequence-diagram.svg)
 
 
