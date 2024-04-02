@@ -1,0 +1,46 @@
+@startuml
+skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+
+skinparam classAttributeIconSize 0
+
+hide circle
+hide methods
+
+class HumanResourcesManager {
+    name
+    email
+    phone
+}
+
+class Collaborator {
+    name
+    birthdate
+    admission date
+    address
+    email
+    phone
+}
+
+class Skill {
+    name
+}
+
+class Team {
+    numberOfCollaborators
+}
+
+class Task {
+    name
+    description
+}
+
+HumanResourcesManager "1" - "*" Collaborator : manages >
+HumanResourcesManager "1" -- "*" Skill : registers >
+Collaborator "1" -- "*" Skill : has >
+Team "1" -- "1" Task : carries out >
+Team "1" -- "*" Skill : requires a set of >
+Collaborator "*" -- "1" Team : form >
+
+@enduml
