@@ -25,14 +25,14 @@
 
 ## Performance
 
-* The application must be available for public use at all times, with as little downtime as possible.
+* The application must be available for use at all times, with as little downtime as possible.
 * Response times on all tasks must be kept as low as possible.
 * The usage of resources such as memory and CPU is limited to the hosting hardware's capacity, but should also be kept as low as possible.
 
 ## Supportability
 
-* The application should be easily installable on almost any personal computer, requiring little to no technical know-how.
-* The application must be compatible with as many desktop computer systems as possible, though no such compatibility is required for mobile systems.
+* The application should be easily installable on the green space's own servers and computers.
+* The application must be compatible with the organization's servers, namely their operating systems and architectures.
 
 ## +
 
