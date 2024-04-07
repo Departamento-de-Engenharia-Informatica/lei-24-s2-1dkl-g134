@@ -8,105 +8,114 @@ To identify domain conceptual classes, start by making a list of candidate conce
 
 ### _Conceptual Class Category List_
 
-**Business Transactions**
+**Green Space**
 
-* 
-
----
-
-**Transaction Line Itemss**
-
-* 
+* local
+* address
+* area
 
 ---
 
-**Product/Service related to a Transaction or Transaction Line Item**
+**Organization**
 
-* 
+* name
+* vatNumber
+* website
+* phoneNumber
+* email
 
 ---
 
-**Transaction Records**
+**Vehicle**
 
-* 
+* plate number
+* brand
+* type
+* model
+* current km
+* checkup frequency
+* km at last checkup
+
+---
+
+**Checkup**
+
+* current vehicle km
+* vehicle plate number
 
 ---  
 
-**Roles of People or Organizations**
+**Fleet Manager**
 
-* 
-
----
-
-**Places**
-
-* 
+* name
+* email
+* phone
 
 ---
 
-**Noteworthy Events**
+**Human Resources Manager**
 
-* 
-
----
-
-**Physical Objects**
-
-* 
+* name
+* email
+* phone
 
 ---
 
-**Descriptions of Things**
+**Green Space Manager**
 
-* 
-
----
-
-**Catalogs**
-
-* 
+* name
+* email
+* phone
 
 ---
 
-**Containers**
+**Green Space User**
 
-* 
-
----
-
-**Elements of Containers**
-
-* 
+* name
+* email
 
 ---
 
-**Organizations**
+**Collaborator**
 
-* 
-
----
-
-**Other External/Collaborating Systems**
-
-* 
-
----
-
-**Records of finance, work, contracts, legal matters**
-
-* 
+* name
+* birthdate
+* admission date
+* address
+* email
+* phone
 
 ---
 
-**Financial Instruments**
+**ID**
 
-* 
+* type
+* number
 
 ---
 
-**Documents mentioned/used to perform some work/**
+**Job**
 
-* 
+* name
+
+---
+
+**Skill**
+
+* name
+
+---
+
+**Team**
+
+* number of collaborators
+
+---
+
+**Task**
+
+* name
+* description
 
 ---
 
@@ -124,10 +133,30 @@ An association is a relationship between instances of objects that indicates a r
 - etc.
 
 
-| Concept (A) 		|  Association   	|  Concept (B) |
-|----------	   		|:-------------:		|------:       |
-| C1  	| verb1    		 	| C2  |
-| ...  	| ...    		 	| ...  |
+| Concept (A) 		             |      Association   	      |             Concept (B) |
+|----------------------------|:-------------------------:|------------------------:|
+| Organization  	            |        has    		 	        |            Collaborator |
+| Organization  	            |        has    		 	        |           Fleet Manager |
+| Organization  	            |        has    		 	        | Human Resources Manager |
+| Organization  	            |        has    		 	        |     Green Space Manager |
+| Organization  	            |       owns    		 	        |             Green Space |
+| Organization  	            |       owns    		 	        |                 Vehicle |
+| Green Space Manager  	     |      manages    		 	      |             Green Space |
+| Green Space Manager  	     |      employs    		 	      |           Fleet Manager |
+| Green Space Manager  	     |      employs    		 	      | Human Resources Manager |
+| Green Space User  	        |       uses    		 	        |             Green Space |
+| Vehicle  	                 |     undergoes    		 	     |                 Checkup |
+| Human Resources Manager  	 |      manages    		 	      |            Collaborator |
+| Human Resources Manager  	 |     registers    		 	     |                   Skill |
+| Human Resources Manager  	 |     registers    		 	     |                     Job |
+| Fleet Manager  	           |      orders    		 	       |                 Checkup |
+| Fleet Manager  	           |     maintains    		 	     |                 Vehicle |
+| Collaborator  	            |        has    		 	        |                   Skill |
+| Collaborator  	            |        has    		 	        |                     Job |
+| Collaborator  	            |        has    		 	        |                      ID |
+| Collaborator  	            |       form    		 	        |                    Team |
+| Team  	                    |    carries out    		 	    |                    Task |
+| Team  	                    | requires a set of    		 	 |                   Skill |
 
 
 
