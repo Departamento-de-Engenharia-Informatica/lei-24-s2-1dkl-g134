@@ -13,7 +13,7 @@ The implementation of the practices recommended in this manual can result in sig
 
 The main audience for this manual is managers and administrators of green spaces, such as public parks and landscaping companies, however it is also useful for professionals in related areas, such environmental science students and biologists interested in deepening their knowledge in the sustainable management of green spaces. 
 # System Overview:
-
+The Green Space Management application is a holistic solution crafted to enhance the efficiency of overseeing and upkeeping green spaces, encompassing parks, gardens, and recreational areas. This application serves the needs of diverse individuals engaged in green space management, including municipal authorities, park administrators, human resources managers, fleet managers, and collaborators. Each user role is equipped with distinct tools and functionalities tailored to enable them to carry out their responsibilities with utmost effectiveness.
 # Features:
 
 - 1. **Skills Registry** | Human Resources Manager
