@@ -16,3 +16,11 @@ The main audience for this manual is managers and administrators of green spaces
 
 # Features:
 
+- 1. **Skills Registry** | Human Resources Manager
+- 2. **Job Creation** | Human Resources Manager
+- 3. **Collaborator Registry** | Human Resources Manager
+- 4. **Collaborator Skill Assignment** | Human Resources Manager
+- 5. **Automatic Team Generation** | Human Resources Manager
+- 6. **Vehicle Registry** | Fleet Manager
+- 7. **Vehicle Check-up Registry** | Fleet Manager
+- 8. **Vehicles needing check-up Listing** | Fleet Manager
