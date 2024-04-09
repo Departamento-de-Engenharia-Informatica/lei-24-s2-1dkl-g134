@@ -1,33 +1,57 @@
-# US008 - List Vehicles Needing Check-up 
+# US011 -  
 
 
 ## 1. Requirements Engineering
 
 ### 1.1. User Story Description
 
-As a Fleet Manager, I want to list the vehicles needing the check-up.
+As a GSM, I want to be able to collect data from the user portal
+about the use of the park, so that I may understand the use of the park
+by different age groups.
 
 ### 1.2. Customer Specifications and Clarifications 
 
 **From the specifications document:**
 
-> Vehicles are needed to carry out the tasks assigned to the teams as well as to transport machines and equipment. This type of vehicle can be only for passengers or mixed, light or heavy, open box or closed vans or trucks.
+> To analyse the use of the park by age groups,
+a three-question survey was inserted in the user portal:
 
-> As for machines, MS has tractors, backhoe loaders and rotating machines, lawn-mowers, among others. The equipment can be greatly diverse, such as sprayers, lifting platforms, chainsaws, brush cutters, blowers, ladders, cisterns and the various elements that can be attached to tractors, such as disc harrows, weeders, aerators and scarifiers
+| Question                                        | Answer type                                                                                           |
+|-------------------------------------------------|-------------------------------------------------------------------------------------------------------|
+| Age range                                       | 1 - Child (up to 15 years old) <br/>2 - Adult (beetwen 16 and 65 years old) <br/>3 - Senior (over 65 years old) |
+| Would you recommend the park to the others?     | Y/N                                                                                                   |
+| How many times do you visit the park per month? | Numeric                                                                                               |
+
+> The obtained responses are recorded in the ”Inquiry.csv” file.<br>
+– Indicate the type of each of the three variables.<br>
+– Indicate the proportion of users from each age group who would
+recommend the park to others.<br>
+– Create a boxplot for each age group, regarding the monthly frequency of use of the park, and draw the main conclusions obtained
+from this type of graph.
+
 
 **From the client clarifications:**
 
-> **Question:** What information must be presented about each vehicle in the list?
+> **Question:** 
 >
-> **Answer:** Plate number, brand, model, current km, checkup frequency, and kms at last checkup.
+> **Answer:** 
 
-> **Question:** What is the criteria for a vehicle to be on the list?
+> **Question:** 
 >
-> **Answer:** The difference between its current kms and its kms at last checkup must have either exceeded the checkup frequency or have a difference with it lower than 5%.
+> **Answer:** 
 
 ### 1.3. Acceptance Criteria
 
-* **AC1:** All vehicles fitting the criteria for requiring check-up are listed.
+* **AC1:** Programming Language: Python;
+* **AC2:** Development environment: Jupyter Notebook;
+* **AC3:** Work delivery format: A single Jupyter Notebook file, which contains
+  all the work carried out;
+* **AC4:** Each US must be composed of: (1) introduction (succinct and objective); (2) code and results, and (3) analysis and interpretation of the
+  results;
+* **AC5:** Formulas must be written in LaTeX;
+* **AC6:** At the end of the file, you must indicate the contribution (in %) of each
+  member of the group to the development of the work (the sum of all
+  percentages must be 100%).
 
 ### 1.4. Found out Dependencies
 
