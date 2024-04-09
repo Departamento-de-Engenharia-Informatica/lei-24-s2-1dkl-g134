@@ -1,0 +1,33 @@
+@startuml
+skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+
+title System Sequence Diagram (SSD) - Main Solution
+
+autonumber
+
+actor "Human Resources \n Manager" as Employee
+participant ":System" as System
+
+activate Employee
+
+    Employee -> System : asks to add a skill to a collaborator
+    activate System
+
+        System --> Employee : requests data (i.e. collaborator id, skill)
+    deactivate System
+
+    Employee -> System : inputs requested data
+    activate System
+
+        System --> Employee : shows all data and requests confirmation
+    deactivate System
+
+    Employee -> System : confirms data
+    activate System
+
+        System --> Employee : displays operation success
+    deactivate System
+
+@enduml
