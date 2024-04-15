@@ -1,49 +1,40 @@
-# US008 - List Vehicles Needing Check-up 
-
+# US012 - Efficient Pipeline Planning
 
 ## 1. Requirements Engineering
 
 ### 1.1. User Story Description
 
-As a Fleet Manager, I want to list the vehicles needing the check-up.
+As a GSM, I want to import a .csv file containing lines with: Water Point X, Water Point Y, Distance into a unique data structureAs a Fleet Manager, I want to describe all possible 
 
-### 1.2. Customer Specifications and Clarifications 
+### 1.2. Customer Specifications and Clarifications
 
 **From the specifications document:**
 
-> Vehicles are needed to carry out the tasks assigned to the teams as well as to transport machines and equipment. This type of vehicle can be only for passengers or mixed, light or heavy, open box or closed vans or trucks.
-
-> As for machines, MS has tractors, backhoe loaders and rotating machines, lawn-mowers, among others. The equipment can be greatly diverse, such as sprayers, lifting platforms, chainsaws, brush cutters, blowers, ladders, cisterns and the various elements that can be attached to tractors, such as disc harrows, weeders, aerators and scarifiers
+> The set of imported lines describes all possible routes that can be opened to lay pipes between each pair of water points, and their respective installation costs (these could simply refer to the length, or to any other cost parameter).
 
 **From the client clarifications:**
 
-> **Question:** What information must be presented about each vehicle in the list?
->
-> **Answer:** Plate number, brand, model, current km, checkup frequency, and kms at last checkup.
-
-> **Question:** What is the criteria for a vehicle to be on the list?
->
-> **Answer:** The difference between its current kms and its kms at last checkup must have either exceeded the checkup frequency or have a difference with it lower than 5%.
+* None
 
 ### 1.3. Acceptance Criteria
 
-* **AC1:** All vehicles fitting the criteria for requiring check-up are listed.
+* **AC1:** The system successfully imports the .csv file containing water route data.
+  **AC2:** The data structure accurately represents all possible routes between water points.
+  **AC3**  Each route includes information on local water, distance and associated installation costs.
 
 ### 1.4. Found out Dependencies
 
-* There is a dependency on "US006 - Register Vehicle" as there must be at least one vehicle registered to check if any vehicles require a check-up.
+* None
 
 ### 1.5 Input and Output Data
 
 **Input Data:**
 
-* None
+* .csv file containing water route data (Water Point X, Water Point Y, Distance, Installation Cost)
 
 **Output Data:**
 
-* List of vehicles requiring check-up
-* Plate number, brand, model, current km, checkup frequency, km at last checkup of every vehicle in the list
-* (In)Success of the operation
+* (Un)Success of the operation
 
 ### 1.6. System Sequence Diagram (SSD)
 
