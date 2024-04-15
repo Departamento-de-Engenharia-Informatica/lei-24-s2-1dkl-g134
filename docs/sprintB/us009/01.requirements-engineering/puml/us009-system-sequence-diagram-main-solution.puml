@@ -1,0 +1,27 @@
+@startuml
+skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+
+title System Sequence Diagram (SSD) - Main Solution
+
+autonumber
+
+actor "Green Space\nManager" as Manager
+participant ":System" as System
+
+activate Manager
+
+    Manager -> System : asks to check data relative to water consumption\ncosts
+    activate System
+
+        System --> Manager : requests necessary input for calculating the\nrequested data
+    deactivate System
+
+    Manager -> System : inputs required data
+    activate System
+
+        System --> Manager : calculates desired output and presents data in\nthe appropriate format
+    deactivate System
+
+@enduml

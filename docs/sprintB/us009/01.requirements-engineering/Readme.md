@@ -1,53 +1,84 @@
-# US008 - List Vehicles Needing Check-up 
+# US009 - Check Water Consumption Costs
 
 
 ## 1. Requirements Engineering
 
 ### 1.1. User Story Description
 
-As a Fleet Manager, I want to list the vehicles needing the check-up.
+As a Green Space Manger, I want to know the exact costs referring to water consumption of specific green space.
 
 ### 1.2. Customer Specifications and Clarifications 
 
 **From the specifications document:**
 
-> Vehicles are needed to carry out the tasks assigned to the teams as well as to transport machines and equipment. This type of vehicle can be only for passengers or mixed, light or heavy, open box or closed vans or trucks.
+> The ”WaterUsed.csv” file provide the necessary data to carry out the study. This file records daily water consumption (in m3) since the day each park opened. The amount paid for water is 0.7 AC/m3, up to a consumption of 50 m3, with a fee of 15% added for higher consumption levels.
 
-> As for machines, MS has tractors, backhoe loaders and rotating machines, lawn-mowers, among others. The equipment can be greatly diverse, such as sprayers, lifting platforms, chainsaws, brush cutters, blowers, ladders, cisterns and the various elements that can be attached to tractors, such as disc harrows, weeders, aerators and scarifiers
+> The data file contains records of the following information: ”Park Identification”, ”Year”, ”Month”, ”Day”, ”Consumption”. Consider this data in order to obtain the following outcomes:
+
+> Barplot representing monthly water consumption, as a result of the following specifications given by the user: time period (StartMonth, EndMonth) and park identification.
+
+> Average of monthly costs related to water consumption as a result of the following specifications given by the user: number of parks to be analyzed, and park identification.
+
+> Consider the water consumption of every day that is recorded. The aim is to analyze and compare statistical indicators between the park with the highest and lowest water consumption. For these two parks, perform the following tasks and compare results:
+
+> Calculate the mean, median, standard deviation, and the coefficient of skewness;
+
+> Build relative and absolute frequency tables (classified data), considering 5 classes;
+
+> Check if the data has outliers, using the outlier definition as values that deviate from the median by more than 1.5 times the interquartile range;
+
+> Graphically represent data through histograms with 10 classes.
 
 **From the client clarifications:**
 
-> **Question:** What information must be presented about each vehicle in the list?
+> **Question:** Does the file in which these costs are registered contain day-by-day data or data that we assume is constant every day?
 >
-> **Answer:** Plate number, brand, model, current km, checkup frequency, and kms at last checkup.
+> **Answer:** Day-by-day data.
 
-> **Question:** What is the criteria for a vehicle to be on the list?
+> **Question:** There are various functionalities that this user story must accomplish. Are these separate, individual functions, or can they be grouped as the output of one single execution of this user story?
 >
-> **Answer:** The difference between its current kms and its kms at last checkup must have either exceeded the checkup frequency or have a difference with it lower than 5%.
+> **Answer:** Either solution works, so long as all the intended output data is available in some way.
+
+> **Question:** Is there a limit on how long the period of time analyzed by this function can be?
+>
+> **Answer:** The outputs must discriminate the data by year in order to avoid outputs covering more than a year. The user must input the year they wish to see the data of.
 
 ### 1.3. Acceptance Criteria
 
-* **AC1:** All vehicles fitting the criteria for requiring check-up are listed.
+* **AC1:** All output data is shown to the user, either separate as different functions or grouped into one global output.
+* **AC2:** Data must discriminate year-by-year as to avoid outputs with data spanning more than a year.
+* **AC3:** The calculations that use the start month and end month parameters must not use the plural park identification, and instead use the singular one.
+* **AC4:** The calculations that use the number of parks to be analyzed must not use the singular park identification, and instead use the plural ones.
+* **AC5:** The "singular park identification" parameter must identify one park, and one park only.
+* **AC6:** The "plural park identification" must identify one or more different parks.
+* **AC7:** The amount of parks identified by the plural park identification must be equal to the "number of parks to be analyzed" parameter.
+* **AC8:** The "WaterUsed.csv" file is used to read the water consumption data necessary for all calculations.
 
 ### 1.4. Found out Dependencies
 
-* There is a dependency on "US006 - Register Vehicle" as there must be at least one vehicle registered to check if any vehicles require a check-up.
+* None
 
 ### 1.5 Input and Output Data
 
 **Input Data:**
 
-* None
+* Selected data:
+    * year
+    * start month
+    * end month
+* Typed data:
+    * singular park identification
+    * plural park identification
+    * number of parks to be analyzed
 
 **Output Data:**
 
-* List of vehicles requiring check-up
-* Plate number, brand, model, current km, checkup frequency, km at last checkup of every vehicle in the list
-* (In)Success of the operation
+* Barplot representing monthly water consumption as a result of the time period between the start month and the end month, in the park specified by the singular park identification.
+* Average of the monthly costs related to water consumption as a result of the number of parks to be analyzed in the parks identified by the plural park identification.
 
 ### 1.6. System Sequence Diagram (SSD)
 
-![System Sequence Diagram](svg/us008-system-sequence-diagram-main-solution.svg)
+![System Sequence Diagram](svg/us009-system-sequence-diagram-main-solution.svg)
 
 ### 1.7 Other Relevant Remarks
 

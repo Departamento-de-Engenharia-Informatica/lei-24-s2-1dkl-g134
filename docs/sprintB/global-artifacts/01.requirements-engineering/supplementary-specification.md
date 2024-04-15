@@ -40,21 +40,27 @@
 
 * All documentation will be developed in the English language, using Markdown formatting.
 * All graphs and images will be developed and modelled in UML, and will be generated in SVG format.
-* Development will utilize the IntelliJ IDEA editor.
+* Development will utilize the IntelliJ IDEA editor (exceptions apply as listed below).
 * Development of the application's graphical interface will be developed in JavaFX 11.
 * Development progress and version control will be handled using Bitbucket.
 * Development will utilize the PlantUML plugin for IntelliJ IDEA as the preferred UML editor.
 * The preferred Markdown editor and reader will be the integrated Markdown interpreter in IntelliJ IDEA.
 * All documentation shall follow the standards established in the UC ESOFT.
+* In US09-US11 specifically, rather than IntelliJ IDEA, the development will utilize the Jupyter Notebook environment.
+* The work done for US09-US11 must be delivered as one single Jupyter Notebook file, containing all the work done for these user stories.
+* The formulas used in US09-US11 must be written in LaTeX in the Jupyter Notebook file.
+* The Jupyter Notebook file used for US09-US11 must, for each user story, consist of an introduction, the code and its results, and the analysis of these results.
+* The Jupyter Notebook file used for US09-US11 must, at its end, indicate the contribution in percentage of each group member to its development. 
 
 ### Implementation Constraints
 
 * Business rule validation must be respected when recording and updating data.
-* All of the code and implementation will be developed in the Java programming language.
+* All of the code and implementation will be developed in the Java programming language (exceptions apply as listed further down).
 * All methods must have associated unit tests, with the exception of I/O operations.
 * All unit tests must be implemented using the JUnit 5 framework.
 * Data persistence shall be ensured using object serialization rather than a database.
 * The implementation will follow all the standards and good practices suggested in the UC PPROG: Javadoc, CamelCase, etc.
+* The implementation in US09-US11 specifically, rather than Java, the code will be developed in the Python programming language.
 
 ### Interface Constraints
 
