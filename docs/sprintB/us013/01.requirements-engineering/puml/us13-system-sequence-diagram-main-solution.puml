@@ -7,15 +7,15 @@ title System Sequence Diagram (SSD) - Main Solution
 
 autonumber
 
-actor "Fleet\nManager" as Manager
+actor "Green Space\nManager" as Manager
 participant ":System" as System
 
 activate Manager
 
-    Manager -> System : asks to list vehicles requiring check-up
+    Manager -> System : asks for the most optimal routes and necessary pipeline placement
     activate System
 
-        System --> Manager : presents list of vehicles whose check-up date is\ndue or past
+        System --> Manager : presents most optimal routes and necessary pipeline placement
     deactivate System
 
 @enduml

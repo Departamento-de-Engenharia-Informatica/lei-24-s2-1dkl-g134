@@ -37,7 +37,7 @@ As a Green Space Manager (GSM), my objective is to utilize an algorithm that eff
 
 ### 1.6. System Sequence Diagram (SSD)
 
-![System Sequence Diagram](svg/us008-system-sequence-diagram-main-solution.svg)
+![System Sequence Diagram](svg/us13-system-sequence-diagram-main-solution.svg)
 
 ### 1.7 Other Relevant Remarks
 
