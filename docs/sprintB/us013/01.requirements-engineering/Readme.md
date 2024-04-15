@@ -1,37 +1,29 @@
-# US008 - List Vehicles Needing Check-up 
+# US13 - Route Planning and Pipeline Deployment Algorithm
 
 
 ## 1. Requirements Engineering
 
 ### 1.1. User Story Description
 
-As a Fleet Manager, I want to list the vehicles needing the check-up.
-
+As a Green Space Manager (GSM), my objective is to utilize an algorithm that efficiently identifies optimal routes to be established and determines the necessary pipeline placement, all while minimizing overall costs and ensuring comprehensive supply coverage
 ### 1.2. Customer Specifications and Clarifications 
 
 **From the specifications document:**
 
-> Vehicles are needed to carry out the tasks assigned to the teams as well as to transport machines and equipment. This type of vehicle can be only for passengers or mixed, light or heavy, open box or closed vans or trucks.
-
-> As for machines, MS has tractors, backhoe loaders and rotating machines, lawn-mowers, among others. The equipment can be greatly diverse, such as sprayers, lifting platforms, chainsaws, brush cutters, blowers, ladders, cisterns and the various elements that can be attached to tractors, such as disc harrows, weeders, aerators and scarifiers
+> The use of computer systems and namely powerful algorithms can save materials like pipes, reduce the time required for the planning and installation, and allow to create more efficient irrigation systems. This becomes even more relevant when considering the installation of irrigation systems in parks that are already in operation, because periods of construction prevent their normal operation.
 
 **From the client clarifications:**
 
-> **Question:** What information must be presented about each vehicle in the list?
->
-> **Answer:** Plate number, brand, model, current km, checkup frequency, and kms at last checkup.
-
-> **Question:** What is the criteria for a vehicle to be on the list?
->
-> **Answer:** The difference between its current kms and its kms at last checkup must have either exceeded the checkup frequency or have a difference with it lower than 5%.
+> Questions: None
 
 ### 1.3. Acceptance Criteria
 
-* **AC1:** All vehicles fitting the criteria for requiring check-up are listed.
+* **AC1:** All implemented procedures must only use primitive operations, and not existing functions in JAVA libraries.
+* **AC2** the map presented must have a minimum associated cost to its pipes
 
 ### 1.4. Found out Dependencies
 
-* There is a dependency on "US006 - Register Vehicle" as there must be at least one vehicle registered to check if any vehicles require a check-up.
+* There is a dependency on US12 - "Import irrigation system planning file" because all possible pipe routes are needed in order to execute the algorithm.
 
 ### 1.5 Input and Output Data
 
@@ -41,9 +33,7 @@ As a Fleet Manager, I want to list the vehicles needing the check-up.
 
 **Output Data:**
 
-* List of vehicles requiring check-up
-* Plate number, brand, model, current km, checkup frequency, km at last checkup of every vehicle in the list
-* (In)Success of the operation
+* Routes to be opened and pipes needed to be laid with a minimum accumulated cost, ensuring that all points are adequately supplied.
 
 ### 1.6. System Sequence Diagram (SSD)
 
