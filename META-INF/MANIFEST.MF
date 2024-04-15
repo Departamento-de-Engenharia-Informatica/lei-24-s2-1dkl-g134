@@ -1,0 +1,6 @@
+Manifest-Version: 1.0
+Main-Class: pt.ipp.isep.dei.esoft.project.ui.Main
+Class-Path: junit-jupiter-engine-5.9.2.jar mockito-all-1.10.19.jar AuthL
+ ib-1.0-SNAPSHOT.jar junit-jupiter-api-5.9.2.jar mockito-core-5.1.1.jar 
+ commons-lang3-3.12.0.jar
+

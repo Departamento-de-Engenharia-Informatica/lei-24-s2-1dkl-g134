@@ -12,10 +12,10 @@ participant ":System" as System
 
 activate Manager
 
-    Manager -> System : asks to list vehicles requiring check-up
+    Manager -> System : asks to view data relative to the usage of park\nequipments
     activate System
 
-        System --> Manager : presents list of vehicles whose check-up date is\ndue or past
+        System --> Manager : presents pie chart representing, in percentage,\nthe amount that each equipment is used
     deactivate System
 
 @enduml

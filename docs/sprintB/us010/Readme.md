@@ -1,4 +1,4 @@
-# US008 - List Vehicles Needing Check-up
+# US010 - View Equipment Usage Percentage
 
 [Requirements Engineering](01.requirements-engineering/Readme.md)
 
