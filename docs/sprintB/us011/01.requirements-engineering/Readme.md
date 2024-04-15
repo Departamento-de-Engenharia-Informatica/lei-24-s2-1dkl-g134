@@ -1,4 +1,4 @@
-# US011 -  
+# US011 - Data Collect from the User Portal
 
 
 ## 1. Requirements Engineering
@@ -29,6 +29,12 @@ recommend the park to others.<br>
 – Create a boxplot for each age group, regarding the monthly frequency of use of the park, and draw the main conclusions obtained
 from this type of graph.
 
+> The green spaces management aims (within the available budget) to design,
+build and maintain parks and gardens that meet the requirements of the
+common citizen who wants to be informed. With this in mind, the objective
+is to develop a Portal in which parks and garden users can post comments,
+and report faults and malfunctions of equipment.
+
 
 **From the client clarifications:**
 
@@ -55,7 +61,7 @@ from this type of graph.
 
 ### 1.4. Found out Dependencies
 
-* There is a dependency on "US006 - Register Vehicle" as there must be at least one vehicle registered to check if any vehicles require a check-up.
+* There is a dependency on "
 
 ### 1.5 Input and Output Data
 
@@ -65,13 +71,13 @@ from this type of graph.
 
 **Output Data:**
 
-* List of vehicles requiring check-up
-* Plate number, brand, model, current km, checkup frequency, km at last checkup of every vehicle in the list
-* (In)Success of the operation
+* Inquiry.csv file including:
+  * proportion of users from each age group who would recommend the park to others;
+  * boxplot for each age group, regarding the monthly frequency of use of the park.
 
 ### 1.6. System Sequence Diagram (SSD)
 
-![System Sequence Diagram](svg/us008-system-sequence-diagram-main-solution.svg)
+![System Sequence Diagram](svg/us011-system-sequence-diagram-main-solution.svg)
 
 ### 1.7 Other Relevant Remarks
 
