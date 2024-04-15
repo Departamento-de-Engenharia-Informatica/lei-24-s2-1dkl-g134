@@ -7,15 +7,15 @@ title System Sequence Diagram (SSD) - Main Solution
 
 autonumber
 
-actor "Fleet\nManager" as Manager
+actor "Green Spaces\nManager" as Manager
 participant ":System" as System
 
 activate Manager
 
-    Manager -> System : asks to list vehicles requiring check-up
+    Manager -> System : requests the tests of the US 13 algorithm.
     activate System
 
-        System --> Manager : presents list of vehicles whose check-up date is\ndue or past
+        System --> Manager :gives the information about the tests
     deactivate System
 
 @enduml
