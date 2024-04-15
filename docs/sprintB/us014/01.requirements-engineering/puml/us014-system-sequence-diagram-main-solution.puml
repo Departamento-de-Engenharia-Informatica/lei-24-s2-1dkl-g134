@@ -12,10 +12,10 @@ participant ":System" as System
 
 activate Manager
 
-    Manager -> System : requests the tests of the US 13 algorithm.
+    Manager -> System : requests the tests of the US13 algorithm.
     activate System
 
-        System --> Manager :gives the information about the tests
+        System --> Manager :presents information about the tests
     deactivate System
 
 @enduml

@@ -119,6 +119,56 @@ To identify domain conceptual classes, start by making a list of candidate conce
 
 ---
 
+**Pipe**
+
+* cost
+
+---
+
+**Irrigation Network**
+
+* total cost
+* number of pipes
+* number of nodes
+
+---
+
+**Software Quality Assessment Team Manager**
+
+* name
+* email
+* phone
+
+---
+
+**Algorithm**
+
+* execution time
+
+---
+
+**Equipment Survey**
+
+* equipment
+* usage
+
+---
+
+**Info Survey**
+
+* age range
+* would reccomend
+* visit frequency
+
+---
+
+**User Portal**
+
+* address
+* hostMachine
+
+---
+
 
 ## Rationale to identify associations between conceptual classes
 
@@ -133,30 +183,40 @@ An association is a relationship between instances of objects that indicates a r
 - etc.
 
 
-| Concept (A) 		             |      Association   	      |             Concept (B) |
-|----------------------------|:-------------------------:|------------------------:|
-| Organization  	            |        has    		 	        |            Collaborator |
-| Organization  	            |        has    		 	        |           Fleet Manager |
-| Organization  	            |        has    		 	        | Human Resources Manager |
-| Organization  	            |        has    		 	        |     Green Space Manager |
-| Organization  	            |       owns    		 	        |             Green Space |
-| Organization  	            |       owns    		 	        |                 Vehicle |
-| Green Space Manager  	     |      manages    		 	      |             Green Space |
-| Green Space Manager  	     |      employs    		 	      |           Fleet Manager |
-| Green Space Manager  	     |      employs    		 	      | Human Resources Manager |
-| Green Space User  	        |       uses    		 	        |             Green Space |
-| Vehicle  	                 |     undergoes    		 	     |                 Checkup |
-| Human Resources Manager  	 |      manages    		 	      |            Collaborator |
-| Human Resources Manager  	 |     registers    		 	     |                   Skill |
-| Human Resources Manager  	 |     registers    		 	     |                     Job |
-| Fleet Manager  	           |      orders    		 	       |                 Checkup |
-| Fleet Manager  	           |     maintains    		 	     |                 Vehicle |
-| Collaborator  	            |        has    		 	        |                   Skill |
-| Collaborator  	            |        has    		 	        |                     Job |
-| Collaborator  	            |        has    		 	        |                      ID |
-| Collaborator  	            |       form    		 	        |                    Team |
-| Team  	                    |    carries out    		 	    |                    Task |
-| Team  	                    | requires a set of    		 	 |                   Skill |
+| Concept (A) 		                              |      Association   	      |                              Concept (B) |
+|---------------------------------------------|:-------------------------:|-----------------------------------------:|
+| Organization  	                             |        has    		 	        |                             Collaborator |
+| Organization  	                             |        has    		 	        |                            Fleet Manager |
+| Organization  	                             |        has    		 	        |                  Human Resources Manager |
+| Organization  	                             |        has    		 	        |                      Green Space Manager |
+| Organization  	                             |        has    		 	        | Software Quality Assessment Team Manager |
+| Organization  	                             |       owns    		 	        |                              Green Space |
+| Organization  	                             |       owns    		 	        |                                  Vehicle |
+| Green Space Manager  	                      |      manages    		 	      |                              Green Space |
+| Green Space Manager  	                      |      employs    		 	      |                            Fleet Manager |
+| Green Space Manager  	                      |      employs    		 	      |                  Human Resources Manager |
+| Green Space Manager  	                      |      employs    		 	      | Software Quality Assessment Team Manager |
+| Green Space User  	                         |       uses    		 	        |                              Green Space |
+| Vehicle  	                                  |     undergoes    		 	     |                                  Checkup |
+| Human Resources Manager  	                  |      manages    		 	      |                             Collaborator |
+| Human Resources Manager  	                  |     registers    		 	     |                                    Skill |
+| Human Resources Manager  	                  |     registers    		 	     |                                      Job |
+| Fleet Manager  	                            |      orders    		 	       |                                  Checkup |
+| Fleet Manager  	                            |     maintains    		 	     |                                  Vehicle |
+| Collaborator  	                             |        has    		 	        |                                    Skill |
+| Collaborator  	                             |        has    		 	        |                                      Job |
+| Collaborator  	                             |        has    		 	        |                                       ID |
+| Collaborator  	                             |       form    		 	        |                                     Team |
+| Team  	                                     |    carries out    		 	    |                                     Task |
+| Team  	                                     | requires a set of    		 	 |                                    Skill |
+| Pipe  	                                     |       form    		 	        |                       Irrigation Network |
+| Algorithm  	                                |     generates    		 	     |                       Irrigation Network |
+| Software Quality Assessment Team Manager  	 |       tests    		 	       |                                Algorithm |
+| Green Space User  	                         |      answers    		 	      |                              Info Survey |
+| Green Space User  	                         |      answers    		 	      |                         Equipment Survey |
+| Green Space Manager  	                      |  checks results    		 	   |                              Info Survey |
+| Green Space Manager  	                      |  checks results    		 	   |                         Equipment Survey |
+| Green Space User  	                         |       uses    		 	        |                              User Portal |
 
 
 

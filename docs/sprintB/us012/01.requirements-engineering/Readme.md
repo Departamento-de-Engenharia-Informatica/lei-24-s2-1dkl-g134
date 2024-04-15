@@ -1,10 +1,10 @@
-# US012 - Efficient Pipeline Planning
+# US012 - Import Irrigation System Planning File
 
 ## 1. Requirements Engineering
 
 ### 1.1. User Story Description
 
-As a GSM, I want to import a .csv file containing lines with: Water Point X, Water Point Y, Distance into a unique data structureAs a Fleet Manager, I want to describe all possible 
+As a Green Space Manager, I want to import a .csv file containing lines with: Water Point X, Water Point Y, Distance into a unique data structureAs a Fleet Manager, I want to describe all possible 
 
 ### 1.2. Customer Specifications and Clarifications
 
@@ -34,11 +34,11 @@ As a GSM, I want to import a .csv file containing lines with: Water Point X, Wat
 
 **Output Data:**
 
-* (Un)Success of the operation
+* (In)Success of the operation
 
 ### 1.6. System Sequence Diagram (SSD)
 
-![System Sequence Diagram](svg/us008-system-sequence-diagram-main-solution.svg)
+![System Sequence Diagram](svg/us012-system-sequence-diagram-main-solution.svg)
 
 ### 1.7 Other Relevant Remarks
 
