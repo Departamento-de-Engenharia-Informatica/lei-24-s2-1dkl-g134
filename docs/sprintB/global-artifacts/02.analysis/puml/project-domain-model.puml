@@ -160,6 +160,7 @@ GreenSpaceUser "*" -- "1" EquipmentSurvey : answers >
 GreenSpaceUser "*" -- "1" UserPortal : uses >
 GreenSpaceManager "1" - "1" InfoSurvey : checks results >
 GreenSpaceManager "1" - "1" EquipmentSurvey : checks results >
+GreenSpace "1"-"1" IrrigationNetwork : contains >
 
 
 @enduml
