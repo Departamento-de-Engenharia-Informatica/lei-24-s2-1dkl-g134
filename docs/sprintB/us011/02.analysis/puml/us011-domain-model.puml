@@ -1,0 +1,46 @@
+@startuml
+skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+
+skinparam classAttributeIconSize 0
+
+hide circle
+hide methods
+
+class GreenSpace{
+    local
+    address
+    area
+}
+
+class GreenSpaceManager {
+    name
+    email
+    phone
+}
+
+class GreenSpaceUser {
+    name
+    email
+}
+
+class InfoSurvey {
+    ageRange
+    wouldRecommend
+    visitFrequency
+}
+
+class UserPortal {
+    address
+    hostMachine
+}
+
+GreenSpaceManager "1" - "1" GreenSpace : manages >
+GreenSpaceUser "*" -left- "1" GreenSpace : uses >
+GreenSpaceUser "*" -- "1" InfoSurvey : answers >
+GreenSpaceUser "*" -- "1" UserPortal : uses >
+GreenSpaceManager "1" - "1" InfoSurvey : checks results >
+
+
+@enduml
