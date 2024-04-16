@@ -1,13 +1,12 @@
-# US011 - Data Collect from the User Portal
+# US011 - View Park User Information
 
 
 ## 1. Requirements Engineering
 
 ### 1.1. User Story Description
 
-As a GSM, I want to be able to collect data from the user portal
-about the use of the park, so that I may understand the use of the park
-by different age groups.
+As a Green Space Manager, I want to be able to collect data from the user portal
+about the use of the park.
 
 ### 1.2. Customer Specifications and Clarifications 
 
@@ -38,30 +37,18 @@ and report faults and malfunctions of equipment.
 
 **From the client clarifications:**
 
-> **Question:** 
+> **Question:** None
 >
-> **Answer:** 
-
-> **Question:** 
->
-> **Answer:** 
+> **Answer:** None
 
 ### 1.3. Acceptance Criteria
 
-* **AC1:** Programming Language: Python;
-* **AC2:** Development environment: Jupyter Notebook;
-* **AC3:** Work delivery format: A single Jupyter Notebook file, which contains
-  all the work carried out;
-* **AC4:** Each US must be composed of: (1) introduction (succinct and objective); (2) code and results, and (3) analysis and interpretation of the
-  results;
-* **AC5:** Formulas must be written in LaTeX;
-* **AC6:** At the end of the file, you must indicate the contribution (in %) of each
-  member of the group to the development of the work (the sum of all
-  percentages must be 100%).
+* **AC1:** All desired information is displayed to the user.
+* **AC2:** The results derived from this information must be faithful and accurate to the information available in the Inquiry.csv file.
 
 ### 1.4. Found out Dependencies
 
-* There is a dependency on "
+* None
 
 ### 1.5 Input and Output Data
 
@@ -71,9 +58,9 @@ and report faults and malfunctions of equipment.
 
 **Output Data:**
 
-* Inquiry.csv file including:
-  * proportion of users from each age group who would recommend the park to others;
-  * boxplot for each age group, regarding the monthly frequency of use of the park.
+* type of each variable in the survey's answer
+* proportion of users from each age group who would recommend the park to others
+* boxplot for each age group, regarding the monthly frequency of use of the park
 
 ### 1.6. System Sequence Diagram (SSD)
 
