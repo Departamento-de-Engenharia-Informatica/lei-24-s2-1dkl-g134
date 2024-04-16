@@ -1,0 +1,59 @@
+@startuml
+skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+
+skinparam classAttributeIconSize 0
+
+hide circle
+hide methods
+
+class SoftwareQualityAssessmentTeamManager{
+    name
+    email
+    phone
+}
+
+class GreenSpaceManager {
+    name
+    email
+    phone
+}
+
+class GreenSpace{
+    local
+    address
+    area
+}
+
+class Organization {
+    name
+    vatNumber
+    website
+    phoneNumber
+    email
+}
+
+class Algorithm {
+    executionTime
+}
+
+class IrrigationNetwork {
+    totalCost
+    numberOfPipes
+    numberOfNodes
+}
+
+class Pipe {
+    cost
+}
+
+SoftwareQualityAssessmentTeamManager "1" - "1" Algorithm : execute >
+GreenSpaceManager "1" - "1" GreenSpace : manages >
+Organization "1" -up- "1" GreenSpaceManager : has >
+Organization "1" -up- "*" GreenSpace : owns >
+GreenSpace "1"-"1" IrrigationNetwork : contains >
+Algorithm "1" -- "*" IrrigationNetwork : generates >
+Pipe "*" -- "1" IrrigationNetwork : form >
+
+@enduml

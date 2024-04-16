@@ -7,7 +7,7 @@ title System Sequence Diagram (SSD) - Main Solution
 
 autonumber
 
-actor "Green Spaces\nManager" as Manager
+actor "Software Quality \nAssessment Team Manager" as Manager
 participant ":System" as System
 
 activate Manager
