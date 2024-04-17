@@ -6,12 +6,12 @@ skinparam shadowing false
 autonumber
 
 'hide footbox
-actor "Organization Employee" as ADM
-participant ":CreateTaskUI" as UI
-participant ":CreateTaskController" as CTRL
+actor "Human Resources \n Manager" as ADM
+participant ":CreateSkillUI" as UI
+participant ":AssignSkillController" as CTRL
 participant ":Repositories" as RepositorySingleton
 participant "repositories\n:Repositories" as PLAT
-participant "taskCategoryRepository:\nTaskCategoryRepository" as TaskCategoryRepository
+participant "skillRepository:\nSkillRepository" as SkillRepository
 participant ":ApplicationSession" as _APP
 participant "appSession\n:ApplicationSession" as APP
 participant "currentSession\n:UserSession" as SESSAO
@@ -21,15 +21,17 @@ participant "task\n:Task" as TAREFA
 
 activate ADM
 
-        ADM -> UI : asks to create a new task
+        ADM -> UI : asks to add a skill to a collaborator
 
         activate UI
 
+
+
 '            UI --> ADM : requests data (reference, description,  informal \n description, technical description, duration, cost)
             'create CTRL
-            UI -> CTRL** : create
+            UI -> CTRL** : assign
 
-            UI -> CTRL : getTaskCategories()
+            UI -> CTRL : getSkill()
             activate CTRL
 
                 CTRL -> RepositorySingleton : getInstance()
@@ -38,25 +40,25 @@ activate ADM
                     RepositorySingleton --> CTRL: repositories
                 deactivate RepositorySingleton
 
-                CTRL -> PLAT : getTaskCategoryRepository()
+                CTRL -> PLAT : getSkillRepository()
                 activate PLAT
 
-                    PLAT --> CTRL: taskCategoryRepository
+                    PLAT --> CTRL: skillRepository
                 deactivate PLAT
 
-                CTRL -> TaskCategoryRepository : getTaskCategories()
-                activate TaskCategoryRepository
+                CTRL -> SkillRepository : getSkill()
+                activate SkillRepository
 
-                    TaskCategoryRepository --> CTRL : taskCategoryList
-                deactivate TaskCategoryRepository
+                    SkillRepository --> CTRL : skillList
+                deactivate SkillRepository
 
-                CTRL --> UI : taskCategoryList
+                CTRL --> UI : skillList
             deactivate CTRL
 
-            UI --> ADM : shows task category list\n and asks to sleect one
+            UI --> ADM : shows skill list\n and asks to sleect one
         deactivate UI
 
-    ADM -> UI : selects a task category
+    ADM -> UI : selects a skill
     activate UI
 
         UI --> ADM : requests data

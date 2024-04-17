@@ -1,4 +1,4 @@
-# US006 - Create a Task 
+# US004 - Assign a skill to collaborator
 
 ## 3. Design - User Story Realization 
 
