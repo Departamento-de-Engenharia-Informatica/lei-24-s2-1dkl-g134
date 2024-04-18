@@ -14,7 +14,10 @@ As a Green Space Manager, I want to import a .csv file containing lines with: Wa
 
 **From the client clarifications:**
 
-* None
+* If the selected file contains two or more lines with the same x and y points but different distances, we need to decide how to handle this situation. Would you prefer an error message to appear, informing the GSM that there is ambiguous information, or should we overwrite the previous information regarding these points?
+* The data contained in the .csv file is previously validated; despite that a message would be preferable.
+
+
 
 ### 1.3. Acceptance Criteria
 
