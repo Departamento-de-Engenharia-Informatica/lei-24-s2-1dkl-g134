@@ -9,122 +9,58 @@ skinparam classAttributeIconSize 0
 
 'left to right direction
 
-class ApplicationSession
-{
-    + static getInstance()
-    + getCurrentSession()
+class AssignSkillUI{
 }
 
-class UserSession
-{
-    + getUserEmail()
-}
 
-class Employee {
-    - name
-    - email
-    - position
-    - phone
-}
-
-class Task {
-    - String reference
-    - String description
-    - String informalDescription
-    - String technicalDescription
-    - Integer duration
-    - Double cost
-
-    + Task(reference, description,\ninformalDescription, technicalDescription,\nduration, cost, createdBy, taskCategory)
-}
-
-class TaskCategory {
-    - String description
-
-    + TaskCategory(description)
-}
-
-class Organization {
-    - String name
-    - String vatNumber
-    - String website
-    - String phone
-    - String email
-
-    - addTask(task)
-    - validateTask(task)
-    + anyEmployeeHasEmail(email)
-    + Organization(name, vatNumber, webSite, phone, email, postalAddress, manager)
-    + createTask(reference, description, informalDesccription,\ntechnicalDescription, duration, cost, taskCategoryDescription)
-    - getEmployeeByEmail(email)
-
-'  +saveTask(task)
-}
-
-class TaskCategoryRepository {
-    + getTaskCategoryByDescription(description)
-}
-
-class OrganizationRepository {
-    + getOrganizationByEmployeeEmail(email)
-}
+class AssignSkillController{
+    + AssignSkillController(collaboratorRepository, skillRepository)
+    + getCollaborators()
+    + getSkills(skillName)
+ }
 
 class Repositories {
     - Repositories()
     + getInstance() : Repositories
-    + getTaskCategoryRepository()
-    + getOrganizationRepository()
+    + getCollaboratorRepository()
+    + getSkillRepository()
 }
 
-class CreateTaskController {
-    + CreateTaskController(organizationRepository, taskCategoryRepository)
-    + getTaskCategories()
-    + createTask(userEmail, reference, description,\ninformalDescription, technicalDescription,\nduration, cost, categoryDescription)
-    - getTaskCategoryByDescription(taskCategoryDescription)
-    - getEmployeeFromSession()
+class CollaboratorRepository {
+    + getCollaborators(name)
 }
 
-note right of CreateTaskController
-    - userEmail is obtained
-    from the user session
-    - categoryDescription
-    is retrieved from selected data
-end note
-
-note bottom of TaskCategoryRepository
-    - used for displaying
-    the category list
-end note
-
-class CreateTaskUI {
+class SkillRepository {
+    + getSkills(skillName)
 }
 
+class Skill{
+    - skillName
+}
+
+class Collaborator{
+    - name
+    - List<Skill> skillList
+    + assignSkill(collaboratorName, skillName)
+    + validateSkill(skillName)
+}
+
+class HRM{
+}
+
+AssignSkillUI .> AssignSkillController
+AssignSkillController .> Repositories : repositories
+Repositories --> "1" SkillRepository
+Repositories --> "1" CollaboratorRepository
 Repositories -> Repositories : instance
-ApplicationSession -> ApplicationSession : instance
 
-CreateTaskUI .> CreateTaskController
-
-CreateTaskController .> Repositories : repositories
-
-Repositories -> "1" TaskCategoryRepository
-
-CreateTaskController ..> TaskCategory
-CreateTaskController ..> OrganizationRepository : organizationRepository
-CreateTaskController ..> TaskCategoryRepository : TaskCategoryRepository
-
-Repositories --> "1" OrganizationRepository
-
-OrganizationRepository --> "*" Organization
-ApplicationSession --> "1" UserSession : userSession
-
-CreateTaskController ..> "1" Organization : organization
-CreateTaskController ..> ApplicationSession
-CreateTaskController ..> UserSession
-Task "*" --> "1" TaskCategory : taskCategory
-TaskCategoryRepository "1" --> "*" TaskCategory : taskCategory
-Organization "1" --> "*" Task : tasks
-Task --> Employee : createdBy
-
-Organization --> "*" Employee : employs
+SkillRepository --> "*" Skill
+CollaboratorRepository --> "*" Collaborator
+HRM "1" ----> "*" Skill : assign
+AssignSkillController ....> "1" Collaborator : collaborator
+AssignSkillController ......> "1" Skill : skill
+Collaborator "1" --> "*" Skill : has
+AssignSkillController ..> "1" CollaboratorRepository : collaboratorRepository
+AssignSkillController ...> "1" SkillRepository : skillRepository
 
 @enduml
