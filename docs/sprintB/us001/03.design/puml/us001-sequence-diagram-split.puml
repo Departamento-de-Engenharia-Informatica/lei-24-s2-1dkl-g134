@@ -57,16 +57,13 @@ activate HRM
                          deactivate PLAT
 
             CTRL -> SR : registerSkill(name)
+
+             ref over SR
+                        Register Skill
+                    end ref
                         activate SR
-
-            SR -> S : register(name)
-
-
-            SR ->SR : addSkill(name)
-
-            SR->SR : confirmSkill(skill)
-
             SR--->CTRL : skill
+
 
                         deactivate SR
             CTRL ---> UI : skill
