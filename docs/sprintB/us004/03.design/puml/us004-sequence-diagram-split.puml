@@ -1,0 +1,120 @@
+@startuml
+skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+
+autonumber
+
+'hide footbox
+actor "Human Resources \n Manager (HRM)" as HRM
+participant ":AssignSkillUI" as UI
+participant ":AssignSkillController" as CTRL
+participant ":Repositories" as RepositorySingleton
+participant "repositories\n:Repositories" as PLAT
+participant "SkillsRepository" as SkillsRepository
+participant "Skill" as Skill
+participant "CollaboratorsRepository" as CollaboratorsRepository
+
+activate HRM
+
+        HRM -> UI : asks to add a skill to a collaborator
+
+        activate UI
+
+
+            UI -> CTRL** : create
+
+            UI -> CTRL : getCollaborators()
+            activate CTRL
+
+                CTRL -> RepositorySingleton : getInstance()
+                activate RepositorySingleton
+
+                    RepositorySingleton --> CTRL: repositories
+                deactivate RepositorySingleton
+
+                CTRL -> PLAT : getCollaboratorsRepository()
+                activate PLAT
+
+                    PLAT --> CTRL: getCollaboratorsRepository
+                deactivate PLAT
+
+                CTRL -> CollaboratorsRepository : getCollaboratorsList()
+                activate CollaboratorsRepository
+
+                    CollaboratorsRepository --> CTRL : collaboratorsList
+                deactivate CollaboratorsRepository
+
+                CTRL --> UI : collaboratorsList
+            deactivate CTRL
+
+            UI --> HRM : shows collaborators list\n to assign skill/s
+        deactivate UI
+
+    HRM -> UI : choose collaborator
+    activate UI
+
+   UI -> CTRL : getSkill (collaboratorName)
+           activate CTRL
+
+ CTRL -> RepositorySingleton : getInstance()
+         activate RepositorySingleton
+
+         RepositorySingleton --> CTRL: repositories
+         deactivate RepositorySingleton
+
+         CTRL -> PLAT : getSkillRepository()
+         activate PLAT
+
+         PLAT -> SkillRepository : getSkillList()
+         activate SkillRepository
+
+         SkillRepository --> PLAT : skillList
+         deactivate  SkillRepository
+
+         PLAT --> CTRL: skillList
+         deactivate PLAT
+
+         CTRL --> UI : skillList
+         deactivate CTRL
+
+         UI --> HRM : show skills list
+         deactivate UI
+
+         HRM -> UI : choose one or more skills to assign
+         activate UI
+
+         UI -> CTRL : assignSkill(collaboratorName, skillName)
+         activate CTRL
+
+         CTRL -> PLAT : assignSkill(collaboratorName, skillName)
+         activate PLAT
+
+         PLAT -> CollaboratorRepository : assignSkill(collaboratorName, skillName)
+         activate CollaboratorRepository
+
+         ref over CollaboratorRepository
+
+
+
+         Assign Skill
+
+
+
+          end ref
+
+         CollaboratorRepository --> PLAT : skill
+         deactivate CollaboratorRepository
+
+         PLAT --> CTRL : skill
+         deactivate PLAT
+
+         CTRL --> UI : skill
+         deactivate CTRL
+
+         UI --> HRM : displays operation success
+         deactivate UI
+
+         deactivate HRM
+
+ @enduml

@@ -1,0 +1,34 @@
+@startuml
+skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+
+participant "CollaboratorRepository" as CollaboratorRepository
+participant "Colaborator" as Collaborator
+
+autonumber 25
+-> CollaboratorRepository: assignSkill(collaboratorName, skillName)
+
+autonumber 25.1
+activate CollaboratorRepository
+    group Assign Skills
+
+        CollaboratorRepository -> Collaborator**: assignSkill(collaboratorName, skillName)
+    activate Collaborator
+        Collaborator -> Collaborator: validateSkill(skillName)
+
+        Collaborator -> Collaborator : assignSkill(skillName)
+
+     Collaborator --> CollaboratorRepository : skill
+             deactivate Collaborator
+        autonumber 26
+         <-- CollaboratorRepository : skill
+
+
+
+
+    end
+
+
+
+@enduml
