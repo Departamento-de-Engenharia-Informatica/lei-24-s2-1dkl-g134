@@ -90,23 +90,23 @@ activate HRM
          CTRL -> PLAT : assignSkill(collaboratorName, skillName)
          activate PLAT
 
-         PLAT -> CollaboratorRepository : assignSkill(collaboratorName, skillName)
-         activate CollaboratorRepository
+         PLAT -> CollaboratorsRepository : assignSkill(collaboratorName, skillName)
+         activate CollaboratorsRepository
 
 
-         CollaboratorRepository -> Collaborator : assignSkill(collaboratorName, skillName)
+         CollaboratorsRepository -> Collaborator : assignSkill(collaboratorName, skillName)
          activate Collaborator
 
          Collaborator -> Collaborator : validateSkill(skillName)
 
          Collaborator -> Collaborator :assignSkill(skillName)
 
-         Collaborator --> CollaboratorRepository : skill
+         Collaborator --> CollaboratorsRepository : skill
          deactivate Collaborator
 
 
-         CollaboratorRepository --> PLAT : skill
-         deactivate CollaboratorRepository
+         CollaboratorsRepository --> PLAT : skill
+         deactivate CollaboratorsRepository
 
          PLAT --> CTRL : skill
          deactivate PLAT

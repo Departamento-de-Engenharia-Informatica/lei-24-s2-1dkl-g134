@@ -9,10 +9,8 @@ autonumber
 actor "Human Resources \n Manager (HRM)" as HRM
 participant ":AssignSkillUI" as UI
 participant ":AssignSkillController" as CTRL
-participant ":Repositories" as RepositorySingleton
 participant "repositories\n:Repositories" as PLAT
-participant "SkillsRepository" as SkillsRepository
-participant "Skill" as Skill
+
 participant "CollaboratorsRepository" as CollaboratorsRepository
 
 activate HRM
@@ -26,24 +24,11 @@ activate HRM
 
             UI -> CTRL : getCollaborators()
             activate CTRL
+ ref over CTRL
 
-                CTRL -> RepositorySingleton : getInstance()
-                activate RepositorySingleton
+ Get Collaborator
 
-                    RepositorySingleton --> CTRL: repositories
-                deactivate RepositorySingleton
-
-                CTRL -> PLAT : getCollaboratorsRepository()
-                activate PLAT
-
-                    PLAT --> CTRL: getCollaboratorsRepository
-                deactivate PLAT
-
-                CTRL -> CollaboratorsRepository : getCollaboratorsList()
-                activate CollaboratorsRepository
-
-                    CollaboratorsRepository --> CTRL : collaboratorsList
-                deactivate CollaboratorsRepository
+ end
 
                 CTRL --> UI : collaboratorsList
             deactivate CTRL
@@ -57,23 +42,11 @@ activate HRM
    UI -> CTRL : getSkill (collaboratorName)
            activate CTRL
 
- CTRL -> RepositorySingleton : getInstance()
-         activate RepositorySingleton
+ref over CTRL
 
-         RepositorySingleton --> CTRL: repositories
-         deactivate RepositorySingleton
+ Get Skill
 
-         CTRL -> PLAT : getSkillRepository()
-         activate PLAT
-
-         PLAT -> SkillRepository : getSkillList()
-         activate SkillRepository
-
-         SkillRepository --> PLAT : skillList
-         deactivate  SkillRepository
-
-         PLAT --> CTRL: skillList
-         deactivate PLAT
+ end
 
          CTRL --> UI : skillList
          deactivate CTRL
@@ -90,10 +63,10 @@ activate HRM
          CTRL -> PLAT : assignSkill(collaboratorName, skillName)
          activate PLAT
 
-         PLAT -> CollaboratorRepository : assignSkill(collaboratorName, skillName)
-         activate CollaboratorRepository
+         PLAT -> CollaboratorsRepository : assignSkill(collaboratorName, skillName)
+         activate CollaboratorsRepository
 
-         ref over CollaboratorRepository
+         ref over CollaboratorsRepository
 
 
 
@@ -103,8 +76,8 @@ activate HRM
 
           end ref
 
-         CollaboratorRepository --> PLAT : skill
-         deactivate CollaboratorRepository
+         CollaboratorsRepository --> PLAT : skill
+         deactivate CollaboratorsRepository
 
          PLAT --> CTRL : skill
          deactivate PLAT

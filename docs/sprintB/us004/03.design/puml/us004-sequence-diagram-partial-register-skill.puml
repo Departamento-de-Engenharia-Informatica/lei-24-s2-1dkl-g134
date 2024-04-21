@@ -3,31 +3,30 @@ skinparam monochrome true
 skinparam packageStyle rectangle
 skinparam shadowing false
 
-participant "CollaboratorRepository" as CollaboratorRepository
+participant "CollaboratorsRepository" as CollaboratorsRepository
 participant "Colaborator" as Collaborator
 
 autonumber 25
--> CollaboratorRepository: assignSkill(collaboratorName, skillName)
+-> CollaboratorsRepository: assignSkill(collaboratorName, skillName)
 
 autonumber 25.1
-activate CollaboratorRepository
+activate CollaboratorsRepository
     group Assign Skills
 
-        CollaboratorRepository -> Collaborator**: assignSkill(collaboratorName, skillName)
+        CollaboratorsRepository -> Collaborator**: assignSkill(collaboratorName, skillName)
     activate Collaborator
         Collaborator -> Collaborator: validateSkill(skillName)
 
         Collaborator -> Collaborator : assignSkill(skillName)
 
-     Collaborator --> CollaboratorRepository : skill
+     Collaborator --> CollaboratorsRepository : skill
              deactivate Collaborator
-        autonumber 26
-         <-- CollaboratorRepository : skill
-
-
-
 
     end
+
+        autonumber 26
+         <-- CollaboratorsRepository : skill
+
 
 
 
