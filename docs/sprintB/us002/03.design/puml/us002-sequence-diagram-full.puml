@@ -6,22 +6,22 @@ skinparam shadowing false
 autonumber
 
 'hide footbox
-actor "Organization Employee" as ADM
-participant ":CreateTaskUI" as UI
-participant ":CreateTaskController" as CTRL
+actor "Human Resources \n Manager (HRM)" as ADM
+participant ":  AssignJobUI" as UI
+participant ":  AssignJobController" as CTRL
 participant ":Repositories" as RepositorySingleton
 participant "repositories\n:Repositories" as PLAT
-participant "taskCategoryRepository:\nTaskCategoryRepository" as TaskCategoryRepository
+participant "JobsRepository:\nJobCategoryRepository" as JobCategoryRepository
 participant ":ApplicationSession" as _APP
 participant "appSession\n:ApplicationSession" as APP
 participant "currentSession\n:UserSession" as SESSAO
 participant "organizationRepository:\nOrganizationRepository" as OrganizationRepository
 participant "organization\n:Organization" as ORG
-participant "task\n:Task" as TAREFA
+participant "JOB \n:Job" as JOB
 
 activate ADM
 
-        ADM -> UI : asks to create a new task
+        ADM -> UI : asks to add a job
 
         activate UI
 
@@ -29,7 +29,7 @@ activate ADM
             'create CTRL
             UI -> CTRL** : create
 
-            UI -> CTRL : getTaskCategories()
+            UI -> CTRL : getCollaborators()
             activate CTRL
 
                 CTRL -> RepositorySingleton : getInstance()
@@ -38,13 +38,13 @@ activate ADM
                     RepositorySingleton --> CTRL: repositories
                 deactivate RepositorySingleton
 
-                CTRL -> PLAT : getTaskCategoryRepository()
+                CTRL -> PLAT : getCollaboratorsRepository()
                 activate PLAT
 
-                    PLAT --> CTRL: taskCategoryRepository
+                    PLAT --> CTRL: getCollaboratorsRepository
                 deactivate PLAT
 
-                CTRL -> TaskCategoryRepository : getTaskCategories()
+                CTRL -> Collaborato : getTaskCategories()
                 activate TaskCategoryRepository
 
                     TaskCategoryRepository --> CTRL : taskCategoryList
