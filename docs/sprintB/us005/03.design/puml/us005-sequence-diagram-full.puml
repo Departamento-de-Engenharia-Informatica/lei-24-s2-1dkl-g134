@@ -23,7 +23,7 @@ activate ADM
 '
             UI -> CTRL** : create
 
-            UI -> ADM : request data(size of the team)
+            UI --> ADM : request data(size of the team)
             deactivate UI
 
             ADM -> UI : types requested data
@@ -52,13 +52,17 @@ activate ADM
                 CTRL -> CollaboratorRepository : getTeamCharacteristics()
                 activate CollaboratorRepository
 
-                    CTRL --> CollaboratorRepository : anyCollaboratorHasSkill(skill)
+                    CTRL -> CollaboratorRepository : anyCollaboratorHasSkill(skill)
+
+                    CollaboratorRepository --> CTRL: Collaborator List
+
+                    CollaboratorRepository --> CTRL: Team
 
 
                 CTRL --> UI : team
             deactivate CTRL
 
-            UI --> ADM : shows team Suggestion and asks if HRM wants to accept
+            UI --> ADM : shows team and asks if HRM wants to accept
         deactivate UI
 
     ADM -> UI : accepts
@@ -76,13 +80,13 @@ activate ADM
     CTRL -> RepositorySingleton : getInstance()
     activate RepositorySingleton
 
-    RepositorySingleton ->  CTRL : repositories
+    RepositorySingleton -->  CTRL : repositories
     deactivate RepositorySingleton
 
     CTRL -> PLAT: teamRepository
     activate PLAT
 
-    PLAT -> CTRL: TeamRepository
+    PLAT --> CTRL: TeamRepository
 
     CTRL -> TeamRepository : createTeam(team)
     activate TeamRepository
@@ -90,15 +94,17 @@ activate ADM
     TeamRepository -> Team: createTeam(team)
     activate Team
 
-    Team -> TeamRepository: addTeam(team)
+    Team --> TeamRepository: addTeam(team)
     deactivate teamRepository
 
-    TeamRepository -> CTRL: team
+    TeamRepository -> TeamRepository: validateTeam(team)
+
+    TeamRepository --> CTRL: team
     deactivate CTRL
 
-    CTRL -> UI: team
+    CTRL --> UI: team
 
-    UI -> ADM: display final team
+    UI --> ADM: display final team
 
     deactivate UI
 
