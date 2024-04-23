@@ -31,48 +31,31 @@ class CollaboratorRepository {
 
 class TeamRepository {
     + createTeam(team)
+    + validateTeam(team)
 }
 
-class Employee {
-    - name
-    - email
-    - position
-    - phone
-}
-
-class Task {
-    - String reference
-    - String description
-    - String informalDescription
-    - String technicalDescription
-    - Integer duration
-    - Double cost
-
-    + Task(reference, description,\ninformalDescription, technicalDescription,\nduration, cost, createdBy, taskCategory)
-}
-
-class TaskCategory {
-    - String description
-
-     + TaskCategory(description)
-}
-
-class Organization {
+class Collaborator {
     - String name
-    - String vatNumber
-    - String website
-    - String phone
+    - String birthdate
+    - String admission date
+    - String address
     - String email
+    - String skill
+    - int phone
 
-    - addTask(task)
-    - validateTask(task)
-    + anyEmployeeHasEmail(email)
-    + Organization(name, vatNumber, webSite, phone, email, postalAddress, manager)
-    + createTask(reference, description, informalDesccription,\ntechnicalDescription, duration, cost, taskCategoryDescription)
-    - getEmployeeByEmail(email)
-
-'  +saveTask(task)
 }
+
+class Team{
++addTeam(team)
+
+}
+
+class HRM{
+   - String name
+   - String email
+   - int phone
+}
+
 
 
 
@@ -83,28 +66,14 @@ class Organization {
 
 
 Repositories -> Repositories : instance
-ApplicationSession -> ApplicationSession : instance
-
 GenarateTeamUI .> GenarateTeamController
-
 GenarateTeamController .> Repositories : repositories
-
 Repositories -> "1" CollaboratorRepository
-
-GenarateTeamController ..> TaskCategory
+GenarateTeamController ..> Collaborator: collaborator
 GenarateTeamController ..> TeamRepository : teamRepository
 GenarateTeamController ..> CollaboratorRepository : collaboratorRepository
-
 Repositories --> "1" TeamRepository
-
-TeamRepository --> "*" Organization
-
-GenarateTeamController ..> "1" Organization : organization
-Task "*" --> "1" TaskCategory : taskCategory
-CollaboratorRepository "1" --> "*" TaskCategory : taskCategory
-Organization "1" --> "*" Task : tasks
-Task --> Employee : createdBy
-
-Organization --> "*" Employee : employs
-
+CollaboratorRepository "1" --> "*" Collaborator
+TeamRepository "1" --> "*" Team
+HRM --> Team : Generates
 @enduml
