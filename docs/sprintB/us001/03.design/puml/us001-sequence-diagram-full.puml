@@ -11,7 +11,7 @@ participant ":RegisterSkillUI" as UI
 participant ":RegisterSkillController" as CTRL
 participant ":Repositories" as RepositorySingleton
 participant "repositories\n:Repositories" as PLAT
-participant "skillRepository" as SR
+participant "skillRepository\n:SkillRepository" as SR
 participant "skill\n:Skill" as S
 
 
@@ -40,6 +40,8 @@ activate HRM
 
          activate UI
 
+            UI -> CTRL**: create
+
             UI -> CTRL : RegisterSkill(name)
             activate CTRL
 
@@ -59,12 +61,20 @@ activate HRM
             CTRL -> SR : registerSkill(name)
                         activate SR
 
-            SR -> S : register(name)
+            SR -> S** : register(name)
 
 
             SR ->SR : addSkill(skill)
+            activate SR
 
-            SR->SR : confirmSkill(skill)
+            SR->SR : validateSkill(skill)
+            activate SR
+
+            SR --> SR
+            deactivate SR
+
+            SR --> SR
+            deactivate SR
 
             SR--->CTRL : skill
 
