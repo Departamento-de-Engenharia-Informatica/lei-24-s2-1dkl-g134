@@ -59,7 +59,7 @@ activate ADM
     ADM -> UI : choose collaborator
     activate UI
 
-        UI --> ADM : getJob(collaboratorName)
+        UI --> ADM : getJob(collaboratorName,jobName)
     deactivate UI
 
     ADM -> UI : types requested data (Name of Job))
