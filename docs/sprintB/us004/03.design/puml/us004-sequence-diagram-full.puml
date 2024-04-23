@@ -11,8 +11,13 @@ participant ":AssignSkillUI" as UI
 participant ":AssignSkillController" as CTRL
 participant ":Repositories" as RepositorySingleton
 participant "repositories\n:Repositories" as PLAT
-participant "SkillRepository" as SkillRepository
-participant "CollaboratorsRepository" as CollaboratorsRepository
+participant ":ApplicationSession" as _APP
+participant "appSession\n:ApplicationSession" as APP
+participant "currentSession\n:UserSession" as SESSAO
+participant "organizationRepository:\nOrganizationRepository" as OrganizationRepository
+participant "organization\n:Organization" as ORG
+participant "skillRepository\n:SkillRepository" as SkillRepository
+participant "collaborator\n:Collaborator" as COLLAB
 
 activate HRM
 
@@ -26,23 +31,63 @@ activate HRM
             UI -> CTRL : getCollaborators()
             activate CTRL
 
-                CTRL -> RepositorySingleton : getInstance()
-                activate RepositorySingleton
+                |||
+                CTRL -> CTRL : getEmployeeOrganization()
+                activate CTRL
+
+                    CTRL -> _APP: getInstance()
+                    activate _APP
+                        _APP -> CTRL: appSession
+                    deactivate _APP
+
+
+                    CTRL -> APP: getCurrentSession()
+                    activate APP
+
+                        APP --> CTRL: currentSession
+                    deactivate APP
+
+                    CTRL -> SESSAO: email = getUserEmail()
+                    activate SESSAO
+
+                        SESSAO --> CTRL: email
+                    deactivate SESSAO
+
+                    CTRL -> RepositorySingleton: getInstance()
+                    activate RepositorySingleton
 
                     RepositorySingleton --> CTRL: repositories
-                deactivate RepositorySingleton
+                    deactivate RepositorySingleton
 
-                CTRL -> PLAT : getCollaboratorsRepository()
-                activate PLAT
+                    CTRL -> PLAT: getOrganizationRepository(email)
+                    activate PLAT
 
-                    PLAT --> CTRL: getCollaboratorsRepository
-                deactivate PLAT
+                        PLAT --> CTRL: organizationRepository
+                    deactivate PLAT
 
-                CTRL -> CollaboratorsRepository : getCollaboratorsList()
-                activate CollaboratorsRepository
 
-                    CollaboratorsRepository --> CTRL : collaboratorsList
-                deactivate CollaboratorsRepository
+                    CTRL -> OrganizationRepository: getOrganizationByEmployeeEmail(email)
+                    activate OrganizationRepository
+
+                        loop for each organization
+
+                            OrganizationRepository -> ORG : anyEmployeeHasEmail(email)
+                            activate ORG
+
+                                 ORG --> OrganizationRepository : true/false
+                            deactivate ORG
+                        end
+                        OrganizationRepository --> CTRL : organization
+                    deactivate OrganizationRepository
+
+                    CTRL --> CTRL : organization
+                deactivate CTRL
+
+                CTRL -> ORG: getCollaboratorsList()
+                activate ORG
+
+                ORG --> CTRL: collaboratorsList
+                deactivate ORG
 
                 CTRL --> UI : collaboratorsList
             deactivate CTRL
@@ -53,7 +98,7 @@ activate HRM
     HRM -> UI : choose collaborator
     activate UI
 
-   UI -> CTRL : getSkill (collaboratorName)
+   UI -> CTRL : getSkills()
            activate CTRL
 
  CTRL -> RepositorySingleton : getInstance()
@@ -65,14 +110,14 @@ activate HRM
          CTRL -> PLAT : getSkillRepository()
          activate PLAT
 
-         PLAT -> SkillRepository : getSkillList()
+         PLAT -> CTRL : skillRepository
+         deactivate PLAT
+
+         CTRL --> SkillRepository : getSkillList()
          activate SkillRepository
 
-         SkillRepository --> PLAT : skillList
-         deactivate  SkillRepository
-
-         PLAT --> CTRL: skillList
-         deactivate PLAT
+         SkillRepository --> CTRL: skillList
+         deactivate SkillRepository
 
          CTRL --> UI : skillList
          deactivate CTRL
@@ -83,34 +128,28 @@ activate HRM
          HRM -> UI : choose one or more skills to assign
          activate UI
 
-         UI -> CTRL : assignSkill(collaboratorName, skillName)
+         UI -> CTRL : assignSkill(collaborator, skillList)
          activate CTRL
 
-         CTRL -> PLAT : assignSkill(collaboratorName, skillName)
-         activate PLAT
+         CTRL -> ORG : assignSkill(collaborator, skillList)
+         activate ORG
 
-         PLAT -> CollaboratorsRepository : assignSkill(collaboratorName, skillName)
-         activate CollaboratorsRepository
+         ORG -> COLLAB : assignSkills(skillList)
+         activate COLLAB
 
+         loop for each skill in skillList
+         COLLAB -> COLLAB :assignSkill(skill)
 
-         CollaboratorsRepository -> Collaborator : assignSkill(collaboratorName, skillName)
-         activate Collaborator
+         COLLAB -> COLLAB :validateSkillWasAssigned(skill)
+         end
 
-         Collaborator -> Collaborator : validateSkill(skillName)
+         COLLAB --> ORG : true/false
+         deactivate COLLAB
 
-         Collaborator -> Collaborator :assignSkill(skillName)
+         ORG --> CTRL : true/false
+         deactivate ORG
 
-         Collaborator --> CollaboratorsRepository : skill
-         deactivate Collaborator
-
-
-         CollaboratorsRepository --> PLAT : skill
-         deactivate CollaboratorsRepository
-
-         PLAT --> CTRL : skill
-         deactivate PLAT
-
-         CTRL --> UI : skill
+         CTRL --> UI : true/false
          deactivate CTRL
 
          UI --> HRM : displays operation success

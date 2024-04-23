@@ -72,6 +72,11 @@ activate ADM
                         SESSAO --> CTRL: email
                     deactivate SESSAO
 
+                    CTRL -> RepositorySingleton: getInstance()
+                    activate RepositorySingleton
+
+                    RepositorySingleton --> CTRL: repositories
+                    deactivate RepositorySingleton
 
                     CTRL -> PLAT: getOrganizationRepository(email)
                     activate PLAT
