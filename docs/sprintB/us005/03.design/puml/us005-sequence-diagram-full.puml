@@ -83,7 +83,7 @@ activate ADM
     RepositorySingleton -->  CTRL : repositories
     deactivate RepositorySingleton
 
-    CTRL -> PLAT: teamRepository
+    CTRL -> PLAT: getTeamRepository()
     activate PLAT
 
     PLAT --> CTRL: TeamRepository
