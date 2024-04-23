@@ -1,0 +1,51 @@
+@startuml
+'skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+skinparam linetype polyline
+'skinparam linetype orto
+
+skinparam classAttributeIconSize 0
+
+'left to right direction
+
+class RegisterVehicleMaintenanceUI{
+}
+
+
+class RegisterVehicleMaintenanceController{
+   +CreateSkillController(jobRepository)
+   +registerSkill(name)
+ }
+
+class Repositories {
+    - Repositories(): Repositories
+    + getInstance() : Repositories
+    + getVehicleRepository() : Repositories
+}
+
+
+class VehicleRepository {
+    + register()
+}
+
+class Skill{
+    -name : String
+    +Skill(name)
+}
+
+class FM{
+}
+
+RegisterVehicleMaintenanceUI .>  RegisterVehicleMaintenanceController
+ RegisterVehicleMaintenanceController ...r> Repositories : repositories
+Repositories ---> "1" VehicleRepository
+Repositories -> Repositories : instance
+Repositories "1" --> "*" Skill
+
+VehicleRepository --> "*" Skill
+FM "1" -l-> "*" Skill
+ RegisterVehicleMaintenanceController ......>  Skill : skill
+ RegisterVehicleMaintenanceController ...> "1" VehicleRepository : skillRepository
+
+@enduml

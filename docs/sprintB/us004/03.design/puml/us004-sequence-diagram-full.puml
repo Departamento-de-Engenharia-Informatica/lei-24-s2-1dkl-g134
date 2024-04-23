@@ -11,8 +11,7 @@ participant ":AssignSkillUI" as UI
 participant ":AssignSkillController" as CTRL
 participant ":Repositories" as RepositorySingleton
 participant "repositories\n:Repositories" as PLAT
-participant "SkillsRepository" as SkillsRepository
-participant "Skill" as Skill
+participant "SkillRepository" as SkillRepository
 participant "CollaboratorsRepository" as CollaboratorsRepository
 
 activate HRM
