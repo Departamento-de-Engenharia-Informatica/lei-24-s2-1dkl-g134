@@ -1,0 +1,113 @@
+@startuml
+skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+
+autonumber
+
+'hide footbox
+actor "Organization Employee" as ADM
+participant ":GenarateTeamUI" as UI
+participant ":GenarateTeamController" as CTRL
+participant ":Repositories" as RepositorySingleton
+participant "repositories\n:Repositories" as PLAT
+participant "collaboratorRepository:\nCollaboratorRepository" as CollaboratorRepository
+participant "teamRepository:\nTeamRepository" as TeamRepository
+participant "team:\nTeam" as Team
+activate ADM
+
+        ADM -> UI : asks to generate a new team
+
+        activate UI
+
+'
+            UI -> CTRL** : create
+
+            UI --> ADM : request data(size of the team)
+            deactivate UI
+
+            ADM -> UI : types requested data
+            activate UI
+
+
+            UI -> CTRL: getTeamCharacteristics()
+            activate CTRL
+
+
+
+
+
+                CTRL -> RepositorySingleton : getInstance()
+                activate RepositorySingleton
+
+                    RepositorySingleton --> CTRL: repositories
+                deactivate RepositorySingleton
+
+                CTRL -> PLAT : getCollaboratorRepository()
+                activate PLAT
+
+                    PLAT --> CTRL: CollaboratorRepository
+                deactivate PLAT
+
+                CTRL -> CollaboratorRepository : getTeamCharacteristics()
+                activate CollaboratorRepository
+
+                    CTRL -> CollaboratorRepository : anyCollaboratorHasSkill(skill)
+
+                    CollaboratorRepository --> CTRL: Collaborator List
+
+                    CollaboratorRepository --> CTRL: Team
+
+
+                CTRL --> UI : team
+            deactivate CTRL
+
+            UI --> ADM : shows team and asks if HRM wants to accept
+        deactivate UI
+
+    ADM -> UI : accepts
+    activate UI
+
+        UI --> ADM : shows all data and requests confirmation
+    deactivate UI
+
+    ADM -> UI : confirms data
+    activate UI
+
+    UI -> CTRL: createTeam(team)
+    activate CTRL
+
+    CTRL -> RepositorySingleton : getInstance()
+    activate RepositorySingleton
+
+    RepositorySingleton -->  CTRL : repositories
+    deactivate RepositorySingleton
+
+    CTRL -> PLAT: getTeamRepository()
+    activate PLAT
+
+    PLAT --> CTRL: TeamRepository
+
+    CTRL -> TeamRepository : createTeam(team)
+    activate TeamRepository
+
+    TeamRepository -> Team: createTeam(team)
+    activate Team
+
+    Team --> TeamRepository: addTeam(team)
+    deactivate teamRepository
+
+    TeamRepository -> TeamRepository: validateTeam(team)
+
+    TeamRepository --> CTRL: team
+    deactivate CTRL
+
+    CTRL --> UI: team
+
+    UI --> ADM: display final team
+
+    deactivate UI
+
+deactivate ADM
+
+@enduml

@@ -1,0 +1,79 @@
+@startuml
+'skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+skinparam linetype polyline
+'skinparam linetype orto
+
+skinparam classAttributeIconSize 0
+
+'left to right direction
+class GenarateTeamUI {
+}
+
+class GenarateTeamController {
++GenarateTeamController(collaboratorRepository,teamRepository)
++getTeamCharacteristics()
++createTeam(team)
+}
+
+
+class Repositories {
+    - Repositories()
+    + getInstance() : Repositories
+    + getCollaboratorRepository()
+    + getTeamRepository()
+}
+
+class CollaboratorRepository {
+    + anyCollaboratorHasSkill(skill)
+}
+
+class TeamRepository {
+    + createTeam(team)
+    + validateTeam(team)
+}
+
+class Collaborator {
+    - String name
+    - String birthdate
+    - String admission date
+    - String address
+    - String email
+    - String skill
+    - int phone
+
+}
+
+class Team{
++addTeam(team)
+
+}
+
+class HRM{
+   - String name
+   - String email
+   - int phone
+}
+
+
+
+
+
+
+
+
+
+
+Repositories -> Repositories : instance
+GenarateTeamUI .> GenarateTeamController
+GenarateTeamController .> Repositories : repositories
+Repositories -> "1" CollaboratorRepository
+GenarateTeamController ..> Collaborator: collaborator
+GenarateTeamController ..> TeamRepository : teamRepository
+GenarateTeamController ..> CollaboratorRepository : collaboratorRepository
+Repositories --> "1" TeamRepository
+CollaboratorRepository "1" --> "*" Collaborator
+TeamRepository "1" --> "*" Team
+HRM --> Team : Generates
+@enduml
