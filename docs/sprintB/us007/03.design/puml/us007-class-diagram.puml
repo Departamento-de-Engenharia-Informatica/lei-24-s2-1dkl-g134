@@ -9,13 +9,13 @@ skinparam classAttributeIconSize 0
 
 'left to right direction
 
-class RegisterVehicleMaintenanceUI{
+class RegisterVehicleCheckupUI{
 }
 
 
-class RegisterVehicleMaintenanceController{
-   +CreateSkillController(jobRepository)
-   +registerSkill(name)
+class RegisterVehicleCheckupController{
+   +CreateVehicleCheckupController(VehicleRepository)
+   +registerVehicleCheckup(vehicle)
  }
 
 class Repositories {
@@ -29,23 +29,23 @@ class VehicleRepository {
     + register()
 }
 
-class Skill{
+class  Vehicle{
     -name : String
-    +Skill(name)
+    +Vehicle()
 }
 
 class FM{
 }
 
-RegisterVehicleMaintenanceUI .>  RegisterVehicleMaintenanceController
- RegisterVehicleMaintenanceController ...r> Repositories : repositories
+RegisterVehicleCheckupUI .>  RegisterVehicleCheckupController
+ RegisterVehicleCheckupController ...r> Repositories : repositories
 Repositories ---> "1" VehicleRepository
 Repositories -> Repositories : instance
-Repositories "1" --> "*" Skill
+Repositories "1" --> "*" Vehicle
 
-VehicleRepository --> "*" Skill
-FM "1" -l-> "*" Skill
- RegisterVehicleMaintenanceController ......>  Skill : skill
- RegisterVehicleMaintenanceController ...> "1" VehicleRepository : skillRepository
+VehicleRepository --> "*" Vehicle
+FM "1" -l-> "*" Vehicle
+ RegisterVehicleCheckupController ......>  Vehicle : Vehicle
+ RegisterVehicleCheckupController ...> "1" VehicleRepository : VehicleRepository
 
 @enduml
