@@ -6,22 +6,19 @@ skinparam shadowing false
 autonumber
 
 'hide footbox
-actor "Organization Employee" as ADM
-participant ":CreateTaskUI" as UI
-participant ":CreateTaskController" as CTRL
+actor "Human Resources Manager" as ADM
+participant ":RegisterCollaboratorUI" as UI
+participant ":RegisterCollaboratorController" as CTRL
 participant ":Repositories" as RepositorySingleton
 participant "repositories\n:Repositories" as PLAT
-participant "taskCategoryRepository:\nTaskCategoryRepository" as TaskCategoryRepository
-participant ":ApplicationSession" as _APP
-participant "appSession\n:ApplicationSession" as APP
-participant "currentSession\n:UserSession" as SESSAO
-participant "organizationRepository:\nOrganizationRepository" as OrganizationRepository
-participant "organization\n:Organization" as ORG
-participant "task\n:Task" as TAREFA
+participant "jobRepository:\nJobRepository" as JobRepository
+participant "organization:\nOrganization" as Organization
+participant "collaboratorRepository:\nCollaboratorRepository" as CollaboratorRepository
+participant "collaborator\nCollaborator" as Collaborator
 
 activate ADM
 
-        ADM -> UI : asks to create a new task
+        ADM -> UI : asks to register a new collaborator
 
         activate UI
 
@@ -29,7 +26,15 @@ activate ADM
             'create CTRL
             UI -> CTRL** : create
 
-            UI -> CTRL : getTaskCategories()
+            UI --> ADM: requests data(name,birthdate,admission date,address,phone number,email,identification document type,identification number)
+
+            deactivate UI
+
+            ADM -> UI : types requested data
+
+            activate UI
+
+            UI -> CTRL : getListJob()
             activate CTRL
 
                 CTRL -> RepositorySingleton : getInstance()
@@ -38,141 +43,95 @@ activate ADM
                     RepositorySingleton --> CTRL: repositories
                 deactivate RepositorySingleton
 
-                CTRL -> PLAT : getTaskCategoryRepository()
+                CTRL -> PLAT : getJobRepository()
                 activate PLAT
 
-                    PLAT --> CTRL: taskCategoryRepository
+                    PLAT --> CTRL: jobRepository
                 deactivate PLAT
 
-                CTRL -> TaskCategoryRepository : getTaskCategories()
-                activate TaskCategoryRepository
+                CTRL -> JobRepository : getJobList()
 
-                    TaskCategoryRepository --> CTRL : taskCategoryList
-                deactivate TaskCategoryRepository
+                    JobRepository --> CTRL : jobList
+                deactivate JobRepository
 
-                CTRL --> UI : taskCategoryList
+                CTRL --> UI : listJob
             deactivate CTRL
 
-            UI --> ADM : shows task category list\n and asks to sleect one
+            UI --> ADM : shows a list of jobs and ask to choose one of them
         deactivate UI
 
-    ADM -> UI : selects a task category
+    ADM -> UI : selects a job
     activate UI
 
-        UI --> ADM : requests data
+        UI --> ADM : show all information and appeal authentication
     deactivate UI
 
-    ADM -> UI : types requested data (reference, description, \ninformal description, technical description,\nduration, cost)
+    ADM -> UI : authenticate information
     activate UI
 
-        UI --> ADM : shows selected category and requested data
-    deactivate UI
+    UI -> CTRL: createCollaborator(name,birthDate,admissionDate,address,phoneNumber,email,identificationDocumentType,identificationNumber)
+    activate CTRL
 
-    ADM -> UI : submits data
-    activate UI
+                CTRL -> CTRL : getJob(job)
+                    CTRL -> RepositorySingleton : getInstance()
+                    activate RepositorySingleton
 
-        UI -> CTRL : createTask(reference,\ndescription,\ninformalDescription,\ntechnicalDescription,\nduration, cost,\ntaskCategoryDescription)
-        activate CTRL
+                        RepositorySingleton --> CTRL: repositories
+                    deactivate RepositorySingleton
 
-            CTRL -> CTRL : getTaskCategoryByDescription(taskCategoryDescription)
-            activate CTRL
+                    CTRL -> PLAT : getJobRepository()
+                    activate PLAT
 
-                CTRL -> RepositorySingleton : getInstance()
+                        PLAT --> CTRL : jobRepository
+                    deactivate PLAT
+
+                    CTRL -> JobRepository : getJob(job)
+                    activate JobRepository
+
+                        JobRepository --> CTRL : job
+                    deactivate JobRepository
+
+                CTRL -> Organization: createCollaborator(name,birthDate,admissionDate,address,phoneNumber,email,identificationDocumentType,identificationNumber)
+                activate Organization
+
+                Organization -> Collaborator: createCollaborator(name,birthDate,admissionDate,address,phoneNumber,email,identificationDocumentType,identificationNumber)
+                activate Collaborator
+
+                Collaborator --> Organization: addCollaborator(collaborator)
+                deactivate Collaborator
+
+                Organization --> Organization: validateCollaborator(collaborator)
+
+                Organization --> CTRL: collaborator
+                deactivate Organization
+
+
+                CTRL -> RepositorySingleton: getInstance()
                 activate RepositorySingleton
 
                     RepositorySingleton --> CTRL: repositories
                 deactivate RepositorySingleton
 
-                CTRL -> PLAT : getTaskCategoryRepository()
+
+                CTRL -> PLAT: getCollaboratorRepository(email)
                 activate PLAT
 
-                    PLAT -> CTRL : taskCategoryRepository
-                deactivate PLAT
-
-                CTRL -> TaskCategoryRepository : getTaskCategoryByDescription(taskCategoryDescription)
-                activate TaskCategoryRepository
-
-                    TaskCategoryRepository --> CTRL : taskCategory
-                deactivate TaskCategoryRepository
-                    CTRL --> CTRL : taskCategory
-            deactivate CTRL
-
-            |||
-            CTRL -> CTRL : getEmployeeFromSession()
-            activate CTRL
-
-                CTRL -> _APP: getInstance()
-                activate _APP
-                    _APP -> CTRL: appSession
-                deactivate _APP
-
-
-                CTRL -> APP: getCurrentSession()
-                activate APP
-
-                    APP --> CTRL: currentSession
-                deactivate APP
-
-                CTRL -> SESSAO: email = getUserEmail()
-                activate SESSAO
-
-                    SESSAO --> CTRL: email
-                deactivate SESSAO
-
-
-                CTRL -> PLAT: getOrganizationRepository(email)
-                activate PLAT
-
-                    PLAT --> CTRL: organizationRepository
+                    PLAT --> CTRL: collaboratorRepository
                 deactivate PLAT
 
 
-                CTRL -> OrganizationRepository: getOrganizationByEmployeeEmail(email)
-                activate OrganizationRepository
+                CTRL -> CollaboratorRepository: getCollaboratorList()
+                activate CollaboratorRepository
 
-                    loop [for each organization
-                        OrganizationRepository -> ORG : anyEmployeeHasEmail(email)
-                        activate ORG
+                CollaboratorRepository --> CTRL: collaboratorList
+                deactivate CollaboratorRepository
 
-                             ORG --> OrganizationRepository : true/false
-                        deactivate ORG
-                    end
-                    OrganizationRepository --> CTRL : organization
-                deactivate OrganizationRepository
+                CTRL --> UI: collaboratorList
 
-                CTRL -> ORG: getEmployeeByEmail(email)
-                activate ORG
-
-                    ORG --> CTRL : employee
-                deactivate ORG
-
-                CTRL --> CTRL : employee
-            deactivate CTRL
-
-            |||
-            CTRL -> ORG: createTask(employee, reference, description,\ninformalDescription, technicalDescription,\nduration, cost, , taskCategory, employee)
-            activate ORG
-
-                ORG -> TAREFA**: create(employee, reference, description,\ninformalDescription, technicalDescription,\nduration, cost, taskCategory, employee)
-                ORG -> ORG: addTask (task)
+                UI --> ADM: displays operation success and register a collaborator
 
 
-                activate ORG
-                    ORG -> ORG: validateTask(task)
-                    activate ORG
-                        ORG --> ORG
-                    deactivate ORG
 
-                    ORG --> ORG
-                deactivate ORG
-
-                ORG --> CTRL : task
-
-            deactivate ORG
-
-            CTRL --> UI: task
-            deactivate CTRL
-            UI --> ADM: displays operation success
     deactivate UI
 
 deactivate ADM
