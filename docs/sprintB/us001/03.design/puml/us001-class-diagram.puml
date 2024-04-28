@@ -34,17 +34,13 @@ class Skill{
     +Skill(name)
 }
 
-class HRM{
-}
-
 RegisterSkillUI .> RegisterSkillController
 RegisterSkillController ...r> Repositories : repositories
-Repositories ---> "1" SkillRepository
+Repositories ---> "1" SkillRepository : skillRepository
 Repositories -> Repositories : instance
 Repositories "1" --> "*" Skill
 
 SkillRepository --> "*" Skill
-HRM "1" -l-> "*" Skill
 RegisterSkillController ......>  Skill : skill
 RegisterSkillController ...> "1" SkillRepository : skillRepository
 
