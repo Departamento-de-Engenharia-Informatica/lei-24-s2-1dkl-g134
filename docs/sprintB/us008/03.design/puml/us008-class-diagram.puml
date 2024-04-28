@@ -9,118 +9,45 @@ skinparam classAttributeIconSize 0
 
 'left to right direction
 
-class ApplicationSession
-{
-    + static getInstance()
-    + getCurrentSession()
+class GenerateMaintenanceReportUI{
 }
 
-class UserSession
-{
-    + getUserEmail()
-}
 
-class Employee {
-    - name
-    - email
-    - position
-    - phone
-}
-
-class Vehicle {
-    - String plate
-    - String brand
-    - String model
-    - Integer currentKms
-
-class MaintenanceCheckup {
-    - Integer frequency
-    - Integer lastCheckupKms
-    - Integer nextCheckupKms
-}bi
-
-
-class Organization {
-    - String name
-    - String vatNumber
-    - String website
-    - String phone
-    - String email
-
-    - addTask(task)
-    - validateTask(task)
-    + anyEmployeeHasEmail(email)
-    + Organization(name, vatNumber, webSite, phone, email, postalAddress, manager)
-    + createTask(reference, description, informalDesccription,\ntechnicalDescription, duration, cost, taskCategoryDescription)
-    - getEmployeeByEmail(email)
-
-'  +saveTask(task)
-}
-
-class TaskCategoryRepository {
-    + getTaskCategoryByDescription(description)
-}
-
-class OrganizationRepository {
-    + getOrganizationByEmployeeEmail(email)
-}
+class GenerateMaintenanceReportController{
+   +CreateMaintenanceReportController(VehicleRepository)
+     +generateMaintenanceReport()
+ }
 
 class Repositories {
-    - Repositories()
+    - Repositories(): Repositories
     + getInstance() : Repositories
-    + getTaskCategoryRepository()
-    + getOrganizationRepository()
+    + getVehicleRepository() : Repositories
 }
 
-class CreateTaskController {
-    + CreateTaskController(organizationRepository, taskCategoryRepository)
-    + getTaskCategories()
-    + createTask(userEmail, reference, description,\ninformalDescription, technicalDescription,\nduration, cost, categoryDescription)
-    - getTaskCategoryByDescription(taskCategoryDescription)
-    - getEmployeeFromSession()
+
+class VehicleRepository {
+    + register()
+
 }
 
-note right of CreateTaskController
-    - userEmail is obtained
-    from the user session
-    - categoryDescription
-    is retrieved from selected data
-end note
-
-note bottom of TaskCategoryRepository
-    - used for displaying
-    the category list
-end note
-
-class CreateTaskUI {
+class  Vehicle{
+   -plate : String
+       -brand : String
+       -model : String
+       -currentKms : int
+       +Vehicle()
 }
 
+class FM{
+}
+GenerateMaintenanceReportUI .>  GenerateMaintenanceReportController
+ GenerateMaintenanceReportController ...r> Repositories : repositories
+Repositories ---> "1" VehicleRepository
 Repositories -> Repositories : instance
-ApplicationSession -> ApplicationSession : instance
+Repositories "1" --> "*" Vehicle
 
-CreateTaskUI .> CreateTaskController
-
-CreateTaskController .> Repositories : repositories
-
-Repositories -> "1" TaskCategoryRepository
-
-CreateTaskController ..> TaskCategory
-CreateTaskController ..> OrganizationRepository : organizationRepository
-CreateTaskController ..> TaskCategoryRepository : TaskCategoryRepository
-
-Repositories --> "1" OrganizationRepository
-
-OrganizationRepository --> "*" Organization
-ApplicationSession --> "1" UserSession : userSession
-
-CreateTaskController ..> "1" Organization : organization
-CreateTaskController ..> ApplicationSession
-CreateTaskController ..> UserSession
-Task "*" --> "1" TaskCategory : taskCategory
-TaskCategoryRepository "1" --> "*" TaskCategory : taskCategory
-Organization "1" --> "*" Task : tasks
-Task --> Employee : createdBy
-
-Organization --> "*" Employee : employs
-
+VehicleRepository --> "*" Vehicle
+FM "1" -l-> "*" Vehicle
+ GenerateMaintenanceReportController ......>  Vehicle : Vehicle
+ GenerateMaintenanceReportController ...> "1" VehicleRepository : VehicleRepository
 @enduml
