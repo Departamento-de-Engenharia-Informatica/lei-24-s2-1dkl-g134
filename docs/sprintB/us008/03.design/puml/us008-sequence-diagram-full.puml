@@ -83,8 +83,6 @@ activate FM
                         OrganizationRepository --> CTRL : organization
                     deactivate OrganizationRepository
 
-                    CTRL --> CTRL : organization
-                deactivate CTRL
 
                 CTRL -> ORG: getLatestMaintenanceForVehicles(vehicleList)
                 activate ORG
