@@ -27,22 +27,18 @@ class Employee {
     - phone
 }
 
-class Task {
-    - String reference
-    - String description
-    - String informalDescription
-    - String technicalDescription
-    - Integer duration
-    - Double cost
+class Vehicle {
+    - String plate
+    - String brand
+    - String model
+    - Integer currentKms
 
-    + Task(reference, description,\ninformalDescription, technicalDescription,\nduration, cost, createdBy, taskCategory)
-}
+class MaintenanceCheckup {
+    - Integer frequency
+    - Integer lastCheckupKms
+    - Integer nextCheckupKms
+}bi
 
-class TaskCategory {
-    - String description
-
-    + TaskCategory(description)
-}
 
 class Organization {
     - String name
