@@ -71,5 +71,5 @@ GenarateTeamController ..> CollaboratorRepository : collaboratorRepository
 Repositories --> "1" TeamRepository
 CollaboratorRepository "1" --> "*" Collaborator
 TeamRepository "1" --> "*" Team
-HRM --> Team : Generates
+
 @enduml
