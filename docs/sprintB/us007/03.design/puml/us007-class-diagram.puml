@@ -29,13 +29,18 @@ class VehicleRepository {
     + register()
 }
 
+class CheckupRepository{
+    + registerVehicleCheckup(vehicleList, date)
+    + addVehicle()
+    + validateVehicle(vehicle)
+    }
+
 class  Vehicle{
     -name : String
     +Vehicle()
 }
 
-class FM{
-}
+
 
 RegisterVehicleCheckupUI .>  RegisterVehicleCheckupController
  RegisterVehicleCheckupController ...r> Repositories : repositories
@@ -44,8 +49,7 @@ Repositories -> Repositories : instance
 Repositories "1" --> "*" Vehicle
 
 VehicleRepository --> "*" Vehicle
-FM "1" -l-> "*" Vehicle
  RegisterVehicleCheckupController ......>  Vehicle : Vehicle
  RegisterVehicleCheckupController ...> "1" VehicleRepository : VehicleRepository
-
+CheckupRepository --> Vehicle : has
 @enduml

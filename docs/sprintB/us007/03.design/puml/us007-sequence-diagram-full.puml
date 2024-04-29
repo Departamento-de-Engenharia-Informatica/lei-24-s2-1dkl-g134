@@ -6,18 +6,13 @@ skinparam shadowing false
 autonumber
 
 'hide footbox
-actor "Fleet Manager" as FM
+actor "Vehicle Fleet Manager" as FM
 participant "RegisterVehicleCheckupUI" as UI
 participant "RegisterVehicleCheckupController" as CTRL
 participant "VehicleRepository" as VR
-participant "Vehicle\n:Vehicle" as V
 participant ":Repositories" as RepositorySingleton
 participant "repositories\n:Repositories" as PLAT
-participant ":ApplicationSession" as _APP
-participant "appSession\n:ApplicationSession" as APP
-participant "currentSession\n:UserSession" as SESSAO
-participant "organizationRepository:\nOrganizationRepository" as OrganizationRepository
-participant "organization\n:Organization" as ORG
+participant "CheckupRepository" as CUR
 
 
 activate FM
@@ -34,63 +29,26 @@ activate FM
             UI -> CTRL : getVehicle()
             activate CTRL
 
-                |||
-                CTRL -> CTRL : getEmployeeOrganization()
-                activate CTRL
-
-                    CTRL -> _APP: getInstance()
-                    activate _APP
-                        _APP -> CTRL: appSession
-                    deactivate _APP
 
 
-                    CTRL -> APP: getCurrentSession()
-                    activate APP
+                CTRL -> RepositorySingleton: getInstance()
+                activate RepositorySingleton
 
-                        APP --> CTRL: currentSession
-                    deactivate APP
+                RepositorySingleton --> CTRL: repositories
+                deactivate RepositorySingleton
 
-                    CTRL -> SESSAO: email = getUserEmail()
-                    activate SESSAO
+                CTRL -> PLAT: getVehicleRepository()
+                activate PLAT
 
-                        SESSAO --> CTRL: email
-                    deactivate SESSAO
+                PLAT --> CTRL: VehicleRepository
+                deactivate PLAT
 
-                    CTRL -> RepositorySingleton: getInstance()
-                    activate RepositorySingleton
+                CTRL->VR: getVehiclesList
+                activate VR
 
-                    RepositorySingleton --> CTRL: repositories
-                    deactivate RepositorySingleton
+                VR-->CTRL: vehiclesList
+                deactivate VR
 
-                    CTRL -> PLAT: getOrganizationRepository(email)
-                    activate PLAT
-
-                        PLAT --> CTRL: organizationRepository
-                    deactivate PLAT
-
-
-                    CTRL -> OrganizationRepository: getOrganizationByEmployeeEmail(email)
-                    activate OrganizationRepository
-
-                        loop for each organization
-
-                            OrganizationRepository -> ORG : anyEmployeeHasEmail(email)
-                            activate ORG
-
-                                 ORG --> OrganizationRepository : true/false
-                            deactivate ORG
-                        end
-                        OrganizationRepository --> CTRL : organization
-                    deactivate OrganizationRepository
-
-                    CTRL --> CTRL : organization
-                deactivate CTRL
-
-                CTRL -> ORG: getVehiclesList()
-                activate ORG
-
-                ORG --> CTRL: vehiclesList
-                deactivate ORG
 
                 CTRL --> UI : vehiclesList
             deactivate CTRL
@@ -109,27 +67,37 @@ activate FM
                  UI -> CTRL : RegisterVehicleCheckup(vehicle, date, current km)
                  activate CTRL
 
-   CTRL -> V : RegisterVehicleCheckup(vehicle, date, current km)
-                          activate V
-
-              V -> CheckUp** : Create
 
 
-              V ->V : addCheckUp(checkUp)
-              activate V
+                 CTRL -> PLAT: getCheckupRepository()
+                      activate PLAT
 
-              V->V : validateCheckup(checkUp)
-              activate V
+                 PLAT --> CTRL: CheckupRepository
+                     deactivate PLAT
 
-              V --> V
-              deactivate V
+   CTRL -> CUR : RegisterVehicleCheckup(vehicle, date, current km)
+                     activate CUR
 
-              V --> V
-              deactivate V
 
-              V--->CTRL : CheckUp
 
-                          deactivate V
+              CUR -> CheckUp** : Create
+
+
+              CUR ->CUR : addCheckUp(checkUp)
+              activate CUR
+
+              CUR->CUR : validateCheckup(checkUp)
+              activate CUR
+
+              CUR --> CUR
+              deactivate CUR
+
+              CUR --> CUR
+              deactivate CUR
+
+              CUR--->CTRL : CheckUp
+
+                          deactivate CUR
               CTRL ---> UI : CheckUp
                           deactivate CTRL
 
