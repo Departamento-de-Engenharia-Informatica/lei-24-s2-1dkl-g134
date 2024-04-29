@@ -32,6 +32,7 @@ According to the taken rationale, the conceptual classes promoted to software cl
 Other software classes (i.e. Pure Fabrication) identified:
 
 * None
+
 ## 3.2. Sequence Diagram (SD)
 
 _**Note that SSD - Alternative Two is adopted.**_
@@ -40,8 +41,8 @@ _**Note that SSD - Alternative Two is adopted.**_
 
 This diagram shows the full sequence of interactions between the classes involved in the realization of this user story.
 
-![Sequence Diagram - Full](svg/us007-sequence-diagram-full.svg)
+![Sequence Diagram - Full](svg/us008-sequence-diagram-full.svg)
 
 ## 3.3. Class Diagram (CD)
 
-![Class Diagram](svg/us007-class-diagram.svg)
+![Class Diagram](svg/us008-class-diagram.svg)
