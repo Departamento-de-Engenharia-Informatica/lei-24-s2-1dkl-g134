@@ -11,11 +11,7 @@ participant ":RegisterVehicleUI" as UI
 participant ":RegisterVehicleController" as CTRL
 participant ":Repositories" as RepositorySingleton
 participant "repositories\n:Repositories" as PLAT
-participant ":ApplicationSession" as _APP
-participant "appSession\n:ApplicationSession" as APP
-participant "currentSession\n:UserSession" as SESSAO
-participant "organizationRepository:\nOrganizationRepository" as OrganizationRepository
-participant "organization\n:Organization" as ORG
+participant "vehicleRepository:\nVehicleRepository" as VehicleRepository
 participant "vehicle \n:Vehicle" as VEHICLE
 
 activate ADM
@@ -47,88 +43,40 @@ activate ADM
             'create CTRL
             UI -> CTRL** : create
 
-            UI -> CTRL : getUserOrganization()
-            activate CTRL
-
-                |||
-                CTRL -> CTRL : getEmployeeOrganization()
-                activate CTRL
-
-                    CTRL -> _APP: getInstance()
-                    activate _APP
-                        _APP -> CTRL: appSession
-                    deactivate _APP
-
-
-                    CTRL -> APP: getCurrentSession()
-                    activate APP
-
-                        APP --> CTRL: currentSession
-                    deactivate APP
-
-                    CTRL -> SESSAO: email = getUserEmail()
-                    activate SESSAO
-
-                        SESSAO --> CTRL: email
-                    deactivate SESSAO
-
-                    CTRL -> RepositorySingleton: getInstance()
-                    activate RepositorySingleton
-
-                    RepositorySingleton --> CTRL: repositories
-                    deactivate RepositorySingleton
-
-                    CTRL -> PLAT: getOrganizationRepository(email)
-                    activate PLAT
-
-                        PLAT --> CTRL: organizationRepository
-                    deactivate PLAT
-
-
-                    CTRL -> OrganizationRepository: getOrganizationByEmployeeEmail(email)
-                    activate OrganizationRepository
-
-                        loop for each organization
-
-                            OrganizationRepository -> ORG : anyEmployeeHasEmail(email)
-                            activate ORG
-
-                                 ORG --> OrganizationRepository : true/false
-                            deactivate ORG
-                        end
-                        OrganizationRepository --> CTRL : organization
-                    deactivate OrganizationRepository
-
-                    CTRL --> CTRL : organization
-                deactivate CTRL
-
-                CTRL --> UI : organization
-            deactivate CTRL
-
-
         UI -> CTRL : registerVehicle(brand, model, tare, grossWeight,\ncurrentKM, registerDate, acquisitionDate,\ncheckUpFrequency, plateNumber, type)
         activate CTRL
 
+            CTRL -> RepositorySingleton: getInstance()
+            activate RepositorySingleton
+
+            RepositorySingleton --> CTRL: repositories
+            deactivate RepositorySingleton
+
+            CTRL -> PLAT: getVehicleRepository()
+            activate PLAT
+
+                PLAT --> CTRL: vehicleRepository
+            deactivate PLAT
             |||
-            CTRL -> ORG: registerVehicle(brand, model, tare, grossWeight,\ncurrentKM, registerDate, acquisitionDate,\ncheckUpFrequency, plateNumber, type)
-            activate ORG
+            CTRL -> VehicleRepository: registerVehicle(brand, model, tare, grossWeight,\ncurrentKM, registerDate, acquisitionDate,\ncheckUpFrequency, plateNumber, type)
+            activate VehicleRepository
 
-                ORG -> VEHICLE**: create(brand, model, tare, grossWeight,\ncurrentKM, registerDate, acquisitionDate,\ncheckUpFrequency, plateNumber, type)
-                ORG -> ORG: addVehicle(vehicle)
+                VehicleRepository -> VEHICLE**: create(brand, model, tare, grossWeight,\ncurrentKM, registerDate, acquisitionDate,\ncheckUpFrequency, plateNumber, type)
+                VehicleRepository -> VehicleRepository: addVehicle(vehicle)
 
 
-                activate ORG
-                    ORG -> ORG: validateVehicle(vehicle)
-                    activate ORG
-                        ORG --> ORG
-                    deactivate ORG
+                activate VehicleRepository
+                    VehicleRepository -> VehicleRepository: validateVehicle(vehicle)
+                    activate VehicleRepository
+                        VehicleRepository --> VehicleRepository
+                    deactivate VehicleRepository
 
-                    ORG --> ORG
-                deactivate ORG
+                    VehicleRepository --> VehicleRepository
+                deactivate VehicleRepository
 
-                ORG --> CTRL : vehicle
+                VehicleRepository --> CTRL : vehicle
 
-            deactivate ORG
+            deactivate VehicleRepository
 
             CTRL --> UI: vehicle
             deactivate CTRL

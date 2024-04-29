@@ -7,15 +7,11 @@ autonumber
 
 'hide footbox
 actor "Human Resources \n Manager (HRM)" as ADM
-participant ":  AssignJobUI" as UI
-participant ":  AssignJobController" as CTRL
+participant ":  CreateJobUI" as UI
+participant ":  CreateJobController" as CTRL
 participant ":Repositories" as RepositorySingleton
 participant "repositories\n:Repositories" as PLAT
-participant ":ApplicationSession" as _APP
-participant "appSession\n:ApplicationSession" as APP
-participant "currentSession\n:UserSession" as SESSAO
-participant "organizationRepository:\nOrganizationRepository" as OrganizationRepository
-participant "organization\n:Organization" as ORG
+participant "jobRepository:\njobRepository" as JobRepository
 participant "job\n:Job" as JOB
 
 activate ADM
@@ -43,79 +39,35 @@ activate ADM
         UI -> CTRL : createJob(Name of Job)
         activate CTRL
 
-                |||
-                CTRL -> CTRL : getEmployeeOrganization()
-                activate CTRL
-
-                    CTRL -> _APP: getInstance()
-                    activate _APP
-                        _APP -> CTRL: appSession
-                    deactivate _APP
-
-
-                    CTRL -> APP: getCurrentSession()
-                    activate APP
-
-                        APP --> CTRL: currentSession
-                    deactivate APP
-
-                    CTRL -> SESSAO: email = getUserEmail()
-                    activate SESSAO
-
-                        SESSAO --> CTRL: email
-                    deactivate SESSAO
-
-                    CTRL -> RepositorySingleton: getInstance()
-                    activate RepositorySingleton
-
-                    RepositorySingleton --> CTRL: repositories
-                    deactivate RepositorySingleton
-
-                    CTRL -> PLAT: getOrganizationRepository(email)
-                    activate PLAT
-
-                        PLAT --> CTRL: organizationRepository
-                    deactivate PLAT
-
-
-                    CTRL -> OrganizationRepository: getOrganizationByEmployeeEmail(email)
-                    activate OrganizationRepository
-
-                        loop for each organization
-
-                            OrganizationRepository -> ORG : anyEmployeeHasEmail(email)
-                            activate ORG
-
-                                 ORG --> OrganizationRepository : true/false
-                            deactivate ORG
-                        end
-                        OrganizationRepository --> CTRL : organization
-                    deactivate OrganizationRepository
-
-                    CTRL --> CTRL : organization
-                deactivate CTRL
-
             |||
-            CTRL -> ORG: createJob(name)
-            activate ORG
+            CTRL -> RepositorySingleton: getInstance()
+            activate RepositorySingleton
 
-                ORG -> JOB**: create(name)
-                ORG -> ORG: addJob (job)
+            RepositorySingleton --> CTRL: repositories
+            deactivate RepositorySingleton
 
+            CTRL -> PLAT: getjobRepository(email)
+            activate PLAT
 
-                activate ORG
-                    ORG -> ORG: validateJob(job)
-                    activate ORG
-                    ORG --> ORG
-                    deactivate ORG
-                    ORG --> ORG
+                PLAT --> CTRL: jobRepository
+            deactivate PLAT
+            |||
+            CTRL -> JobRepository: createJob(name)
+            activate JobRepository
 
+                JobRepository -> JOB**: create(name)
+                JobRepository -> JobRepository: addJob(job)
+                activate JobRepository
+                    JobRepository -> JobRepository: validateJob(job)
+                    activate JobRepository
+                    JobRepository --> JobRepository
+                    deactivate JobRepository
+                JobRepository --> JobRepository
+                deactivate JobRepository
 
-                deactivate ORG
+                JobRepository --> CTRL : job
 
-                ORG --> CTRL : job
-
-            deactivate ORG
+            deactivate JobRepository
 
             CTRL --> UI: job
             deactivate CTRL
