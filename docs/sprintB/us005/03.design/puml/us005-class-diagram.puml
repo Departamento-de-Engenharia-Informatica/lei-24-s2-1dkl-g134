@@ -50,11 +50,7 @@ class Team{
 
 }
 
-class HRM{
-   - String name
-   - String email
-   - int phone
-}
+
 
 
 
