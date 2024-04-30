@@ -12,25 +12,32 @@ class GenarateTeamUI {
 }
 
 class GenarateTeamController {
-+GenarateTeamController(collaboratorRepository,teamRepository)
-+getTeamCharacteristics()
-+createTeam(team)
+    +GenarateTeamController(skillRepository,collaboratorRepository,teamRepository)
+    + getSkillList()
+    + generateTeamProposal(minTeamSize,maxTeamSize, selectedSkillList)
+    + createTeam(collaboratorList,selectedSkillList)
 }
 
 
 class Repositories {
     - Repositories()
     + getInstance() : Repositories
+    + getSkillRepository
     + getCollaboratorRepository()
     + getTeamRepository()
 }
 
+class SkillRepository{
+    + getSkillList()
+}
+
 class CollaboratorRepository {
-    + anyCollaboratorHasSkill(skill)
+
+    + generateTeamProposal(minTeamSize,maxTeamSize, selectedSkillList)
 }
 
 class TeamRepository {
-    + createTeam(team)
+    + addTeam(team)
     + validateTeam(team)
 }
 
@@ -46,7 +53,7 @@ class Collaborator {
 }
 
 class Team{
-+addTeam(team)
+    + createTeam(collaboratorList,selectedSkillList)
 
 }
 
@@ -65,11 +72,14 @@ Repositories -> Repositories : instance
 GenarateTeamUI .> GenarateTeamController
 GenarateTeamController .> Repositories : repositories
 Repositories -> "1" CollaboratorRepository
-GenarateTeamController ..> Collaborator: collaborator
+Repositories -> "1" TeamRepository
+Repositories -> "1" SkillRepository
+GenarateTeamController ..> SkillRepository : skillRepository
 GenarateTeamController ..> TeamRepository : teamRepository
 GenarateTeamController ..> CollaboratorRepository : collaboratorRepository
-Repositories --> "1" TeamRepository
-CollaboratorRepository "1" --> "*" Collaborator
+GenarateTeamController ..> Collaborator: collaborator
+CollaboratorRepository "1" --> "*" Collaborator: has
 TeamRepository "1" --> "*" Team
+Team -> Collaborator: has
 
 @enduml
