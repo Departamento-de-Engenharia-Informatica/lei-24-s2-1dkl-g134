@@ -9,21 +9,15 @@ skinparam classAttributeIconSize 0
 
 'left to right direction
 
-class AssignJobUI{
-}
 
 
-class AssignJobController{
-    + AssignJobController(collaboratorRepository, jobRepository)
-    + getCollaborators()
-    + getJobs(jobName)
- }
+
 
 class Repositories {
     - Repositories()
     + getInstance() : Repositories
     + getCollaboratorRepository()
-    + getJobRepository()
+    + getJobRepository() :
 }
 
 class CollaboratorRepository {
@@ -35,7 +29,12 @@ class JobRepository {
 }
 
 class Job{
-    - jobName
+    -jobName
+}
+class AssignJobController{
+AssignJobController(collaboratorRepository,jobRepository)
++getCollaborators()
++getJobs((jobName)
 }
 
 class Collaborator{
@@ -45,8 +44,8 @@ class Collaborator{
     + validateJob(jobName)
 }
 
-class HRM{
-}
+
+
 AssignJobUI .> AssignJobController
 AssignJobController .> Repositories : repositories
 Repositories --> "1" JobRepository
@@ -55,7 +54,7 @@ Repositories -> Repositories : instance
 
 JobRepository --> "*" Job
 CollaboratorRepository --> "*" Collaborator
-HRM "1" ----> "*" Job : create
+
 AssignJobController ....> "1" Collaborator : collaborator
 AssignJobController ......> "1" Job : job
 Collaborator "1" --> "*" Job : has
