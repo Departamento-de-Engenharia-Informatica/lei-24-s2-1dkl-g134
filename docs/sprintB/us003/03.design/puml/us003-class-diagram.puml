@@ -43,8 +43,6 @@ class Collaborator{
 - int phone
 }
 
-class HRM{
-}
 
 
 
@@ -59,7 +57,6 @@ RegisterCollaboratorController ..> CollaboratorRepository : CollaboratorReposito
 RegisterCollaboratorController ..> JobRepository : JobRepository
 JobRepository ..> Collaborator
 CollaboratorRepository -> Collaborator: has
-HRM -> Collaborator: register
 Repositories --> "1" CollaboratorRepository
 
 
