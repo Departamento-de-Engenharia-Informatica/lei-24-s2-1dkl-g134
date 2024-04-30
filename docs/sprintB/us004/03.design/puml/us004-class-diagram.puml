@@ -45,8 +45,6 @@ class Collaborator{
     + validateSkill(skillName)
 }
 
-class HRM{
-}
 
 AssignSkillUI .> AssignSkillController
 AssignSkillController .> Repositories : repositories
@@ -56,7 +54,6 @@ Repositories -> Repositories : instance
 
 SkillRepository --> "*" Skill
 CollaboratorRepository --> "*" Collaborator
-HRM "1" ----> "*" Skill : assign
 AssignSkillController ....> "1" Collaborator : collaborator
 AssignSkillController ......> "1" Skill : skill
 Collaborator "1" --> "*" Skill : has
