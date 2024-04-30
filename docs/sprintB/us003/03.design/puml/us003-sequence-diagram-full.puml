@@ -12,7 +12,6 @@ participant ":RegisterCollaboratorController" as CTRL
 participant ":Repositories" as RepositorySingleton
 participant "repositories\n:Repositories" as PLAT
 participant "jobRepository:\nJobRepository" as JobRepository
-participant "organization:\nOrganization" as Organization
 participant "collaboratorRepository:\nCollaboratorRepository" as CollaboratorRepository
 participant "collaborator\nCollaborator" as Collaborator
 
@@ -27,6 +26,8 @@ activate ADM
 
             ADM -> UI : types requested data
             activate UI
+
+            UI -> CTRL** : create()
 
             UI -> CTRL : getJobList()
             activate CTRL

@@ -12,9 +12,9 @@ class RegisterCollaboratorUI {
 }
 
 class RegisterCollaboratorController {
-    + RegisterCollaboratorController(jobRepository, collaboratorRepository)
-    + getListJob()
-    + createCollaborator(name,birthdate,admission date,address,phone number,email,identification document type,identification number)
+    + create()
+    + getJobList()
+    + createCollaborator(name,birthdate,admission date,address,phone number,email,identification document type,identification number, job)
 
 }
 class Repositories {
@@ -26,11 +26,11 @@ class Repositories {
 
 class JobRepository {
     + getJobList()
-    + getJob(job)
 }
 
 class CollaboratorRepository {
     + getCollaboratorList()
+    + createCollaborator(name,birthdate,admission date,address,phone number,email,identification document type,identification number, job)
 }
 
 class Collaborator{
@@ -41,6 +41,8 @@ class Collaborator{
 - String email
 - String skill
 - int phone
+
++ create(name,birthdate,admission date,address,phone number,email,identification document type,identification number, job)
 }
 
 
