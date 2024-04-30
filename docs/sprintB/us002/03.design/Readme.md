@@ -6,28 +6,29 @@
 
 _**Note that SSD - Alternative One is adopted.**_
 
-| Interaction ID | Question: Which class is responsible for...                | Answer                 | Justification (with patterns)                                                                                                                              |
-|:---------------|:-----------------------------------------------------------|:-----------------------|:-----------------------------------------------------------------------------------------------------------------------------------------------------------|
-| Step 1         | ... interacting with the actor?                            | RegisterJobUI          | Pure Fabrication: there is no reason to assign this responsibility to any existing class in the Domain Model.                                              |
-|                | ... coordinating the US?                                   | RegisterJobController  | Controller: Coordinates interactions related to registering new work in the user interface (UI) and executes the logic necessary to process these requests |
-| Step 2         | ... knowing the user using the system?                     | UserSession            | IE: cf. A&A component documentation.                                                                                                                       |
-| Step 3         | ... saving the new job?                                    | RegisterJobUI          | IE: RegisterJob manages the new job data.                                                                                                                  |
-| Step 4         | ... getting the job?                                       | JobRepository          | IE: owns job list.                                                                                                                                         |                       |                                                                                                                                                                             |                                                                                                   |
-| Step 5         | ... validating all data (local validation)?                | Job                    | IE: owns its data.                                                                                                                                         |
-|                | ... validating all data (global validation)?               | Job                    | IE: knows all its organizations.                                                                                                                           |
-| Step 6         | ...  saving the new job assigned to an organization?       | Organization           | IE: owns all its organizations.                                                                                                                            |
-| Step 7         | ... informing operation success?                           | RegisterJobUI          | IE: is responsible for user interactions.                                                                                                                  |
+| Interaction ID | Question: Which class is responsible for...                                        | Answer                | Justification (with patterns)                                                                                                                              |
+|:---------------|:-----------------------------------------------------------------------------------|:----------------------|:-----------------------------------------------------------------------------------------------------------------------------------------------------------|
+| Step 1         | ... interacting with the actor?                                                    | RegisterJobUI         | Pure Fabrication: there is no reason to assign this responsibility to any existing class in the Domain Model.                                              |
+|                | ... coordinating the US?                                                           | RegisterJobController | Controller: Coordinates interactions related to registering new work in the user interface (UI) and executes the logic necessary to process these requests |
+| Step 2         |                                                                                    |                       |                                                                                                                                                            |
+| Step 3         | ... temporarily storing the input data?                                            | RegisterJobUI         | Pure Fabrication: there is no reason to assign this responsibility to any existing class in the Domain Model.                                              |
+| Step 4         | ... displaying all the information before submitting?                              | RegisterJobUI         | Pure Fabrication: there is no reason to assign this responsibility to any existing class in the Domain Model.                                              |
+| Step 5         | ... creating the Job object?                                                       | JobRepository         | Creator: has the necessary data and records all jobs                                                                                                       |                       |                                                                                                                                                                             |                                                                                                   |
+|                | ... validating the data locally?                                                   | Job                   | IE: owns its data.                                                                                                                                         |
+|                | ... adding the data to a collection and validating duplicates (global validation)? | JobRepository         | IE: knows all jobs.                                                                                                                                        |
+| Step 6         | ... informing operation success?                                                   | RegisterJobUI         | Pure Fabrication: there is no reason to assign this responsibility to any existing class in the Domain Model.                                              |
 
 ### Systematization ##
 
 According to the taken rationale, the conceptual classes promoted to software classes are:
 
-* OrganizationRepository 
 * Job
+
 Other software classes (i.e. Pure Fabrication) identified:
 
 * RegisterJobUI
 * RegisterJobController
+* Job Repository
 
 ## 3.2. Sequence Diagram (SD)
 
