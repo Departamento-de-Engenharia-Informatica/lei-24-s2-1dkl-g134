@@ -11,13 +11,9 @@ participant ":AssignSkillUI" as UI
 participant ":AssignSkillController" as CTRL
 participant ":Repositories" as RepositorySingleton
 participant "repositories\n:Repositories" as PLAT
-participant ":ApplicationSession" as _APP
-participant "appSession\n:ApplicationSession" as APP
-participant "currentSession\n:UserSession" as SESSAO
-participant "organizationRepository:\nOrganizationRepository" as OrganizationRepository
-participant "organization\n:Organization" as ORG
 participant "skillRepository\n:SkillRepository" as SkillRepository
 participant "collaborator\n:Collaborator" as COLLAB
+participant "collaboratorsRepository\n:CollaboratorRepository" as CR
 
 activate HRM
 
@@ -31,27 +27,6 @@ activate HRM
             UI -> CTRL : getCollaborators()
             activate CTRL
 
-                |||
-                CTRL -> CTRL : getEmployeeOrganization()
-                activate CTRL
-
-                    CTRL -> _APP: getInstance()
-                    activate _APP
-                        _APP -> CTRL: appSession
-                    deactivate _APP
-
-
-                    CTRL -> APP: getCurrentSession()
-                    activate APP
-
-                        APP --> CTRL: currentSession
-                    deactivate APP
-
-                    CTRL -> SESSAO: email = getUserEmail()
-                    activate SESSAO
-
-                        SESSAO --> CTRL: email
-                    deactivate SESSAO
 
                     CTRL -> RepositorySingleton: getInstance()
                     activate RepositorySingleton
@@ -59,35 +34,17 @@ activate HRM
                     RepositorySingleton --> CTRL: repositories
                     deactivate RepositorySingleton
 
-                    CTRL -> PLAT: getOrganizationRepository(email)
+                    CTRL -> PLAT: getCollaboratorsRepository()
                     activate PLAT
 
-                        PLAT --> CTRL: organizationRepository
+                        PLAT --> CTRL: getCollaboratorsRepository
                     deactivate PLAT
 
+                CTRL -> CR: getCollaboratorsList()
+                activate CR
 
-                    CTRL -> OrganizationRepository: getOrganizationByEmployeeEmail(email)
-                    activate OrganizationRepository
-
-                        loop for each organization
-
-                            OrganizationRepository -> ORG : anyEmployeeHasEmail(email)
-                            activate ORG
-
-                                 ORG --> OrganizationRepository : true/false
-                            deactivate ORG
-                        end
-                        OrganizationRepository --> CTRL : organization
-                    deactivate OrganizationRepository
-
-                    CTRL --> CTRL : organization
-                deactivate CTRL
-
-                CTRL -> ORG: getCollaboratorsList()
-                activate ORG
-
-                ORG --> CTRL: collaboratorsList
-                deactivate ORG
+                CR --> CTRL: collaboratorsList
+                deactivate CR
 
                 CTRL --> UI : collaboratorsList
             deactivate CTRL
@@ -100,12 +57,6 @@ activate HRM
 
    UI -> CTRL : getSkills()
            activate CTRL
-
- CTRL -> RepositorySingleton : getInstance()
-         activate RepositorySingleton
-
-         RepositorySingleton --> CTRL: repositories
-         deactivate RepositorySingleton
 
          CTRL -> PLAT : getSkillRepository()
          activate PLAT
@@ -131,10 +82,10 @@ activate HRM
          UI -> CTRL : assignSkill(collaborator, skillList)
          activate CTRL
 
-         CTRL -> ORG : assignSkill(collaborator, skillList)
-         activate ORG
+         CTRL -> CR : assignSkill(collaborator, skillList)
+         activate CR
 
-         ORG -> COLLAB : assignSkills(skillList)
+         CR -> COLLAB : assignSkills(skillList)
          activate COLLAB
 
          loop for each skill in skillList
@@ -143,11 +94,11 @@ activate HRM
          COLLAB -> COLLAB :validateSkillWasAssigned(skill)
          end
 
-         COLLAB --> ORG : true/false
+         COLLAB --> CR : true/false
          deactivate COLLAB
 
-         ORG --> CTRL : true/false
-         deactivate ORG
+         CR --> CTRL : true/false
+         deactivate CR
 
          CTRL --> UI : true/false
          deactivate CTRL
