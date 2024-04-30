@@ -7,27 +7,21 @@
 
 _**Note that SSD - Alternative One is adopted.**_
 
-| Interaction ID | Question: Which class is responsible for...   | Answer                    | Justification (with patterns)                                                                                 |
-|:-------------  |:----------------------------------------------|:--------------------------|:--------------------------------------------------------------------------------------------------------------|
-| Step 1  		 | 	... interacting with the actor?              | RegisterVehicleUI         | Pure Fabrication: there is no reason to assign this responsibility to any existing class in the Domain Model. |
-| 			  		 | 	... coordinating the US?                     | RegisterVehicleController | Controller                                                                                                    |
-| 			  		 | 	... instantiating a new Vehicle?             | Repositories              | Creator (Rule 1): in the DM Organization has a Vehicle.                                                       |
-| 			  		 | ... knowing the user using the system?        | Fleet Manager             | IE: cf. A&A component documentation.                                                                          |
-| Step 2  		 | 							                                       |                           |                                                                                                               |
-| Step 3  		 | 	...saving the inputted data?                 | Vehicle                   | IE: object created in step 1 has its own data.                                                                |
-| Step 4  		 | ...knowing the vehicle types to show?         | Repositories              | IE: Vehicle Categories are defined by the Administrators.                                                     |
-| Step 5  		 | 	... saving the selected category?            | Vehicle                   | IE: object created in step 1 is classified in one Type.                                                       |
-| Step 7  		 | 	... validating all data (local validation)?  | Vehicle                   | IE: owns its data.                                                                                            | 
-| 			  		 | 	... validating all data (global validation)? | Repositiories             | IE: knows all its vehicles.                                                                                   | 
-| 			  		 | 	... saving the created vehicle?              | Repositories              | IE: owns all its vehicles.                                                                                    | 
-| Step 8  		 | 	... informing operation success?             | RegisterVehicleUI              | IE: is responsible for user interactions.                                                                     | 
+| Interaction ID | Question: Which class is responsible for...   | Answer             | Justification (with patterns)                                                                                 |
+|:---------------|:----------------------------------------------|:-------------------|:--------------------------------------------------------------------------------------------------------------|
+| Step 1  		     | 	... interacting with the actor?              | RegisterVehicleUI  | Pure Fabrication: there is no reason to assign this responsibility to any existing class in the Domain Model. |
+| 			  		        | 	... coordinating the US?                     | RegisterVehicleUI  | Controller                                                                                                    ||
+| 	              | ...knowing the vehicle types to show?         | VehicleRepository  | IE: Vehicle Categories are defined by the Administrators.                                                     |
+| Step 2		       | 	... validating all data (local validation)?  | VehicleRepository  | IE: owns its data.                                                                                            | 
+| 			  		        | 	... validating all data (global validation)? | VehicleRepositiory | IE: knows all its vehicles.                                                                                   | 
+| 			  		        | 	... saving the created vehicle?              | VehicleRepository  | IE: owns all its vehicles.                                                                                    | 
+|   		           | 	... informing operation success?             | RegisterVehicleUI  | IE: is responsible for user interactions.                                                                     | 
 
 ### Systematization ##
 
 According to the taken rationale, the conceptual classes promoted to software classes are: 
 
-* Repositories
-* Vehicle
+* VehicleRepository
 
 Other software classes (i.e. Pure Fabrication) identified: 
 
