@@ -36,9 +36,14 @@ public class Vehicle {
         this.type = type;
     }
 
-    //@Override
-   // public boolean equals(Vehicle newVehicle){
-   // }
+    @Override
+    public boolean equals(Object o){
+        Vehicle v = (Vehicle) o;
+        if (v.getPlateNumber().equals(plateNumber)) {
+            return true;
+        }
+        return false;
+    }
 
     public String getBrand() { return brand; }
 
