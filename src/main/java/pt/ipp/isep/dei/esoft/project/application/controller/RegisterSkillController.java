@@ -2,8 +2,10 @@ package pt.ipp.isep.dei.esoft.project.application.controller;
 
 import pt.ipp.isep.dei.esoft.project.repository.Repositories;
 import pt.ipp.isep.dei.esoft.project.repository.SkillRepository;
+import pt.ipp.isep.dei.esoft.project.domain.Skill;
 
 import java.util.Objects;
+import java.util.Optional;
 
 public class RegisterSkillController {
 
@@ -15,7 +17,7 @@ public class RegisterSkillController {
 
     }
 
-    public boolean registerSkill(String name) {
+    public Optional<Skill> registerSkill(String name) {
         return skillRepository.add(name);
     }
 

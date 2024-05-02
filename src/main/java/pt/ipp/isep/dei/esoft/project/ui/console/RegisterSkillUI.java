@@ -4,6 +4,8 @@ import pt.ipp.isep.dei.esoft.project.application.controller.RegisterSkillControl
 import pt.ipp.isep.dei.esoft.project.domain.Skill;
 import pt.ipp.isep.dei.esoft.project.ui.console.utils.Utils;
 
+import java.util.Optional;
+
 public class RegisterSkillUI implements Runnable {
 
     private final RegisterSkillController ctrl = new RegisterSkillController();
@@ -29,7 +31,8 @@ public class RegisterSkillUI implements Runnable {
 
         if (input) {
             System.out.println("Registration finalized\n");
-            if (ctrl.registerSkill(name)){
+            Optional<Skill> skill = ctrl.registerSkill(name);
+            if (skill.isPresent()){
                 System.out.println("Skill registration successful.");
 
             } else {
