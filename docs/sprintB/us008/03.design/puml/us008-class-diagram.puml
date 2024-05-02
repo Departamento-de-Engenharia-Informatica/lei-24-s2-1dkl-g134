@@ -14,8 +14,8 @@ class GenerateMaintenanceReportUI{
 
 
 class GenerateMaintenanceReportController{
-   +CreateMaintenanceReportController(VehicleRepository)
-     +generateMaintenanceReport()
+
+    +getVehiclesRequiringCheckup()
  }
 
 class Repositories {
@@ -38,8 +38,7 @@ class  Vehicle{
        +Vehicle()
 }
 
-class FM{
-}
+
 GenerateMaintenanceReportUI .>  GenerateMaintenanceReportController
  GenerateMaintenanceReportController ...r> Repositories : repositories
 Repositories ---> "1" VehicleRepository
@@ -47,7 +46,7 @@ Repositories -> Repositories : instance
 Repositories "1" --> "*" Vehicle
 
 VehicleRepository --> "*" Vehicle
-FM "1" -l-> "*" Vehicle
+
  GenerateMaintenanceReportController ......>  Vehicle : Vehicle
  GenerateMaintenanceReportController ...> "1" VehicleRepository : VehicleRepository
 @enduml

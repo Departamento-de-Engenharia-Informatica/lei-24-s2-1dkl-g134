@@ -23,7 +23,7 @@ activate FM
 '            UI --> ADM : requests data (reference, description,  informal \n description, technical description, duration, cost)
             'create CTRL
 
-            UI -> CTRL** : choose vehicle
+            UI -> CTRL** : create vehicle
 
             UI -> CTRL : getVehiclesRequiringCheckup()
             activate CTRL

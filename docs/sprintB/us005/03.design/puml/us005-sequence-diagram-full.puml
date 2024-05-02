@@ -49,7 +49,7 @@ activate ADM
                 SkillRepository --> CTRL: skillList
                 deactivate SkillRepository
 
-                CTRL --> UI : team
+                CTRL --> UI : skillList
             deactivate CTRL
 
     UI --> ADM : shows list of skills and asks to select\nthe required team skills
