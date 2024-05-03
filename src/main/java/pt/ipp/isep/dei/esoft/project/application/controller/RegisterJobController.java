@@ -22,5 +22,6 @@ public class RegisterJobController {
     }
 
     public Optional<Job> registerJob(String name) {
+    return Optional.empty();
     }
 }
