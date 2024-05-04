@@ -1,39 +1,34 @@
 package pt.ipp.isep.dei.esoft.project.domain;
 
+import pt.ipp.isep.dei.esoft.project.domain.CheckUp;
+import pt.ipp.isep.dei.esoft.project.repository.CheckupRepository;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class GenerateMaintenanceReport {
-    private List<CheckUp> checkUps;
+    private CheckupRepository checkupRepository;
 
-    public GenerateMaintenanceReport() {
-        this.checkUps = new ArrayList<>();
-    }
-
-    public void addCheckUp(CheckUp checkUp) {
-
-    }
-
-    public List<CheckUp> getCheckUps() {
-        return checkUps;
-    }
-
-    public List<String[]> generateMaintenanceReport() {
-        List<String[]> report = new ArrayList<>();
-        for (CheckUp checkUp : checkUps) {
-            String[] rowData = new String[7];
-            rowData[0] = checkUp.getVehicle().getPlate();
-            rowData[1] = checkUp.getVehicle().getBrand();
-            rowData[2] = checkUp.getVehicle().getModel();
-            rowData[3] = String.valueOf(checkUp.getCurrentKM());
-            rowData[5] = String.valueOf(checkUp.getVehicle().getLastMaintenanceKM());
-            rowData[6] = String.valueOf(checkUp.getVehicle().getNextMaintenanceKM());
-            report.add(rowData);
-        }
-        return report;
+    public GenerateMaintenanceReport(CheckupRepository checkupRepository) {
+        this.checkupRepository = checkupRepository;
     }
 
     public void generateReport() {
+        List<CheckUp> checkUps = checkupRepository.getVehicleCheckUp();
+        if (checkUps.isEmpty()) {
+            System.out.println("No vehicles need maintenance at this time.");
+            return;
+        }
+        System.out.println("Maintenance Report:");
+        System.out.printf("%-10s%-10s%-10s%-10s%-10s%-10s%n",
+                "Plate", "Brand", "Model", "Curr.Kms", "Freq", "Next");
+        for (CheckUp checkUp : checkUps) {
+            System.out.printf("%-10s%-10s%-10s%-10d%-10d%-10d%n",
+                    checkUp.getVehicle().getPlate(),
+                    checkUp.getVehicle().getBrand(),
+                    checkUp.getVehicle().getModel(),
+                    checkUp.getCurrentKM(),
+                    checkUp.getVehicle().getCheckUpFrequency(),
+
+        }
     }
 }

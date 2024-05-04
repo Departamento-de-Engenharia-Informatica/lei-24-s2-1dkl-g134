@@ -16,4 +16,7 @@ public class CheckupRepository {
         public List<CheckUp> getVehicleCheckUp(List<Vehicle> vehicleList) {
 
         }
+
+    public List<CheckUp> getVehicleCheckUp() {
+    }
 }
