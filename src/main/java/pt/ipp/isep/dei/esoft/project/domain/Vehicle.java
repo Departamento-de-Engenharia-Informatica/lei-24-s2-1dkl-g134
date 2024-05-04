@@ -64,6 +64,12 @@ public class Vehicle {
     public double getGrossWeight() { return grossWeight; }
 
     public int getTare() { return tare; }
+
+    public String getPlate() {
+        return "";
+    }
+
+
 }
 
 
