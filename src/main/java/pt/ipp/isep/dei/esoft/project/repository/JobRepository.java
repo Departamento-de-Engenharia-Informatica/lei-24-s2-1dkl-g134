@@ -22,5 +22,9 @@ public class JobRepository {
         return Optional.of(s);
     }
 
+    public Optional<ArrayList<Job>> getJobList(){
+        return null;
+    }
+
 
 }
