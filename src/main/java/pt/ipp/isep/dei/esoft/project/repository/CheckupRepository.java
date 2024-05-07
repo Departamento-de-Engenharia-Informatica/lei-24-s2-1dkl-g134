@@ -15,8 +15,10 @@ public class CheckupRepository {
     }
         public List<CheckUp> getVehicleCheckUp(List<Vehicle> vehicleList) {
 
+            return List.of();
         }
 
     public List<CheckUp> getVehicleCheckUp() {
+        return null;
     }
 }

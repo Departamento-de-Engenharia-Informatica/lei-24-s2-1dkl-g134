@@ -3,6 +3,7 @@ package pt.ipp.isep.dei.esoft.project.domain;
 import pt.ipp.isep.dei.esoft.project.domain.CheckUp;
 import pt.ipp.isep.dei.esoft.project.repository.CheckupRepository;
 
+import java.io.PrintStream;
 import java.util.List;
 
 public class GenerateMaintenanceReport {
@@ -22,12 +23,13 @@ public class GenerateMaintenanceReport {
         System.out.printf("%-10s%-10s%-10s%-10s%-10s%-10s%n",
                 "Plate", "Brand", "Model", "Curr.Kms", "Freq", "Next");
         for (CheckUp checkUp : checkUps) {
-            System.out.printf("%-10s%-10s%-10s%-10d%-10d%-10d%n",
+            PrintStream printf = System.out.printf("%-10s%-10s%-10s%-10d%-10d%-10d%n",
                     checkUp.getVehicle().getPlate(),
                     checkUp.getVehicle().getBrand(),
                     checkUp.getVehicle().getModel(),
                     checkUp.getCurrentKM(),
-                    checkUp.getVehicle().getCheckUpFrequency(),
+                    checkUp.getCheckUpFrequency(),
+                    checkUp.getNextCheckUpKM());
 
         }
     }
