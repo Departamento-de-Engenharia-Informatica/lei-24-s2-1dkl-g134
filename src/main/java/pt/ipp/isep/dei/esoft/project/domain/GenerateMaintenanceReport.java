@@ -22,14 +22,10 @@ public class GenerateMaintenanceReport {
         System.out.printf("%-10s%-10s%-10s%-10s%-10s%-10s%n",
                 "Plate", "Brand", "Model", "Curr.Kms", "Freq", "Next");
         for (CheckUp checkUp : checkUps) {
-            PrintStream printf = System.out.printf("%-10s%-10s%-10s%-10d%-10d%-10d%n",
-                    checkUp.getVehicle().getPlate(),
+            PrintStream printf = System.out.printf("%-10s%-10s%-10s%-10d%-10d%-10d%n", checkUp.getVehicle().getPlate(),
                     checkUp.getVehicle().getBrand(),
                     checkUp.getVehicle().getModel(),
-                    checkUp.getCurrentKM(),
-                    checkUp.getCheckUpFrequency(),
-                    checkUp.getNextCheckUpKM());
-
+                    checkUp.getCurrentKM());
         }
     }
 }
