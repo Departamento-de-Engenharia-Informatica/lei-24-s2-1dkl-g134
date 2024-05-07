@@ -1,6 +1,5 @@
 package pt.ipp.isep.dei.esoft.project.domain;
 
-import pt.ipp.isep.dei.esoft.project.domain.CheckUp;
 import pt.ipp.isep.dei.esoft.project.repository.CheckupRepository;
 
 import java.io.PrintStream;

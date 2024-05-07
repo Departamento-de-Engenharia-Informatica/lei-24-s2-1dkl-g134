@@ -6,6 +6,7 @@ public class CheckUp {
     private Vehicle vehicle;
     private int currentKM;
     private String date;
+
     public Vehicle getVehicle() {return vehicle;}
 
     public int getCurrentKM() {return currentKM;}
