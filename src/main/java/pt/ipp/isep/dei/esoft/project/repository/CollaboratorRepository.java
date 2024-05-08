@@ -11,13 +11,18 @@ public class CollaboratorRepository {
     private ArrayList<Collaborator> collaborators;
     private ArrayList<ArrayList<Collaborator>> blacklistedTeamProposals;
 
+    public CollaboratorRepository() {
+        this.collaborators = new ArrayList<>();
+    }
+
     public Optional<Collaborator> add(String name, String birthDate,String admissionDate,String address,
                                       String phoneNumber, String email, String identificationDocumentType,
-                                      String identificationNumber, Job job){
+                                      String identificationNumber, String taxpayerNumber, Job job){
         Collaborator pessoa = new Collaborator(name, birthDate, admissionDate, address,
                 phoneNumber, email, identificationDocumentType,
-                identificationNumber, job);
+                identificationNumber, taxpayerNumber, job);
         if(!collaborators.contains(pessoa)){
+            collaborators.add(pessoa);
             return Optional.of(pessoa);
         }
         return Optional.empty();
@@ -35,6 +40,7 @@ public class CollaboratorRepository {
     }
 
     public Optional<ArrayList<Collaborator>> generateTeamProposal(int minTeamSize, int maxTeamSize, ArrayList<Skill> requiredSkills){
+        blacklistedTeamProposals = new ArrayList<>();
         ArrayList<Collaborator> teamProposal = new ArrayList<>();
         boolean impossible = false;
         while(true){

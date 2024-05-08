@@ -1,21 +1,30 @@
 package pt.ipp.isep.dei.esoft.project.application.controller;
 
-import pt.ipp.isep.dei.esoft.project.domain.GenerateMaintenanceReport;
+
+import pt.ipp.isep.dei.esoft.project.domain.CheckUp;
+import pt.ipp.isep.dei.esoft.project.domain.Vehicle;
+import pt.ipp.isep.dei.esoft.project.repository.CheckupRepository;
+import pt.ipp.isep.dei.esoft.project.repository.Repositories;
+
+import java.util.ArrayList;
+import java.util.Optional;
 
 public class GenerateMaintenanceReportController {
-    private GenerateMaintenanceReport reportGenerator;
-    private GenerateMaintenanceReportUI reportUI;
+    private CheckupRepository checkupRepository;
 
-    public GenerateMaintenanceReportController(GenerateMaintenanceReport reportGenerator, GenerateMaintenanceReportUI reportUI) {
-        this.reportGenerator = reportGenerator;
-        this.reportUI = reportUI;
+    public GenerateMaintenanceReportController() {
+        getCheckupRepository();
     }
 
-    public void generateReport() {
-        reportGenerator.generateReport();
+    private void getCheckupRepository() {
+        checkupRepository = Repositories.getInstance().getCheckupRepository();
     }
 
-    public void run() {
-        reportUI.displayMenu();
+    public Optional<ArrayList<Vehicle>> getVehiclesRequiringCheckup() {
+        return checkupRepository.getVehiclesRequiringCheckUp();
+    }
+
+    public Optional<CheckUp> getLatestCheckUpOfVehicle(Vehicle vehicle){
+        return checkupRepository.getLatestCheckUpOfVehicle(vehicle);
     }
 }

@@ -10,6 +10,10 @@ import java.util.Optional;
 public class TeamRepository {
     private ArrayList<Team> teams;
 
+    public TeamRepository() {
+        this.teams = new ArrayList<>();
+    }
+
     public Optional<Team> add(ArrayList<Collaborator> collaboratorList, ArrayList<Skill> skillList) {
         Team newTeam = new Team(collaboratorList, skillList);
 

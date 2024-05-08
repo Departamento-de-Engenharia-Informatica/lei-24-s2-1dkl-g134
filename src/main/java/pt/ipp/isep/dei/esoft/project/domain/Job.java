@@ -14,6 +14,9 @@ public class Job{
     }
 
     public Job(String name) {
+        if(name.isBlank() || name == null){
+            throw new IllegalArgumentException("Job name cannot be blank");
+        }
         this.name = name;
     }
 

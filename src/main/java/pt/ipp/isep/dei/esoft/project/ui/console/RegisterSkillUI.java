@@ -30,13 +30,12 @@ public class RegisterSkillUI implements Runnable {
         boolean input = Utils.confirm("Do you wish to proceed? (s or n):\n");
 
         if (input) {
-            System.out.println("Registration finalized\n");
             Optional<Skill> skill = ctrl.registerSkill(name);
             if (skill.isPresent()){
-                System.out.println("Skill registration successful.");
+                System.out.println("\nSkill registration successful.");
 
             } else {
-                System.out.printf("Invalid skill.");
+                System.out.println("\nError: Invalid skill. Skill registration aborted.");
 
             }
         } else {

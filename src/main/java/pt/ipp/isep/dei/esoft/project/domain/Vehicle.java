@@ -17,13 +17,15 @@ public class Vehicle {
                    int checkUpFrequency, String plateNumber, String type) {
         if (brand == null || model == null || registerDate == null ||
                 acquisitionDate == null || plateNumber == null || type == null ||
-                plateNumber.isEmpty() || brand.isEmpty() || model.isEmpty() || type.isEmpty()) {
+                plateNumber.isBlank() || brand.isBlank() || model.isBlank() || type.isBlank()) {
             throw new IllegalArgumentException("All fields must be filled");
         }
         if (grossWeight <= 0 || tare <= 0 || currentKM <= 0 || checkUpFrequency <= 0) {
             throw new IllegalArgumentException("Values must be greater than zero");
         }
-
+        if(!isValidDate(acquisitionDate) || !isValidDate(registerDate)) {
+            throw new IllegalArgumentException("Invalid date format. Please use 'YYYY/MM/DD'");
+        }
         this.brand = brand;
         this.model = model;
         this.tare = tare;
@@ -65,11 +67,10 @@ public class Vehicle {
 
     public int getTare() { return tare; }
 
-    public String getPlate() {
-        return "";
+    private boolean isValidDate(String date) {
+        String datePattern = "\\d{4}/\\d{2}/\\d{2}";
+        return date.matches(datePattern);
     }
-
-
 }
 
 

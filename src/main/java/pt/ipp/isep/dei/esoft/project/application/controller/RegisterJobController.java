@@ -17,11 +17,7 @@ public class RegisterJobController {
 
     }
 
-    public Optional<Job> registerSkill(String name) {
-        return jobRepository.add(name);
-    }
-
     public Optional<Job> registerJob(String name) {
-    return Optional.empty();
+    return jobRepository.add(name);
     }
 }

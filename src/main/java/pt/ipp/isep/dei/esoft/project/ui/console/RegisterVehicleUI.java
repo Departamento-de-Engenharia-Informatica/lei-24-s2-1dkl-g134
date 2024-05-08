@@ -22,16 +22,19 @@ public class RegisterVehicleUI {
     public void run(){
         System.out.println("\n >>>>>>>>>> REGISTER VEHICLE <<<<<<<<<< \n");
 
+        requestData();
+
+        submitData();
     }
     private void requestData(){
         brand = requestBrand();
         model = requestModel();
-        tare = Integer.parseInt(requestTare());
-        grossWeight = Double.parseDouble(requestGrossWeight());
-        currentKM = Integer.parseInt(requestCurrentKM());
+        tare = requestTare();
+        grossWeight = requestGrossWeight();
+        currentKM = requestCurrentKM();
         registerDate = requestRegisterDate();
         acquisitionDate = requestAcquisitionDate();
-        checkUpFrequency = Integer.parseInt(requestCheckUpFrequency());
+        checkUpFrequency = requestCheckUpFrequency();
         plateNumber = requestPlateNumber();
         type = requestType();
     }
@@ -55,20 +58,38 @@ public class RegisterVehicleUI {
         System.out.println("Model: ");
         return input.nextLine();
     }
-    private String requestTare(){
+    private int requestTare(){
         Scanner input = new Scanner(System.in);
-        System.out.println("Tare: ");
-        return input.nextLine();
+        while(true){
+            try{
+                System.out.println("Tare: ");
+                return input.nextInt();
+            }catch(Exception e){
+                System.out.println("Tare value must be a number.");
+            }
+        }
     }
-    private String requestGrossWeight(){
+    private double requestGrossWeight(){
         Scanner input = new Scanner(System.in);
-        System.out.println("Gross Weight: ");
-        return input.nextLine();
+        while(true){
+            try{
+                System.out.println("Gross Weight: ");
+                return input.nextDouble();
+            }catch(Exception e){
+                System.out.println("Gross Weight value must be a number.");
+            }
+        }
     }
-    private String requestCurrentKM(){
+    private int requestCurrentKM(){
         Scanner input = new Scanner(System.in);
-        System.out.println("Current KM: ");
-        return input.nextLine();
+        while(true){
+            try{
+                System.out.println("Current KM: ");
+                return input.nextInt();
+            }catch(Exception e){
+                System.out.println("Current KM value must be a number.");
+            }
+        }
     }
     private String requestRegisterDate(){
         Scanner input = new Scanner(System.in);
@@ -80,10 +101,16 @@ public class RegisterVehicleUI {
         System.out.println("Acquisition Date: ");
         return input.nextLine();
     }
-    private String requestCheckUpFrequency(){
+    private int requestCheckUpFrequency(){
         Scanner input = new Scanner(System.in);
-        System.out.println("Check Up Frequency: ");
-        return input.nextLine();
+        while(true){
+            try{
+                System.out.println("Checkup Frequency: ");
+                return input.nextInt();
+            }catch(Exception e){
+                System.out.println("Checkup Frequency value must be a number.");
+            }
+        }
     }
     private String requestPlateNumber(){
         Scanner input = new Scanner(System.in);

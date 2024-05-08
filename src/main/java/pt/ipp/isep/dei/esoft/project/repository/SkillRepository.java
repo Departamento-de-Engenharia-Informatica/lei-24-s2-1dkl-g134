@@ -3,12 +3,11 @@ package pt.ipp.isep.dei.esoft.project.repository;
 import pt.ipp.isep.dei.esoft.project.domain.Skill;
 
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
 
 public class SkillRepository {
 
-    private final List<Skill> skills;
+    private final ArrayList<Skill> skills;
 
     public SkillRepository() {
         this.skills = new ArrayList<>();
@@ -23,4 +22,10 @@ public class SkillRepository {
         return Optional.of(s);
     }
 
+    public Optional<ArrayList<Skill>> getSkillList() {
+        if(skills.isEmpty()) {
+            return Optional.empty();
+        }
+        return Optional.of(skills);
+    }
 }

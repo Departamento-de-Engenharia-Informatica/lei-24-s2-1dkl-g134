@@ -14,6 +14,9 @@ public class Skill {
     }
 
     public Skill(String name) {
+        if(name.isBlank() || name == null){
+            throw new IllegalArgumentException("Skill name cannot be blank");
+        }
         this.name = name;
     }
 

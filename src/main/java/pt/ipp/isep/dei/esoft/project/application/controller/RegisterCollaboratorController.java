@@ -29,10 +29,10 @@ public class RegisterCollaboratorController {
 
     public Optional<Collaborator> createCollaborator(String name, String birthDate,String admissionDate,String address,
                                                      String phoneNumber, String email, String identificationDocumentType,
-                                                     String identificationNumber, Job job){
+                                                     String identificationNumber, String taxpayerNumber, Job job){
         return collaboratorRepository.add( name,  birthDate, admissionDate, address,
                  phoneNumber,  email,  identificationDocumentType,
-                 identificationNumber,  job);
+                 identificationNumber, taxpayerNumber, job);
 
     }
     public Optional<ArrayList<Job>> getJobList(){

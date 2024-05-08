@@ -9,9 +9,15 @@ import java.util.Optional;
 public class VehicleRepository {
     private ArrayList<Vehicle> vehicles;
 
+    public VehicleRepository() {
+        this.vehicles = new ArrayList<>();
+    }
 
-    public ArrayList<Vehicle> getVehicleList() {
-        return vehicles;
+    public Optional<ArrayList<Vehicle>> getVehicleList() {
+        if(vehicles.isEmpty()) {
+            return Optional.empty();
+        }
+        return Optional.of(vehicles);
     }
 
     public Optional<Vehicle> add(String brand, String model, int tare, double grossWeight,

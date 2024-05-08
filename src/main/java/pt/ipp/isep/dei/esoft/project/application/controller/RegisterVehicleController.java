@@ -24,7 +24,4 @@ public class RegisterVehicleController {
                                      checkUpFrequency,  plateNumber,  type);
 
     }
-
-
-
 }

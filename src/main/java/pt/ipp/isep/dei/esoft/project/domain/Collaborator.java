@@ -12,15 +12,22 @@ public class Collaborator {
     private String phoneNumber;
     private String email;
     private String identificationDocumentType;
-
+    private String taxpayerNumber;
     private String identificationNumber;
     private Job job;
     private ArrayList<Skill> collaboratorSkills;
 
     public Collaborator(String name, String birthDate,String admissionDate,String address,
                         String phoneNumber, String email, String identificationDocumentType,
-                        String identificationNumber, Job job) {
-        // NEEDS LOCAL VALIDATION
+                        String identificationNumber, String taxpayerNumber, Job job) {
+        if(name.isBlank() || birthDate.isBlank() || admissionDate.isBlank() || address.isBlank()
+        || phoneNumber.isBlank() || email.isBlank() || identificationDocumentType.isBlank()
+        || identificationNumber.isBlank() || taxpayerNumber.isBlank()) {
+            throw new IllegalArgumentException("All fields must be filled in.");
+        }
+        if(!isValidDate(birthDate) || !isValidDate(admissionDate)) {
+            throw new IllegalArgumentException("Invalid date format. Please use 'YYYY/MM/DD'.");
+        }
         this.name = name;
         this.birthDate = birthDate;
         this.admissionDate = admissionDate;
@@ -29,6 +36,7 @@ public class Collaborator {
         this.email = email;
         this.identificationDocumentType = identificationDocumentType;
         this.identificationNumber = identificationNumber;
+        this.taxpayerNumber = taxpayerNumber;
         this.job = job;
         collaboratorSkills = new ArrayList<>();
     }
@@ -61,4 +69,9 @@ public class Collaborator {
     }
 
     public boolean hasSkill(Skill skill) {return collaboratorSkills.contains(skill);}
+
+    private boolean isValidDate(String date) {
+        String datePattern = "\\d{4}/\\d{2}/\\d{2}";
+        return date.matches(datePattern);
+    }
 }

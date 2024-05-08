@@ -1,11 +1,12 @@
 package pt.ipp.isep.dei.esoft.project.domain;
 
-import java.util.ArrayList;
+import pt.ipp.isep.dei.esoft.project.repository.Repositories;
 
 public class CheckUp {
     private Vehicle vehicle;
     private int currentKM;
     private String date;
+
     public Vehicle getVehicle() {return vehicle;}
 
     public int getCurrentKM() {return currentKM;}
@@ -25,8 +26,15 @@ public class CheckUp {
         this.vehicle = vehicle;
         this.currentKM = currentKM;
         this.date = date;
+        if(Repositories.getInstance().getVehicleRepository().getVehicleList().isPresent()){
+            if(!Repositories.getInstance().getVehicleRepository().getVehicleList().get().contains(vehicle)){
+                throw new IllegalArgumentException("Checkup vehicle does not exist.");
+            }
+        }else{
+            throw new IllegalArgumentException("No vehicles to assign checkup to.");
+        }
         if(currentKM<=0){
-            throw new IllegalArgumentException("value must be greater than 0");
+            throw new IllegalArgumentException("Current KM value must be greater than 0");
         }
         if (!isValidDate(date)) {
             throw new IllegalArgumentException("Invalid date format. Please use 'YYYY/MM/DD'.");

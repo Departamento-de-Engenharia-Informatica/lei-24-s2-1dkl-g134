@@ -30,14 +30,12 @@ public class RegisterJobUI implements Runnable {
         boolean input = Utils.confirm("Do you wish to proceed? (s or n):\n");
 
         if (input) {
-            System.out.println("Registration finalized\n");
             Optional<Job> job = ctrl.registerJob(name);
             if (job.isPresent()){
-                System.out.println("Job registration successful.");
+                System.out.println("\nJob registration successful.");
 
             } else {
-                System.out.printf("Invalid Job.");
-
+                System.out.println("\nError: Invalid Job. Job registration aborted.");
             }
         } else {
             System.out.println("Cancelling registration\n");

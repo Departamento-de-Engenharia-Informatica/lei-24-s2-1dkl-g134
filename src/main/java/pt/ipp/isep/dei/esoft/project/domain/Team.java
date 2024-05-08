@@ -10,6 +10,8 @@ public class Team {
         if(!teamMembers.isEmpty() && !teamSkills.isEmpty()) {
             this.teamMembers = teamMembers;
             this.teamSkills = teamSkills;
+        }else{
+            throw new IllegalArgumentException("Team must contain at least one collaborator and at least one skill");
         }
     }
 
@@ -18,15 +20,16 @@ public class Team {
     @Override
     public boolean equals(Object o){
         Team newTeam = (Team) o;
-        boolean discrepancyFound = false;
         ArrayList<Collaborator> newTeamMembers = newTeam.getTeamMembers();
         if(newTeamMembers.size() == teamMembers.size()){
             for(Collaborator member : teamMembers){
                 if(!newTeamMembers.contains(member)){
-                    discrepancyFound = true;
+                    return false;
                 }
             }
+            return true;
+        }else{
+            return false;
         }
-        return false;
     }
 }
