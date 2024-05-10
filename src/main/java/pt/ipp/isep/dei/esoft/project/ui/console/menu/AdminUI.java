@@ -1,9 +1,7 @@
 package pt.ipp.isep.dei.esoft.project.ui.console.menu;
 
 
-import pt.ipp.isep.dei.esoft.project.ui.console.CreateTaskUI;
-import pt.ipp.isep.dei.esoft.project.ui.console.RegisterSkillUI;
-import pt.ipp.isep.dei.esoft.project.ui.console.ShowTextUI;
+import pt.ipp.isep.dei.esoft.project.ui.console.*;
 import pt.ipp.isep.dei.esoft.project.ui.console.utils.Utils;
 
 import java.util.ArrayList;
@@ -19,10 +17,14 @@ public class AdminUI implements Runnable {
 
     public void run() {
         List<MenuItem> options = new ArrayList<MenuItem>();
-        options.add(new MenuItem("Create Task", new CreateTaskUI()));
         options.add(new MenuItem("Register Skill", new RegisterSkillUI()));
-        options.add(new MenuItem("Option 3", new ShowTextUI("You have chosen Option 3.")));
-        options.add(new MenuItem("Option 4", new ShowTextUI("You have chosen Option 4.")));
+        options.add(new MenuItem("Register Job", new RegisterJobUI()));
+        options.add(new MenuItem("Register Collaborator", new RegisterCollaboratorUI()));
+        options.add(new MenuItem("Assign Skills To Collaborator", new AssignSkillsToCollaboratorUI()));
+        options.add(new MenuItem("Generate Teams", new GenerateTeamUI()));
+        options.add(new MenuItem("Register Vehicle", new RegisterVehicleUI()));
+        options.add(new MenuItem("Register Vehicle Checkup", new RegisterVehicleCheckupUI()));
+        options.add(new MenuItem("List Vehicles Requiring Checkup", new GenerateMaintenanceReportUI()));
 
         int option = 0;
         do {

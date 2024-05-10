@@ -2,11 +2,14 @@ package pt.ipp.isep.dei.esoft.project.ui.console;
 
 import pt.ipp.isep.dei.esoft.project.application.controller.RegisterVehicleController;
 import pt.ipp.isep.dei.esoft.project.domain.Vehicle;
+import pt.ipp.isep.dei.esoft.project.ui.console.utils.Utils;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Optional;
 import java.util.Scanner;
 
-public class RegisterVehicleUI {
+public class RegisterVehicleUI implements Runnable {
     private String brand;
     private String model;
     private int tare;
@@ -63,7 +66,7 @@ public class RegisterVehicleUI {
         while(true){
             try{
                 System.out.println("Tare: ");
-                return input.nextInt();
+                return Integer.parseInt(input.nextLine());
             }catch(Exception e){
                 System.out.println("Tare value must be a number.");
             }
@@ -74,7 +77,7 @@ public class RegisterVehicleUI {
         while(true){
             try{
                 System.out.println("Gross Weight: ");
-                return input.nextDouble();
+                return Double.parseDouble(input.nextLine());
             }catch(Exception e){
                 System.out.println("Gross Weight value must be a number.");
             }
@@ -85,28 +88,28 @@ public class RegisterVehicleUI {
         while(true){
             try{
                 System.out.println("Current KM: ");
-                return input.nextInt();
+                return Integer.parseInt(input.nextLine());
             }catch(Exception e){
                 System.out.println("Current KM value must be a number.");
             }
         }
     }
     private String requestRegisterDate(){
-        Scanner input = new Scanner(System.in);
-        System.out.println("Register Date: ");
-        return input.nextLine();
+        Date date = Utils.readDateFromConsole("Register Date: ");
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy/MM/dd");
+        return formatter.format(date);
     }
     private String requestAcquisitionDate(){
-        Scanner input = new Scanner(System.in);
-        System.out.println("Acquisition Date: ");
-        return input.nextLine();
+        Date date = Utils.readDateFromConsole("Acquisition Date: ");
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy/MM/dd");
+        return formatter.format(date);
     }
     private int requestCheckUpFrequency(){
         Scanner input = new Scanner(System.in);
         while(true){
             try{
                 System.out.println("Checkup Frequency: ");
-                return input.nextInt();
+                return Integer.parseInt(input.nextLine());
             }catch(Exception e){
                 System.out.println("Checkup Frequency value must be a number.");
             }

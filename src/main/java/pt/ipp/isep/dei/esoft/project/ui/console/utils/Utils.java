@@ -61,12 +61,13 @@ public class Utils {
             try {
                 String strDate = readLineFromConsole(prompt);
 
-                SimpleDateFormat df = new SimpleDateFormat("dd-MM-yyyy");
+                SimpleDateFormat df = new SimpleDateFormat("yyyy/MM/dd");
 
                 Date date = df.parse(strDate);
 
                 return date;
             } catch (ParseException ex) {
+                System.out.println("Error: Invalid date. Make sure to use YYYY/MM/DD and that the year, month, and day values are valid.");
                 Logger.getLogger(Utils.class.getName()).log(Level.SEVERE, null, ex);
             }
         } while (true);

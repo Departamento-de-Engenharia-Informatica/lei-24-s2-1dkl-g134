@@ -42,6 +42,7 @@ public class Collaborator {
     }
 
     public String getIdentificationNumber() {return identificationNumber;}
+    public String getName() {return name;}
 
     @Override
     public boolean equals(Object o) {
@@ -57,7 +58,7 @@ public class Collaborator {
         boolean anySkillAssigned = false;
         for(Skill skill : skillList){
             if(!hasSkill(skill)){
-                skillList.add(skill);
+                collaboratorSkills.add(skill);
                 assignedSkills.add(skill);
                 anySkillAssigned = true;
             }

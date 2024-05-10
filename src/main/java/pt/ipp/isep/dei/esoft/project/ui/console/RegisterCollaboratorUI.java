@@ -3,12 +3,15 @@ package pt.ipp.isep.dei.esoft.project.ui.console;
 import pt.ipp.isep.dei.esoft.project.application.controller.RegisterCollaboratorController;
 import pt.ipp.isep.dei.esoft.project.domain.Collaborator;
 import pt.ipp.isep.dei.esoft.project.domain.Job;
+import pt.ipp.isep.dei.esoft.project.ui.console.utils.Utils;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Optional;
 import java.util.Scanner;
 
-public class RegisterCollaboratorUI {
+public class RegisterCollaboratorUI implements Runnable {
     private String name;
     private String birthDate;
     private String admissionDate;
@@ -57,15 +60,15 @@ public class RegisterCollaboratorUI {
         return input.nextLine();
     }
     private String requestBirthDate() {
-        Scanner input = new Scanner(System.in);
-        System.out.print("Birth Date: ");
-        return input.nextLine();
+        Date date = Utils.readDateFromConsole("Birth Date: ");
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy/MM/dd");
+        return formatter.format(date);
     }
 
     private String requestAdmissionDate() {
-        Scanner input = new Scanner(System.in);
-        System.out.print("Admission date: ");
-        return input.nextLine();
+        Date date = Utils.readDateFromConsole("Admission Date: ");
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy/MM/dd");
+        return formatter.format(date);
     }
     private String requestAddress() {
         Scanner input = new Scanner(System.in);
@@ -113,7 +116,7 @@ public class RegisterCollaboratorUI {
         while(true){
             try{
                 System.out.println("Choose a number corresponding to a job.");
-                option = input.nextInt();
+                option = Integer.parseInt(input.nextLine());
                 if(option <= 0 || option > jobs.get().size()){
                     System.out.println("Error: Invalid option.");
                     continue;

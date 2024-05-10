@@ -16,7 +16,23 @@ public class TeamRepository {
 
     public Optional<Team> add(ArrayList<Collaborator> collaboratorList, ArrayList<Skill> skillList) {
         Team newTeam = new Team(collaboratorList, skillList);
-
+        Repositories.getInstance().getCollaboratorRepository().resetLists();
+        if(teams.contains(newTeam)) {
+            return Optional.empty();
+        }
+        teams.add(newTeam);
         return Optional.of(newTeam);
+    }
+
+    public ArrayList<Collaborator> getAllCollaboratorsInTeams(){
+        ArrayList<Collaborator> collaboratorsInTeams = new ArrayList<>();
+        for(Team team : teams) {
+            for(Collaborator collaborator : team.getTeamMembers()){
+                if(!collaboratorsInTeams.contains(collaborator)) {
+                    collaboratorsInTeams.add(collaborator);
+                }
+            }
+        }
+        return collaboratorsInTeams;
     }
 }

@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.Optional;
 import java.util.Scanner;
 
-public class GenerateMaintenanceReportUI {
+public class GenerateMaintenanceReportUI implements Runnable {
     private GenerateMaintenanceReportController controller = new GenerateMaintenanceReportController();
 
     public void run(){
