@@ -2,12 +2,11 @@ package pt.ipp.isep.dei.esoft.project.ui.console;
 
 import pt.ipp.isep.dei.esoft.project.application.controller.RegisterVehicleCheckupController;
 import pt.ipp.isep.dei.esoft.project.domain.CheckUp;
+import pt.ipp.isep.dei.esoft.project.domain.CustomDate;
 import pt.ipp.isep.dei.esoft.project.domain.Vehicle;
 import pt.ipp.isep.dei.esoft.project.ui.console.utils.Utils;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.Optional;
 import java.util.Scanner;
 
@@ -17,14 +16,23 @@ public class RegisterVehicleCheckupUI implements Runnable {
     private String date;
     private RegisterVehicleCheckupController registerVehicleCheckupController = new RegisterVehicleCheckupController();
 
+    /**
+     * Run this functionality.
+     */
     public void run(){
         System.out.println("\n >>>>>>>>>> REGISTER VEHICLE CHECKUP <<<<<<<<<< \n");
-
-        requestData();
-        if(vehicle == null){ return; }
-        submitData();
+        while(true){
+            requestData();
+            if(vehicle == null){ return; }
+            if(!confirmData()){continue;}
+            submitData();
+            break;
+        }
     }
 
+    /**
+     * Request all necessary data and save it to its respective variables.
+     */
     private void requestData(){
         vehicle = requestVehicle();
         if(vehicle == null){ return; }
@@ -32,6 +40,10 @@ public class RegisterVehicleCheckupUI implements Runnable {
         date = requestDate();
     }
 
+    /**
+     * Requests the checkup's vehicle.
+     * @return The checkup's vehicle.
+     */
     private Vehicle requestVehicle(){
         Scanner input = new Scanner(System.in);
         Optional<ArrayList<Vehicle>> vehicles = registerVehicleCheckupController.getVehicleList();
@@ -41,7 +53,7 @@ public class RegisterVehicleCheckupUI implements Runnable {
         }
         System.out.println("Choose a vehicle from the following list of their respective plate numbers:\n");
         for(int i = 0; i < vehicles.get().size(); i++){
-            System.out.println((i+1) + "- "+vehicles.get().get(i).getPlateNumber());
+            System.out.println((i+1) + "- "+vehicles.get().get(i).toString());
         }
 
         int option = 0;
@@ -61,6 +73,10 @@ public class RegisterVehicleCheckupUI implements Runnable {
         return vehicles.get().get(option-1);
     }
 
+    /**
+     * Requests the checkup's current km.
+     * @return The checkup's current km.
+     */
     private int requestCurrentKM(){
         Scanner input = new Scanner(System.in);
         while(true){
@@ -73,18 +89,45 @@ public class RegisterVehicleCheckupUI implements Runnable {
         }
     }
 
+    /**
+     * Requests the checkup's date.
+     * @return The checkup's date.
+     */
     private String requestDate(){
-        Date date = Utils.readDateFromConsole("Current Date: ");
+        Scanner input = new Scanner(System.in);
+        System.out.print("Checkup Date: ");
+        return input.nextLine();
+        /*CustomDate date = Utils.readDateFromConsole("Current Date: ");
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy/MM/dd");
-        return formatter.format(date);
+        return date.toString();*/
     }
 
+    /**
+     * Confirm user inputs and selections.
+     * @return A boolean value describing if the user confirms their selection.
+     */
+    private boolean confirmData(){
+        System.out.println("\n>>>>>>>>>> CHECKUP INFORMATION <<<<<<<<<< \n");
+        System.out.println("Vehicle: " + vehicle.toString());
+        System.out.println("Current KM: " + currentKM);
+        System.out.println("Date: " + date);
+        return Utils.confirm("Do you wish to proceed? (s or n)");
+    }
+
+    /**
+     * Submit the inputted data and provide the respective feedback.
+     */
     private void submitData(){
-        Optional<CheckUp> newCheckUp = registerVehicleCheckupController.registerCheckup(vehicle, currentKM, date);
-        if (newCheckUp.isEmpty()){
+        try{
+            Optional<CheckUp> newCheckUp = registerVehicleCheckupController.registerCheckup(vehicle, currentKM, date);
+            if (newCheckUp.isEmpty()){
+                System.out.println("Failed to add new check up! Are you sure the checkup date or kms are correct?");
+            } else {
+                System.out.println("Check up added successfully!");
+            }
+        }catch(Exception e){
             System.out.println("Failed to add new check up!");
-        } else {
-            System.out.println("Check up added successfully!");
+            System.out.println(e.getMessage());
         }
     }
 }

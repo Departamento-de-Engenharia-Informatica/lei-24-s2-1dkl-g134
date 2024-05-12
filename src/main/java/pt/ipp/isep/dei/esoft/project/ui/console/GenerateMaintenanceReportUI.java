@@ -10,6 +10,9 @@ import java.util.Scanner;
 public class GenerateMaintenanceReportUI implements Runnable {
     private GenerateMaintenanceReportController controller = new GenerateMaintenanceReportController();
 
+    /**
+     * Run this functionality.
+     */
     public void run(){
         System.out.println("\n >>>>>>>>>> LIST OF VEHICLES REQUIRING CHECKUP <<<<<<<<<< \n");
 
@@ -28,9 +31,8 @@ public class GenerateMaintenanceReportUI implements Runnable {
             + vehicle.getCurrentKM() + " | " + vehicle.getCheckUpFrequency() + " | " + lastCheckupKm
             + " | " + (lastCheckupKm + vehicle.getCheckUpFrequency()));
         }
-        System.out.println("\nPress ENTER to continue.");
         Scanner in = new Scanner(System.in);
+        System.out.println("\nPress ENTER to continue.");
         in.nextLine();
-        in.close();
     }
 }

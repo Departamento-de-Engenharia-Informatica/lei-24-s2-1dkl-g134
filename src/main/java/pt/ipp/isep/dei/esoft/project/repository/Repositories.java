@@ -15,7 +15,10 @@ public class Repositories {
     private final CheckupRepository checkupRepository;
     private final TeamRepository teamRepository;
 
-
+    /**
+     * Constructor for the Repositories class.
+     * All this does is initialize every repository.
+     */
     private Repositories() {
         organizationRepository = new OrganizationRepository();
         taskCategoryRepository = new TaskCategoryRepository();
@@ -28,6 +31,10 @@ public class Repositories {
         teamRepository = new TeamRepository();
     }
 
+    /**
+     * Gets the existing instance of the Repositories class.
+     * @return The instance of Repositories.
+     */
     public static Repositories getInstance() {
         if (instance == null) {
             synchronized (Repositories.class) {
@@ -41,6 +48,10 @@ public class Repositories {
         return organizationRepository;
     }
 
+    /**
+     * Gets the skill repository.
+     * @return The SkillRepository object.
+     */
     public SkillRepository getSkillRepository() {return skillRepository; }
 
     public TaskCategoryRepository getTaskCategoryRepository() {
@@ -50,9 +61,34 @@ public class Repositories {
     public AuthenticationRepository getAuthenticationRepository() {
         return authenticationRepository;
     }
+
+    /**
+     * Gets the collaborator repository.
+     * @return The CollaboratorRepository object.
+     */
     public CollaboratorRepository getCollaboratorRepository(){ return  collaboratorRepository;}
+
+    /**
+     * Gets the job repository.
+     * @return The JobRepository object.
+     */
     public JobRepository getJobRepository(){ return jobRepository;}
+
+    /**
+     * Gets the vehicle repository.
+     * @return The VehicleRepository object.
+     */
     public  VehicleRepository getVehicleRepository(){ return vehicleRepository;}
+
+    /**
+     * Gets the team repository.
+     * @return The TeamRepository object.
+     */
     public TeamRepository getTeamRepository(){ return teamRepository;}
+
+    /**
+     * Gets the checkup repository.
+     * @return The CheckupRepository object.
+     */
     public CheckupRepository getCheckupRepository(){ return checkupRepository;}
 }

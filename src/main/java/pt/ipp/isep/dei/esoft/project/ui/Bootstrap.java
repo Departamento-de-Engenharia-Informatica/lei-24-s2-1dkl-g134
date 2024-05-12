@@ -5,6 +5,7 @@ import pt.ipp.isep.dei.esoft.project.domain.*;
 import pt.ipp.isep.dei.esoft.project.repository.*;
 
 import java.util.ArrayList;
+import java.util.Optional;
 
 public class Bootstrap implements Runnable {
 
@@ -14,6 +15,7 @@ public class Bootstrap implements Runnable {
         addOrganization();
         addUsers();
         addWorkforce();
+        addFleet();
     }
 
     private void addOrganization() {
@@ -67,22 +69,22 @@ public class Bootstrap implements Runnable {
         Skill skill7 = skillRepository.add("Style").get();
         Skill skill8 = skillRepository.add("Communication").get();
         Job job = jobRepository.add("Member").get();
-        Collaborator collaborator1 = collaboratorRepository.add("Roger", "2005/05/22", "2020/04/25", "His house, duh",
+        Collaborator collaborator1 = collaboratorRepository.add("Roger", "2005/05/22", "2023/05/22", "His house, duh",
         "960144802", "roger@is.real", "CC", "15017807", "256", job).get();
-        Collaborator collaborator2 = collaboratorRepository.add("Emily", "2005/05/22", "2020/04/25", "Her house, duh",
-        "960144802", "roger@is.real", "CC", "15017808", "256", job).get();
-        Collaborator collaborator3 = collaboratorRepository.add("Exas", "2005/05/22", "2020/04/25", "Their house, duh",
-        "960144802", "roger@is.real", "CC", "15017809", "256", job).get();
-        Collaborator collaborator4 = collaboratorRepository.add("Stanley", "2005/05/22", "2020/04/25", "The bucket",
-        "960144802", "roger@is.real", "CC", "427", "256", job).get();
-        Collaborator collaborator5 = collaboratorRepository.add("Narrator", "2005/05/22", "2020/04/25", "Stanley",
-        "960144802", "roger@is.real", "CC", "8888", "256", job).get();
-        Collaborator collaborator6 = collaboratorRepository.add("Bucket", "2005/05/22", "2020/04/25", "The universe",
-        "960144802", "roger@is.real", "CC", "3", "256", job).get();
-        Collaborator collaborator7 = collaboratorRepository.add("Coleman", "2005/05/22", "2020/04/25", "The girls and the gays",
-        "960144802", "roger@is.real", "CC", "69420", "256", job).get();
-        Collaborator collaborator8 = collaboratorRepository.add("Daniel", "2005/05/22", "2020/04/25", "The Irish Casino",
-        "960144802", "roger@is.real", "CC", "777", "256", job).get();
+        Collaborator collaborator2 = collaboratorRepository.add("Emily", "2005/05/22", "2023/05/22", "Her house, duh",
+        "960144802", "emily@is.real", "CC", "15017808", "256", job).get();
+        Collaborator collaborator3 = collaboratorRepository.add("Exas", "2005/05/22", "2023/05/22", "Their house, duh",
+        "960144802", "exas@is.real", "CC", "15017809", "256", job).get();
+        Collaborator collaborator4 = collaboratorRepository.add("Stanley", "2005/05/22", "2023/05/22", "The bucket",
+        "960144802", "the@stanley.parable", "CC", "427", "256", job).get();
+        Collaborator collaborator5 = collaboratorRepository.add("Narrator", "2005/05/22", "2023/05/22", "Stanley",
+        "960144802", "will@never.end", "CC", "8888", "256", job).get();
+        Collaborator collaborator6 = collaboratorRepository.add("Bucket", "2005/05/22", "2023/05/22", "The universe",
+        "960144802", "the@reassurance.bucket", "CC", "3", "256", job).get();
+        Collaborator collaborator7 = collaboratorRepository.add("Coleman", "2005/05/22", "2023/05/22", "The girls and the gays",
+        "960144802", "coleslaw@poeslaw.coleman", "CC", "1337", "256", job).get();
+        Collaborator collaborator8 = collaboratorRepository.add("Daniel", "2005/05/22", "2023/05/22", "The Irish Casino",
+        "960144802", "rumble@tumble.games", "CC", "777", "256", job).get();
         ArrayList<Skill> collabSkills = new ArrayList<>();
         collabSkills.add(skill1);
         collabSkills.add(skill3);
@@ -143,5 +145,18 @@ public class Bootstrap implements Runnable {
         //Roger - Emily - Stanley - Exas - Bucket ----------- DONE
         //Roger - Emily - Coleman - Stanley - Bucket ------------ DONE
         //Roger - Emily - Coleman - Exas - Stanley ----------- DONE
+    }
+
+    public void addFleet(){
+        VehicleRepository vehicleRepository = Repositories.getInstance().getVehicleRepository();
+        CheckupRepository checkupRepository = Repositories.getInstance().getCheckupRepository();
+        Vehicle vehicle = vehicleRepository.add("Ford", "T", 5000, 2500.0,3000,
+        "2010/04/25", "2009/04/25", 500, "H3LL0", "Car").get();
+        vehicleRepository.add("Ford", "X", 5000, 2500.0,1000,
+        "2010/04/25", "2009/04/25", 750, "G00DBY3", "Truck");
+        vehicleRepository.add("The USSR", "Stalin", 5000, 2500.0,1000,
+        "2010/04/25", "2009/04/25", 1010, "CCCP", "Tank");
+        vehicleRepository.add("The US", "F1", 5000, 2500.0,2000,
+        "2010/04/25", "2009/04/25", 5000, "0407", "Jet");
     }
 }

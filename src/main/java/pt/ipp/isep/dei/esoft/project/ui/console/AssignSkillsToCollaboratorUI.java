@@ -3,6 +3,7 @@ package pt.ipp.isep.dei.esoft.project.ui.console;
 import pt.ipp.isep.dei.esoft.project.application.controller.AssignSkillsToCollaboratorController;
 import pt.ipp.isep.dei.esoft.project.domain.Collaborator;
 import pt.ipp.isep.dei.esoft.project.domain.Skill;
+import pt.ipp.isep.dei.esoft.project.ui.console.utils.Utils;
 
 import java.util.ArrayList;
 import java.util.Optional;
@@ -13,20 +14,34 @@ public class AssignSkillsToCollaboratorUI implements Runnable {
     private ArrayList<Skill> selectedSkills = null;
     private AssignSkillsToCollaboratorController controller = new AssignSkillsToCollaboratorController();
 
+    /**
+     * Run this functionality.
+     */
     public void run(){
         System.out.println("\n >>>>>>>>>> ASSIGN SKILLS TO COLLABORATOR <<<<<<<<<< \n");
 
-        requestData();
-        if(collaborator == null || selectedSkills == null){ return; }
-        submitData();
+        while(true){
+            requestData();
+            if(collaborator == null || selectedSkills == null){ return; }
+            if(!confirmData()){continue;}
+            submitData();
+            break;
+        }
     }
 
+    /**
+     * Request all necessary data and save it to its respective variables.
+     */
     private void requestData(){
         collaborator = requestCollaborator();
         if(collaborator == null){ return; }
         selectedSkills = requestSkills();
     }
 
+    /**
+     * Requests the collaborator to assign skills to.
+     * @return The collaborator to assign skills to.
+     */
     private Collaborator requestCollaborator(){
         Scanner input = new Scanner(System.in);
         Optional<ArrayList<Collaborator>> collaborators = controller.getCollaboratorList();
@@ -36,7 +51,7 @@ public class AssignSkillsToCollaboratorUI implements Runnable {
         }
         System.out.println("Choose a collaborator from the following list (Name | ID number):\n");
         for(int i = 0; i < collaborators.get().size(); i++){
-            System.out.println((i+1) + "- "+collaborators.get().get(i).getName() + " | "+collaborators.get().get(i).getIdentificationNumber());
+            System.out.println((i+1) + "- "+collaborators.get().get(i).toString());
         }
         int option = 0;
         while(true){
@@ -55,6 +70,10 @@ public class AssignSkillsToCollaboratorUI implements Runnable {
         return collaborators.get().get(option-1);
     }
 
+    /**
+     * Requests the list of skills to assign.
+     * @return The list of skills to assign.
+     */
     private ArrayList<Skill> requestSkills(){
         ArrayList<Skill> userSkillSelection = new ArrayList<>();
         Scanner input = new Scanner(System.in);
@@ -67,9 +86,9 @@ public class AssignSkillsToCollaboratorUI implements Runnable {
             System.out.println("Choose skills from the following list (to remove a selected skill, choose it again):\n");
             for(int i = 0; i < skills.get().size(); i++){
                 if(userSkillSelection.contains(skills.get().get(i))){
-                    System.out.println((i+1) + "- "+skills.get().get(i).getName()+" (Selected)");
+                    System.out.println((i+1) + "- "+skills.get().get(i).toString()+" (Selected)");
                 }else{
-                    System.out.println((i+1) + "- "+skills.get().get(i).getName());
+                    System.out.println((i+1) + "- "+skills.get().get(i).toString());
                 }
             }
             int option = 0;
@@ -98,16 +117,39 @@ public class AssignSkillsToCollaboratorUI implements Runnable {
         }
     }
 
-    private void submitData(){
-        Optional<ArrayList<Skill>> assignedSkills = controller.assignSkillsToCollaborator(selectedSkills, collaborator);
-        if(assignedSkills.isPresent()){
-            System.out.println("The following skills were assigned successfully:");
-            for(Skill skill : assignedSkills.get()){
-                System.out.println(skill.getName());
-            }
-            System.out.println("If any selected skill is missing from this list, it was either invalid or already present in the collaborator.");
-        }else{
-            System.out.println("Failed to assign skills successfully! Are you sure the selected collaborator doesn't already have these skills?");
+    /**
+     * Confirm user inputs and selections.
+     * @return A boolean value describing if the user confirms their selection.
+     */
+    private boolean confirmData(){
+        System.out.println("\n>>>>>>>>>> ASSIGNMENT INFORMATION <<<<<<<<<< \n");
+        System.out.println("Assign the following skills: ");
+        for(Skill skill : selectedSkills){
+            System.out.println(skill.toString());
         }
+        System.out.println("\nTo the collaborator "+collaborator.toString());
+        return Utils.confirm("Do you wish to proceed? (s or n)");
+    }
+
+    /**
+     * Submit the inputted data and provide the respective feedback.
+     */
+    private void submitData(){
+        try{
+            Optional<ArrayList<Skill>> assignedSkills = controller.assignSkillsToCollaborator(selectedSkills, collaborator);
+            if(assignedSkills.isPresent()){
+                System.out.println("The following skills were assigned successfully:");
+                for(Skill skill : assignedSkills.get()){
+                    System.out.println(skill.getName());
+                }
+                System.out.println("If any selected skill is missing from this list, it was either invalid or already present in the collaborator.");
+            }else{
+                System.out.println("Failed to assign skills successfully! Are you sure the selected collaborator doesn't already have these skills?");
+            }
+        }catch(Exception e){
+            System.out.println("Failed to assign skills successfully!");
+            System.out.println(e.getMessage());
+        }
+
     }
 }

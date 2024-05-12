@@ -1,9 +1,12 @@
 package pt.ipp.isep.dei.esoft.project.ui.console.utils;
 
+import pt.ipp.isep.dei.esoft.project.domain.CustomDate;
+
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
@@ -56,19 +59,17 @@ public class Utils {
         } while (true);
     }
 
-    static public Date readDateFromConsole(String prompt) {
+    static public CustomDate readDateFromConsole(String prompt) {
         do {
             try {
                 String strDate = readLineFromConsole(prompt);
 
-                SimpleDateFormat df = new SimpleDateFormat("yyyy/MM/dd");
-
-                Date date = df.parse(strDate);
+                CustomDate date = new CustomDate(strDate);
 
                 return date;
-            } catch (ParseException ex) {
-                System.out.println("Error: Invalid date. Make sure to use YYYY/MM/DD and that the year, month, and day values are valid.");
-                Logger.getLogger(Utils.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (Exception e) {
+                System.out.println(e.getMessage());
+                Logger.getLogger(Utils.class.getName()).log(Level.SEVERE, null, e);
             }
         } while (true);
     }

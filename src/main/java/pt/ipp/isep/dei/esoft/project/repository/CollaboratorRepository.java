@@ -11,6 +11,10 @@ public class CollaboratorRepository {
     private ArrayList<Collaborator> collaboratorBlacklist;
     private ArrayList<Collaborator> collaboratorWhitelist;
 
+    /**
+     * Constructor for a new collaborator repository.
+     * All this does is initialize the lists in this repository.
+     */
     public CollaboratorRepository() {
         this.collaborators = new ArrayList<>();
         this.blacklistedTeamProposals = new ArrayList<>();
@@ -18,6 +22,22 @@ public class CollaboratorRepository {
         this.collaboratorWhitelist = new ArrayList<>();
     }
 
+    /**
+     * Adds a new collaborator to this repository.
+     * If the collaborator is equal to any other collaborator in the repository, no collaborator is added.
+     * Check the documentation of collaborator.equals() for the criteria of such.
+     * @param name A String representing the collaborator's name
+     * @param birthDate A String representing the collaborator's birthdate.
+     * @param admissionDate A String representing the collaborator's admission date.
+     * @param address A String representing the collaborator's address.
+     * @param phoneNumber A String representing the collaborator's phone number.
+     * @param email A String representing the collaborator's email.
+     * @param identificationDocumentType A String representing the collaborator's ID document type.
+     * @param identificationNumber A String representing the collaborator's ID number.
+     * @param taxpayerNumber A String representing the collaborator's taxpayer number.
+     * @param job A Job object representing the collaborator's job.
+     * @return If a collaborator was added, the added collaborator. Otherwise, an empty Optional object.
+     */
     public Optional<Collaborator> add(String name, String birthDate,String admissionDate,String address,
                                       String phoneNumber, String email, String identificationDocumentType,
                                       String identificationNumber, String taxpayerNumber, Job job){
@@ -31,10 +51,22 @@ public class CollaboratorRepository {
         return Optional.empty();
     }
 
+    /**
+     * Assigns a number of skills to a collaborator.
+     * This method receives a list of skills, but will only assign those that are not already present
+     * on the collaborator's list of skills.
+     * @param  collaborator The collaborator to add the skills to.
+     * @param skills The list of skills to assign to the collaborator.
+     * @return The list of skills actually assigned to the collaborator.
+     */
     public Optional<ArrayList<Skill>> assignSkillsToCollaborator(Collaborator collaborator, ArrayList<Skill> skills) {
         return collaborators.get(collaborators.indexOf(collaborator)).assignSkills(skills);
     }
 
+    /**
+     * Returns the list of all collaborators in the repository.
+     * @return The list of all collaborators in the repository
+     */
     public Optional<ArrayList<Collaborator>> getCollaboratorList() {
         if(collaborators.isEmpty()){
             return Optional.empty();
@@ -42,6 +74,16 @@ public class CollaboratorRepository {
         return Optional.of(collaborators);
     }
 
+    /**
+     * Generates a team proposal. If no proposal is found, returns an empty Optional object.
+     * Refer to comments in this method's (and methods called by it) source code for further
+     * information.
+     * @param minTeamSize The team's minimum size.
+     * @param maxTeamSize The team's maximum size.
+     * @param requiredSkills The required skills for that team's composition.
+     * @return A list of collaborators forming a valid team proposal, if any could be found.
+     * If not, an empty Optional object.
+     */
     public Optional<ArrayList<Collaborator>> generateTeamProposal(int minTeamSize, int maxTeamSize, ArrayList<Skill> requiredSkills){
         if(collaboratorWhitelist.isEmpty() && collaboratorBlacklist.isEmpty()){
             ArrayList<Skill> requiredSkillsNoDuplicates = new ArrayList<>();
@@ -66,6 +108,15 @@ public class CollaboratorRepository {
         return generationAlgorithm(minTeamSize, maxTeamSize, requiredSkills);
     }
 
+    /**
+     * Generates a new valid team proposal. If none is found, returns an empty Optional object.
+     * Refer to the comments in this method's source code for further information.
+     * @param minTeamSize The minimum size of the team.
+     * @param maxTeamSize The maximum size of the team.
+     * @param requiredSkills The full list of skills required for the makeup of the team.
+     * @return The list of collaborators that form the team proposal, if any was found. If not, an
+     * empty Optional object.
+     */
     private Optional<ArrayList<Collaborator>> generationAlgorithm(int minTeamSize, int maxTeamSize, ArrayList<Skill> requiredSkills){
         ArrayList<TeamMember> teamProposal = new ArrayList<>();
         ArrayList<Skill> requiredSkillsCopy = new ArrayList<>();
@@ -213,6 +264,12 @@ public class CollaboratorRepository {
         return Optional.of(teamMembers);
     }
 
+    /**
+     * Checks if the list of collaborators passed to this method forms a currently blacklisted team.
+     * The order of the collaborators in the list does not matter.
+     * @param proposal The list of collaborators that form the team to be checked.
+     * @return A boolean value describing if the specified team is blacklisted.
+     */
     private boolean isProposalBlacklisted(ArrayList<Collaborator> proposal){
         for(ArrayList<Collaborator> blacklistMember : blacklistedTeamProposals){
             boolean discrepancyFound = false;
@@ -231,6 +288,11 @@ public class CollaboratorRepository {
         return false;
     }
 
+    /**
+     * Gets the list of collaborators that have the specified skill.
+     * @param skill The skill to search for.
+     * @return The list of collaborators that have that skill.
+     */
     private Optional<ArrayList<Collaborator>> getAllCollaboratorsWithSkill(Skill skill){
         ArrayList<Collaborator> collaboratorsWithSkill = new ArrayList<>();
         for(Collaborator collaborator : collaborators){
@@ -242,10 +304,19 @@ public class CollaboratorRepository {
         else { return Optional.of(collaboratorsWithSkill); }
     }
 
+    /**
+     * Blacklists a team proposal.
+     * This prevents that team from being suggested again until the lists are reset.
+     * @param blacklistedTeam The list of collaborators that form the team to be blacklisted.
+     */
     public void blacklistTeamProposal(ArrayList<Collaborator> blacklistedTeam){
         blacklistedTeamProposals.add(blacklistedTeam);
     }
 
+    /**
+     * Resets all temporary lists in this repository.
+     * This is only done upon the abortion or completion of a team registration.
+     */
     public void resetLists(){
         blacklistedTeamProposals = new ArrayList<>();
         collaboratorWhitelist = new ArrayList<>();

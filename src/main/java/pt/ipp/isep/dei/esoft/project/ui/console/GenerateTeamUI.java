@@ -16,18 +16,33 @@ public class GenerateTeamUI implements Runnable {
     private int minTeamSize, maxTeamSize;
     private GenerateTeamController controller = new GenerateTeamController();
 
+    /**
+     * Run this functionality.
+     */
     public void run() {
         System.out.println("\n >>>>>>>>>> GENERATE TEAM PROPOSALS <<<<<<<<<< \n");
 
-        requestData();
-
-        finalTeamMembers = generateProposals();
-        if(finalTeamMembers.isEmpty()){
+        if(!controller.doCollaboratorsExist()){
+            System.out.println("Error: No collaborators. Aborting team generation.");
             return;
         }
-        submitData();
+
+        while(true){
+            requestData();
+
+            finalTeamMembers = generateProposals();
+            if(finalTeamMembers.isEmpty()){
+                return;
+            }
+            if(!confirmData()){continue;}
+            submitData();
+            return;
+        }
     }
 
+    /**
+     * Request all necessary data and save it to its respective variables.
+     */
     public void requestData(){
         requiredSkills = requestSkills();
         if(requiredSkills.isEmpty()){
@@ -39,6 +54,10 @@ public class GenerateTeamUI implements Runnable {
         maxTeamSize = requestMaxTeamSize();
     }
 
+    /**
+     * Requests the team's minimum size.
+     * @return The team's minimum size.
+     */
     private int requestMinTeamSize(){
         Scanner input = new Scanner(System.in);
         int minTeamSizeAccordingToRequiredSkills = minSizeOfRequiredSkills();
@@ -46,7 +65,7 @@ public class GenerateTeamUI implements Runnable {
             try{
                 System.out.println("Minimum team size: ");
                 int minTeamSize = Integer.parseInt(input.nextLine());
-                if(minTeamSize < minTeamSizeAccordingToRequiredSkills){
+                if(minTeamSize < minTeamSizeAccordingToRequiredSkills || minTeamSize > requiredSkills.size()){
                     System.out.println("Minimum team size impossible according to the list of required skills.");
                     continue;
                 }
@@ -57,6 +76,10 @@ public class GenerateTeamUI implements Runnable {
         }
     }
 
+    /**
+     * Calculates the minimum size of the team according to the list of required skills.
+     * @return The team's minimum possible size.
+     */
     private int minSizeOfRequiredSkills(){
         ArrayList<Skill> requiredSkillsNoDuplicates = new ArrayList<>();
         ArrayList<Integer> skillRepresentation = new ArrayList<>();
@@ -77,6 +100,10 @@ public class GenerateTeamUI implements Runnable {
         return maxRepresentation;
     }
 
+    /**
+     * Requests the team's maximum size.
+     * @return The team's maximum size.
+     */
     private int requestMaxTeamSize(){
         Scanner input = new Scanner(System.in);
         while(true){
@@ -94,6 +121,10 @@ public class GenerateTeamUI implements Runnable {
         }
     }
 
+    /**
+     * Requests the team's required skills.
+     * @return The team's required skills.
+     */
     private ArrayList<Skill> requestSkills(){
         ArrayList<Skill> userSkillSelection = new ArrayList<>();
         Scanner input = new Scanner(System.in);
@@ -105,7 +136,7 @@ public class GenerateTeamUI implements Runnable {
         while(true){
             System.out.println("Choose skills from the following list (duplicate selections are allowed):\n");
             for(int i = 0; i < skills.get().size(); i++){
-                System.out.println((i+1) + "- "+skills.get().get(i).getName());
+                System.out.println((i+1) + "- "+skills.get().get(i).toString());
             }
             int option = 0;
             System.out.println("Current skill selection:");
@@ -138,7 +169,14 @@ public class GenerateTeamUI implements Runnable {
         }
     }
 
-    public Optional<ArrayList<Collaborator>> generateProposals(){
+    /**
+     * Generate team proposals, present them to the user, and request acceptance.
+     * Should a proposal be accepted, returns that team proposal in the form of a list of collaborators.
+     * Should it be rejected, generate another team proposal, and repeat the process.
+     * @return The accepted team proposal in the form of a list of collaborators. If no proposal was
+     * accepted, an empty Optional object instead.
+     */
+    private Optional<ArrayList<Collaborator>> generateProposals(){
         System.out.println("\n\n");
         while(true){
             Optional<ArrayList<Collaborator>> teamProposal = controller.generateTeamProposal(minTeamSize, maxTeamSize, requiredSkills);
@@ -160,12 +198,39 @@ public class GenerateTeamUI implements Runnable {
         }
     }
 
-    public void submitData(){
-        Optional<Team> newTeam = controller.registerTeam(finalTeamMembers.get(), requiredSkills);
-        if(newTeam.isEmpty()){
-            System.out.println("Failed to register new team!");
-        }else{
-            System.out.println("Team registered successfully!");
+    /**
+     * Confirm user inputs and selections.
+     * @return A boolean value describing if the user confirms their selection.
+     */
+    private boolean confirmData(){
+        System.out.println("\n>>>>>>>>>> TEAM INFORMATION <<<<<<<<<< \n");
+
+        System.out.println("Skillset:");
+        for(Skill skill : requiredSkills){
+            System.out.println(skill.toString());
         }
+        System.out.println("\nMembers:");
+        for(Collaborator collaborator : finalTeamMembers.get()){
+            System.out.println(collaborator.toString());
+        }
+        return Utils.confirm("Do you wish to proceed? (s or n)");
+    }
+
+    /**
+     * Submit the inputted data and provide the respective feedback.
+     */
+    private void submitData(){
+        try{
+            Optional<Team> newTeam = controller.registerTeam(finalTeamMembers.get(), requiredSkills);
+            if(newTeam.isEmpty()){
+                System.out.println("Failed to register new team!");
+            }else{
+                System.out.println("Team registered successfully!");
+            }
+        }catch(Exception e){
+            System.out.println("Failed to register new team!");
+            System.out.println(e.getMessage());
+        }
+
     }
 }
