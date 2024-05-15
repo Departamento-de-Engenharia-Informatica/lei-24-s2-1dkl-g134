@@ -1,0 +1,93 @@
+@startuml
+skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+
+autonumber
+
+'hide footbox
+actor "Human Resources \n Manager (HRM)" as HRM
+participant ":AssignSkillUI" as UI
+participant ":AssignSkillController" as CTRL
+participant "repositories\n:Repositories" as PLAT
+
+participant "CollaboratorsRepository" as CollaboratorsRepository
+
+activate HRM
+
+        HRM -> UI : asks to add a skill to a collaborator
+
+        activate UI
+
+
+            UI -> CTRL** : create
+
+            UI -> CTRL : getCollaborators()
+            activate CTRL
+ ref over CTRL
+
+ Get Collaborator
+
+ end
+
+                CTRL --> UI : collaboratorsList
+            deactivate CTRL
+
+            UI --> HRM : shows collaborators list\n to assign skill/s
+        deactivate UI
+
+    HRM -> UI : choose collaborator
+    activate UI
+
+   UI -> CTRL : getSkill (collaboratorName)
+           activate CTRL
+
+ref over CTRL
+
+ Get Skill
+
+ end
+
+         CTRL --> UI : skillList
+         deactivate CTRL
+
+         UI --> HRM : show skills list
+         deactivate UI
+
+         HRM -> UI : choose one or more skills to assign
+         activate UI
+
+         UI -> CTRL : assignSkill(collaboratorName, skillName)
+         activate CTRL
+
+         CTRL -> PLAT : assignSkill(collaboratorName, skillName)
+         activate PLAT
+
+         PLAT -> CollaboratorsRepository : assignSkill(collaboratorName, skillName)
+         activate CollaboratorsRepository
+
+         ref over CollaboratorsRepository
+
+
+
+         Assign Skill
+
+
+
+          end ref
+
+         CollaboratorsRepository --> PLAT : skill
+         deactivate CollaboratorsRepository
+
+         PLAT --> CTRL : skill
+         deactivate PLAT
+
+         CTRL --> UI : skill
+         deactivate CTRL
+
+         UI --> HRM : displays operation success
+         deactivate UI
+
+         deactivate HRM
+
+ @enduml

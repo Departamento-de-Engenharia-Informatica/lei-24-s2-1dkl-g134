@@ -1,0 +1,111 @@
+@startuml
+skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+
+autonumber
+
+'hide footbox
+actor "Human Resources \n Manager (HRM)" as HRM
+participant ":AssignSkillUI" as UI
+participant ":AssignSkillController" as CTRL
+participant ":Repositories" as RepositorySingleton
+participant "repositories\n:Repositories" as PLAT
+participant "skillRepository\n:SkillRepository" as SkillRepository
+participant "collaborator\n:Collaborator" as COLLAB
+participant "collaboratorsRepository\n:CollaboratorRepository" as CR
+
+activate HRM
+
+        HRM -> UI : asks to add a skill to a collaborator
+
+        activate UI
+
+
+            UI -> CTRL** : create
+
+            UI -> CTRL : getCollaborators()
+            activate CTRL
+
+
+                    CTRL -> RepositorySingleton: getInstance()
+                    activate RepositorySingleton
+
+                    RepositorySingleton --> CTRL: repositories
+                    deactivate RepositorySingleton
+
+                    CTRL -> PLAT: getCollaboratorsRepository()
+                    activate PLAT
+
+                        PLAT --> CTRL: getCollaboratorsRepository
+                    deactivate PLAT
+
+                CTRL -> CR: getCollaboratorsList()
+                activate CR
+
+                CR --> CTRL: collaboratorsList
+                deactivate CR
+
+                CTRL --> UI : collaboratorsList
+            deactivate CTRL
+
+            UI --> HRM : shows collaborators list\n to assign skill/s
+        deactivate UI
+
+    HRM -> UI : choose collaborator
+    activate UI
+
+   UI -> CTRL : getSkills()
+           activate CTRL
+
+         CTRL -> PLAT : getSkillRepository()
+         activate PLAT
+
+         PLAT -> CTRL : skillRepository
+         deactivate PLAT
+
+         CTRL --> SkillRepository : getSkillList()
+         activate SkillRepository
+
+         SkillRepository --> CTRL: skillList
+         deactivate SkillRepository
+
+         CTRL --> UI : skillList
+         deactivate CTRL
+
+         UI --> HRM : show skills list
+         deactivate UI
+
+         HRM -> UI : choose one or more skills to assign
+         activate UI
+
+         UI -> CTRL : assignSkill(collaborator, skillList)
+         activate CTRL
+
+         CTRL -> CR : assignSkill(collaborator, skillList)
+         activate CR
+
+         CR -> COLLAB : assignSkills(skillList)
+         activate COLLAB
+
+         loop for each skill in skillList
+         COLLAB -> COLLAB :assignSkill(skill)
+
+         COLLAB -> COLLAB :validateSkillWasAssigned(skill)
+         end
+
+         COLLAB --> CR : true/false
+         deactivate COLLAB
+
+         CR --> CTRL : true/false
+         deactivate CR
+
+         CTRL --> UI : true/false
+         deactivate CTRL
+
+         UI --> HRM : displays operation success
+         deactivate UI
+
+         deactivate HRM
+
+ @enduml

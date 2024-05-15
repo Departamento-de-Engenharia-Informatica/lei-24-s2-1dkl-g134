@@ -1,0 +1,21 @@
+@startuml
+skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+
+title System Sequence Diagram (SSD) - Main Solution
+
+autonumber
+
+actor "Software Quality \nAssessment Team Manager" as Manager
+participant ":System" as System
+
+activate Manager
+
+    Manager -> System : requests the tests of the US13 algorithm.
+    activate System
+
+        System --> Manager :presents information about the tests
+    deactivate System
+
+@enduml

@@ -1,0 +1,77 @@
+@startuml
+skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+
+autonumber
+
+'hide footbox
+actor "Human Resources \n Manager (HRM)" as ADM
+participant ":  CreateJobUI" as UI
+participant ":  CreateJobController" as CTRL
+participant ":Repositories" as RepositorySingleton
+participant "repositories\n:Repositories" as PLAT
+participant "jobRepository:\njobRepository" as JobRepository
+participant "job\n:Job" as JOB
+
+activate ADM
+
+        ADM -> UI : asks to add a job
+
+        activate UI
+'
+            UI --> ADM : request job name
+
+         deactivate UI
+
+            ADM -> UI : Types requested data
+
+         activate UI
+
+           UI --> ADM : Shows all data and request confirmation
+
+         deactivate UI
+
+            ADM -> UI : Confirm job
+    activate UI
+        UI -> CTRL** : create()
+
+        UI -> CTRL : createJob(Name of Job)
+        activate CTRL
+
+            |||
+            CTRL -> RepositorySingleton: getInstance()
+            activate RepositorySingleton
+
+            RepositorySingleton --> CTRL: repositories
+            deactivate RepositorySingleton
+
+            CTRL -> PLAT: getjobRepository(email)
+            activate PLAT
+
+                PLAT --> CTRL: jobRepository
+            deactivate PLAT
+            |||
+            CTRL -> JobRepository: createJob(name)
+            activate JobRepository
+
+                JobRepository -> JOB**: create(name)
+                JobRepository -> JobRepository: addJob(job)
+                activate JobRepository
+                    JobRepository -> JobRepository: validateJob(job)
+                    activate JobRepository
+                    JobRepository --> JobRepository
+                    deactivate JobRepository
+                JobRepository --> JobRepository
+                deactivate JobRepository
+
+                JobRepository --> CTRL : job
+
+            deactivate JobRepository
+
+            CTRL --> UI: job
+            deactivate CTRL
+            UI --> ADM: displays operation success
+    deactivate UI
+
+@enduml

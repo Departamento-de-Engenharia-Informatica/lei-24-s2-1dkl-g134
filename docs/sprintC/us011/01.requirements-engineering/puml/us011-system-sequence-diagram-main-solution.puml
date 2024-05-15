@@ -1,0 +1,32 @@
+@startuml
+skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+
+title System Sequence Diagram (SSD) - Main Solution
+
+autonumber
+
+actor "Green Space\nManager" as Manager
+actor "Green Space\nUser" as User
+participant ":System" as System
+
+activate User
+    System -> User : presents the inquiry
+    activate System
+
+    User -> System : answers to the inquiry
+    System --> User : presents success in the operation
+
+    deactivate System
+deactivate User
+
+activate Manager
+
+    Manager -> System : asks for the park analysis
+    activate System
+
+        System --> Manager : presents park analysis based on\nuser inquiries
+    deactivate System
+
+@enduml

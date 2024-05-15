@@ -1,0 +1,63 @@
+@startuml
+'skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+skinparam linetype polyline
+'skinparam linetype orto
+
+skinparam classAttributeIconSize 0
+
+'left to right direction
+
+class AssignSkillUI{
+}
+
+
+class AssignSkillController{
+    + AssignSkillController(collaboratorRepository, skillRepository)
+    + getCollaborators()
+    + getSkills(skillName)
+ }
+
+class Repositories {
+    - Repositories()
+    + getInstance() : Repositories
+    + getCollaboratorRepository()
+    + getSkillRepository()
+}
+
+class CollaboratorRepository {
+    + getCollaborators(name)
+}
+
+class SkillRepository {
+    + getSkills(skillName)
+}
+
+class Skill{
+    - skillName
+}
+
+class Collaborator{
+    - name
+    - List<Skill> skillList
+    + assignSkill(collaboratorName, skillName)
+    + validateSkill(skillName)
+}
+
+
+AssignSkillUI .> AssignSkillController
+AssignSkillController .> Repositories : repositories
+Repositories --> "1" SkillRepository
+Repositories --> "1" CollaboratorRepository
+Repositories -> Repositories : instance
+
+SkillRepository --> "*" Skill
+CollaboratorRepository --> "*" Collaborator
+AssignSkillController ....> "1" Collaborator : collaborator
+AssignSkillController ......> "1" Skill : skill
+Collaborator "1" --> "*" Skill : has
+AssignSkillController ..> "1" CollaboratorRepository : collaboratorRepository
+AssignSkillController ...> "1" SkillRepository : skillRepository
+
+@enduml

@@ -1,0 +1,88 @@
+@startuml
+skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+
+autonumber
+
+'hide footbox
+actor "Fleet Manager" as ADM
+participant ":RegisterVehicleUI" as UI
+participant ":RegisterVehicleController" as CTRL
+participant ":Repositories" as RepositorySingleton
+participant "repositories\n:Repositories" as PLAT
+participant "vehicleRepository:\nVehicleRepository" as VehicleRepository
+participant "vehicle \n:Vehicle" as VEHICLE
+
+activate ADM
+
+        ADM -> UI : asks to register new vehicle
+
+        activate UI
+
+'            UI --> ADM : requests data (reference, description,  informal \n description, technical description, duration, cost)
+            'create CTRL
+
+            UI --> ADM : requests required information
+
+         deactivate UI
+
+            ADM --> UI : Types requested data
+
+         activate UI
+
+           UI --> ADM : Shows all data and request confirmation
+
+         deactivate UI
+
+            ADM --> UI : Confirm vehicle
+
+        activate UI
+
+'            UI --> ADM : requests data (reference, description,  informal \n description, technical description, duration, cost)
+            'create CTRL
+            UI -> CTRL** : create
+
+        UI -> CTRL : registerVehicle(brand, model, tare, grossWeight,\ncurrentKM, registerDate, acquisitionDate,\ncheckUpFrequency, plateNumber, type)
+        activate CTRL
+
+            CTRL -> RepositorySingleton: getInstance()
+            activate RepositorySingleton
+
+            RepositorySingleton --> CTRL: repositories
+            deactivate RepositorySingleton
+
+            CTRL -> PLAT: getVehicleRepository()
+            activate PLAT
+
+                PLAT --> CTRL: vehicleRepository
+            deactivate PLAT
+            |||
+            CTRL -> VehicleRepository: registerVehicle(brand, model, tare, grossWeight,\ncurrentKM, registerDate, acquisitionDate,\ncheckUpFrequency, plateNumber, type)
+            activate VehicleRepository
+
+                VehicleRepository -> VEHICLE**: create(brand, model, tare, grossWeight,\ncurrentKM, registerDate, acquisitionDate,\ncheckUpFrequency, plateNumber, type)
+                VehicleRepository -> VehicleRepository: addVehicle(vehicle)
+
+
+                activate VehicleRepository
+                    VehicleRepository -> VehicleRepository: validateVehicle(vehicle)
+                    activate VehicleRepository
+                        VehicleRepository --> VehicleRepository
+                    deactivate VehicleRepository
+
+                    VehicleRepository --> VehicleRepository
+                deactivate VehicleRepository
+
+                VehicleRepository --> CTRL : vehicle
+
+            deactivate VehicleRepository
+
+            CTRL --> UI: vehicle
+            deactivate CTRL
+            UI --> ADM: displays operation success
+    deactivate UI
+
+deactivate ADM
+
+@enduml

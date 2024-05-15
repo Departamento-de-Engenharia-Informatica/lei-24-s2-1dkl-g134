@@ -1,0 +1,108 @@
+@startuml
+skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+
+autonumber
+
+'hide footbox
+actor "Human Resources Manager" as ADM
+participant ":RegisterCollaboratorUI" as UI
+participant ":RegisterCollaboratorController" as CTRL
+participant ":Repositories" as RepositorySingleton
+participant "repositories\n:Repositories" as PLAT
+participant "jobRepository:\nJobRepository" as JobRepository
+participant "collaboratorRepository:\nCollaboratorRepository" as CollaboratorRepository
+participant "collaborator\nCollaborator" as Collaborator
+
+activate ADM
+
+        ADM -> UI : asks to register a new collaborator
+
+        activate UI
+
+            UI --> ADM: requests required data
+            deactivate UI
+
+            ADM -> UI : types requested data
+            activate UI
+
+            UI -> CTRL** : create()
+
+            UI -> CTRL : getJobList()
+            activate CTRL
+
+                CTRL -> RepositorySingleton : getInstance()
+                activate RepositorySingleton
+
+                    RepositorySingleton --> CTRL: repositories
+                deactivate RepositorySingleton
+
+                CTRL -> PLAT : getJobRepository()
+                activate PLAT
+
+                    PLAT --> CTRL: jobRepository
+                deactivate PLAT
+
+                CTRL -> JobRepository : getJobList()
+                activate JobRepository
+
+                    JobRepository --> CTRL : jobList
+                deactivate JobRepository
+
+                CTRL --> UI : jobList
+            deactivate CTRL
+
+            UI --> ADM : shows a list of jobs and asks to select\na collaborator job
+        deactivate UI
+
+    ADM -> UI : selects a job
+    activate UI
+
+        UI --> ADM : show all information and requests confirmation
+    deactivate UI
+
+    ADM -> UI : confirm data
+    activate UI
+
+    UI -> CTRL: createCollaborator(name, birthDate, admissionDate, address,\nphoneNumber, email, identificationDocumentType,\nidentificationNumber, job)
+    activate CTRL
+
+                CTRL -> PLAT : getCollaboratorRepository()
+                activate PLAT
+
+                    PLAT --> CTRL : collaboratorRepository
+                deactivate PLAT
+
+                CTRL -> CollaboratorRepository: createCollaborator(name, birthDate, admissionDate, address,\nphoneNumber, email, identificationDocumentType,\nidentificationNumber, job)
+                activate CollaboratorRepository
+
+                CollaboratorRepository -> Collaborator**: create(name, birthDate, admissionDate, address,\nphoneNumber, email, identificationDocumentType,\nidentificationNumber, job)
+
+                CollaboratorRepository -> CollaboratorRepository: addCollaborator(collaborator)
+                activate CollaboratorRepository
+
+                CollaboratorRepository -> CollaboratorRepository: validateCollaborator(collaborator)
+                activate CollaboratorRepository
+
+                CollaboratorRepository --> CollaboratorRepository
+                deactivate CollaboratorRepository
+
+                CollaboratorRepository --> CollaboratorRepository
+                deactivate CollaboratorRepository
+
+                CollaboratorRepository --> CTRL: collaborator
+                deactivate CollaboratorRepository
+
+                CTRL --> UI: collaborator
+                deactivate CTRL
+
+                UI --> ADM: displays operation success
+
+
+
+    deactivate UI
+
+deactivate ADM
+
+@enduml

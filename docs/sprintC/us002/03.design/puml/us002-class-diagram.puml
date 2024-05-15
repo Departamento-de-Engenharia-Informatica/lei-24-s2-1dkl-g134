@@ -1,0 +1,64 @@
+@startuml
+'skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+skinparam linetype polyline
+'skinparam linetype orto
+
+skinparam classAttributeIconSize 0
+
+'left to right direction
+
+
+
+
+
+class Repositories {
+    - Repositories()
+    + getInstance() : Repositories
+    + getCollaboratorRepository()
+    + getJobRepository() :
+}
+
+class CollaboratorRepository {
+    + getCollaborators(name)
+}
+
+class JobRepository {
+    + getJobs(jobName)
+}
+
+class Job{
+    -jobName
+}
+class AssignJobController{
+AssignJobController(collaboratorRepository,jobRepository)
++getCollaborators()
++getJobs((jobName)
+}
+
+class Collaborator{
+    - name
+    - List<Job> jobList
+    + createJob(collaboratorName, jobName)
+    + validateJob(jobName)
+}
+
+
+
+AssignJobUI .> AssignJobController
+AssignJobController .> Repositories : repositories
+Repositories --> "1" JobRepository
+Repositories --> "1" CollaboratorRepository
+Repositories -> Repositories : instance
+
+JobRepository --> "*" Job
+CollaboratorRepository --> "*" Collaborator
+
+AssignJobController ....> "1" Collaborator : collaborator
+AssignJobController ......> "1" Job : job
+Collaborator "1" --> "*" Job : has
+AssignJobController ..> "1" CollaboratorRepository : collaboratorRepository
+AssignJobController ...> "1" JobRepository : jobRepository
+
+@enduml

@@ -1,0 +1,166 @@
+@startuml
+skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+
+skinparam classAttributeIconSize 0
+
+hide circle
+hide methods
+
+class GreenSpace{
+    local
+    address
+    area
+}
+
+class Organization {
+    name
+    vatNumber
+    website
+    phoneNumber
+    email
+}
+
+class Vehicle {
+    plate number
+    brand
+    type
+    model
+    current km
+    checkup frequency
+    km at last checkup
+}
+
+class Checkup {
+    current vehicle km
+    vehicle plate number
+}
+
+class FleetManager {
+    name
+    email
+    phone
+}
+
+class HumanResourcesManager {
+    name
+    email
+    phone
+}
+
+class GreenSpaceManager {
+    name
+    email
+    phone
+}
+
+class GreenSpaceUser {
+    name
+    email
+}
+
+class Collaborator {
+    name
+    birthdate
+    admission date
+    address
+    email
+    phone
+}
+
+class ID {
+    type
+    number
+}
+
+class Job {
+    name
+}
+
+class Skill {
+    name
+}
+
+class Team {
+    numberOfCollaborators
+}
+
+class Task {
+    name
+    description
+}
+
+class Pipe {
+    cost
+}
+
+class IrrigationNetwork {
+    totalCost
+    numberOfPipes
+    numberOfNodes
+}
+
+class SoftwareQualityAssessmentTeamManager {
+    name
+    email
+    phone
+}
+
+class Algorithm {
+    executionTime
+}
+
+class EquipmentSurvey {
+    equipment
+    usage
+}
+
+class InfoSurvey {
+    ageRange
+    wouldReccomend
+    visitFrequency
+}
+
+class UserPortal {
+    address
+    hostMachine
+}
+
+Organization "1" - "*" Collaborator : has >
+Organization "1" - "1" FleetManager : has >
+Organization "1" - "1" HumanResourcesManager : has >
+Organization "1" -up- "1" GreenSpaceManager : has >
+Organization "1" -up- "1" SoftwareQualityAssessmentTeamManager : has >
+Organization "1" -up- "*" GreenSpace : owns >
+GreenSpaceManager "1" - "1" GreenSpace : manages >
+GreenSpaceManager "1" -down- "1" FleetManager : employs >
+GreenSpaceManager "1" - "1" HumanResourcesManager : employs >
+GreenSpaceManager "1" -up- "1" SoftwareQualityAssessmentTeamManager : employs >
+GreenSpaceUser "*" -left- "1" GreenSpace : uses >
+Organization "1" - "*" Vehicle: owns >
+Vehicle "1" - "*" Checkup: undergoes >
+HumanResourcesManager "1" -down- "*" Collaborator : manages >
+Collaborator "1" -- "0..*" Vehicle : uses >
+HumanResourcesManager "1" -- "*" Skill : registers >
+HumanResourcesManager "1" -- "*" Job : registers >
+Collaborator "1" -- "*" Skill : has >
+Collaborator "1" -right- "1" Job : has >
+Collaborator "1" -- "1" ID : has >
+FleetManager "1" -up- "*" Vehicle : maintains >
+FleetManager "1" -- "*" Checkup : orders >
+Team "1" -- "1" Task : carries out >
+Team "1" -- "*" Skill : requires a set of >
+Collaborator "*" -- "1" Team : form >
+Pipe "*" -- "1" IrrigationNetwork : form >
+Algorithm "1" -- "*" IrrigationNetwork : generates >
+SoftwareQualityAssessmentTeamManager "1" -- "1" Algorithm : tests >
+GreenSpaceUser "*" -- "1" InfoSurvey : answers >
+GreenSpaceUser "*" -- "1" EquipmentSurvey : answers >
+GreenSpaceUser "*" -- "1" UserPortal : uses >
+GreenSpaceManager "1" - "1" InfoSurvey : checks results >
+GreenSpaceManager "1" - "1" EquipmentSurvey : checks results >
+GreenSpace "1"-"1" IrrigationNetwork : contains >
+
+
+@enduml

@@ -1,0 +1,65 @@
+@startuml
+'skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+skinparam linetype polyline
+'skinparam linetype orto
+
+skinparam classAttributeIconSize 0
+
+'left to right direction
+class RegisterCollaboratorUI {
+}
+
+class RegisterCollaboratorController {
+    + create()
+    + getJobList()
+    + createCollaborator(name,birthdate,admission date,address,phone number,email,identification document type,identification number, job)
+
+}
+class Repositories {
+    - Repositories()
+    + getInstance() : Repositories
+    + getJobRepository()
+    + getCollaboratorRepository()
+}
+
+class JobRepository {
+    + getJobList()
+}
+
+class CollaboratorRepository {
+    + getCollaboratorList()
+    + createCollaborator(name,birthdate,admission date,address,phone number,email,identification document type,identification number, job)
+}
+
+class Collaborator{
+- String name
+- String birthdate
+- String admission date
+- String address
+- String email
+- String skill
+- int phone
+
++ create(name,birthdate,admission date,address,phone number,email,identification document type,identification number, job)
+}
+
+
+
+
+
+
+
+Repositories -> Repositories : instance
+RegisterCollaboratorUI .> RegisterCollaboratorController
+RegisterCollaboratorController .> Repositories : repositories
+Repositories -> "1" JobRepository
+RegisterCollaboratorController ..> CollaboratorRepository : CollaboratorRepository
+RegisterCollaboratorController ..> JobRepository : JobRepository
+JobRepository ..> Collaborator
+CollaboratorRepository -> Collaborator: has
+Repositories --> "1" CollaboratorRepository
+
+
+@enduml

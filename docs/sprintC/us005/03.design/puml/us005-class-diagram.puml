@@ -1,0 +1,85 @@
+@startuml
+'skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+skinparam linetype polyline
+'skinparam linetype orto
+
+skinparam classAttributeIconSize 0
+
+'left to right direction
+class GenarateTeamUI {
+}
+
+class GenarateTeamController {
+    +GenarateTeamController(skillRepository,collaboratorRepository,teamRepository)
+    + getSkillList()
+    + generateTeamProposal(minTeamSize,maxTeamSize, selectedSkillList)
+    + createTeam(collaboratorList,selectedSkillList)
+}
+
+
+class Repositories {
+    - Repositories()
+    + getInstance() : Repositories
+    + getSkillRepository
+    + getCollaboratorRepository()
+    + getTeamRepository()
+}
+
+class SkillRepository{
+    + getSkillList()
+}
+
+class CollaboratorRepository {
+
+    + generateTeamProposal(minTeamSize,maxTeamSize, selectedSkillList)
+}
+
+class TeamRepository {
+    + addTeam(team)
+    + validateTeam(team)
+}
+
+class Collaborator {
+    - String name
+    - String birthdate
+    - String admission date
+    - String address
+    - String email
+    - String skill
+    - int phone
+
+}
+
+class Team{
+    + createTeam(collaboratorList,selectedSkillList)
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+Repositories -> Repositories : instance
+GenarateTeamUI .> GenarateTeamController
+GenarateTeamController .> Repositories : repositories
+Repositories -> "1" CollaboratorRepository
+Repositories -> "1" TeamRepository
+Repositories -> "1" SkillRepository
+GenarateTeamController ..> SkillRepository : skillRepository
+GenarateTeamController ..> TeamRepository : teamRepository
+GenarateTeamController ..> CollaboratorRepository : collaboratorRepository
+GenarateTeamController ..> Collaborator: collaborator
+CollaboratorRepository "1" --> "*" Collaborator: has
+TeamRepository "1" --> "*" Team
+Team -> Collaborator: has
+
+@enduml

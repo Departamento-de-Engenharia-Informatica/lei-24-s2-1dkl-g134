@@ -1,0 +1,21 @@
+@startuml
+skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+
+title System Sequence Diagram (SSD) - Main Solution
+
+autonumber
+
+actor "Green Space\nManager" as Manager
+participant ":System" as System
+
+activate Manager
+
+    Manager -> System : asks for the most optimal routes and necessary pipeline placement
+    activate System
+
+        System --> Manager : presents most optimal routes and necessary pipeline placement
+    deactivate System
+
+@enduml

@@ -1,0 +1,22 @@
+@startuml
+skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+
+title System Sequence Diagram (SSD) - Main Solution
+
+autonumber
+
+actor "Green Space\nManager" as Manager
+participant ":System" as System
+
+activate Manager
+
+    Manager -> System : asks to import .csv file containing lines with:\nWater Point X, Water Point Y, Distance
+
+    activate System
+
+        System --> Manager : imports requested file into unique data structure
+    deactivate System
+
+@enduml
