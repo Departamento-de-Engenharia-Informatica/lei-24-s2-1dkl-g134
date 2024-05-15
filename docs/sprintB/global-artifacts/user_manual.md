@@ -27,9 +27,7 @@ The Fleet Manager (FM) is responsible for maintaining and assigning vehicles, ma
 
 Collaborators, employees of the organization, engage in design, construction, and maintenance activities for green areas.
 
-The Green Spaces Manager (GSM) oversees green space management, tracking KPIs and conducting Statistical Analysis for effective strategies. They analyze water consumption costs and equipment usage preferences, utilizing an electronic device for data collection. They adapt management approaches for diverse age groups based on insights from user portal data.
 
-The application now includes features for planning and building irrigation systems in green parks, aiming to streamline these tasks. By leveraging powerful algorithms, it can optimize material usage, reduce planning and installation time, and create more efficient irrigation systems. 
 # Features:
 
 - 1. **Skills Registry** | Human Resources Manager
