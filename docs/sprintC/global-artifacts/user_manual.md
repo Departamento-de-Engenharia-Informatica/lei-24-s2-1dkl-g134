@@ -4,62 +4,61 @@
 
 # Introduction:
 ## Purpose and Scope
+Sure, here's a simplified version:
 
-The manual presented was developed with the aim of providing information on the usage of this application, built with the purpose of management and maintenance of green spaces and is mainly aimed at managers and administrators of green spaces, providing crucial information to ensure the safe and efficient functioning of these areas.
+---
 
-As a manager or administrator of green space, it is essential to understand the best practices to ensure  the proper functioning of the environments.
+Welcome to the GreenGuardian manual! This guide is all about using our app to manage green spaces effectively. Whether you're in charge of a park, garden, or any green area, this manual will help you make the most of our features.
 
-Throughout this document, the reader will find essential information on the usage of the application's features for the effective and efficient management of green spaces, from workforce management to maintenance of vehicles, regardless of the dimensions or characteristics of green space.
+As a manager or administrator, it's crucial to understand how to keep your green spaces running smoothly. In this manual, you'll learn how to use GreenGuardian to manage your workforce, maintain vehicles, and more.
 
-The usage of the features available in the application and presented in this manual can result in significant improvement in the quality of administration in green spaces, as, for example, managers can utilize them to quickly and easily oversee the day-to-day operations of the park's workforce as well as update the system's records to account for any new developments in the company's workforce, vehicle fleets, etc.
+By using GreenGuardian, you can streamline your operations and improve the quality of your green space management. For example, you can easily keep track of your staff's activities and update records as needed.
 
-This manual's intended audience are green space managers of any sort who may have an interest in using the application's services in their labors: As such, it assumes some knowledge and familiarity of concepts related to green space management by the reader, such as vehicles used in a park's maintenance and the workforce necessary for the running of a green space. However, we believe it to be somewhat approachable and accessible to anyone with an interest in this field. 
+This manual is for anyone managing green spaces who wants to use our app to make their job easier. While it assumes some knowledge of green space management, we've tried to make it accessible to everyone interested in the field.
+
 # System Overview:
-The Green Space Management application is a comprehensive solution designed to optimize the management and maintenance of green spaces, such as parks, gardens and recreational areas.
+GreenGuardian is a handy app designed to make managing green spaces like parks and gardens a breeze.
 
-This application caters to and is built primarily for the use of various entities involved in green spaces management, including park administrators on any level of a hierarchy, and the workers and members of the park's staff. 
+It's made for different folks involved in green space management, like park admins and staff.
 
-Each user role is equipped with specific tools and functionalities to fulfill their responsabilities effectively.
+Each user has their own tools:
 
-The Human Resources Manager (HRM) oversees workforce management, defining project teams based on project requirements and employee skills.
+- The Human Resources Manager (HRM) handles teams and projects.
+- The Fleet Manager (FM) takes care of vehicles and equipment.
+- Collaborators do design, construction, and maintenance.
+- The Green Spaces Manager (GSM) oversees everything, tracking stats and adjusting strategies.
 
-The Fleet Manager (FM) is responsible for maintaining and assigning vehicles, machines, and equipment for tasks.
-
-Collaborators, employees of the organization, engage in design, construction, and maintenance activities for green areas.
-
-The Green Spaces Manager (GSM) oversees green space management, tracking KPIs and conducting Statistical Analysis for effective strategies. They analyze water consumption costs and equipment usage preferences, utilizing an electronic device for data collection. They adapt management approaches for diverse age groups based on insights from user portal data.
-
-The application now includes features for planning and building irrigation systems in green parks, aiming to streamline these tasks. By leveraging powerful algorithms, it can optimize material usage, reduce planning and installation time, and create more efficient irrigation systems.
+Now, the app even helps plan and build irrigation systems, making it quicker and easier.
 # Features:
 
-- 1. **Skills Registry** | Human Resources Manager
+1. **Skill Recording** | Human Resources Manager
 
-A park's human resources manager is capable of registering and recording different skills that a park worker or collaborator may have: Each skill requires only a name to exist.
+The HR manager can note down the various skills that park workers or collaborators have. Just need to give each skill a name.
 
-- 2. **Job Creation** | Human Resources Manager
+2. **Job Creation** | Human Resources Manager
 
-Similar to the previous feature, a human resources manager may also create various jobs that a collaborator may work on by simply creating a job title with a given name.
+Similar to skills, the HR manager can create different jobs for collaborators. Simply assign a name to each job.
 
-- 3. **Collaborator Registry** | Human Resources Manager
+3. **Collaborator Registration** | Human Resources Manager
 
-Upon admission, a human resources manager may register into the system the presence of a new collaborator. This registry requires some basic personal information, such as their name and ID, but crucially also required an assigned job, chosen from all previously registered jobs.
+When a new collaborator joins, the HR manager can add their details to the system. Requires basic info like name and ID, and also needs to assign them a job from the available options.
 
-- 4. **Collaborator Skill Assignment** | Human Resources Manager
+4. **Assigning Skills to Collaborators** | Human Resources Manager
 
-Given that a registered collaborator may acquire new skills over time, a human resources manager is capable of adding skills to the list of a collaborator's skills, with the skill in question being chosen from the pool of registered skills.
+As collaborators gain new skills, the HR manager can add them to their profile. Just select the skill from the list.
 
-- 5. **Automatic Team Generation** | Human Resources Manager
+5. **Automatic Team Formation** | Human Resources Manager
 
-With enough collaborators registered in the system, a human resources manager will be capable of creating teams that are automatically generated by the system to group these collaborators into. The formation of a team requires only information on the skills required for the team's labors, with which the system will generate automatic team proposals from the list of collaborators and their assigned skills.
+With enough collaborators in the system, the HR manager can create teams automatically. Just specify the skills needed, and the system will suggest team combinations based on the available skills.
 
-- 6. **Vehicle Registry** | Fleet Manager
+6. **Vehicle Registration** | Fleet Manager
 
-Upon the acquisition of such, a fleet manager may register into the system the existence of a new vehicle in the park's fleet, to which identification information such as the plate number, model, type, as well as technical information such as the gross weight and the tare is assigned.
+When a new vehicle is acquired, the fleet manager can add it to the system. Includes details like plate number, model, type, and technical specs.
 
-- 7. **Vehicle Check-up Registry** | Fleet Manager
+7. **Vehicle Maintenance Record** | Fleet Manager
 
-Vehicles undergo regular check-ups, and the information regarding these checkups, such as the vehicle that underwent such and their current kms during the checkup, can be registered into the system by a fleet manager.
+Regular vehicle check-ups can be logged in the system by the fleet manager. Record details such as the vehicle checked and its current mileage.
 
-- 8. **Listing Vehicles Needing Check-up** | Fleet Manager
+8. **Check-up Reminder List** | Fleet Manager
 
-Following the logic of the previous feature, a fleet manager may also wish to know which vehicles currently require a checkup. The system provides a feature with which a fleet manager may automatically be presented with a list of all vehicles in the park's fleet that are currently requiring a checkup.
+To keep track of vehicles due for check-ups, the fleet manager can view a list of vehicles needing maintenance.
