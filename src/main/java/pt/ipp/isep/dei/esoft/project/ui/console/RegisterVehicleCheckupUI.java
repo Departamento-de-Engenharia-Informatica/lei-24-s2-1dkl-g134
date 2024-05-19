@@ -95,7 +95,7 @@ public class RegisterVehicleCheckupUI implements Runnable {
      */
     private String requestDate(){
         Scanner input = new Scanner(System.in);
-        System.out.print("Checkup Date: ");
+        System.out.print("Checkup Date (YYYY/MM/DD, with leading zeros): ");
         return input.nextLine();
         /*CustomDate date = Utils.readDateFromConsole("Current Date: ");
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy/MM/dd");

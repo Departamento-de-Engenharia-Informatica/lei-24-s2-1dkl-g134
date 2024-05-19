@@ -119,7 +119,7 @@ public class RegisterVehicleUI implements Runnable {
         Scanner input = new Scanner(System.in);
         while(true){
             try{
-                System.out.println("Tare: ");
+                System.out.println("Tare (in kilograms): ");
                 return Integer.parseInt(input.nextLine());
             }catch(Exception e){
                 System.out.println("Tare value must be a number.");
@@ -135,7 +135,7 @@ public class RegisterVehicleUI implements Runnable {
         Scanner input = new Scanner(System.in);
         while(true){
             try{
-                System.out.println("Gross Weight: ");
+                System.out.println("Gross Weight (in kilograms): ");
                 return Double.parseDouble(input.nextLine());
             }catch(Exception e){
                 System.out.println("Gross Weight value must be a number.");
@@ -165,7 +165,7 @@ public class RegisterVehicleUI implements Runnable {
      */
     private String requestRegisterDate(){
         Scanner input = new Scanner(System.in);
-        System.out.print("Register Date: ");
+        System.out.print("Register Date (YYYY/MM/DD, with leading zeros): ");
         return input.nextLine();
         /*CustomDate date = Utils.readDateFromConsole("Register Date: ");
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy/MM/dd");
@@ -178,7 +178,7 @@ public class RegisterVehicleUI implements Runnable {
      */
     private String requestAcquisitionDate(){
         Scanner input = new Scanner(System.in);
-        System.out.print("Acquisition Date: ");
+        System.out.print("Acquisition Date (YYYY/MM/DD, with leading zeros): ");
         return input.nextLine();
         /*CustomDate date = Utils.readDateFromConsole("Acquisition Date: ");
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy/MM/dd");
@@ -193,7 +193,7 @@ public class RegisterVehicleUI implements Runnable {
         Scanner input = new Scanner(System.in);
         while(true){
             try{
-                System.out.println("Checkup Frequency: ");
+                System.out.println("Checkup Frequency (in kilometers): ");
                 return Integer.parseInt(input.nextLine());
             }catch(Exception e){
                 System.out.println("Checkup Frequency value must be a number.");

@@ -19,11 +19,17 @@ public class Bootstrap implements Runnable {
     }
 
     private void addOrganization() {
-        //TODO: add organizations bootstrap here
         //get organization repository
         OrganizationRepository organizationRepository = Repositories.getInstance().getOrganizationRepository();
         Organization organization = new Organization("This Company");
         organization.addEmployee(new Employee("admin@this.app"));
+        organization.addEmployee(new Employee("hrm@this.app"));
+        organization.addEmployee(new Employee("vfm@this.app"));
+        organization.addEmployee(new Employee("collab1@this.app"));
+        organization.addEmployee(new Employee("collab2@this.app"));
+        organization.addEmployee(new Employee("collab3@this.app"));
+        organization.addEmployee(new Employee("gsm1@this.app"));
+        organization.addEmployee(new Employee("gsm2@this.app"));
         organization.addEmployee(new Employee("employee@this.app"));
         organizationRepository.add(organization);
     }
@@ -43,14 +49,38 @@ public class Bootstrap implements Runnable {
     }
 
     private void addUsers() {
-        //TODO: add Authentication users here: should be created for each user in the organization
         AuthenticationRepository authenticationRepository = Repositories.getInstance().getAuthenticationRepository();
         authenticationRepository.addUserRole(AuthenticationController.ROLE_ADMIN, AuthenticationController.ROLE_ADMIN);
+        authenticationRepository.addUserRole(AuthenticationController.ROLE_HRM, AuthenticationController.ROLE_HRM);
+        authenticationRepository.addUserRole(AuthenticationController.ROLE_VFM, AuthenticationController.ROLE_VFM);
+        authenticationRepository.addUserRole(AuthenticationController.ROLE_COLLAB, AuthenticationController.ROLE_COLLAB);
+        authenticationRepository.addUserRole(AuthenticationController.ROLE_GSM, AuthenticationController.ROLE_GSM);
         authenticationRepository.addUserRole(AuthenticationController.ROLE_EMPLOYEE,
                 AuthenticationController.ROLE_EMPLOYEE);
 
         authenticationRepository.addUserWithRole("Main Administrator", "admin@this.app", "admin",
                 AuthenticationController.ROLE_ADMIN);
+
+        authenticationRepository.addUserWithRole("HRM", "hrm@this.app", "hrm",
+                AuthenticationController.ROLE_HRM);
+
+        authenticationRepository.addUserWithRole("VFM", "vfm@this.app", "vfm",
+                AuthenticationController.ROLE_VFM);
+
+        authenticationRepository.addUserWithRole("Collab1", "collab1@this.app", "collab1",
+                AuthenticationController.ROLE_COLLAB);
+
+        authenticationRepository.addUserWithRole("Collab2", "collab2@this.app", "collab2",
+                AuthenticationController.ROLE_COLLAB);
+
+        authenticationRepository.addUserWithRole("Collab3", "collab3@this.app", "collab3",
+                AuthenticationController.ROLE_COLLAB);
+
+        authenticationRepository.addUserWithRole("GSM1", "gsm1@this.app", "gsm1",
+                AuthenticationController.ROLE_GSM);
+
+        authenticationRepository.addUserWithRole("GSM2", "gsm2@this.app", "gsm2",
+                AuthenticationController.ROLE_GSM);
 
         authenticationRepository.addUserWithRole("Employee", "employee@this.app", "pwd",
                 AuthenticationController.ROLE_EMPLOYEE);

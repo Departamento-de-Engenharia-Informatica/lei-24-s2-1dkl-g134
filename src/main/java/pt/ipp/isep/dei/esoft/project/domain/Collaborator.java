@@ -59,6 +59,12 @@ public class Collaborator {
         identificationDocumentType = identificationDocumentType.trim();
         identificationNumber = identificationNumber.trim();
         taxpayerNumber = taxpayerNumber.trim();
+        char[] nameCharacters = name.toCharArray();
+        for(char c : nameCharacters){
+            if(!Character.isLetter(c) && !Character.isWhitespace(c)){
+                throw new IllegalArgumentException("Collaborator name can only contain letters and whitespaces.");
+            }
+        }
         this.name = name;
         this.birthDate = new CustomDate(birthDate);
         if(!this.birthDate.isLegalAge()){

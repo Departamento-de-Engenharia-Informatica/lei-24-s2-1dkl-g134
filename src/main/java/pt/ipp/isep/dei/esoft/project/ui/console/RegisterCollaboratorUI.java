@@ -108,7 +108,7 @@ public class RegisterCollaboratorUI implements Runnable {
      */
     private String requestBirthDate() {
         Scanner input = new Scanner(System.in);
-        System.out.print("Birth Date: ");
+        System.out.print("Birth Date (YYYY/MM/DD, with leading zeros): ");
         return input.nextLine();
         /*CustomDate date = Utils.readDateFromConsole("Birth Date: ");
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy/MM/dd");
@@ -121,7 +121,7 @@ public class RegisterCollaboratorUI implements Runnable {
      */
     private String requestAdmissionDate() {
         Scanner input = new Scanner(System.in);
-        System.out.print("Birth Date: ");
+        System.out.print("Admission Date (YYYY/MM/DD, with leading zeros): ");
         return input.nextLine();
         /*CustomDate date = Utils.readDateFromConsole("Admission Date: ");
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy/MM/dd");

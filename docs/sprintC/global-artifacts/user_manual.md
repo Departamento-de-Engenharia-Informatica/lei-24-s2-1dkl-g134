@@ -4,9 +4,6 @@
 
 # Introduction:
 ## Purpose and Scope
-Sure, here's a simplified version:
-
----
 
 Welcome to the GreenGuardian manual! This guide is all about using our app to manage green spaces effectively. Whether you're in charge of a park, garden, or any green area, this manual will help you make the most of our features.
 
