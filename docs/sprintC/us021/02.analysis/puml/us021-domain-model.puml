@@ -1,0 +1,53 @@
+@startuml
+skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+
+skinparam classAttributeIconSize 0
+
+hide circle
+hide methods
+
+
+class Organization {
+    name
+    vatNumber
+    website
+    phoneNumber
+    email
+}
+
+class Tasks {
+ description
+ urgency
+ duration
+ green space
+}
+
+class ToDoList {
+    Tasks
+}
+
+class GreenSpaceManager {
+    name
+    email
+    phone
+}
+
+class Collaborator {
+    name
+    birthdate
+    admission date
+    address
+    email
+    phone
+}
+
+Organization "1" --> "*" Collaborator : has
+Organization "1" -> "1" GreenSpaceManager : has
+Collaborator "1" --> "*" Tasks : has
+GreenSpaceManager "1" --> "*" ToDoList : manage
+ToDoList "1" --> "*" Tasks :has
+
+
+@enduml

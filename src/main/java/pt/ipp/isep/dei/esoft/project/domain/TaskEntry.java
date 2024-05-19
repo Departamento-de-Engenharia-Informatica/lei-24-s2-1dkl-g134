@@ -24,6 +24,7 @@ public boolean equals(Object o) {
             duration == taskEntry.duration;
 }
 
+
     public String getTaskDescription() {return taskDescription;}
 
     public String getUrgency() {return urgency;}
