@@ -1,18 +1,27 @@
 package pt.ipp.isep.dei.esoft.project.repository;
 import pt.ipp.isep.dei.esoft.project.domain.GreenSpace;
+import pt.ipp.isep.dei.esoft.project.domain.GreenSpaceType;
 
 
 import java.util.ArrayList;
 import java.util.Optional;
 
 public class GreenSpaceRepository {
-    private ArrayList<GreenSpace> GreenSpaces;
-    public GreenSpaceRepository(){
-        this.GreenSpaces=new ArrayList<>();}
-public Optional<ArrayList<GreenSpace>> add(String name, String household, int area, String type){
-        GreenSpace greenSpace=new GreenSpace(name,household,area,type);
+    private ArrayList<GreenSpace> greenSpaces;
 
-    return Optional.empty();
-}
+    public GreenSpaceRepository(){this.greenSpaces=new ArrayList<>();}
+
+    public Optional<GreenSpace> add(String name, String address, int area, GreenSpaceType type){
+
+        GreenSpace greenSpace=new GreenSpace(name,address,area,type);
+
+        if(greenSpaces.contains(greenSpace)){
+            return Optional.empty();
+        }
+
+        greenSpaces.add(greenSpace);
+        return Optional.of(greenSpace);
     }
+
+}
 

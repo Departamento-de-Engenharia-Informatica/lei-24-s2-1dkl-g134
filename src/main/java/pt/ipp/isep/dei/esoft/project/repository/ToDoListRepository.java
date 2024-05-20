@@ -18,7 +18,6 @@ public class ToDoListRepository {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         ToDoListRepository that = (ToDoListRepository) o;
         return toDoLists.equals(that.toDoLists);

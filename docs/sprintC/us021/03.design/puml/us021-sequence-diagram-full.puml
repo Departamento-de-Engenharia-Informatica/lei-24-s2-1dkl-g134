@@ -7,14 +7,14 @@ autonumber
 
 'hide footbox
 actor "Green Space \nManager" as ADM
-participant ":AddToDoTaskUI" as UI
-participant ":AddToDoTaskController" as CTRL
+participant ":AddTaskEntryUI" as UI
+participant ":AddTaskEntryController" as CTRL
 participant ":Repositories" as RepositorySingleton
 participant ":repositories\n:Repositories" as PLAT
 
 participant ":UrgencyLevelRepository" as URG
 participant ":ToDoListRepository" as TDR
-participant "task\n:Task" as TASK
+participant "taskEntry\n:TaskEntry" as TASK
 
 activate ADM
 

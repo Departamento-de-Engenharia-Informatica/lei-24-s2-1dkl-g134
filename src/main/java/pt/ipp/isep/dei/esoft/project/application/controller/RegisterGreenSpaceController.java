@@ -12,7 +12,7 @@ public class RegisterGreenSpaceController {
 
 
     public RegisterGreenSpaceController(){
-        //GreenSpaceRepository = Repositories.getInstance().getGreenSpaceRepository();
+        GreenSpaceRepository = Repositories.getInstance().getGreenSpaceRepository();
     }
 
 
