@@ -35,4 +35,21 @@ public class UserSession {
     public boolean isLoggedInWithRole(String roleId) {
         return this.userSession.isLoggedInWithRole(roleId);
     }
+
+    @Override
+    public boolean equals(Object o){
+        if(!(o instanceof UserSession)){
+            return false;
+        }
+        UserSession other = (UserSession) o;
+        if(other.getUserEmail().equalsIgnoreCase(getUserEmail()) || other.getUserName().equalsIgnoreCase(getUserName())){
+            return true;
+        }
+        return false;
+    }
+
+    @Override
+    public String toString(){
+        return getUserName() + " | " + getUserEmail();
+    }
 }
