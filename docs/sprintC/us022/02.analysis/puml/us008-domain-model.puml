@@ -17,42 +17,37 @@ class Organization {
     email
 }
 
-class Vehicle {
-    plate number
-    brand
-    type
-    model
-    current km
-    checkup frequency
-    km at last checkup
+class GreenSpace {
+   name
+   address
+   area
+   type
 }
 
-class Checkup {
-    current vehicle km
-    vehicle plate number
+class Entry {
+
 }
 
-class FleetManager {
+class GreenSpaceManager {
     name
     email
     phone
 }
 
-class Collaborator {
-    name
-    birthdate
-    admission date
-    address
-    email
-    phone
+class Agenda{
+
 }
 
-Organization "1" - "*" Collaborator : has >
-Organization "1" - "1" FleetManager : has >
-Organization "1" - "*" Vehicle: owns >
-Vehicle "1" - "*" Checkup: undergoes >
-Collaborator "1" -- "0..*" Vehicle : uses >
-FleetManager "1" -- "*" Checkup : orders >
-FleetManager "1" -- "*" Vehicle : maintains >
+class ToDoList{
+
+}
+
+
+
+Organization "1" - "1" GreenSpaceManager : has >
+Entry "1" - "*" GreenSpace: associated >
+GreenSpaceManager "1" -- "*" GreenSpace : manages >
+ToDoList "1" -  Entry : contains all >
+Agenda "1" -  Entry : contains some >
 
 @enduml
