@@ -1,12 +1,15 @@
 package pt.ipp.isep.dei.esoft.project.domain;
 
+import pt.ipp.isep.dei.esoft.project.application.session.ApplicationSession;
+import pt.ipp.isep.dei.esoft.project.application.session.UserSession;
+
 public class GreenSpace {
 
     private String name;
     private String address;
     private int area;
     private GreenSpaceType type;
-
+    private UserSession creator;
 
 
 
@@ -15,6 +18,7 @@ public class GreenSpace {
         this.address=address;
         this.area = area;
         this.type = type;
+        creator = ApplicationSession.getInstance().getCurrentSession();
     }
 
     @Override
