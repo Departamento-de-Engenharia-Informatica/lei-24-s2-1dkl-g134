@@ -5,15 +5,24 @@
 
 ### 1.1. User Story Description
 
-As a Green Space Manager, I want to know which piece(s) of equipment is/are used in each day.
+As a ---, I want to predict the average monthly cost that will be
+paid for water consumption in a new 55 hectare park.
 
 ### 1.2. Customer Specifications and Clarifications 
 
 **From the specifications document:**
 
-> Consider that the park has the following equipment: walking paths, children’s playground, picnic area, and exercise machines (gymnastics equipment). At the park exit there is an electronic device with a list of all the equipment, in which the user(s) must indicate the equipment they used that day.
+> The monthly cost associated with water consumption in each
+park is related to its size. Consider the file ”water consumption updated.csv”
+adapted from the file used in US09, in which the daily water consumption of more parks were inserted. The file ”Area.csv” has the area
+(in hectares) of each park. Consider that the cost of water consumed
+follows the rules defined in US09.
 
-> In the file ”EquipmentUsed.csv” the choices of 1000 users are recorded. Make a pie chart representing, in percentage, the use of each piece of equipment.
+> The park management company is considering starting to manage a
+new 55-hectare park. Predict the average monthly cost that will be
+paid for water consumption in this new park. Apply the linear regression model, considering the park area as the independent variable and
+the average monthly cost spent on water consumption as the response
+variable. Start by studying the feasibility of linear adjustment.
 
 **From the client clarifications:**
 
@@ -33,11 +42,12 @@ As a Green Space Manager, I want to know which piece(s) of equipment is/are used
 
 **Input Data:**
 
-* None
+* Area.csv file, with park name and its corresponding size;
+* water_consumption_updated.csv file, with daily water consumption for each park.
 
 **Output Data:**
 
-* Pie chart representing, in percentage, the data available in the EquipmentUsed.csv file.
+* Float number, representing the prediction of the average monthly cost that will be paid.
 
 ### 1.6. System Sequence Diagram (SSD)
 
