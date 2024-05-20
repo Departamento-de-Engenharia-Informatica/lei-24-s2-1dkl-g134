@@ -16,13 +16,15 @@ public class RegisterGreenSpaceUI implements Runnable {
     private GreenSpaceType type;
     private RegisterGreenSpaceController registerGreenSpaceController = new RegisterGreenSpaceController();
 
+    public RegisterGreenSpaceController getRegisterGreenSpaceController() {return registerGreenSpaceController;}
+
     public void run() {
         System.out.println("\n >>>>>>>>>> REGISTER GREEN SPACE  <<<<<<<<<< \n");
 
-        while (true) {
+       while (true) {
             requestData();
             if (!confirmData()) {
-                continue;
+                submitData();
                 break;
 
             }
@@ -49,7 +51,7 @@ public class RegisterGreenSpaceUI implements Runnable {
 
     private void submitData() {
         try {
-            Optional<GreenSpace> newGreenSpace = registerGreenSpaceController.registerGreenSpace(name, address, area, type);
+            Optional<GreenSpace> newGreenSpace = getRegisterGreenSpaceController().registerGreenSpace(name, address, area, type);
             if (newGreenSpace.isEmpty()) {
                 System.out.println("Failled to add new Green Space!");
             } else {
