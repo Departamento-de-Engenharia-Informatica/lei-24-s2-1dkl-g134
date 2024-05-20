@@ -46,5 +46,8 @@ public class GreenSpace {
         return name;
     }
 
+    public UserSession getCreator() {
+        return creator;
+    }
 }
 
