@@ -36,4 +36,5 @@ public boolean equals(Object o) {
     public int getDuration() {return duration;}
 
     public String getTaskTitle() {return taskTitle;}
+
 }

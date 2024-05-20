@@ -2,10 +2,7 @@ package pt.ipp.isep.dei.esoft.project.ui.console;
 
 import pt.ipp.isep.dei.esoft.project.application.controller.CreateTaskController;
 import pt.ipp.isep.dei.esoft.project.application.controller.authorization.AddTaskEntryController;
-import pt.ipp.isep.dei.esoft.project.domain.State;
-import pt.ipp.isep.dei.esoft.project.domain.Task;
-import pt.ipp.isep.dei.esoft.project.domain.Vehicle;
-import pt.ipp.isep.dei.esoft.project.domain.urgencyLevel;
+import pt.ipp.isep.dei.esoft.project.domain.*;
 import pt.ipp.isep.dei.esoft.project.ui.console.utils.Utils;
 
 import java.util.ArrayList;
@@ -60,9 +57,9 @@ public class AddTaskEntryUI implements Runnable {
         return Utils.confirm("Do you wish to proceed? (s or n)");
     }
     private void submitData() {
-        Optional<Task> TaskEntry = getController().addTaskEntry(taskTitle, taskDescription, urgencyLevel, state, duration);
+        Optional<TaskEntry> taskEntry = getController().addTaskEntry(taskTitle, taskDescription, urgencyLevel, state, duration);
 
-        if (TaskEntry.isPresent()) {
+        if (taskEntry.isPresent()) {
             System.out.println("\nTask Entry successfully created!");
         } else {
             System.out.println("\nTask Entry not created!");
