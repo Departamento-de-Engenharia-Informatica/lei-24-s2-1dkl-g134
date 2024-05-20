@@ -14,7 +14,7 @@ public class Repositories {
     private final VehicleRepository vehicleRepository;
     private final CheckupRepository checkupRepository;
     private final TeamRepository teamRepository;
-
+private final GreenSpaceRepository greenSpaceRepository;
     /**
      * Constructor for the Repositories class.
      * All this does is initialize every repository.
@@ -29,6 +29,7 @@ public class Repositories {
         vehicleRepository = new VehicleRepository();
         checkupRepository = new CheckupRepository();
         teamRepository = new TeamRepository();
+        greenSpaceRepository=new GreenSpaceRepository();
     }
 
     /**
@@ -91,4 +92,8 @@ public class Repositories {
      * @return The CheckupRepository object.
      */
     public CheckupRepository getCheckupRepository(){ return checkupRepository;}
+
+    public GreenSpaceRepository getGreenSpaceRepository(){
+        return greenSpaceRepository;
+    }
 }
