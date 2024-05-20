@@ -1,34 +1,39 @@
 package pt.ipp.isep.dei.esoft.project.domain;
 
+
 public class TaskEntry {
 
+    private String taskTitle;
     private String taskDescription;
-    private String urgency;
+    private urgencyLevel urgencyLevel;
+    private State state;
     private int duration;
 
-    public TaskEntry(String taskDescription, String urgency, int duration) {
+    public TaskEntry(String taskTitle, String taskDescription, urgencyLevel urgencyLevel, int duration, State state) {
+        this.taskTitle = taskTitle;
         this.taskDescription = taskDescription;
-        this.urgency = urgency; //high, medium, low
+        this.urgencyLevel = urgencyLevel;
         this.duration = duration; //in minutes??
+        this.state = state;
     }
 @Override
 public boolean equals(Object o) {
-    if (this == o) {
-        return true;
-    }
+
     if (!(o instanceof TaskEntry)) {
         return false;
     }
     TaskEntry taskEntry = (TaskEntry) o;
-    return taskDescription.equals(taskEntry.taskDescription) && urgency.equals(taskEntry.urgency) &&
-            duration == taskEntry.duration;
+    return taskTitle.equalsIgnoreCase(taskEntry.getTaskTitle());
 }
 
 
     public String getTaskDescription() {return taskDescription;}
 
-    public String getUrgency() {return urgency;}
+    public urgencyLevel getUrgencyLevel() {return urgencyLevel;}
+
+    public State getState() {return state;}
 
     public int getDuration() {return duration;}
 
+    public String getTaskTitle() {return taskTitle;}
 }
