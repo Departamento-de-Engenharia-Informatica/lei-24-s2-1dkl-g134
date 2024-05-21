@@ -1,4 +1,4 @@
-package pt.ipp.isep.dei.esoft.project.application.controller.authorization;
+package pt.ipp.isep.dei.esoft.project.application.controller;
 import pt.ipp.isep.dei.esoft.project.domain.*;
 import pt.ipp.isep.dei.esoft.project.repository.Repositories;
 import pt.ipp.isep.dei.esoft.project.repository.ToDoListRepository;
@@ -12,8 +12,8 @@ public class AddTaskEntryController {
     public AddTaskEntryController(){
         ToDoListRepository = Repositories.getInstance().getToDoListRepository();
     }
-    public Optional<TaskEntry> addTaskEntry(String taskTitle, String taskDescription,urgencyLevel urgencyLevel, State state, int duration){
-        return ToDoListRepository.add(taskTitle,taskDescription,urgencyLevel,state,duration);
+    public Optional<TaskEntry> addTaskEntry(String taskTitle, String taskDescription,urgencyLevel urgencyLevel, int duration){
+        return ToDoListRepository.add(taskTitle,taskDescription,urgencyLevel,duration);
 
     }
 }

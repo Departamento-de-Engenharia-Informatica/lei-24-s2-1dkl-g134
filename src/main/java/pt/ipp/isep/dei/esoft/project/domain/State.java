@@ -3,6 +3,7 @@ package pt.ipp.isep.dei.esoft.project.domain;
 import java.util.ArrayList;
 
 public enum State{
+    PENDING,
     PLANNED,
     POSTPONED,
     COMPLETED,

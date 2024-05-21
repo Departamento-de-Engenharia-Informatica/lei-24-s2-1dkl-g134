@@ -16,6 +16,7 @@ public class Repositories {
     private final TeamRepository teamRepository;
     private final GreenSpaceRepository greenSpaceRepository;
     private final ToDoListRepository toDoListRepository;
+    private final AgendaRepository agendaRepository;
     /**
      * Constructor for the Repositories class.
      * All this does is initialize every repository.
@@ -32,6 +33,7 @@ public class Repositories {
         teamRepository = new TeamRepository();
         greenSpaceRepository=new GreenSpaceRepository();
         toDoListRepository=new ToDoListRepository();
+        agendaRepository=new AgendaRepository();
     }
 
     /**
@@ -100,4 +102,5 @@ public class Repositories {
     }
 
     public ToDoListRepository getToDoListRepository() {return toDoListRepository;}
+    public AgendaRepository getAgendaRepository(){return agendaRepository;}
 }
