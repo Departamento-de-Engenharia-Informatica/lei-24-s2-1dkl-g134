@@ -33,8 +33,16 @@ public class GreenSpace {
         }return false;
     }
 
-    private String getName() {
-        return null;
+    public GreenSpaceType getType() {
+        return type;
+    }
+
+    public int getArea() {
+        return area;
+    }
+
+    public String getName() {
+        return name;
     }
 
     public String getAddress() {
