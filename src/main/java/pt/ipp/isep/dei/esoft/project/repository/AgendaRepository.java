@@ -26,4 +26,19 @@ public class AgendaRepository {
         agenda.add(task);
         return Optional.of(task);
     }
+    public Optional<TaskEntry> postponeTask(TaskEntry taskEntry, String date){
+        return taskEntry.postponeTask(date);
+    }
+    public Optional<ArrayList<TaskEntry>> getPlannedAndPostponedTasks(){
+        ArrayList<TaskEntry> currentTasks = new ArrayList<>();
+        for(TaskEntry taskEntry : agenda){
+            if(taskEntry.getState() == State.PLANNED || taskEntry.getState() == State.POSTPONED){
+                currentTasks.add(taskEntry);
+            }
+        }
+        if (currentTasks.isEmpty()){
+            return Optional.empty();
+        }
+        return Optional.of(currentTasks);
+    }
 }

@@ -1,6 +1,8 @@
 package pt.ipp.isep.dei.esoft.project.domain;
 
 
+import java.util.Optional;
+
 public class TaskEntry {
 
     private String taskTitle;
@@ -39,6 +41,17 @@ public class TaskEntry {
         return taskTitle + " | " + taskDescription;
     }
 
+    public Optional<TaskEntry> postponeTask(String date){
+        CustomDate newDate = new CustomDate(date);
+        if(newDate.isAfterDate(this.date)){
+            this.date=newDate;
+            this.state=State.POSTPONED;
+        }else{
+            throw new IllegalArgumentException("Postponed date can't be before current date");
+        }
+        return Optional.of(this);
+    }
+
 
     public String getTaskDescription() {return taskDescription;}
 
@@ -49,5 +62,7 @@ public class TaskEntry {
     public int getDuration() {return duration;}
 
     public String getTaskTitle() {return taskTitle;}
+
+
 
 }

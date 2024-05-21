@@ -10,13 +10,11 @@ import java.util.Scanner;
 
 public class AddTaskEntryUI implements Runnable {
 
-    private final AddTaskEntryController controller;
+    private final AddTaskEntryController controller = new AddTaskEntryController();
     private String taskTitle;
     private String taskDescription;
     private urgencyLevel urgencyLevel;
     private int duration;
-
-    public AddTaskEntryUI() {controller = new AddTaskEntryController();}
 
     public AddTaskEntryController getController() {return controller;}
 
