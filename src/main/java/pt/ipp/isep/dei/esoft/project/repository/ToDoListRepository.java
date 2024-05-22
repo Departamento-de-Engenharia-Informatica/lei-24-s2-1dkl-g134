@@ -1,26 +1,38 @@
 package pt.ipp.isep.dei.esoft.project.repository;
-import pt.ipp.isep.dei.esoft.project.domain.ToDoList;
+import pt.ipp.isep.dei.esoft.project.domain.*;
+
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 public class ToDoListRepository {
-    private List<ToDoList> toDoLists;
+    private List<TaskEntry> toDoList;
 
 
     public ToDoListRepository() {
-        this.toDoLists = new ArrayList<>();
+        this.toDoList = new ArrayList<>();
     }
 
-    public void addToDoList(ToDoList toDoList) {
-        toDoLists.add(toDoList);
+    public Optional<TaskEntry> add(String taskTitle, String taskDescription, urgencyLevel urgencyLevel, int duration) {
+        TaskEntry taskEntry =new TaskEntry(taskTitle,taskDescription,urgencyLevel,duration);
+
+        if(toDoList.contains(taskEntry)){
+            return Optional.empty();
+        }
+
+        toDoList.add(taskEntry);
+        return Optional.of(taskEntry);
     }
-
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        ToDoListRepository that = (ToDoListRepository) o;
-        return toDoLists.equals(that.toDoLists);
+    public Optional<ArrayList<TaskEntry>> getPendingTasks(){
+        ArrayList<TaskEntry> pendingTasks = new ArrayList<>();
+        for(TaskEntry taskEntry : toDoList){
+            if(taskEntry.getState() == State.PENDING){
+                pendingTasks.add(taskEntry);
+            }
+        }
+        if (pendingTasks.isEmpty()){
+            return Optional.empty();
+        }
+        return Optional.of(pendingTasks);
     }
 }

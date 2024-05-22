@@ -30,7 +30,7 @@ The starting date will be enough because the task already has the predicted dura
 
 > **Question:** When the GSM plans a task (that was previously in To-Do) into the Agenda, what aditional data/information does he need to input when planning?
 >
-> **Answer:** The starting date for the task. Later the GSM will be able to add the Team and vehicles (if required)..
+> **Answer:** The starting date for the task. Later the GSM will be able to add the Team and vehicles (if required).
 
 ### 1.3. Acceptance Criteria
 
@@ -60,7 +60,7 @@ The starting date will be enough because the task already has the predicted dura
 
 ### 1.6. System Sequence Diagram (SSD)
 
-![System Sequence Diagram](svg/us010-system-sequence-diagram-main-solution.svg)
+![System Sequence Diagram](svg/us022-system-sequence-diagram-main-solution.svg)
 
 ### 1.7 Other Relevant Remarks
 
