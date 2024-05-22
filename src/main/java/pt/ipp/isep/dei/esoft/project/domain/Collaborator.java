@@ -1,5 +1,7 @@
 package pt.ipp.isep.dei.esoft.project.domain;
 
+import pt.ipp.isep.dei.esoft.project.application.session.UserSession;
+
 import javax.swing.*;
 import java.util.ArrayList;
 import java.util.Calendar;
