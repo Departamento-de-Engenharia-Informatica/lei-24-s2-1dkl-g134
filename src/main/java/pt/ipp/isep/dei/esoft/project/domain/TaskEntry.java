@@ -72,7 +72,10 @@ public class TaskEntry {
         }
         return Optional.empty();
     }
-    public boolean hasVehicle(Vehicle vehicle) {return assignedVehicles.contains(vehicle);}
+
+    public boolean hasVehicle(Vehicle vehicle) {
+        return assignedVehicles.contains(vehicle);
+    }
     public Optional<TaskEntry> assignTeam(Team team){
         if(team.equals(assignedTeam)){
             return Optional.empty();
@@ -93,6 +96,14 @@ public class TaskEntry {
 
     public String getTaskTitle() {return taskTitle;}
 
+    public Optional<TaskEntry> cancelTask() {
+        if (state == State.CANCELED) {
+            return Optional.empty();
+        } else {
+            state = State.CANCELED;
+            return Optional.of(this);
+        }
+    }
 
 
 }

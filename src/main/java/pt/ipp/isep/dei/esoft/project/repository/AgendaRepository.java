@@ -46,4 +46,7 @@ public class AgendaRepository {
         return agenda.get(agenda.indexOf(taskEntry)).assignTeam(team);
     }
 
+    public Optional<TaskEntry> cancelTask(TaskEntry taskEntry) {
+        return agenda.get(agenda.indexOf(taskEntry)).cancelTask();
+    }
 }
