@@ -63,7 +63,31 @@ public class PostponeTaskUI implements Runnable{
     }
 
     private TaskEntry requestTaskEntry(){
+        Scanner input = new Scanner(System.in);
         Optional<ArrayList<TaskEntry>> taskEntries = controller.getPlannedAndPostponedTask();
-        
+        if(taskEntries.isEmpty()){
+            System.out.println("Error: No available tasks. Task postponing aborted.");
+            return null;
+        }
+        System.out.println("Choose a task from the following list (Title | Description):\n");
+        for(int i = 0; i < taskEntries.get().size(); i++){
+            System.out.println((i+1) + "- "+taskEntries.get().get(i).toString());
+        }
+        int option = 0;
+        while(true){
+            try{
+                System.out.println("Choose a number corresponding to a task.");
+                option = Integer.parseInt(input.nextLine());
+                if(option <= 0 || option > taskEntries.get().size()){
+                    System.out.println("Error: Invalid option.");
+                    continue;
+                }
+                break;
+            }catch(Exception e){
+                System.out.println("Error: Selected option must be a number.");
+            }
+        }
+        return taskEntries.get().get(option-1);
+
     }
 }
