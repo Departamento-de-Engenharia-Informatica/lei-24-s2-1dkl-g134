@@ -24,7 +24,7 @@ public class TaskEntry {
         assignedVehicles = new ArrayList<>();
     }
 
-    public TaskEntry addAgendaData(State state, String date){
+    public TaskEntry addAgendaData(State state, String date) {
         this.state = state;
         this.date = new CustomDate(date);
         return this;
@@ -41,47 +41,69 @@ public class TaskEntry {
     }
 
     @Override
-    public String toString(){
+    public String toString() {
         return taskTitle + " | " + taskDescription;
     }
 
-    public Optional<TaskEntry> postponeTask(String date){
+    public Optional<TaskEntry> postponeTask(String date) {
         CustomDate newDate = new CustomDate(date);
-        if(newDate.isAfterDate(this.date)){
-            this.date=newDate;
-            this.state=State.POSTPONED;
-        }else{
+        if (newDate.isAfterDate(this.date)) {
+            this.date = newDate;
+            this.state = State.POSTPONED;
+        } else {
             throw new IllegalArgumentException("Postponed date can't be before current date");
         }
         return Optional.of(this);
     }
 
-    public Optional<ArrayList<Vehicle>> assignVehicles(ArrayList<Vehicle> vehicles){
+    public Optional<ArrayList<Vehicle>> assignVehicles(ArrayList<Vehicle> vehicles) {
         ArrayList<Vehicle> vehiclesToAssign = new ArrayList<Vehicle>();
         boolean anyVehicleAssigned = false;
-        for(Vehicle vehicle : vehicles){
-            if(!hasVehicle(vehicle)){
+        for (Vehicle vehicle : vehicles) {
+            if (!hasVehicle(vehicle)) {
                 assignedVehicles.add(vehicle);
                 vehiclesToAssign.add(vehicle);
                 anyVehicleAssigned = true;
             }
         }
-        if(anyVehicleAssigned){
+        if (anyVehicleAssigned) {
             return Optional.of(vehiclesToAssign);
         }
         return Optional.empty();
     }
-    public boolean hasVehicle(Vehicle vehicle) {return assignedVehicles.contains(vehicle);}
-    public String getTaskDescription() {return taskDescription;}
 
-    public urgencyLevel getUrgencyLevel() {return urgencyLevel;}
+    public boolean hasVehicle(Vehicle vehicle) {
+        return assignedVehicles.contains(vehicle);
+    }
 
-    public State getState() {return state;}
+    public String getTaskDescription() {
+        return taskDescription;
+    }
 
-    public int getDuration() {return duration;}
+    public urgencyLevel getUrgencyLevel() {
+        return urgencyLevel;
+    }
 
-    public String getTaskTitle() {return taskTitle;}
+    public State getState() {
+        return state;
+    }
 
+    public int getDuration() {
+        return duration;
+    }
+
+    public String getTaskTitle() {
+        return taskTitle;
+    }
+
+    public Optional<TaskEntry> cancelTask() {
+        if (state == State.CANCELED) {
+            return Optional.empty();
+        } else {
+            state = State.CANCELED;
+            return Optional.of(this);
+        }
+    }
 
 
 }
