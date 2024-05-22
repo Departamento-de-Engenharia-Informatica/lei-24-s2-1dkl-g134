@@ -1,6 +1,9 @@
 package pt.ipp.isep.dei.esoft.project.domain;
 
 
+import java.util.ArrayList;
+import java.util.Optional;
+
 public class TaskEntry {
 
     private String taskTitle;
@@ -8,6 +11,8 @@ public class TaskEntry {
     private urgencyLevel urgencyLevel;
     private State state;
     private int duration;
+
+    private ArrayList<Vehicle> assignedVehicles;
     private CustomDate date;
 
     public TaskEntry(String taskTitle, String taskDescription, urgencyLevel urgencyLevel, int duration) {
@@ -16,6 +21,7 @@ public class TaskEntry {
         this.urgencyLevel = urgencyLevel;
         this.duration = duration;
         this.state = State.PENDING;
+        assignedVehicles = new ArrayList<>();
     }
 
     public TaskEntry addAgendaData(State state, String date){
@@ -39,7 +45,33 @@ public class TaskEntry {
         return taskTitle + " | " + taskDescription;
     }
 
+    public Optional<TaskEntry> postponeTask(String date){
+        CustomDate newDate = new CustomDate(date);
+        if(newDate.isAfterDate(this.date)){
+            this.date=newDate;
+            this.state=State.POSTPONED;
+        }else{
+            throw new IllegalArgumentException("Postponed date can't be before current date");
+        }
+        return Optional.of(this);
+    }
 
+    public Optional<ArrayList<Vehicle>> assignVehicles(ArrayList<Vehicle> vehicles){
+        ArrayList<Vehicle> vehiclesToAssign = new ArrayList<Vehicle>();
+        boolean anyVehicleAssigned = false;
+        for(Vehicle vehicle : vehicles){
+            if(!hasVehicle(vehicle)){
+                assignedVehicles.add(vehicle);
+                vehiclesToAssign.add(vehicle);
+                anyVehicleAssigned = true;
+            }
+        }
+        if(anyVehicleAssigned){
+            return Optional.of(vehiclesToAssign);
+        }
+        return Optional.empty();
+    }
+    public boolean hasVehicle(Vehicle vehicle) {return assignedVehicles.contains(vehicle);}
     public String getTaskDescription() {return taskDescription;}
 
     public urgencyLevel getUrgencyLevel() {return urgencyLevel;}
@@ -49,5 +81,7 @@ public class TaskEntry {
     public int getDuration() {return duration;}
 
     public String getTaskTitle() {return taskTitle;}
+
+
 
 }
