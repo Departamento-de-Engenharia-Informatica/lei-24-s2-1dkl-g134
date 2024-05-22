@@ -1,8 +1,6 @@
 package pt.ipp.isep.dei.esoft.project.repository;
 
-import pt.ipp.isep.dei.esoft.project.domain.State;
-import pt.ipp.isep.dei.esoft.project.domain.TaskEntry;
-import pt.ipp.isep.dei.esoft.project.domain.urgencyLevel;
+import pt.ipp.isep.dei.esoft.project.domain.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -40,5 +38,8 @@ public class AgendaRepository {
             return Optional.empty();
         }
         return Optional.of(currentTasks);
+    }
+    public Optional<ArrayList<Vehicle>> assignVehiclesToTask(TaskEntry taskEntry, ArrayList<Vehicle> vehicles) {
+        return agenda.get(agenda.indexOf(taskEntry)).assignVehicles(vehicles);
     }
 }
