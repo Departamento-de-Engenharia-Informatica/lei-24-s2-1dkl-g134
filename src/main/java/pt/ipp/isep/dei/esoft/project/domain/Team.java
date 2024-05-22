@@ -55,4 +55,13 @@ public class Team {
             return false;
         }
     }
+
+    @Override
+    public String toString(){
+        String representation = "";
+        for(Collaborator collaborator : teamMembers){
+            representation += collaborator.toString() + "\n";
+        }
+        return representation;
+    }
 }

@@ -42,4 +42,8 @@ public class AgendaRepository {
     public Optional<ArrayList<Vehicle>> assignVehiclesToTask(TaskEntry taskEntry, ArrayList<Vehicle> vehicles) {
         return agenda.get(agenda.indexOf(taskEntry)).assignVehicles(vehicles);
     }
+    public Optional<TaskEntry> assignTeamToTask(TaskEntry taskEntry,Team team) {
+        return agenda.get(agenda.indexOf(taskEntry)).assignTeam(team);
+    }
+
 }
