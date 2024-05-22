@@ -15,6 +15,7 @@ public class AddTaskEntryUI implements Runnable {
     private String taskDescription;
     private urgencyLevel urgencyLevel;
     private int duration;
+    private GreenSpace greenSpace;
 
     public AddTaskEntryController getController() {return controller;}
 
@@ -23,6 +24,9 @@ public class AddTaskEntryUI implements Runnable {
 
         while(true){
             requestData();
+            if(greenSpace == null) {
+                return;
+            }
             if(!confirmData()){continue;}
             submitData();
             break;
@@ -31,6 +35,11 @@ public class AddTaskEntryUI implements Runnable {
 
     private void requestData() {
 
+        greenSpace = requestGreenSpaceManagedByUser();
+        if(greenSpace == null) {
+            return;
+        }
+
         taskTitle = requestTaskTitle();
 
         taskDescription = requestTaskDescription();
@@ -38,6 +47,7 @@ public class AddTaskEntryUI implements Runnable {
         urgencyLevel = requestUrgencyLevel();
 
         duration = requestTaskDuration();
+
     }
 
 
@@ -101,6 +111,35 @@ public class AddTaskEntryUI implements Runnable {
         Scanner input = new Scanner(System.in);
         System.out.print("Task Duration (in days): ");
         return input.nextInt();
+    }
+
+    private GreenSpace requestGreenSpaceManagedByUser() {
+        Scanner input = new Scanner(System.in);
+        Optional<ArrayList<GreenSpace>> greenSpacesManagedByUser = controller.getGreenSpacesManagedByCurrentUser();
+        if(greenSpacesManagedByUser.isEmpty()){
+            System.out.println("No green spaces managed by you were found. Task creation aborted..");
+            return null;
+        }
+        System.out.println("Choose a green space from the following list of their respective titles:\n");
+        for(int i = 0; i < greenSpacesManagedByUser.get().size(); i++){
+            System.out.println((i+1) + "- "+greenSpacesManagedByUser.get().get(i));
+        }
+
+        int option = 0;
+        while(true){
+            try{
+                System.out.println("Choose a number corresponding to a green space.");
+                option = Integer.parseInt(input.nextLine());
+                if(option <= 0 || option > greenSpacesManagedByUser.get().size()){
+                    System.out.println("Error: Invalid option.");
+                    continue;
+                }
+                break;
+            }catch(Exception e){
+                System.out.println("Error: Selected option must be a number.");
+            }
+        }
+        return greenSpacesManagedByUser.get().get(option-1);
     }
 
 }

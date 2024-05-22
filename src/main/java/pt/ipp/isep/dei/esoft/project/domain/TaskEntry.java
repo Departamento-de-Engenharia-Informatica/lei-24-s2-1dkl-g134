@@ -11,17 +11,19 @@ public class TaskEntry {
     private urgencyLevel urgencyLevel;
     private State state;
     private int duration;
-
+    private GreenSpace greenSpace;
     private ArrayList<Vehicle> assignedVehicles;
     private CustomDate date;
 
-    public TaskEntry(String taskTitle, String taskDescription, urgencyLevel urgencyLevel, int duration) {
+    public TaskEntry(String taskTitle, String taskDescription, urgencyLevel urgencyLevel, int duration, GreenSpace greenSpace) {
         this.taskTitle = taskTitle;
         this.taskDescription = taskDescription;
         this.urgencyLevel = urgencyLevel;
         this.duration = duration;
         this.state = State.PENDING;
+        this.greenSpace = greenSpace;
         assignedVehicles = new ArrayList<>();
+
     }
 
     public TaskEntry addAgendaData(State state, String date){
