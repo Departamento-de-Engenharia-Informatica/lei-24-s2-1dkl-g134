@@ -1,0 +1,32 @@
+@startuml
+skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+
+title System Sequence Diagram (SSD) - Main Solution
+
+autonumber
+
+actor "Green Space\nManager" as Manager
+participant ":System" as System
+
+activate Manager
+
+    Manager -> System : asks to assign a Team to an entry in the Agenda
+    activate System
+
+        System --> Manager :requests data
+    deactivate System
+     Manager -> System : types requested data
+        activate System
+
+            System --> Manager :displays all the teams available
+        deactivate System
+
+         Manager -> System : choose one of the teams
+            activate System
+
+                   System --> Manager : requests confirmation
+                   Manager -> System : confirms team
+
+@enduml
