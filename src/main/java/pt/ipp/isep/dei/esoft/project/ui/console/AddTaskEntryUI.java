@@ -55,12 +55,13 @@ public class AddTaskEntryUI implements Runnable {
         System.out.println("\n>>>>>>>>>> TASK ENTRY INFORMATION <<<<<<<<<< \n");
         System.out.println("Title: " + taskTitle);
         System.out.println("Description: " + taskDescription);
+        System.out.println("Green Space: " + greenSpace.toString());
         System.out.println("Level of Urgency: " + urgencyLevel);
-        System.out.println("Duration: "+ duration);
+        System.out.println("Duration: "+ duration+" hours");
         return Utils.confirm("Do you wish to proceed? (s or n)");
     }
     private void submitData() {
-        Optional<TaskEntry> taskEntry = getController().addTaskEntry(taskTitle, taskDescription, urgencyLevel, duration);
+        Optional<TaskEntry> taskEntry = getController().addTaskEntry(taskTitle, taskDescription, urgencyLevel, duration, greenSpace);
 
         if (taskEntry.isPresent()) {
             System.out.println("\nTask Entry successfully created!");
@@ -109,7 +110,7 @@ public class AddTaskEntryUI implements Runnable {
 
     private int requestTaskDuration() {
         Scanner input = new Scanner(System.in);
-        System.out.print("Task Duration (in days): ");
+        System.out.print("Task Duration (in hours): ");
         return input.nextInt();
     }
 

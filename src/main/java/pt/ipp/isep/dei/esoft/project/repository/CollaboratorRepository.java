@@ -336,14 +336,14 @@ public class CollaboratorRepository {
      * @return The Collaborator object corresponding to the current user session. If none is
      * found, an empty Optional object instead.
      */
-    public Optional<Collaborator> getCurrentUserCollaborator() throws Exception{
+    public Optional<Collaborator> getCurrentUserCollaborator() throws InvalidRoleException{
         if(!ApplicationSession.getInstance().getCurrentSession().isLoggedInWithRole(AuthenticationController.ROLE_COLLAB)){
             throw new InvalidRoleException("Attempting to search for current collaborator with non-collaborator account");
         }
         String username = ApplicationSession.getInstance().getCurrentSession().getUserName();
         String useremail = ApplicationSession.getInstance().getCurrentSession().getUserEmail();
         for(Collaborator collaborator : collaborators){
-            if(username.equalsIgnoreCase(collaborator.getName()) && useremail.equalsIgnoreCase(collaborator.getEmail())){
+            if(username.equalsIgnoreCase(collaborator.getName()) && useremail.equals(collaborator.getEmail())){
                 return Optional.of(collaborator);
             }
         }

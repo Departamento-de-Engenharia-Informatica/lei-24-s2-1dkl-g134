@@ -16,8 +16,8 @@ public class AddTaskEntryController {
         this.greenSpaceRepository = Repositories.getInstance().getGreenSpaceRepository();
         ToDoListRepository = Repositories.getInstance().getToDoListRepository();
     }
-    public Optional<TaskEntry> addTaskEntry(String taskTitle, String taskDescription,urgencyLevel urgencyLevel, int duration){
-        return ToDoListRepository.add(taskTitle,taskDescription,urgencyLevel,duration);
+    public Optional<TaskEntry> addTaskEntry(String taskTitle, String taskDescription,urgencyLevel urgencyLevel, int duration, GreenSpace greenSpace){
+        return ToDoListRepository.add(taskTitle,taskDescription,urgencyLevel,duration,greenSpace);
 
     }
 
