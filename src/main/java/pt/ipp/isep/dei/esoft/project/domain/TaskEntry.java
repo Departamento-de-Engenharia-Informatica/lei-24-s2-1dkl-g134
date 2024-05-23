@@ -117,6 +117,10 @@ public class TaskEntry {
         return date;
     }
 
+    public String getGreenSpace() {
+        return greenSpace.toString();
+    }
+
     public Optional<TaskEntry> cancelTask() {
         if (state == State.CANCELED) {
             return Optional.empty();
