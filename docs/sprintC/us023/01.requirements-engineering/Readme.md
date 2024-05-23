@@ -35,17 +35,20 @@ As a Green Space Manager, I want to assign a Team to an entry in the Agenda.
 
 ### 1.4. Found out Dependencies
 
-* None.
+* There is a dependency on "US 22- Add New Entry in the Agenda" because the entry must exist in the Agenda.
 
 ### 1.5 Input and Output Data
 
 **Input Data:**
-
-* None
+* Selected data:
+    * entry
+    * team
 
 **Output Data:**
 
-* Pie chart representing, in percentage, the data available in the EquipmentUsed.csv file.
+* (In)Success of the operation
+
+
 
 ### 1.6. System Sequence Diagram (SSD)
 
