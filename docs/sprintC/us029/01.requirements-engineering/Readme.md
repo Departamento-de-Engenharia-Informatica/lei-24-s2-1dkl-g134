@@ -5,25 +5,42 @@
 
 ### 1.1. User Story Description
 
-As a Green Space Manager, I want to know which piece(s) of equipment is/are used in each day.
+As a Collaborator, I want to record the completion of a task
 
 ### 1.2. Customer Specifications and Clarifications 
 
 **From the specifications document:**
 
-> Consider that the park has the following equipment: walking paths, children’s playground, picnic area, and exercise machines (gymnastics equipment). At the park exit there is an electronic device with a list of all the equipment, in which the user(s) must indicate the equipment they used that day.
+> The To-Do List comprises all pending tasks for all parks. The entries in
+this list describe the required task, the degree of urgency (High, Medium,
+and Low), and the approximate expected duration. The Agenda is made
+up of entries that relate to a task (which was previously in the To-Do List),
+the team that will carry out the task, the vehicles/equipment assigned to
+the task, expected duration, and the status (Planned, Postponed, Canceled,
+Done).
 
-> In the file ”EquipmentUsed.csv” the choices of 1000 users are recorded. Make a pie chart representing, in percentage, the use of each piece of equipment.
+
+
 
 **From the client clarifications:**
 
-> **Question:** None.
+> **Question:** The collaborator can see what type of entrys? Like what status can he filter ? Can he see canceled Entry's?
+> 
+> **Answer:** The ones assigned to him. He can filter by the different values the status of the status, like planned, executed, canceled ...
+
+> **Question:** When a collaborator records a task, it should be asked for any observations regarding the completed task?
 >
-> **Answer:** None.
+> **Answer:** Maybe if optional, not mandatory.
+
+> **Question:** Can an employee record more than one completed task at a time?
+>
+> **Answer:** It's a matter of UX/UI, each dev team can decide about it.
+
+
 
 ### 1.3. Acceptance Criteria
 
-* **AC1:** The pie chart is successfully created, accurately represents the registered data, and is presented to the user.
+* None.
 
 ### 1.4. Found out Dependencies
 

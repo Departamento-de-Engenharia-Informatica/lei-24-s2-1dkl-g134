@@ -51,4 +51,11 @@ public class TeamRepository {
         }
         return collaboratorsInTeams;
     }
+
+    public Optional<ArrayList<Team>> getTeamList(){
+        if(teams.isEmpty()){
+             return Optional.empty();
+        }
+        return Optional.of(teams);
+    }
 }

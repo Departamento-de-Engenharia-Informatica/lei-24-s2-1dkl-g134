@@ -13,6 +13,7 @@ public class TaskEntry {
     private int duration;
     private GreenSpace greenSpace;
     private ArrayList<Vehicle> assignedVehicles;
+    private Team assignedTeam;
     private CustomDate date;
 
     public TaskEntry(String taskTitle, String taskDescription, urgencyLevel urgencyLevel, int duration, GreenSpace greenSpace) {
@@ -23,7 +24,7 @@ public class TaskEntry {
         this.state = State.PENDING;
         this.greenSpace = greenSpace;
         assignedVehicles = new ArrayList<>();
-
+        assignedTeam = null;
     }
 
     public TaskEntry addAgendaData(State state, String date){
@@ -73,7 +74,20 @@ public class TaskEntry {
         }
         return Optional.empty();
     }
-    public boolean hasVehicle(Vehicle vehicle) {return assignedVehicles.contains(vehicle);}
+
+    public boolean hasVehicle(Vehicle vehicle) {
+        return assignedVehicles.contains(vehicle);
+    }
+    public Optional<TaskEntry> assignTeam(Team team){
+        if(team.equals(assignedTeam)){
+            return Optional.empty();
+        }
+        assignedTeam = team;
+
+        //TODO: Send e-mail to team members
+
+        return Optional.of(this);
+    }
     public String getTaskDescription() {return taskDescription;}
 
     public urgencyLevel getUrgencyLevel() {return urgencyLevel;}
@@ -84,6 +98,14 @@ public class TaskEntry {
 
     public String getTaskTitle() {return taskTitle;}
 
+    public Optional<TaskEntry> cancelTask() {
+        if (state == State.CANCELED) {
+            return Optional.empty();
+        } else {
+            state = State.CANCELED;
+            return Optional.of(this);
+        }
+    }
 
 
 }
