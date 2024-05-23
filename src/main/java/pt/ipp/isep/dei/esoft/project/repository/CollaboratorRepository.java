@@ -1,5 +1,8 @@
 package pt.ipp.isep.dei.esoft.project.repository;
 
+import pt.ipp.isep.dei.esoft.project.application.controller.authorization.AuthenticationController;
+import pt.ipp.isep.dei.esoft.project.application.session.ApplicationSession;
+import pt.ipp.isep.dei.esoft.project.customexceptions.InvalidRoleException;
 import pt.ipp.isep.dei.esoft.project.domain.*;
 
 import java.util.ArrayList;
@@ -321,5 +324,29 @@ public class CollaboratorRepository {
         blacklistedTeamProposals = new ArrayList<>();
         collaboratorWhitelist = new ArrayList<>();
         collaboratorBlacklist = new ArrayList<>();
+    }
+
+    /**
+     * Searches for, and returns, the collaborator object associated with the currently
+     * logged-in user. This method uses the current user session's e-mail and name as
+     * identifiers, and checks every collaborator for one with an identical e-mail and equal
+     * (not case-sensitive) name. This method will throw a generic exception if the current user
+     * session is not a collaborator, and will return an empty Optional object if no matching
+     * collaborator is found.
+     * @return The Collaborator object corresponding to the current user session. If none is
+     * found, an empty Optional object instead.
+     */
+    public Optional<Collaborator> getCurrentUserCollaborator() throws Exception{
+        if(!ApplicationSession.getInstance().getCurrentSession().isLoggedInWithRole(AuthenticationController.ROLE_COLLAB)){
+            throw new InvalidRoleException("Attempting to search for current collaborator with non-collaborator account");
+        }
+        String username = ApplicationSession.getInstance().getCurrentSession().getUserName();
+        String useremail = ApplicationSession.getInstance().getCurrentSession().getUserEmail();
+        for(Collaborator collaborator : collaborators){
+            if(username.equalsIgnoreCase(collaborator.getName()) && useremail.equalsIgnoreCase(collaborator.getEmail())){
+                return Optional.of(collaborator);
+            }
+        }
+        return Optional.empty();
     }
 }

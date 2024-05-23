@@ -117,6 +117,12 @@ public class Collaborator {
     public String getName() {return name;}
 
     /**
+     * Returns this collaborator's email.
+     * @return A String representing this collaborator's email.
+     */
+    public String getEmail() {return email;}
+
+    /**
      * Checks if this collaborator is the same as another.
      * Two collaborators are considered the same if their ID number is the same.
      * @param o The collaborator to compare against.
