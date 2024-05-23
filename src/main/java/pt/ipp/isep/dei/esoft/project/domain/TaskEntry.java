@@ -13,7 +13,7 @@ public class TaskEntry {
     private int duration;
     private GreenSpace greenSpace;
     private ArrayList<Vehicle> assignedVehicles;
-    private Team assignedTeam;
+    private ArrayList<Collaborator> assignedTeam;
     private CustomDate date;
 
     public TaskEntry(String taskTitle, String taskDescription, urgencyLevel urgencyLevel, int duration, GreenSpace greenSpace) {
@@ -79,10 +79,23 @@ public class TaskEntry {
         return assignedVehicles.contains(vehicle);
     }
     public Optional<TaskEntry> assignTeam(Team team){
-        if(team.equals(assignedTeam)){
+        ArrayList<Collaborator> teamMembers = team.getTeamMembers();
+        boolean discrepancyFound = false;
+        if(assignedTeam.size() != teamMembers.size()){
+            discrepancyFound = true;
+        }else{
+            for(Collaborator member : teamMembers){
+                if(!assignedTeam.contains(member)){
+                    discrepancyFound = true;
+                    break;
+                }
+            }
+        }
+        if(!discrepancyFound){
             return Optional.empty();
         }
-        assignedTeam = team;
+
+        assignedTeam.addAll(teamMembers);
 
         //TODO: Send e-mail to team members
 
@@ -97,6 +110,12 @@ public class TaskEntry {
     public int getDuration() {return duration;}
 
     public String getTaskTitle() {return taskTitle;}
+
+    public ArrayList<Collaborator> getAssignedTeam() { return assignedTeam; }
+
+    public CustomDate getDate() {
+        return date;
+    }
 
     public Optional<TaskEntry> cancelTask() {
         if (state == State.CANCELED) {

@@ -13,8 +13,8 @@ public class ToDoListRepository {
         this.toDoList = new ArrayList<>();
     }
 
-    public Optional<TaskEntry> add(String taskTitle, String taskDescription, urgencyLevel urgencyLevel, int duration) {
-        TaskEntry taskEntry =new TaskEntry(taskTitle,taskDescription,urgencyLevel,duration);
+    public Optional<TaskEntry> add(String taskTitle, String taskDescription, urgencyLevel urgencyLevel, int duration, GreenSpace greenSpace) {
+        TaskEntry taskEntry =new TaskEntry(taskTitle,taskDescription,urgencyLevel,duration,greenSpace);
 
         if(toDoList.contains(taskEntry)){
             return Optional.empty();
