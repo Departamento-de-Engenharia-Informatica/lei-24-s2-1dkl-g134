@@ -52,7 +52,7 @@ As a Green Space Manager, I want to assign a Team to an entry in the Agenda.
 
 ### 1.6. System Sequence Diagram (SSD)
 
-![System Sequence Diagram](svg/us010-system-sequence-diagram-main-solution.svg)
+![System Sequence Diagram](svg/us023-system-sequence-diagram-main-solution.svg)
 
 ### 1.7 Other Relevant Remarks
 
