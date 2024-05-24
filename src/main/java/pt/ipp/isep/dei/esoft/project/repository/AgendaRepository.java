@@ -1,5 +1,6 @@
 package pt.ipp.isep.dei.esoft.project.repository;
 
+import pt.ipp.isep.dei.esoft.project.customexceptions.CollaboratorNotFoundException;
 import pt.ipp.isep.dei.esoft.project.customexceptions.InvalidRoleException;
 import pt.ipp.isep.dei.esoft.project.domain.*;
 
@@ -55,7 +56,7 @@ public class AgendaRepository {
         return agenda.get(agenda.indexOf(taskEntry)).cancelTask();
     }
 
-    public Optional<ArrayList<TaskEntry>> getCurrentUserTasksBetweenTwoDates(String firstDate, String secondDate) throws InvalidRoleException {
+    public Optional<ArrayList<TaskEntry>> getCurrentUserTasksBetweenTwoDates(String firstDate, String secondDate) throws InvalidRoleException, CollaboratorNotFoundException {
         CustomDate start = new CustomDate(firstDate);
         CustomDate end = new CustomDate(secondDate);
         ArrayList<TaskEntry> foundTasks = new ArrayList<>();
@@ -64,7 +65,7 @@ public class AgendaRepository {
         }
         Optional<Collaborator> currentCollaborator = Repositories.getInstance().getCollaboratorRepository().getCurrentUserCollaborator();
         if (currentCollaborator.isEmpty()) {
-            return Optional.empty();
+            throw new CollaboratorNotFoundException("No collaborator corresponding to your email and name was found in the system.");
         }
         for (TaskEntry taskEntry : agenda) {
             if (taskEntry.getAssignedTeam().contains(currentCollaborator)) {
