@@ -41,15 +41,18 @@ class Agenda{
 class ToDoList{
 
 }
-
+class Team{
+teamMembers
+teamSkills
+}
 
 
 
 Organization "1" --- "1" GreenSpaceManager : has >
-Entry "1" -- "*" GreenSpace: associated >
+Entry "1" --"*" GreenSpace: associated >
 GreenSpaceManager "1" -- "*" GreenSpace : manages >
 ToDoList "1" -  Entry : contains all >
 Agenda "1" --  Entry : contains some >
-
-
+Team "1" - "*" Entry: assign >
+Team"1"-- Agenda
 @enduml

@@ -27,8 +27,12 @@ activate Manager
     Manager -> System : choose one of the entries
     activate System
 
-           System --> Manager : requests confirmation
-           Manager -> System : confirms entry
-           System --> Manager : displays operation success
-           deactivate System
+          System --> Manager : requests confirmation
+          deactivate System
+
+    Manager -> System : confirms entry
+    activate System
+
+    System --> Manager : displays operation success
+
 @enduml
