@@ -1,9 +1,10 @@
 package pt.ipp.isep.dei.esoft.project.domain;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Comparator;
 
-public class TeamMember {
+public class TeamMember implements Serializable {
     private Collaborator collaborator;
     private ArrayList<Skill> contributions;
     private ArrayList<ArrayList<Skill>> contributionCombinations;

@@ -5,11 +5,12 @@ import pt.ipp.isep.dei.esoft.project.domain.CustomDate;
 import pt.ipp.isep.dei.esoft.project.domain.Vehicle;
 import pt.ipp.isep.dei.esoft.project.repository.VehicleRepository;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-public class CheckupRepository {
+public class CheckupRepository implements Serializable {
     private ArrayList<CheckUp> checkups;
 
     /**

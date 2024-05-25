@@ -2,7 +2,9 @@ package pt.ipp.isep.dei.esoft.project.domain;
 
 import pt.ipp.isep.dei.esoft.project.repository.Repositories;
 
-public class CheckUp {
+import java.io.Serializable;
+
+public class CheckUp implements Serializable {
     private Vehicle vehicle;
     private int currentKM;
     private CustomDate date;

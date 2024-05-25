@@ -1,8 +1,9 @@
 package pt.ipp.isep.dei.esoft.project.domain;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public enum urgencyLevel {
+public enum urgencyLevel implements Serializable {
     HIGH,
     MEDIUM,
     LOW;

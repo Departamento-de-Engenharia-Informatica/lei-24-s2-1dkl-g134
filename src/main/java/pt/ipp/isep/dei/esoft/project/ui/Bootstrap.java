@@ -35,7 +35,6 @@ public class Bootstrap implements Runnable {
     }
 
     private void addTaskCategories() {
-        //TODO: add bootstrap Task Categories here
 
         //get task category repository
         TaskCategoryRepository taskCategoryRepository = Repositories.getInstance().getTaskCategoryRepository();
@@ -48,7 +47,7 @@ public class Bootstrap implements Runnable {
         taskCategoryRepository.add(new TaskCategory("Maintenance"));
     }
 
-    private void addUsers() {
+    public void addUsers() {
         AuthenticationRepository authenticationRepository = Repositories.getInstance().getAuthenticationRepository();
         authenticationRepository.addUserRole(AuthenticationController.ROLE_ADMIN, AuthenticationController.ROLE_ADMIN);
         authenticationRepository.addUserRole(AuthenticationController.ROLE_HRM, AuthenticationController.ROLE_HRM);
@@ -177,7 +176,7 @@ public class Bootstrap implements Runnable {
         //Roger - Emily - Coleman - Exas - Stanley ----------- DONE
     }
 
-    public void addFleet(){
+    private void addFleet(){
         VehicleRepository vehicleRepository = Repositories.getInstance().getVehicleRepository();
         CheckupRepository checkupRepository = Repositories.getInstance().getCheckupRepository();
         Vehicle vehicle = vehicleRepository.add("Ford", "T", 5000, 2500.0,3000,

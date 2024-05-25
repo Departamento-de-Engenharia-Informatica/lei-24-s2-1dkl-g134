@@ -1,8 +1,9 @@
 package pt.ipp.isep.dei.esoft.project.domain;
 
+import java.io.Serializable;
 import java.util.Calendar;
 
-public class CustomDate {
+public class CustomDate implements Serializable {
     private int year;
     private int month;
     private int day;

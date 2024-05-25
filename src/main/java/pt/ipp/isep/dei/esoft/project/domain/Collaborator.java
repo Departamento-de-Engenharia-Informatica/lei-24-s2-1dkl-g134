@@ -3,11 +3,11 @@ package pt.ipp.isep.dei.esoft.project.domain;
 import pt.ipp.isep.dei.esoft.project.application.session.UserSession;
 
 import javax.swing.*;
+import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Optional;
 
-public class Collaborator {
+public class Collaborator implements Serializable {
     private String name;
     private CustomDate birthDate;
     private CustomDate admissionDate;

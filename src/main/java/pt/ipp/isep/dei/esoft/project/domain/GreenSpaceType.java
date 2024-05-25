@@ -1,8 +1,9 @@
 package pt.ipp.isep.dei.esoft.project.domain;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public enum GreenSpaceType {
+public enum GreenSpaceType implements Serializable {
     GARDEN,
     MEDIUM_SIZE,
     LARGE_SIZE;

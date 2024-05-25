@@ -4,10 +4,11 @@ import pt.ipp.isep.dei.esoft.project.domain.GreenSpace;
 import pt.ipp.isep.dei.esoft.project.domain.GreenSpaceType;
 
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Optional;
 
-public class GreenSpaceRepository {
+public class GreenSpaceRepository implements Serializable {
     private ArrayList<GreenSpace> greenSpaces;
 
     public GreenSpaceRepository(){this.greenSpaces=new ArrayList<>();}
@@ -26,7 +27,7 @@ public class GreenSpaceRepository {
     public Optional<ArrayList<GreenSpace>> getGreenSpacesManagedByUser(){
         ArrayList<GreenSpace> greenSpacesManagedByUser = new ArrayList<>();
          for (GreenSpace greenSpace : greenSpaces){
-             if (greenSpace.getCreator().equals(ApplicationSession.getInstance().getCurrentSession())){
+             if(greenSpace.isCreatedBy(ApplicationSession.getInstance().getCurrentSession().getUserName(), ApplicationSession.getInstance().getCurrentSession().getUserEmail())){
                  greenSpacesManagedByUser.add(greenSpace);
              }
          }

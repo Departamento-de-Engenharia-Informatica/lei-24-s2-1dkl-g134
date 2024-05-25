@@ -2,12 +2,14 @@ package pt.ipp.isep.dei.esoft.project.repository;
 
 import pt.ipp.isep.dei.esoft.project.application.session.ApplicationSession;
 
-public class Repositories {
+import java.io.*;
+
+public class Repositories implements Serializable {
 
     private static Repositories instance;
-    private final OrganizationRepository organizationRepository;
-    private final TaskCategoryRepository taskCategoryRepository;
-    private final AuthenticationRepository authenticationRepository;
+    private transient final OrganizationRepository organizationRepository;
+    private transient final TaskCategoryRepository taskCategoryRepository;
+    private transient AuthenticationRepository authenticationRepository;
     private final CollaboratorRepository collaboratorRepository;
     private final JobRepository jobRepository;
     private final SkillRepository skillRepository;
@@ -47,6 +49,27 @@ public class Repositories {
             }
         }
         return instance;
+    }
+
+    public static void save() throws IOException {
+        FileOutputStream file = new FileOutputStream("persistanceEnsurance.dat");
+        ObjectOutputStream out = new ObjectOutputStream(file);
+
+        out.writeObject(instance);
+        out.close();
+        file.close();
+    }
+
+    public static void load() throws Exception {
+        FileInputStream file = new FileInputStream("persistanceEnsurance.dat");
+        ObjectInputStream in = new ObjectInputStream(file);
+
+        instance = (Repositories) in.readObject();
+
+        in.close();
+        file.close();
+
+        instance.authenticationRepository = new AuthenticationRepository();
     }
 
     public OrganizationRepository getOrganizationRepository() {

@@ -4,10 +4,11 @@ package pt.ipp.isep.dei.esoft.project.domain;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Optional;
 
-public class TaskEntry {
+public class TaskEntry implements Serializable {
 
     private String taskTitle;
     private String taskDescription;

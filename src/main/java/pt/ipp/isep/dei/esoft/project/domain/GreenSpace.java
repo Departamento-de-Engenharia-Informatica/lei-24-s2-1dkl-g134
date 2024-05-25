@@ -3,13 +3,15 @@ package pt.ipp.isep.dei.esoft.project.domain;
 import pt.ipp.isep.dei.esoft.project.application.session.ApplicationSession;
 import pt.ipp.isep.dei.esoft.project.application.session.UserSession;
 
-public class GreenSpace {
+import java.io.Serializable;
+
+public class GreenSpace implements Serializable {
 
     private String name;
     private String address;
     private int area;
     private GreenSpaceType type;
-    private UserSession creator;
+    private String creatorName, creatorEmail;
 
 
 
@@ -18,7 +20,8 @@ public class GreenSpace {
         this.address=address;
         this.area = area;
         this.type = type;
-        creator = ApplicationSession.getInstance().getCurrentSession();
+        creatorName = ApplicationSession.getInstance().getCurrentSession().getUserName();
+        creatorEmail = ApplicationSession.getInstance().getCurrentSession().getUserEmail();
     }
 
     @Override
@@ -54,8 +57,11 @@ public class GreenSpace {
         return name;
     }
 
-    public UserSession getCreator() {
-        return creator;
+    public boolean isCreatedBy(String name, String email) {
+        if(name.equalsIgnoreCase(creatorName) && email.equalsIgnoreCase(creatorEmail)){
+            return true;
+        }
+        return false;
     }
 }
 

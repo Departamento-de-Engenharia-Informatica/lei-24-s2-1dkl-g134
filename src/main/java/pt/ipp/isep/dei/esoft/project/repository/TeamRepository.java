@@ -4,10 +4,11 @@ import pt.ipp.isep.dei.esoft.project.domain.Collaborator;
 import pt.ipp.isep.dei.esoft.project.domain.Skill;
 import pt.ipp.isep.dei.esoft.project.domain.Team;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Optional;
 
-public class TeamRepository {
+public class TeamRepository implements Serializable {
     private ArrayList<Team> teams;
 
     /**

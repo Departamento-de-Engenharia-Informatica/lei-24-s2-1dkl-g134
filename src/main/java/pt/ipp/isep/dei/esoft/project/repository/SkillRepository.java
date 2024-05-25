@@ -2,10 +2,11 @@ package pt.ipp.isep.dei.esoft.project.repository;
 
 import pt.ipp.isep.dei.esoft.project.domain.Skill;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Optional;
 
-public class SkillRepository {
+public class SkillRepository implements Serializable {
 
     private final ArrayList<Skill> skills;
 
