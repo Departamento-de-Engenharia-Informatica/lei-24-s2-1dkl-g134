@@ -7,6 +7,7 @@ import pt.ipp.isep.dei.esoft.project.repository.AgendaRepository;
 import pt.ipp.isep.dei.esoft.project.repository.Repositories;
 import pt.ipp.isep.dei.esoft.project.repository.TeamRepository;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Optional;
 
@@ -40,7 +41,7 @@ public class AssignTeamToTaskController {
     }
 
 
-    public Optional<TaskEntry> assignTeamToTask(Team team, TaskEntry taskEntry){
+    public Optional<TaskEntry> assignTeamToTask(Team team, TaskEntry taskEntry) throws IOException {
         return agendaRepository.assignTeamToTask(taskEntry, team);
     }
 }

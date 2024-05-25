@@ -1,6 +1,9 @@
 package pt.ipp.isep.dei.esoft.project.domain;
 
 
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Optional;
 
@@ -78,7 +81,8 @@ public class TaskEntry {
     public boolean hasVehicle(Vehicle vehicle) {
         return assignedVehicles.contains(vehicle);
     }
-    public Optional<TaskEntry> assignTeam(Team team){
+
+    public Optional<TaskEntry> assignTeam(Team team) throws IOException {
         ArrayList<Collaborator> teamMembers = team.getTeamMembers();
         boolean discrepancyFound = false;
         if(assignedTeam.size() != teamMembers.size()){
@@ -97,7 +101,32 @@ public class TaskEntry {
 
         assignedTeam.addAll(teamMembers);
 
-        //TODO: Send e-mail to team members
+        File simulationDirectory = new File("emailSimulations");
+        if(!simulationDirectory.exists() || !simulationDirectory.isDirectory()){
+            simulationDirectory.mkdir();
+        }
+        for(Collaborator collaborator : teamMembers){
+            File email = new File(simulationDirectory+"\\email-"+ collaborator.getName()+".txt");
+            if(email.isFile()){
+                email.delete();
+            }
+            FileWriter emailCreator = new FileWriter(email.getPath());
+            emailCreator.append("To: " + collaborator.getName() + "\n");
+            emailCreator.append("Address: " + collaborator.getEmail() + "\n");
+            emailCreator.append("Subject: Assingment to task '"+taskTitle+"'\n");
+            emailCreator.append("Message:\n\n");
+            emailCreator.append("Dear collaborator,\nAs part of the team comprised of the members:\n");
+            emailCreator.append(team.toString());
+            emailCreator.append("You and your teammates have been assigned to the task '"+taskTitle+"'.\n");
+            emailCreator.append("Task description: "+taskDescription+"\n");
+            emailCreator.append("This task will take place in in the following green space: "+greenSpace.toString()+"\n");
+            emailCreator.append("The address of this green space is: "+greenSpace.getAddress()+"\n");
+            emailCreator.append("This task is scheduled to start on the following date and time: "+ date.toString()+"\n");
+            emailCreator.append("This task is expected to have a duration of "+duration+" hours.\n");
+            emailCreator.append("The urgency level of this task is: "+urgencyLevel+"\n");
+            emailCreator.append("\nThank you, and good work!");
+            emailCreator.close();
+        }
 
         return Optional.of(this);
     }

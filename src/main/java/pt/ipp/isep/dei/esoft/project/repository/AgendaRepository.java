@@ -4,6 +4,7 @@ import pt.ipp.isep.dei.esoft.project.customexceptions.CollaboratorNotFoundExcept
 import pt.ipp.isep.dei.esoft.project.customexceptions.InvalidRoleException;
 import pt.ipp.isep.dei.esoft.project.domain.*;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -48,7 +49,7 @@ public class AgendaRepository {
         return agenda.get(agenda.indexOf(taskEntry)).assignVehicles(vehicles);
     }
 
-    public Optional<TaskEntry> assignTeamToTask(TaskEntry taskEntry, Team team) {
+    public Optional<TaskEntry> assignTeamToTask(TaskEntry taskEntry, Team team) throws IOException {
         return agenda.get(agenda.indexOf(taskEntry)).assignTeam(team);
     }
 
