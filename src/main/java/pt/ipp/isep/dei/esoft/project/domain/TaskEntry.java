@@ -1,6 +1,8 @@
 package pt.ipp.isep.dei.esoft.project.domain;
 
 
+import javafx.application.Application;
+import pt.ipp.isep.dei.esoft.project.application.session.ApplicationSession;
 import pt.ipp.isep.dei.esoft.project.ui.Bootstrap;
 
 import java.io.File;
@@ -126,6 +128,9 @@ public class TaskEntry implements Serializable {
         if(team == null){
             throw new IllegalArgumentException("Null fields not allowed.");
         }
+        if(ApplicationSession.getInstance().getProperties().getProperty("Email.Service") == null){
+            throw new IllegalArgumentException("Email service not configured.");
+        }
         ArrayList<Collaborator> teamMembers = team.getTeamMembers();
         boolean discrepancyFound = false;
         if(assignedTeam.size() != teamMembers.size()){
@@ -154,6 +159,7 @@ public class TaskEntry implements Serializable {
                 email.delete();
             }
             FileWriter emailCreator = new FileWriter(email.getPath());
+            emailCreator.append("From: "+ ApplicationSession.getInstance().getProperties().getProperty("Email.Service")+"\n");
             emailCreator.append("To: " + collaborator.getName() + "\n");
             emailCreator.append("Address: " + collaborator.getEmail() + "\n");
             emailCreator.append("Subject: Assingment to task '"+taskTitle+"'\n");

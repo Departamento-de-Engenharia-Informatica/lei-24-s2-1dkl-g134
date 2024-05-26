@@ -12,6 +12,8 @@ public class ApplicationSession {
     private final AuthenticationRepository authenticationRepository;
     private static final String CONFIGURATION_FILENAME = "src/main/resources/config.properties";
     private static final String COMPANY_DESIGNATION = "Company.Designation";
+    private static final String SORTING_ALGORITHM = "Sorting.Algorithm";
+    private static final String EMAIL_SERVICE = "Email.Service";
 
     private ApplicationSession() {
         this.authenticationRepository = Repositories.getInstance().getAuthenticationRepository();
@@ -23,7 +25,7 @@ public class ApplicationSession {
         return new UserSession(userSession);
     }
 
-    private Properties getProperties() {
+    public Properties getProperties() {
         Properties props = new Properties();
 
         // Add default properties and values

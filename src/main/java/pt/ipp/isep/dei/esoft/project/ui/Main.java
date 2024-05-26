@@ -2,6 +2,7 @@ package pt.ipp.isep.dei.esoft.project.ui;
 
 import pt.ipp.isep.dei.esoft.project.repository.Repositories;
 import pt.ipp.isep.dei.esoft.project.ui.console.menu.MainMenuUI;
+import pt.ipp.isep.dei.esoft.project.ui.console.utils.Utils;
 
 public class Main {
 
@@ -32,6 +33,14 @@ public class Main {
         }
 
         try {
+
+            /*if(Utils.confirm("Do you wish to boot into GUI mode? (Only Sprint C content will be available!) (s or n)")){
+                //GUI boot here.
+            }else{
+                MainMenuUI menu = new MainMenuUI();
+                menu.run();
+            }*/
+
             MainMenuUI menu = new MainMenuUI();
             menu.run();
         } catch (Exception e) {
