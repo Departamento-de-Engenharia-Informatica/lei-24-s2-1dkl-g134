@@ -18,19 +18,19 @@ public class AgendaRepository implements Serializable {
         this.agenda = new ArrayList<>();
     }
 
-    public Optional<TaskEntry> add(TaskEntry task, State state, String date) {
+    public Optional<TaskEntry> add(TaskEntry task, String date, String time) {
         if (agenda.contains(task)) {
             return Optional.empty();
         }
 
-        task.addAgendaData(state, date);
+        task.addAgendaData(date, time);
 
         agenda.add(task);
         return Optional.of(task);
     }
 
-    public Optional<TaskEntry> postponeTask(TaskEntry taskEntry, String date) {
-        return taskEntry.postponeTask(date);
+    public Optional<TaskEntry> postponeTask(TaskEntry taskEntry, String date, String time) {
+        return taskEntry.postponeTask(date, time);
     }
 
     public Optional<ArrayList<TaskEntry>> getPlannedAndPostponedTasks() {
@@ -71,7 +71,7 @@ public class AgendaRepository implements Serializable {
         }
         for (TaskEntry taskEntry : agenda) {
             if (taskEntry.getAssignedTeam().contains(currentCollaborator)) {
-                if (taskEntry.getDate().isAfterDate(start) && !taskEntry.getDate().isAfterDate(end)) {
+                if (taskEntry.getStartDate().isAfterDate(start) && !taskEntry.getStartDate().isAfterDate(end)) {
                     foundTasks.add(taskEntry);
                 }
             }
@@ -79,5 +79,75 @@ public class AgendaRepository implements Serializable {
         if (foundTasks.isEmpty()) {
             return Optional.empty();
         } else return Optional.of(foundTasks);
+    }
+
+    public boolean isTeamAvailable(Team team, TaskEntry taskEntry) {
+        //HOW THIS WORKS:
+        //Check each task, check if the team is in there.
+        //Compare dates: First we check if the task we're on starts strictly after the received
+        //task ends, or ends strictly before the received task starts. If either one of these
+        //is true, the task we're on is skipped.
+        //The only times this check does not skip where the team won't be available is when
+        //the start of one is equal to the end of another, and the times are compatible.
+        //We check each one of those and skip if the times are compatible.
+        //If no skips are performed, we know the tasks conflict, so we return false.
+        //If we successfully skip to the end of the array, no tasks conflict, so we return true.
+        for(TaskEntry taskToCompare : agenda){
+            if(taskToCompare.equals(taskEntry)){
+                continue;
+            }
+            if(taskToCompare.isSameTeam(team.getTeamMembers())){
+                if((taskToCompare.getStartDate().isAfterDate(taskEntry.getEndDate()) && !taskToCompare.getStartDate().equals(taskEntry.getEndDate()) || !taskToCompare.getEndDate().isAfterDate(taskEntry.getStartDate()))){
+                    continue;
+                }
+                if(taskEntry.getStartDate().equals(taskToCompare.getEndDate())){
+                    if(taskEntry.getStartTime().getHour() > taskToCompare.getEndTime().getHour()){
+                        continue;
+                    }
+                }
+                if(taskEntry.getEndDate().equals(taskToCompare.getStartDate())){
+                    if(taskEntry.getEndTime().getHour() < taskToCompare.getStartTime().getHour()){
+                        continue;
+                    }
+                }
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public boolean isVehicleAvailable(Vehicle vehicle, TaskEntry taskEntry) {
+        //HOW THIS WORKS:
+        //Check each task, check if the vehicle is in there.
+        //Compare dates: First we check if the task we're on starts strictly after the received
+        //task ends, or ends strictly before the received task starts. If either one of these
+        //is true, the task we're on is skipped.
+        //The only times this check does not skip where the team won't be available is when
+        //the start of one is equal to the end of another, and the times are compatible.
+        //We check each one of those and skip if the times are compatible.
+        //If no skips are performed, we know the tasks conflict, so we return false.
+        //If we successfully skip to the end of the array, no tasks conflict, so we return true.
+        for(TaskEntry taskToCompare : agenda){
+            if(taskToCompare.equals(taskEntry)){
+                continue;
+            }
+            if(taskToCompare.hasVehicle(vehicle)){
+                if((taskToCompare.getStartDate().isAfterDate(taskEntry.getEndDate()) && !taskToCompare.getStartDate().equals(taskEntry.getEndDate()) || !taskToCompare.getEndDate().isAfterDate(taskEntry.getStartDate()))){
+                    continue;
+                }
+                if(taskEntry.getStartDate().equals(taskToCompare.getEndDate())){
+                    if(taskEntry.getStartTime().getHour() > taskToCompare.getEndTime().getHour()){
+                        continue;
+                    }
+                }
+                if(taskEntry.getEndDate().equals(taskToCompare.getStartDate())){
+                    if(taskEntry.getEndTime().getHour() < taskToCompare.getStartTime().getHour()){
+                        continue;
+                    }
+                }
+                return false;
+            }
+        }
+        return true;
     }
 }

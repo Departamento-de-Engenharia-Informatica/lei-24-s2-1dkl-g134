@@ -7,6 +7,7 @@ public class CustomDate implements Serializable {
     private int year;
     private int month;
     private int day;
+    private final int[] daysOfMonth = {0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
 
     /**
      * Constructor for a new CustomDate object.
@@ -26,7 +27,7 @@ public class CustomDate implements Serializable {
         date = date.trim();
         String datePattern = "\\d{4}/\\d{2}/\\d{2}";
         if(!date.matches(datePattern)){
-            throw new IllegalArgumentException("Invalid date format. Please use 'YYYY/MM/DD'.");
+            throw new IllegalArgumentException("Invalid date format. Please use 'YYYY/MM/DD', with leading zeros.");
         }
         String[] components = date.split("/");
         int year = Integer.parseInt(components[0]);
@@ -182,4 +183,52 @@ public class CustomDate implements Serializable {
      * @return An int value representing the day of this date.
      */
     public int getDay(){return day;}
+
+    /**
+     * Adjusts the date by a number of days (does not update the object this is performed on).
+     * This method will throw an IllegalArgumentException if the number of days to adjust
+     * by is negative.
+     * @param days The number of days (not negative) to adjust the date by.
+     * @return The end date after the adjustment in question.
+     */
+    public CustomDate adjust(int days){
+        if(days > 0){
+            throw new IllegalArgumentException("Date adjustment cannot be negative.");
+        }
+        int newMonth = month;
+        int newYear = year;
+        if(days > daysOfMonth[newMonth] - day){
+            days -= daysOfMonth[newMonth] - daysOfMonth[day];
+            newMonth++;
+            if(newMonth == 13){
+                newMonth = 1;
+                newYear++;
+            }
+        }
+        while(days > daysOfMonth[newMonth]){
+            days -= daysOfMonth[newMonth];
+            newMonth++;
+            if(newMonth == 13){
+                newMonth = 1;
+                newYear++;
+            }
+            if(newMonth == 2 && (newYear % 4 == 0 || (newYear % 100 == 0 && newYear % 400 == 0)) && days <= 29){
+                break;
+            }
+        }
+        String yearText = String.valueOf(newYear);
+        int yearTextLength = yearText.length();
+        for(int i = 0; i < 4 - yearTextLength; i++){
+            yearText = "0" + yearText;
+        }
+        String monthText = String.valueOf(newMonth);
+        if(monthText.length() == 1){
+            monthText = "0" + monthText;
+        }
+        String dayText = String.valueOf(days);
+        if(dayText.length() == 1){
+            dayText = "0" + dayText;
+        }
+        return new CustomDate(yearText + "/" + monthText + "/" + dayText);
+    }
 }

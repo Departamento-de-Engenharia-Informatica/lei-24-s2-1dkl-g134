@@ -46,10 +46,10 @@ public class ListTasksBetweenDatesUI implements Runnable {
             int option = -1;
             while(option != 0){
                 System.out.println("Tasks found between " + firstDate + " and " + secondDate + "\n");
-                System.out.println("TITLE | DESCRIPTION | URGENCY | STATE | GREEN SPACE | DURATION | DATE");
+                System.out.println("TITLE | DESCRIPTION | URGENCY | STATE | GREEN SPACE | DURATION | START DATE");
                 for (TaskEntry taskEntry : taskList.get()) {
                     if(stateFilters.isEmpty() || stateFilters.contains(taskEntry.getState())){
-                        System.out.println(taskEntry.getTaskTitle()+" | "+ taskEntry.getTaskDescription()+" | "+taskEntry.getUrgencyLevel()+ " | "+taskEntry.getState()+ " | "+taskEntry.getGreenSpace()+" | "+taskEntry.getDuration()+" | "+taskEntry.getDate());
+                        System.out.println(taskEntry.getTaskTitle()+" | "+ taskEntry.getTaskDescription()+" | "+taskEntry.getUrgencyLevel()+ " | "+taskEntry.getState()+ " | "+taskEntry.getGreenSpace()+" | "+taskEntry.getDuration()+" | "+taskEntry.getStartDate());
                     }
                 }
                 Scanner in = new Scanner(System.in);

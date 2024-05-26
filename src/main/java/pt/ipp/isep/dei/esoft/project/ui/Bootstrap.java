@@ -9,6 +9,10 @@ import java.util.Optional;
 
 public class Bootstrap implements Runnable {
 
+    public static int workHoursStart = 9;
+    public static int workHoursEnd = 17;
+    public static int dailyWorkHours = workHoursEnd - workHoursStart;
+
     //Add some task categories to the repository as bootstrap
     public void run() {
         addTaskCategories();

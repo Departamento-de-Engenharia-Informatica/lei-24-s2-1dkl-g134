@@ -1,5 +1,6 @@
 package pt.ipp.isep.dei.esoft.project.application.controller;
 
+import pt.ipp.isep.dei.esoft.project.customexceptions.CollaboratorNotFoundException;
 import pt.ipp.isep.dei.esoft.project.customexceptions.InvalidRoleException;
 import pt.ipp.isep.dei.esoft.project.domain.State;
 import pt.ipp.isep.dei.esoft.project.domain.TaskEntry;
@@ -16,7 +17,7 @@ public class ListTasksBetweenDatesController {
         this.agendaRepository = Repositories.getInstance().getAgendaRepository();
     }
 
-    public Optional<ArrayList<TaskEntry>>getCurrentUserTasksBetweenTwoDates(String firstDate, String secondDate) throws InvalidRoleException {
+    public Optional<ArrayList<TaskEntry>>getCurrentUserTasksBetweenTwoDates(String firstDate, String secondDate) throws InvalidRoleException, CollaboratorNotFoundException {
         return agendaRepository.getCurrentUserTasksBetweenTwoDates(firstDate, secondDate);
     }
 }

@@ -1,6 +1,8 @@
 package pt.ipp.isep.dei.esoft.project.domain;
 
 
+import pt.ipp.isep.dei.esoft.project.ui.Bootstrap;
+
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -18,9 +20,21 @@ public class TaskEntry implements Serializable {
     private GreenSpace greenSpace;
     private ArrayList<Vehicle> assignedVehicles;
     private ArrayList<Collaborator> assignedTeam;
-    private CustomDate date;
+    private CustomDate startDate, endDate;
+    private CustomTime startTime, endTime;
 
     public TaskEntry(String taskTitle, String taskDescription, urgencyLevel urgencyLevel, int duration, GreenSpace greenSpace) {
+        if(taskTitle == null || taskDescription == null || urgencyLevel == null || greenSpace == null){
+            throw new IllegalArgumentException("Null fields not allowed.");
+        }
+        taskTitle = taskTitle.trim();
+        taskDescription = taskDescription.trim();
+        if(taskTitle.isBlank() || taskDescription.isBlank()){
+            throw new IllegalArgumentException("Blank fields not allowed.");
+        }
+        if(duration <= 0){
+            throw new IllegalArgumentException("Duration must be a number greater than 0.");
+        }
         this.taskTitle = taskTitle;
         this.taskDescription = taskDescription;
         this.urgencyLevel = urgencyLevel;
@@ -31,9 +45,19 @@ public class TaskEntry implements Serializable {
         assignedTeam = null;
     }
 
-    public TaskEntry addAgendaData(State state, String date){
-        this.state = state;
-        this.date = new CustomDate(date);
+    public TaskEntry addAgendaData(String date, String time){
+        if(date == null || time == null){
+            throw new IllegalArgumentException("Null fields not allowed.");
+        }
+        date = date.trim();
+        if(date.isBlank() || time.isBlank()){
+            throw new IllegalArgumentException("Blank fields not allowed.");
+        }
+        this.state = State.PLANNED;
+        this.startDate = new CustomDate(date);
+        this.startTime = new CustomTime(time);
+        this.endTime = startTime.adjust(duration);
+        this.endDate = startDate.adjust(duration / Bootstrap.dailyWorkHours);
         return this;
     }
 
@@ -52,10 +76,22 @@ public class TaskEntry implements Serializable {
         return taskTitle + " | " + taskDescription;
     }
 
-    public Optional<TaskEntry> postponeTask(String date){
+    public Optional<TaskEntry> postponeTask(String date, String time){
+        if(date == null || time == null){
+            throw new IllegalArgumentException("Null fields not allowed.");
+        }
+        date = date.trim();
+        time = time.trim();
+        if(date.isBlank() || time.isBlank()){
+            throw new IllegalArgumentException("Blank fields not allowed.");
+        }
         CustomDate newDate = new CustomDate(date);
-        if(newDate.isAfterDate(this.date)){
-            this.date=newDate;
+        CustomTime newTime = new CustomTime(time);
+        if(newDate.isAfterDate(this.startDate)){
+            this.startDate=newDate;
+            this.startTime=newTime;
+            this.endTime = startTime.adjust(duration);
+            this.endDate = startDate.adjust(duration / Bootstrap.dailyWorkHours);
             this.state=State.POSTPONED;
         }else{
             throw new IllegalArgumentException("Postponed date can't be before current date");
@@ -64,6 +100,9 @@ public class TaskEntry implements Serializable {
     }
 
     public Optional<ArrayList<Vehicle>> assignVehicles(ArrayList<Vehicle> vehicles){
+        if(vehicles.isEmpty()){
+            throw new IllegalArgumentException("List of vehicles to assign must contain one or more vehicles.");
+        }
         ArrayList<Vehicle> vehiclesToAssign = new ArrayList<Vehicle>();
         boolean anyVehicleAssigned = false;
         for(Vehicle vehicle : vehicles){
@@ -84,6 +123,9 @@ public class TaskEntry implements Serializable {
     }
 
     public Optional<TaskEntry> assignTeam(Team team) throws IOException {
+        if(team == null){
+            throw new IllegalArgumentException("Null fields not allowed.");
+        }
         ArrayList<Collaborator> teamMembers = team.getTeamMembers();
         boolean discrepancyFound = false;
         if(assignedTeam.size() != teamMembers.size()){
@@ -122,7 +164,8 @@ public class TaskEntry implements Serializable {
             emailCreator.append("Task description: "+taskDescription+"\n");
             emailCreator.append("This task will take place in in the following green space: "+greenSpace.toString()+"\n");
             emailCreator.append("The address of this green space is: "+greenSpace.getAddress()+"\n");
-            emailCreator.append("This task is scheduled to start on the following date and time: "+ date.toString()+"\n");
+            emailCreator.append("This task is scheduled to start on the following date and time: "+ startDate.toString()+" "+startTime.toString()+"\n");
+            emailCreator.append("And is scheduled to end on the following date and time: "+ endDate.toString()+" "+endTime.toString()+"\n");
             emailCreator.append("This task is expected to have a duration of "+duration+" hours.\n");
             emailCreator.append("The urgency level of this task is: "+urgencyLevel+"\n");
             emailCreator.append("\nThank you, and good work!");
@@ -143,12 +186,38 @@ public class TaskEntry implements Serializable {
 
     public ArrayList<Collaborator> getAssignedTeam() { return assignedTeam; }
 
-    public CustomDate getDate() {
-        return date;
+    public ArrayList<Vehicle> getAssignedVehicles() { return assignedVehicles; }
+
+    public CustomDate getStartDate() {
+        return startDate;
+    }
+
+    public CustomDate getEndDate() {
+        return endDate;
+    }
+
+    public CustomTime getStartTime() {
+        return startTime;
+    }
+
+    public CustomTime getEndTime() {
+        return endTime;
     }
 
     public String getGreenSpace() {
         return greenSpace.toString();
+    }
+
+    public boolean isSameTeam(ArrayList<Collaborator> otherTeam){
+        if(assignedTeam.size() != otherTeam.size()){
+            return false;
+        }
+        for(Collaborator collaborator : otherTeam){
+            if(!assignedTeam.contains(collaborator)){
+                return false;
+            }
+        }
+        return true;
     }
 
     public Optional<TaskEntry> cancelTask() {

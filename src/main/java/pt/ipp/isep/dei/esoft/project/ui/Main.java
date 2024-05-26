@@ -10,7 +10,7 @@ public class Main {
         Runtime.getRuntime().addShutdownHook(new Thread(() -> {
             try{
                 Repositories.save();
-                System.out.println("Serialization successful.");
+                System.out.println("\nSerialization successful.");
             }catch(Exception e){
                 System.out.println("Serialization failed.");
                 System.out.println(e.getMessage());
@@ -35,7 +35,7 @@ public class Main {
             MainMenuUI menu = new MainMenuUI();
             menu.run();
         } catch (Exception e) {
-            System.out.println("A fatal error occurred!");
+            System.out.println("\nA fatal error occurred!");
             System.out.println(e.getMessage());
             System.out.println("Attempting serialization...");
             try{

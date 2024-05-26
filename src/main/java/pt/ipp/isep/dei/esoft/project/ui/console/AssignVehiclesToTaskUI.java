@@ -2,6 +2,7 @@ package pt.ipp.isep.dei.esoft.project.ui.console;
 
 import pt.ipp.isep.dei.esoft.project.application.controller.AssignVehiclesToTaskController;
 import pt.ipp.isep.dei.esoft.project.domain.TaskEntry;
+import pt.ipp.isep.dei.esoft.project.domain.Team;
 import pt.ipp.isep.dei.esoft.project.domain.Vehicle;
 import pt.ipp.isep.dei.esoft.project.ui.console.utils.Utils;
 
@@ -81,6 +82,11 @@ public class AssignVehiclesToTaskUI implements Runnable {
         if(vehicles.isEmpty()){
             System.out.println("Error: No Vehicles. Vehicle assignment aborted.");
             return null;
+        }
+        for(Vehicle vehicle : vehicles.get()){
+            if(!controller.isVehicleAvailable(vehicle, taskEntry)){
+                vehicles.get().remove(vehicles.get().indexOf(vehicle));
+            }
         }
         while(true){
             System.out.println("Choose vehicles from the following list (to remove a selected vehicle, choose it again):\n");

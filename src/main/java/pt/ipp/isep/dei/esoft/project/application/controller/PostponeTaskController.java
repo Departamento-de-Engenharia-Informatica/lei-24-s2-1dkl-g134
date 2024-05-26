@@ -16,7 +16,7 @@ public class PostponeTaskController {
     public Optional<ArrayList<TaskEntry>> getPlannedAndPostponedTask(){
                 return agendaRepository.getPlannedAndPostponedTasks();
     }
-   public Optional<TaskEntry> postponeTask(TaskEntry taskEntry, String date){
-        return agendaRepository.postponeTask(taskEntry,date);
+   public Optional<TaskEntry> postponeTask(TaskEntry taskEntry, String date, String time){
+        return agendaRepository.postponeTask(taskEntry,date,time);
    }
 }

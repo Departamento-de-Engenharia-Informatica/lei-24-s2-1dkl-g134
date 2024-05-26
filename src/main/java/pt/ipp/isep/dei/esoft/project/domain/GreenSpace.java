@@ -16,6 +16,17 @@ public class GreenSpace implements Serializable {
 
 
     public GreenSpace(String name, String address, int area, GreenSpaceType type) {
+        if(name == null || address == null || type == null){
+            throw new IllegalArgumentException("Null fields not allowed.");
+        }
+        name = name.trim();
+        address = address.trim();
+        if(name.isBlank() || address.isBlank()){
+            throw new IllegalArgumentException("Blank fields not allowed.");
+        }
+        if(area <= 0){
+            throw new IllegalArgumentException("Area value must be a number greater than 0.");
+        }
         this.name = name;
         this.address=address;
         this.area = area;

@@ -81,6 +81,11 @@ public class AssignTeamToTaskUI {
             System.out.println("Error: No teams. Team assignment aborted.");
             return null;
         }
+        for(Team team : teams.get()){
+            if(!controller.isTeamAvailable(team, taskEntry)){
+                teams.get().remove(teams.get().indexOf(team));
+            }
+        }
         System.out.println("Choose a team from the following list (Title | Description):\n");
         for(int i = 0; i < teams.get().size(); i++){
             System.out.println((i+1) + "-\n "+teams.get().get(i).toString());
