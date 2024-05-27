@@ -24,6 +24,9 @@ public class CustomTime implements Serializable {
         if(hour < 0 || hour > 23){
             throw new IllegalArgumentException("Hour value must be between 0 and 23.");
         }
+        if(hour < Bootstrap.workHoursStart || hour > Bootstrap.workHoursEnd){
+            throw new IllegalArgumentException("Hour value not part of work hours.");
+        }
     }
 
     @Override
@@ -57,17 +60,21 @@ public class CustomTime implements Serializable {
         }
         int newHour = this.hour + hour;
         if(newHour > Bootstrap.workHoursEnd){
-            int excess = newHour - Bootstrap.workHoursStart;
+            int excess = newHour - Bootstrap.workHoursEnd;
             while(excess > Bootstrap.dailyWorkHours + (Bootstrap.workHoursEnd - this.hour)){
                 excess -= Bootstrap.dailyWorkHours;
             }
             if(excess > Bootstrap.workHoursEnd - this.hour){
-                excess = Bootstrap.workHoursEnd - this.hour;
-                newHour = excess;
+                excess -= Bootstrap.workHoursEnd - this.hour;
+                newHour = Bootstrap.workHoursStart + excess;
             }else{
                 newHour = this.hour + excess;
             }
         }
-        return new CustomTime(newHour + ":00");
+        String newHourText = String.valueOf(newHour);
+        if(newHourText.length() == 1){
+            newHourText = "0" + newHourText;
+        }
+        return new CustomTime(newHourText + ":00");
     }
 }

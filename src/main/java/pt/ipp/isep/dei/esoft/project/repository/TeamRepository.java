@@ -53,6 +53,10 @@ public class TeamRepository implements Serializable {
         return collaboratorsInTeams;
     }
 
+    /**
+     * Gets the full list of all teams.
+     * @return A list of every team in the system. If no teams are found, an empty Optional object.
+     */
     public Optional<ArrayList<Team>> getTeamList(){
         if(teams.isEmpty()){
              return Optional.empty();

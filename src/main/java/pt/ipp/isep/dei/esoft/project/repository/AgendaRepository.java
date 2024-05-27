@@ -30,6 +30,9 @@ public class AgendaRepository implements Serializable {
     }
 
     public Optional<TaskEntry> postponeTask(TaskEntry taskEntry, String date, String time) {
+        if(taskEntry == null){
+            throw new IllegalArgumentException("Null fields not allowed.");
+        }
         return taskEntry.postponeTask(date, time);
     }
 
@@ -47,18 +50,30 @@ public class AgendaRepository implements Serializable {
     }
 
     public Optional<ArrayList<Vehicle>> assignVehiclesToTask(TaskEntry taskEntry, ArrayList<Vehicle> vehicles) {
+        if(taskEntry == null){
+            throw new IllegalArgumentException("Null fields not allowed.");
+        }
         return agenda.get(agenda.indexOf(taskEntry)).assignVehicles(vehicles);
     }
 
     public Optional<TaskEntry> assignTeamToTask(TaskEntry taskEntry, Team team) throws IOException {
+        if(taskEntry == null){
+            throw new IllegalArgumentException("Null fields not allowed.");
+        }
         return agenda.get(agenda.indexOf(taskEntry)).assignTeam(team);
     }
 
     public Optional<TaskEntry> cancelTask(TaskEntry taskEntry) {
+        if(taskEntry == null){
+            throw new IllegalArgumentException("Null fields not allowed.");
+        }
         return agenda.get(agenda.indexOf(taskEntry)).cancelTask();
     }
 
     public Optional<ArrayList<TaskEntry>> getCurrentUserTasksBetweenTwoDates(String firstDate, String secondDate) throws InvalidRoleException, CollaboratorNotFoundException {
+        if(firstDate == null || secondDate == null){
+            throw new IllegalArgumentException("Null fields not allowed.");
+        }
         CustomDate start = new CustomDate(firstDate);
         CustomDate end = new CustomDate(secondDate);
         ArrayList<TaskEntry> foundTasks = new ArrayList<>();
@@ -82,8 +97,11 @@ public class AgendaRepository implements Serializable {
     }
 
     public boolean isTeamAvailable(Team team, TaskEntry taskEntry) {
+        if(taskEntry == null || team == null){
+            throw new IllegalArgumentException("Null fields not allowed.");
+        }
         //HOW THIS WORKS:
-        //Check each task, check if the team is in there.
+        //Check each planned/postponed task, check if the team is in there.
         //Compare dates: First we check if the task we're on starts strictly after the received
         //task ends, or ends strictly before the received task starts. If either one of these
         //is true, the task we're on is skipped.
@@ -93,7 +111,7 @@ public class AgendaRepository implements Serializable {
         //If no skips are performed, we know the tasks conflict, so we return false.
         //If we successfully skip to the end of the array, no tasks conflict, so we return true.
         for(TaskEntry taskToCompare : agenda){
-            if(taskToCompare.equals(taskEntry)){
+            if(taskToCompare.equals(taskEntry) || taskToCompare.getState() == State.CANCELED || taskToCompare.getState() == State.COMPLETED){
                 continue;
             }
             if(taskToCompare.isSameTeam(team.getTeamMembers())){
@@ -117,8 +135,11 @@ public class AgendaRepository implements Serializable {
     }
 
     public boolean isVehicleAvailable(Vehicle vehicle, TaskEntry taskEntry) {
+        if(taskEntry == null || vehicle == null){
+            throw new IllegalArgumentException("Null fields not allowed.");
+        }
         //HOW THIS WORKS:
-        //Check each task, check if the vehicle is in there.
+        //Check each planned/postponed task, check if the vehicle is in there.
         //Compare dates: First we check if the task we're on starts strictly after the received
         //task ends, or ends strictly before the received task starts. If either one of these
         //is true, the task we're on is skipped.
@@ -128,7 +149,7 @@ public class AgendaRepository implements Serializable {
         //If no skips are performed, we know the tasks conflict, so we return false.
         //If we successfully skip to the end of the array, no tasks conflict, so we return true.
         for(TaskEntry taskToCompare : agenda){
-            if(taskToCompare.equals(taskEntry)){
+            if(taskToCompare.equals(taskEntry) || taskToCompare.getState() == State.CANCELED || taskToCompare.getState() == State.COMPLETED){
                 continue;
             }
             if(taskToCompare.hasVehicle(vehicle)){

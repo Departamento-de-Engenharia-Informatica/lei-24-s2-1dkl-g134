@@ -57,6 +57,10 @@ public class Team implements Serializable {
         }
     }
 
+    /**
+     * Returns the String representation of this Team
+     * @return A String representing each of the team's collaborators.
+     */
     @Override
     public String toString(){
         String representation = "";

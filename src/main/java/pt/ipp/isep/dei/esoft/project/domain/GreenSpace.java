@@ -31,8 +31,13 @@ public class GreenSpace implements Serializable {
         this.address=address;
         this.area = area;
         this.type = type;
-        creatorName = ApplicationSession.getInstance().getCurrentSession().getUserName();
-        creatorEmail = ApplicationSession.getInstance().getCurrentSession().getUserEmail();
+        if(ApplicationSession.getInstance().getCurrentSession().getUserID() == null){
+            creatorName = null;
+            creatorEmail = null;
+        }else{
+            creatorName = ApplicationSession.getInstance().getCurrentSession().getUserName();
+            creatorEmail = ApplicationSession.getInstance().getCurrentSession().getUserEmail();
+        }
     }
 
     @Override

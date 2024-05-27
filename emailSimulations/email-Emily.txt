@@ -1,0 +1,20 @@
+From: "musgosublime@isep.ipp.pt";
+To: Emily
+Address: emily@is.real
+Subject: Assingment to task 'Perhaps'
+Message:
+
+Dear collaborator,
+As part of the team comprised of the members:
+Roger | 15017807
+Emily | 15017808
+You and your teammates have been assigned to the task 'Perhaps'.
+Task description: Perhaps
+This task will take place in in the following green space: Hello
+The address of this green space is: Somewhere
+This task is scheduled to start on the following date and time: 2006/01/21 11:00
+And is scheduled to end on the following date and time: 2006/01/21 14:00
+This task is expected to have a duration of 3 hours.
+The urgency level of this task is: MEDIUM
+
+Thank you, and good work!

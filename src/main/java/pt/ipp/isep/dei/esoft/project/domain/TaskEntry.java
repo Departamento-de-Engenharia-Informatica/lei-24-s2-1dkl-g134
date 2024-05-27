@@ -20,10 +20,10 @@ public class TaskEntry implements Serializable {
     private State state;
     private int duration;
     private GreenSpace greenSpace;
-    private ArrayList<Vehicle> assignedVehicles;
-    private ArrayList<Collaborator> assignedTeam;
-    private CustomDate startDate, endDate;
-    private CustomTime startTime, endTime;
+    private ArrayList<Vehicle> assignedVehicles = null;
+    private ArrayList<Collaborator> assignedTeam = null;
+    private CustomDate startDate = null, endDate = null;
+    private CustomTime startTime = null, endTime = null;
 
     public TaskEntry(String taskTitle, String taskDescription, urgencyLevel urgencyLevel, int duration, GreenSpace greenSpace) {
         if(taskTitle == null || taskDescription == null || urgencyLevel == null || greenSpace == null){
@@ -65,7 +65,6 @@ public class TaskEntry implements Serializable {
 
     @Override
     public boolean equals(Object o) {
-
         if (!(o instanceof TaskEntry)) {
             return false;
         }
@@ -79,6 +78,9 @@ public class TaskEntry implements Serializable {
     }
 
     public Optional<TaskEntry> postponeTask(String date, String time){
+        if(this.state == State.PENDING){
+            throw new IllegalArgumentException("Cannot postpone task not in agenda.");
+        }
         if(date == null || time == null){
             throw new IllegalArgumentException("Null fields not allowed.");
         }
@@ -102,6 +104,9 @@ public class TaskEntry implements Serializable {
     }
 
     public Optional<ArrayList<Vehicle>> assignVehicles(ArrayList<Vehicle> vehicles){
+        if(vehicles == null){
+            throw new IllegalArgumentException("Null fields not allowed.");
+        }
         if(vehicles.isEmpty()){
             throw new IllegalArgumentException("List of vehicles to assign must contain one or more vehicles.");
         }
@@ -133,20 +138,23 @@ public class TaskEntry implements Serializable {
         }
         ArrayList<Collaborator> teamMembers = team.getTeamMembers();
         boolean discrepancyFound = false;
-        if(assignedTeam.size() != teamMembers.size()){
-            discrepancyFound = true;
-        }else{
-            for(Collaborator member : teamMembers){
-                if(!assignedTeam.contains(member)){
-                    discrepancyFound = true;
-                    break;
+        if(assignedTeam != null){
+            if(assignedTeam.size() != teamMembers.size()){
+                discrepancyFound = true;
+            }else{
+                for(Collaborator member : teamMembers){
+                    if(!assignedTeam.contains(member)){
+                        discrepancyFound = true;
+                        break;
+                    }
                 }
             }
-        }
-        if(!discrepancyFound){
-            return Optional.empty();
+            if(!discrepancyFound){
+                return Optional.empty();
+            }
         }
 
+        assignedTeam = new ArrayList<>();
         assignedTeam.addAll(teamMembers);
 
         File simulationDirectory = new File("emailSimulations");
@@ -162,13 +170,13 @@ public class TaskEntry implements Serializable {
             emailCreator.append("From: "+ ApplicationSession.getInstance().getProperties().getProperty("Email.Service")+"\n");
             emailCreator.append("To: " + collaborator.getName() + "\n");
             emailCreator.append("Address: " + collaborator.getEmail() + "\n");
-            emailCreator.append("Subject: Assingment to task '"+taskTitle+"'\n");
+            emailCreator.append("Subject: Assignment to task '"+taskTitle+"'\n");
             emailCreator.append("Message:\n\n");
             emailCreator.append("Dear collaborator,\nAs part of the team comprised of the members:\n");
             emailCreator.append(team.toString());
             emailCreator.append("You and your teammates have been assigned to the task '"+taskTitle+"'.\n");
             emailCreator.append("Task description: "+taskDescription+"\n");
-            emailCreator.append("This task will take place in in the following green space: "+greenSpace.toString()+"\n");
+            emailCreator.append("This task will take place in the following green space: "+greenSpace.toString()+"\n");
             emailCreator.append("The address of this green space is: "+greenSpace.getAddress()+"\n");
             emailCreator.append("This task is scheduled to start on the following date and time: "+ startDate.toString()+" "+startTime.toString()+"\n");
             emailCreator.append("And is scheduled to end on the following date and time: "+ endDate.toString()+" "+endTime.toString()+"\n");
@@ -215,6 +223,9 @@ public class TaskEntry implements Serializable {
     }
 
     public boolean isSameTeam(ArrayList<Collaborator> otherTeam){
+        if(assignedTeam == null){
+            return false;
+        }
         if(assignedTeam.size() != otherTeam.size()){
             return false;
         }
