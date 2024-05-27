@@ -7,49 +7,83 @@ skinparam linetype polyline
 
 skinparam classAttributeIconSize 0
 
-'left to right direction
+class "TaskEntry" {
+        -title
+        -description
+        -urgencyLevel
+        -expectedDuration
+        -state
+        -greenSpace
 
-class RegisterVehicleCheckupUI{
-}
-
-
-class RegisterVehicleCheckupController{
-   +CreateVehicleCheckupController(VehicleRepository)
-   +registerVehicleCheckup(vehicle)
- }
-
-class Repositories {
-    - Repositories(): Repositories
-    + getInstance() : Repositories
-    + getVehicleRepository() : Repositories
-}
-
-
-class VehicleRepository {
-    + register()
-}
-
-class CheckupRepository{
-    + registerVehicleCheckup(vehicleList, date)
-    + addVehicle()
-    + validateVehicle(vehicle)
-    }
-
-class  Vehicle{
-    -name : String
-    +Vehicle()
 }
 
 
 
-RegisterVehicleCheckupUI .>  RegisterVehicleCheckupController
- RegisterVehicleCheckupController ...r> Repositories : repositories
-Repositories ---> "1" VehicleRepository
-Repositories -> Repositories : instance
-Repositories "1" --> "*" Vehicle
+class "AddTaskEntryController" {
+    - ToDoListRepository toDoListRepository
+    + AddTaskEntryController(toDoListRepository)
+    + createTaskEntry(taskDetails)
+}
 
-VehicleRepository --> "*" Vehicle
- RegisterVehicleCheckupController ......>  Vehicle : Vehicle
- RegisterVehicleCheckupController ...> "1" VehicleRepository : VehicleRepository
-CheckupRepository --> Vehicle : has
+class "ToDoListRepository" {
+    -entries
+    + addTaskEntry(toDoList: ToDoList)
+    + getTaskEntry(toDoList: ToDoList)
+}
+
+class "AddTaskEntryUI" {
+}
+
+class "Repositories" {
+    + getInstance()
+    + getToDoListRepository()
+}
+
+class "GreenSpaceController" {
+    + getGreenSpaces()
+}
+
+class "Mapper" {
+    + toDTO(greenSpaces)
+    + toDomain(taskEntryDto)
+}
+
+class "GreenSpaceDTO" {
+    + create(greenSpace)
+}
+
+class "TaskEntryDTO" {
+    + create(title, description, urgencyLevel, expectedDuration, state, greenSpace)
+}
+
+
+
+
+
+AddTaskEntryController ..> ToDoListRepository : toDoListRepository
+
+AddTaskEntryController ..> TaskEntry : task
+TaskEntry ..> ToDoListRepository : exists in >
+AddTaskEntryUI ..> AddTaskEntryController
+
+AddTaskEntryController ..> Repositories : repositories
+
+GreenSpaceController ..> Repositories : repositories
+
+Mapper ..> Repositories : repositories
+GreenSpaceDTO ..> Repositories : repositories
+TaskEntryDTO ..> Repositories : repositories
+
+GreenSpaceController ..> GreenSpaceDTO : greenSpaceDTO
+GreenSpaceDTO ..> GreenSpaceController : greenSpaceController
+
+Mapper ..> GreenSpaceDTO : greenSpaceDTO
+GreenSpaceDTO ..> Mapper : mapper
+
+Mapper ..> TaskEntryDTO : TaskEntryDTO
+TaskEntryDTO ..> Mapper : mapper
+
+AddTaskEntryController ..> TaskEntryDTO : TaskEntryDTO
+TaskEntryDTO ..> AddTaskEntryController : AddTaskEntryController
+
 @enduml
