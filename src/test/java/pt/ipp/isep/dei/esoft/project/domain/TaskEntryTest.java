@@ -397,6 +397,8 @@ public class TaskEntryTest {
 
         assertEquals(State.CANCELED, taskEntry.getState());
 
-        //TODO: ADD THE COMPLETETASK STATE CHANGE
+        taskEntry.completeTask();
+
+        assertEquals(State.COMPLETED, taskEntry.getState());
     }
 }

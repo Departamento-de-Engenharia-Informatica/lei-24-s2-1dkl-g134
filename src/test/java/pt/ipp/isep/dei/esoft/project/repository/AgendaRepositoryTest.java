@@ -175,6 +175,13 @@ public class AgendaRepositoryTest {
     }
 
     @Test
+    void testCompleteTaskFailsWithNullTask(){
+        AgendaRepository agendaRepository = new AgendaRepository();
+        assertThrows(IllegalArgumentException.class,
+                () -> agendaRepository.completeTask(null));
+    }
+
+    @Test
     void testAllStateChanges(){
         AgendaRepository agendaRepository = new AgendaRepository();
         GreenSpace greenSpace = new GreenSpace("Hello", "Somewhere", 50, GreenSpaceType.GARDEN);
@@ -188,11 +195,13 @@ public class AgendaRepositoryTest {
 
         assertEquals(State.POSTPONED, taskEntry.getState());
 
-        agendaRepository.cancelTask(taskPending);
+        agendaRepository.cancelTask(taskEntry);
 
         assertEquals(State.CANCELED, taskEntry.getState());
 
-        //TODO: ADD THE COMPLETETASK STATE CHANGE
+        agendaRepository.completeTask(taskEntry);
+
+        assertEquals(State.COMPLETED, taskEntry.getState());
     }
 
     @Test
