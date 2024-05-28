@@ -9,13 +9,17 @@ autonumber
 actor "Green Space \nManager" as ADM
 participant ":AddTaskEntryUI" as UI
 participant ":AddTaskEntryController" as CTRL
-participant ":Repositories" as RepositorySingleton
-participant ":repositories\n:Repositories" as PLAT
+participant "Repositories" as RepositorySingleton
+participant "repositories\n:Repositories" as PLAT
 participant ":GreenSpaceMapper" as MAP
-participant "GreenSpaceDTOList" as DTO
+participant "greenSpaceDTOList\n :GreenSpaceDTOList" as DTO
 participant ":GreenSpaceRepository" as URG
+participant "objDto: GreenSpaceDto" as GDTO
 participant ":ToDoListRepository" as TDR
 participant "taskEntry\n:TaskEntry" as TASK
+participant ":TaskEntryMapper" as TMAP
+
+
 
 activate ADM
 
@@ -43,16 +47,24 @@ activate ADM
                 URG --> CTRL : GreenSpacesList
             deactivate URG
 
-            CTRL -> MAP : ToDTOList(greenspace)
+            CTRL -> MAP : ToDTOList(GreenSpacesList)
             activate MAP
                 MAP -> DTO: Create()
-                MAP -> URG: obj = get(i)
-                MAP -> MAP: objDTO = toDTO(obj)
+                loop for each green space in the green space list
+                MAP -> URG: greenSpace = get(i)
+                activate URG
+                deactivate URG
+                MAP -> MAP: greenSpaceDTO = toDTO(greenSpace)
                 activate MAP
-                
+                MAP -> GDTO: create(...)
+                deactivate MAP
+                MAP -> DTO: add(greenSpaceDto)
+
+                activate DTO
                 deactivate DTO
-                MAP -> CTRL: greenSpaceDTO
-            deactivate
+                end
+                MAP -> CTRL: greenSpaceDtoList
+            deactivate MAP
 
             CTRL --> UI : greenSpacesDTO
         deactivate CTRL
@@ -63,19 +75,19 @@ activate ADM
     ADM -> UI : selects a green space
     activate UI
 
-        UI --> ADM : requests data (taskTitle, taskDuration, duration, urgency level, state)
+        UI --> ADM : requests data (taskTitle, taskDuration, duration, urgency level)
     deactivate UI
 
     ADM -> UI : types data
     activate UI
 
-        UI --> ADM : shows all data and requests confirmation (taskTitle, taskDuration, duration, urgency level, state)
+        UI --> ADM : shows all data and requests confirmation (taskTitle, taskDuration, duration, urgency level)
     deactivate UI
 
     ADM -> UI : confirms data
     activate UI
 
-        UI -> CTRL : addTask(taskTitle, taskDuration, duration, urgency level, state)
+        UI -> CTRL : addTaskEntry(Dto)
         activate CTRL
 
             CTRL -> PLAT : getToDoListRepository()
@@ -84,16 +96,26 @@ activate ADM
                 PLAT --> CTRL : toDoListRepository
             deactivate PLAT
 
-            CTRL -> TDR : addTask(taskTitle, taskDuration, duration, urgency level, state)
+            CTRL -> TDR : addTask(Dto)
             activate TDR
 
-                TDR -> TASK** : createTask(taskTitle, taskDuration, duration, urgency level, state)
+
+
+
+                TDR ->TMAP : DtoToAttributes(Dto)
+                activate TMAP
+                TMAP ->TDR : attributes
+                                Deactivate TMAP
+                TDR -> TASK** : createTask(taskTitle, taskDuration, duration, urgency level)
                 TDR --> TDR : validateEntry(entry)
                 TDR --> TDR : saveEntry(entry)
-                TDR --> CTRL : boolean
+
+
+                TDR --> CTRL : TaskEntry
+
             deactivate TDR
 
-            CTRL --> UI : boolean
+            CTRL --> UI : TaskEntry
         deactivate CTRL
 
         UI --> ADM : displays operation success
