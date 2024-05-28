@@ -12,7 +12,7 @@ participant ":AddTaskEntryController" as CTRL
 participant ":Repositories" as RepositorySingleton
 participant ":repositories\n:Repositories" as PLAT
 participant ":GreenSpaceMapper" as MAP
-participant "GreenSpaceDTO" as DTO
+participant "GreenSpaceDTOList" as DTO
 participant ":GreenSpaceRepository" as URG
 participant ":ToDoListRepository" as TDR
 participant "taskEntry\n:TaskEntry" as TASK
@@ -21,7 +21,7 @@ activate ADM
 
     ADM -> UI : asks to add a new entry to the To-Do List
     activate UI
-
+        UI -> CTRL : create
         UI -> CTRL : getGreenSpaces()
         activate CTRL
 
@@ -43,37 +43,39 @@ activate ADM
                 URG --> CTRL : GreenSpacesList
             deactivate URG
 
-            loop for every gren space in the repository
-            CTRL -> MAP : ToDTO(greenspace)
+            CTRL -> MAP : ToDTOList(greenspace)
             activate MAP
                 MAP -> DTO: Create()
-                activate DTO
-                    DTO -> MAP:GreenSpaceDTO
+                MAP -> URG: obj = get(i)
+                MAP -> MAP: objDTO = toDTO(obj)
+                activate MAP
+                
                 deactivate DTO
                 MAP -> CTRL: greenSpaceDTO
             deactivate
-            CTRL --> UI : UrgencyLevelList
+
+            CTRL --> UI : greenSpacesDTO
         deactivate CTRL
-            end
-        UI --> ADM : shows a list of degrees of urgency and asks to select one (UrgencyLevelList)
+
+        UI --> ADM : shows a list of green spaces
     deactivate UI
 
-    ADM -> UI : selects a urgency level
+    ADM -> UI : selects a green space
     activate UI
 
-        UI --> ADM : requests data (taskDescription, taskDuration)
+        UI --> ADM : requests data (taskTitle, taskDuration, duration, urgency level, state)
     deactivate UI
 
     ADM -> UI : types data
     activate UI
 
-        UI --> ADM : shows all data and requests confirmation (taskDescription, taskDuration, UrgencyLevel)
+        UI --> ADM : shows all data and requests confirmation (taskTitle, taskDuration, duration, urgency level, state)
     deactivate UI
 
     ADM -> UI : confirms data
     activate UI
 
-        UI -> CTRL : addTask(taskDescription, taskDuration, UrgencyLevel)
+        UI -> CTRL : addTask(taskTitle, taskDuration, duration, urgency level, state)
         activate CTRL
 
             CTRL -> PLAT : getToDoListRepository()
@@ -82,10 +84,10 @@ activate ADM
                 PLAT --> CTRL : toDoListRepository
             deactivate PLAT
 
-            CTRL -> TDR : addTask(taskDescription, taskDuration, UrgencyLevel)
+            CTRL -> TDR : addTask(taskTitle, taskDuration, duration, urgency level, state)
             activate TDR
 
-                TDR -> TASK** : createTask(taskDescription, taskDuration, UrgencyLevel)
+                TDR -> TASK** : createTask(taskTitle, taskDuration, duration, urgency level, state)
                 TDR --> TDR : validateEntry(entry)
                 TDR --> TDR : saveEntry(entry)
                 TDR --> CTRL : boolean
