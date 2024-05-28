@@ -19,6 +19,13 @@ class "TaskEntry" {
     -expectedDuration
     -state
     -greenSpace
+}
+
+
+class "GreenSpaceManager"{
+        -name
+        -email
+        -phone
 
 }
 
@@ -27,7 +34,7 @@ class "ToDoList" {
     -entries
 }
 
-
+"GreenSpaceManager" "1" -- "*" "TaskEntry" :  create >
 TaskEntry "1" -- "0..*" ToDoList : exists in >
 
 @enduml

@@ -11,8 +11,9 @@ participant ":AddTaskEntryUI" as UI
 participant ":AddTaskEntryController" as CTRL
 participant ":Repositories" as RepositorySingleton
 participant ":repositories\n:Repositories" as PLAT
-
-participant ":UrgencyLevelRepository" as URG
+participant ":GreenSpaceMapper" as MAP
+participant "GreenSpaceDTO" as DTO
+participant ":GreenSpaceRepository" as URG
 participant ":ToDoListRepository" as TDR
 participant "taskEntry\n:TaskEntry" as TASK
 
@@ -21,7 +22,7 @@ activate ADM
     ADM -> UI : asks to add a new entry to the To-Do List
     activate UI
 
-        UI -> CTRL : getUrgencyLevelList()
+        UI -> CTRL : getGreenSpaces()
         activate CTRL
 
             CTRL -> RepositorySingleton : getInstance()
@@ -30,21 +31,30 @@ activate ADM
                 RepositorySingleton --> CTRL : repositories
             deactivate RepositorySingleton
 
-            CTRL -> PLAT : getUrgencyLevelRepository()
+            CTRL -> PLAT : getGreenSpaceRepository()
             activate PLAT
 
-                PLAT --> CTRL : UrgencyLevelRepository
+                PLAT --> CTRL : GreenSpaceRepository
             deactivate PLAT
 
-            CTRL -> URG : getUrgencyLevelList()
+            CTRL -> URG : getGreenSpaces()
             activate URG
 
-                URG --> CTRL : UrgencyLevelList
+                URG --> CTRL : GreenSpacesList
             deactivate URG
 
+            loop for every gren space in the repository
+            CTRL -> MAP : ToDTO(greenspace)
+            activate MAP
+                MAP -> DTO: Create()
+                activate DTO
+                    DTO -> MAP:GreenSpaceDTO
+                deactivate DTO
+                MAP -> CTRL: greenSpaceDTO
+            deactivate
             CTRL --> UI : UrgencyLevelList
         deactivate CTRL
-
+            end
         UI --> ADM : shows a list of degrees of urgency and asks to select one (UrgencyLevelList)
     deactivate UI
 
