@@ -12,10 +12,17 @@ participant ":System" as System
 
 activate GSM
 
-    Manager -> System : asks to view data relative to the usage of park\nequipments
+    GSM -> System : asks to register a new green space
     activate System
 
-        System --> Manager : presents pie chart representing, in percentage,\nthe amount that each equipment is used
+        System --> GSM : request details of the green space(garden, medium-sized park or large-sized park)\n and respctive area
     deactivate System
+
+    GSM -> System : provides green space details
+       activate System
+
+       System --> GSM : registers green spaces and their respective areas, displaying operation success.
+           deactivate System
+
 
 @enduml

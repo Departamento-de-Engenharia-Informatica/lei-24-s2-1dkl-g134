@@ -25,7 +25,11 @@ class GreenSpace {
 }
 
 class Entry {
-
+taskTitle
+taskDescription
+urgencyLevel
+state
+duration
 }
 
 class GreenSpaceManager {
