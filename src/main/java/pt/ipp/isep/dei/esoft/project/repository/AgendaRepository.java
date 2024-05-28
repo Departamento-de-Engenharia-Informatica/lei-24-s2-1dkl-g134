@@ -114,8 +114,10 @@ public class AgendaRepository implements Serializable {
         } else return Optional.of(foundTasks);
     }
     public Optional<TaskEntry> completeTask(TaskEntry taskEntry){
+        if(taskEntry == null){
+            throw new IllegalArgumentException("Null fields not allowed");
+        }
         return agenda.get(agenda.indexOf(taskEntry)).completeTask();
-
     }
 
     public boolean isTeamAvailable(Team team, TaskEntry taskEntry) {
