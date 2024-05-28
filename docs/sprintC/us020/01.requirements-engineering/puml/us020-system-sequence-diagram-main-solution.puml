@@ -7,10 +7,10 @@ title System Sequence Diagram (SSD) - Main Solution
 
 autonumber
 
-actor "Fleet\nManager" as Manager
+actor "Green Space\nManager" as Manager
 participant ":System" as System
 
-activate Manager
+activate GSM
 
     Manager -> System : asks to view data relative to the usage of park\nequipments
     activate System
