@@ -7,6 +7,7 @@ public class CustomDate implements Serializable {
     private int year;
     private int month;
     private int day;
+    private final int[] daysOfMonth = {0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
 
     /**
      * Constructor for a new CustomDate object.
@@ -26,7 +27,7 @@ public class CustomDate implements Serializable {
         date = date.trim();
         String datePattern = "\\d{4}/\\d{2}/\\d{2}";
         if(!date.matches(datePattern)){
-            throw new IllegalArgumentException("Invalid date format. Please use 'YYYY/MM/DD'.");
+            throw new IllegalArgumentException("Invalid date format. Please use 'YYYY/MM/DD', with leading zeros.");
         }
         String[] components = date.split("/");
         int year = Integer.parseInt(components[0]);
@@ -182,4 +183,84 @@ public class CustomDate implements Serializable {
      * @return An int value representing the day of this date.
      */
     public int getDay(){return day;}
+
+    /**
+     * Adjusts the date by a number of days (does not update the object this is performed on).
+     * This method will throw an IllegalArgumentException if the number of days to adjust
+     * by is negative.
+     * @param days The number of days (not negative) to adjust the date by.
+     * @return The end date after the adjustment in question.
+     */
+    public CustomDate adjust(int days){
+        //HOW THIS WORKS:
+        //First we check for negative adjustments, then we create new month and year variables.
+        //We do a frankly very bad way of checking for leap years: Before any place where it
+        //matters, we check if the month is february and the year is a leap year, and if it is,
+        //we modify the array daysOfMonth to account for that, making sure to modify it back
+        //once the section where it matters is over.
+        //The actual check consists of first checking if the change of days is greater than the
+        //number of days remaining in the current month: If it is, remove that section and
+        //advance the month, maybe advancing the year too if needed.
+        //From there we simply continuously check if the number of days to change is still
+        //greater than the number of days remaining in the month (in this case, all the days).
+        //And if it is, we advance the month and remove that amount of days. If it isn't, we stop.
+        //Finally, we check if we modified the month or year through all this. If we did, the
+        //final day is equal to the days variable. If we didn't, it's equal to the sum of the
+        //days variable to this object's day variable (seeing as no month change occurred).
+        if(days < 0){
+            throw new IllegalArgumentException("Date adjustment cannot be negative.");
+        }
+        int newMonth = month;
+        int newYear = year;
+        if(newMonth == 2 && (newYear % 4 == 0 || (newYear % 100 == 0 && newYear % 400 == 0))){
+            daysOfMonth[2] = 29;
+        }
+        if(days > daysOfMonth[newMonth] - day){
+            days -= daysOfMonth[newMonth] - day;
+            newMonth++;
+            if(newMonth == 13){
+                newMonth = 1;
+                newYear++;
+            }
+        }
+        if(daysOfMonth[2] == 29){
+            daysOfMonth[2] = 28;
+        }
+        while(days > daysOfMonth[newMonth]){
+            days -= daysOfMonth[newMonth];
+            newMonth++;
+            if(newMonth == 13){
+                newMonth = 1;
+                newYear++;
+            }
+            if(newMonth == 2 && (newYear % 4 == 0 || (newYear % 100 == 0 && newYear % 400 == 0))){
+                daysOfMonth[2] = 29;
+            }else{
+                daysOfMonth[2] = 28;
+            }
+        }
+        if(daysOfMonth[2] == 29){
+            daysOfMonth[2] = 28;
+        }
+        int newDay = 0;
+        if(newMonth != month || newYear != year){
+            newDay = days;
+        }else{
+            newDay = day+days;
+        }
+        String yearText = String.valueOf(newYear);
+        int yearTextLength = yearText.length();
+        for(int i = 0; i < 4 - yearTextLength; i++){
+            yearText = "0" + yearText;
+        }
+        String monthText = String.valueOf(newMonth);
+        if(monthText.length() == 1){
+            monthText = "0" + monthText;
+        }
+        String dayText = String.valueOf(newDay);
+        if(dayText.length() == 1){
+            dayText = "0" + dayText;
+        }
+        return new CustomDate(yearText + "/" + monthText + "/" + dayText);
+    }
 }

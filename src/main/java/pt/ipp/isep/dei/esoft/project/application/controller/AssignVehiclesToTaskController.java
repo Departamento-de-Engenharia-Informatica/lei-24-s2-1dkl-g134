@@ -42,4 +42,8 @@ public class AssignVehiclesToTaskController {
     public Optional<ArrayList<Vehicle>> assignVehiclesToTask(ArrayList<Vehicle> vehicles, TaskEntry taskEntry){
         return agendaRepository.assignVehiclesToTask(taskEntry, vehicles);
     }
+
+    public boolean isVehicleAvailable(Vehicle vehicle, TaskEntry taskEntry){
+        return agendaRepository.isVehicleAvailable(vehicle, taskEntry);
+    }
 }

@@ -2,6 +2,7 @@ package pt.ipp.isep.dei.esoft.project.ui.console;
 
 import pt.ipp.isep.dei.esoft.project.application.controller.ListTasksBetweenDatesController;
 import pt.ipp.isep.dei.esoft.project.customexceptions.InvalidRoleException;
+import pt.ipp.isep.dei.esoft.project.domain.GreenSpace;
 import pt.ipp.isep.dei.esoft.project.domain.State;
 import pt.ipp.isep.dei.esoft.project.domain.TaskEntry;
 
@@ -43,13 +44,16 @@ public class ListTasksBetweenDatesUI implements Runnable {
                 System.out.println("No tasks found for you between these dates.");
                 return;
             }
+
+            taskList = Optional.of(sortTasks(taskList.get()));
+
             int option = -1;
             while(option != 0){
                 System.out.println("Tasks found between " + firstDate + " and " + secondDate + "\n");
-                System.out.println("TITLE | DESCRIPTION | URGENCY | STATE | GREEN SPACE | DURATION | DATE");
+                System.out.println("TITLE | DESCRIPTION | URGENCY | STATE | GREEN SPACE | DURATION | START DATE");
                 for (TaskEntry taskEntry : taskList.get()) {
                     if(stateFilters.isEmpty() || stateFilters.contains(taskEntry.getState())){
-                        System.out.println(taskEntry.getTaskTitle()+" | "+ taskEntry.getTaskDescription()+" | "+taskEntry.getUrgencyLevel()+ " | "+taskEntry.getState()+ " | "+taskEntry.getGreenSpace()+" | "+taskEntry.getDuration()+" | "+taskEntry.getDate());
+                        System.out.println(taskEntry.getTaskTitle()+" | "+ taskEntry.getTaskDescription()+" | "+taskEntry.getUrgencyLevel()+ " | "+taskEntry.getState()+ " | "+taskEntry.getGreenSpace()+" | "+taskEntry.getDuration()+" | "+taskEntry.getStartDate());
                     }
                 }
                 Scanner in = new Scanner(System.in);
@@ -106,4 +110,17 @@ public class ListTasksBetweenDatesUI implements Runnable {
         return Utils.confirm("Do you wish to proceed? (s or n)");
     }
 
+
+    private ArrayList<TaskEntry> sortTasks(ArrayList<TaskEntry> taskEntries){
+        for(int i = 0; i < taskEntries.size(); i++){
+            for(int j = 0; j < taskEntries.size()-i; j++){
+                if(taskEntries.get(j).getStartDate().isAfterDate(taskEntries.get(j+1).getStartDate())){
+                    TaskEntry temp = taskEntries.get(j+1);
+                    taskEntries.set(j+1, taskEntries.get(j));
+                    taskEntries.set(j, temp);
+                }
+            }
+        }
+        return taskEntries;
+    }
 }

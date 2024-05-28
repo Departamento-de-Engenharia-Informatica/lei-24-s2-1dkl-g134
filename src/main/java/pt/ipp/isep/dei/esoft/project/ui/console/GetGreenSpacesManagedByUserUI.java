@@ -5,10 +5,7 @@ import pt.ipp.isep.dei.esoft.project.application.session.ApplicationSession;
 import pt.ipp.isep.dei.esoft.project.domain.GreenSpace;
 import pt.ipp.isep.dei.esoft.project.domain.Vehicle;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-import java.util.Scanner;
+import java.util.*;
 
 public class GetGreenSpacesManagedByUserUI implements Runnable {
 
@@ -27,6 +24,23 @@ public class GetGreenSpacesManagedByUserUI implements Runnable {
         if (greenSpaces.isEmpty()) {
             System.out.println("You do not manage any green spaces.");
         } else {
+
+            String sortingAlgorithm = ApplicationSession.getInstance().getProperties().getProperty("Sorting.Algorithm");
+            if(sortingAlgorithm == null){
+                System.out.println("Error: Sorting algorithm not defined.");
+                System.out.println("Cannot list green spaces without a sorting algorithm. Aborting list.");
+                return;
+            }
+            if(sortingAlgorithm.equals("DefaultSort")){
+                defaultSort(greenSpaces.get());
+            }else if(sortingAlgorithm.equals("BubbleSort")){
+                greenSpaces = Optional.of(bubbleSort(greenSpaces.get()));
+            }else{
+                System.out.println("Error: Invalid sorting algorithm in configurations.");
+                System.out.println("Cannot list green spaces without a sorting algorithm. Aborting list.");
+                return;
+            }
+
             System.out.println("NAME | ADDRESS | AREA | TYPE");
 
             for (GreenSpace greenSpace : greenSpaces.get()) {
@@ -36,15 +50,23 @@ public class GetGreenSpacesManagedByUserUI implements Runnable {
             System.out.println("\nPress ENTER to continue.");
             in.nextLine();
         }
-
-
-
-
-
-
-
-
-
-        }
     }
+
+    private void defaultSort(ArrayList<GreenSpace> greenSpaces){
+        greenSpaces.sort(Comparator.comparing(GreenSpace::getArea, Comparator.reverseOrder()));
+    }
+
+    private ArrayList<GreenSpace> bubbleSort(ArrayList<GreenSpace> greenSpaces){
+        for(int i = 0; i < greenSpaces.size(); i++){
+            for(int j = 0; j < greenSpaces.size()-i; j++){
+                if(greenSpaces.get(j).getArea() < greenSpaces.get(j+1).getArea()){
+                    GreenSpace temp = greenSpaces.get(j+1);
+                    greenSpaces.set(j+1, greenSpaces.get(j));
+                    greenSpaces.set(j, temp);
+                }
+            }
+        }
+        return greenSpaces;
+    }
+}
 

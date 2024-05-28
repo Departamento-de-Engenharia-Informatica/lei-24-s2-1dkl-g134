@@ -1,5 +1,6 @@
 package pt.ipp.isep.dei.esoft.project.application.session;
 
+import pt.isep.lei.esoft.auth.domain.model.Email;
 import pt.isep.lei.esoft.auth.mappers.dto.UserRoleDTO;
 
 import java.util.List;
@@ -19,6 +20,8 @@ public class UserSession {
     public String getUserName() {
         return this.userSession.getUserName();
     }
+
+    public Email getUserID(){return userSession.getUserId();}
 
     public List<UserRoleDTO> getUserRoles() {
         return this.userSession.getUserRoles();

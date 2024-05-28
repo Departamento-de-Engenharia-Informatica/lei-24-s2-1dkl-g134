@@ -10,7 +10,7 @@ import java.util.Scanner;
 
 public class PostponeTaskUI implements Runnable{
     private TaskEntry taskEntry;
-    private String date;
+    private String date, time;
     private PostponeTaskController controller = new PostponeTaskController();
 
 
@@ -33,20 +33,27 @@ public class PostponeTaskUI implements Runnable{
             return;
         }
         date = requestDate();
+        time = requestTime();
     }
 
     private boolean confirmData(){
         System.out.println("\n>>>>>>>>>> TASK ENTRY INFORMATION <<<<<<<<<< \n");
         System.out.println("New date: " + date);
+        System.out.println("New time: " + time);
         System.out.println("Postponed task: " + taskEntry.toString());
         return Utils.confirm("Do you wish to proceed? (s or n)");
     }
     private void submitData() {
-        Optional<TaskEntry> taskEntries = controller.postponeTask(this.taskEntry,date);
-        if (taskEntries.isPresent()) {
-            System.out.println("\nSuccessfully postponed!");
-        } else {
-            System.out.println("\nFailed to be postponed");
+        try{
+            Optional<TaskEntry> taskEntries = controller.postponeTask(this.taskEntry,date,time);
+            if (taskEntries.isPresent()) {
+                System.out.println("\nSuccessfully postponed!");
+            } else {
+                System.out.println("\nFailed to be postponed");
+            }
+        }catch(Exception e){
+            System.out.println("Failed to be postponed");
+            System.out.println(e.getMessage());
         }
     }
 
@@ -54,9 +61,12 @@ public class PostponeTaskUI implements Runnable{
         Scanner input = new Scanner(System.in);
         System.out.print("New date (YYYY/MM/DD, with leading zeros): ");
         return input.nextLine();
-        /*CustomDate date = Utils.readDateFromConsole("Current Date: ");
-        SimpleDateFormat formatter = new SimpleDateFormat("yyyy/MM/dd");
-        return date.toString();*/
+    }
+
+    private String requestTime(){
+        Scanner input = new Scanner(System.in);
+        System.out.print("New starting hour (00-23, with leading zeros): ");
+        return input.nextLine() + ":00";
     }
 
     private TaskEntry requestTaskEntry(){

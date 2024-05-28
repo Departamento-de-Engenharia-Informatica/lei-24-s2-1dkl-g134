@@ -17,8 +17,8 @@ public class AssignTaskToAgendaController {
         this.agendaRepository = Repositories.getInstance().getAgendaRepository();
         this.toDoListRepository = Repositories.getInstance().getToDoListRepository();
     }
-    public Optional<TaskEntry> assignTaskToAgenda(TaskEntry task, State state, String date){
-        return agendaRepository.add(task,state,date);
+    public Optional<TaskEntry> assignTaskToAgenda(TaskEntry task, String date, String time){
+        return agendaRepository.add(task,date,time);
     }
     public Optional<ArrayList<TaskEntry>> getPendingTasks(){
         return toDoListRepository.getPendingTasks();

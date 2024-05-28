@@ -197,4 +197,66 @@ class CustomDateTest {
 
         assertEquals(25, customDate.getDay());
     }
+
+    @Test
+    void testAdjustNoProgress(){
+        CustomDate customDate = new CustomDate("1974/04/20");
+
+        assertEquals(customDate, customDate.adjust(0));
+    }
+
+    @Test
+    void testAdjustForwardSameMonth(){
+        CustomDate customDate = new CustomDate("1974/04/20");
+        CustomDate customDate1 = new CustomDate("1974/04/25");
+
+        assertEquals(customDate1, customDate.adjust(5));
+    }
+
+    @Test
+    void testAdjustForwardDifferentMonth31Days(){
+        CustomDate customDate = new CustomDate("1974/01/20");
+        CustomDate customDate1 = new CustomDate("1974/02/05");
+
+        assertEquals(customDate1, customDate.adjust(16));
+    }
+
+    @Test
+    void testAdjustForwardDifferentMonth30Days(){
+        CustomDate customDate = new CustomDate("1974/04/20");
+        CustomDate customDate1 = new CustomDate("1974/05/05");
+
+        assertEquals(customDate1, customDate.adjust(15));
+    }
+
+    @Test
+    void testAdjustForwardDifferentMonthFebruaryNotLeapYear(){
+        CustomDate customDate = new CustomDate("2005/02/27");
+        CustomDate customDate1 = new CustomDate("2005/03/04");
+
+        assertEquals(customDate1, customDate.adjust(5));
+    }
+
+    @Test
+    void testAdjustForwardDifferentMonthFebruaryLeapYear(){
+        CustomDate customDate = new CustomDate("2004/02/27");
+        CustomDate customDate1 = new CustomDate("2004/03/04");
+
+        assertEquals(customDate1, customDate.adjust(6));
+    }
+
+    @Test
+    void testAdjustForwardDifferentYear(){
+        CustomDate customDate = new CustomDate("1974/12/20");
+        CustomDate customDate1 = new CustomDate("1975/01/05");
+
+        assertEquals(customDate1, customDate.adjust(16));
+    }
+
+    @Test
+    void testAdjustFailsWithNegatives(){
+        CustomDate customDate = new CustomDate("1974/04/20");
+        assertThrows(IllegalArgumentException.class,
+                () -> customDate.adjust(-1));
+    }
 }

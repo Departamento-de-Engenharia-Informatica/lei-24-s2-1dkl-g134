@@ -1,6 +1,10 @@
 package pt.ipp.isep.dei.esoft.project.domain;
 
 
+import javafx.application.Application;
+import pt.ipp.isep.dei.esoft.project.application.session.ApplicationSession;
+import pt.ipp.isep.dei.esoft.project.ui.Bootstrap;
+
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -16,11 +20,23 @@ public class TaskEntry implements Serializable {
     private State state;
     private int duration;
     private GreenSpace greenSpace;
-    private ArrayList<Vehicle> assignedVehicles;
-    private ArrayList<Collaborator> assignedTeam;
-    private CustomDate date;
+    private ArrayList<Vehicle> assignedVehicles = null;
+    private ArrayList<Collaborator> assignedTeam = null;
+    private CustomDate startDate = null, endDate = null;
+    private CustomTime startTime = null, endTime = null;
 
     public TaskEntry(String taskTitle, String taskDescription, urgencyLevel urgencyLevel, int duration, GreenSpace greenSpace) {
+        if(taskTitle == null || taskDescription == null || urgencyLevel == null || greenSpace == null){
+            throw new IllegalArgumentException("Null fields not allowed.");
+        }
+        taskTitle = taskTitle.trim();
+        taskDescription = taskDescription.trim();
+        if(taskTitle.isBlank() || taskDescription.isBlank()){
+            throw new IllegalArgumentException("Blank fields not allowed.");
+        }
+        if(duration <= 0){
+            throw new IllegalArgumentException("Duration must be a number greater than 0.");
+        }
         this.taskTitle = taskTitle;
         this.taskDescription = taskDescription;
         this.urgencyLevel = urgencyLevel;
@@ -31,15 +47,24 @@ public class TaskEntry implements Serializable {
         assignedTeam = null;
     }
 
-    public TaskEntry addAgendaData(State state, String date){
-        this.state = state;
-        this.date = new CustomDate(date);
+    public TaskEntry addAgendaData(String date, String time){
+        if(date == null || time == null){
+            throw new IllegalArgumentException("Null fields not allowed.");
+        }
+        date = date.trim();
+        if(date.isBlank() || time.isBlank()){
+            throw new IllegalArgumentException("Blank fields not allowed.");
+        }
+        this.state = State.PLANNED;
+        this.startDate = new CustomDate(date);
+        this.startTime = new CustomTime(time);
+        this.endTime = startTime.adjust(duration);
+        this.endDate = startDate.adjust(duration / Bootstrap.dailyWorkHours);
         return this;
     }
 
     @Override
     public boolean equals(Object o) {
-
         if (!(o instanceof TaskEntry)) {
             return false;
         }
@@ -52,10 +77,25 @@ public class TaskEntry implements Serializable {
         return taskTitle + " | " + taskDescription;
     }
 
-    public Optional<TaskEntry> postponeTask(String date){
+    public Optional<TaskEntry> postponeTask(String date, String time){
+        if(this.state == State.PENDING){
+            throw new IllegalArgumentException("Cannot postpone task not in agenda.");
+        }
+        if(date == null || time == null){
+            throw new IllegalArgumentException("Null fields not allowed.");
+        }
+        date = date.trim();
+        time = time.trim();
+        if(date.isBlank() || time.isBlank()){
+            throw new IllegalArgumentException("Blank fields not allowed.");
+        }
         CustomDate newDate = new CustomDate(date);
-        if(newDate.isAfterDate(this.date)){
-            this.date=newDate;
+        CustomTime newTime = new CustomTime(time);
+        if(newDate.isAfterDate(this.startDate)){
+            this.startDate=newDate;
+            this.startTime=newTime;
+            this.endTime = startTime.adjust(duration);
+            this.endDate = startDate.adjust(duration / Bootstrap.dailyWorkHours);
             this.state=State.POSTPONED;
         }else{
             throw new IllegalArgumentException("Postponed date can't be before current date");
@@ -64,6 +104,12 @@ public class TaskEntry implements Serializable {
     }
 
     public Optional<ArrayList<Vehicle>> assignVehicles(ArrayList<Vehicle> vehicles){
+        if(vehicles == null){
+            throw new IllegalArgumentException("Null fields not allowed.");
+        }
+        if(vehicles.isEmpty()){
+            throw new IllegalArgumentException("List of vehicles to assign must contain one or more vehicles.");
+        }
         ArrayList<Vehicle> vehiclesToAssign = new ArrayList<Vehicle>();
         boolean anyVehicleAssigned = false;
         for(Vehicle vehicle : vehicles){
@@ -84,22 +130,31 @@ public class TaskEntry implements Serializable {
     }
 
     public Optional<TaskEntry> assignTeam(Team team) throws IOException {
+        if(team == null){
+            throw new IllegalArgumentException("Null fields not allowed.");
+        }
+        if(ApplicationSession.getInstance().getProperties().getProperty("Email.Service") == null){
+            throw new IllegalArgumentException("Email service not configured.");
+        }
         ArrayList<Collaborator> teamMembers = team.getTeamMembers();
         boolean discrepancyFound = false;
-        if(assignedTeam.size() != teamMembers.size()){
-            discrepancyFound = true;
-        }else{
-            for(Collaborator member : teamMembers){
-                if(!assignedTeam.contains(member)){
-                    discrepancyFound = true;
-                    break;
+        if(assignedTeam != null){
+            if(assignedTeam.size() != teamMembers.size()){
+                discrepancyFound = true;
+            }else{
+                for(Collaborator member : teamMembers){
+                    if(!assignedTeam.contains(member)){
+                        discrepancyFound = true;
+                        break;
+                    }
                 }
             }
-        }
-        if(!discrepancyFound){
-            return Optional.empty();
+            if(!discrepancyFound){
+                return Optional.empty();
+            }
         }
 
+        assignedTeam = new ArrayList<>();
         assignedTeam.addAll(teamMembers);
 
         File simulationDirectory = new File("emailSimulations");
@@ -112,17 +167,19 @@ public class TaskEntry implements Serializable {
                 email.delete();
             }
             FileWriter emailCreator = new FileWriter(email.getPath());
+            emailCreator.append("From: "+ ApplicationSession.getInstance().getProperties().getProperty("Email.Service")+"\n");
             emailCreator.append("To: " + collaborator.getName() + "\n");
             emailCreator.append("Address: " + collaborator.getEmail() + "\n");
-            emailCreator.append("Subject: Assingment to task '"+taskTitle+"'\n");
+            emailCreator.append("Subject: Assignment to task '"+taskTitle+"'\n");
             emailCreator.append("Message:\n\n");
             emailCreator.append("Dear collaborator,\nAs part of the team comprised of the members:\n");
             emailCreator.append(team.toString());
             emailCreator.append("You and your teammates have been assigned to the task '"+taskTitle+"'.\n");
             emailCreator.append("Task description: "+taskDescription+"\n");
-            emailCreator.append("This task will take place in in the following green space: "+greenSpace.toString()+"\n");
+            emailCreator.append("This task will take place in the following green space: "+greenSpace.toString()+"\n");
             emailCreator.append("The address of this green space is: "+greenSpace.getAddress()+"\n");
-            emailCreator.append("This task is scheduled to start on the following date and time: "+ date.toString()+"\n");
+            emailCreator.append("This task is scheduled to start on the following date and time: "+ startDate.toString()+" "+startTime.toString()+"\n");
+            emailCreator.append("And is scheduled to end on the following date and time: "+ endDate.toString()+" "+endTime.toString()+"\n");
             emailCreator.append("This task is expected to have a duration of "+duration+" hours.\n");
             emailCreator.append("The urgency level of this task is: "+urgencyLevel+"\n");
             emailCreator.append("\nThank you, and good work!");
@@ -143,12 +200,41 @@ public class TaskEntry implements Serializable {
 
     public ArrayList<Collaborator> getAssignedTeam() { return assignedTeam; }
 
-    public CustomDate getDate() {
-        return date;
+    public ArrayList<Vehicle> getAssignedVehicles() { return assignedVehicles; }
+
+    public CustomDate getStartDate() {
+        return startDate;
+    }
+
+    public CustomDate getEndDate() {
+        return endDate;
+    }
+
+    public CustomTime getStartTime() {
+        return startTime;
+    }
+
+    public CustomTime getEndTime() {
+        return endTime;
     }
 
     public String getGreenSpace() {
         return greenSpace.toString();
+    }
+
+    public boolean isSameTeam(ArrayList<Collaborator> otherTeam){
+        if(assignedTeam == null){
+            return false;
+        }
+        if(assignedTeam.size() != otherTeam.size()){
+            return false;
+        }
+        for(Collaborator collaborator : otherTeam){
+            if(!assignedTeam.contains(collaborator)){
+                return false;
+            }
+        }
+        return true;
     }
 
     public Optional<TaskEntry> cancelTask() {

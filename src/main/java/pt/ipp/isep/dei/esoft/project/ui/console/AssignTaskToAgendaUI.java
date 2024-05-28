@@ -13,8 +13,7 @@ import java.util.Scanner;
 
 public class AssignTaskToAgendaUI implements Runnable {
     private TaskEntry taskEntry;
-    private State state;
-    private String date;
+    private String date, time;
     private AssignTaskToAgendaController assignTaskToAgendaController = new AssignTaskToAgendaController();
 
     public void run(){
@@ -31,19 +30,19 @@ public class AssignTaskToAgendaUI implements Runnable {
     public void requestData(){
         taskEntry = requestTaskEntry();
         if(taskEntry == null){return;}
-        state = requestTaskState();
         date = requestDate();
+        time = requestTime();
     }
     public boolean confirmData(){
         System.out.println("\n>>>>>>>>>> ASSIGNMENT INFORMATION <<<<<<<<<< \n");
         System.out.println("Task: "+ taskEntry.toString());
-        System.out.println("State: "+ state);
         System.out.println("Date: "+ date);
+        System.out.println("Time: "+ time);
         return Utils.confirm("Do you wish to proceed? (s or n)");
     }
     public void submitData(){
         try{
-            Optional<TaskEntry> assignedTask = assignTaskToAgendaController.assignTaskToAgenda(taskEntry,state,date);
+            Optional<TaskEntry> assignedTask = assignTaskToAgendaController.assignTaskToAgenda(taskEntry,date,time);
             if(assignedTask.isEmpty()){
                 System.out.println("Failed to assign task to Agenda!");
             }else{
@@ -83,34 +82,15 @@ public class AssignTaskToAgendaUI implements Runnable {
         return taskEntries.get().get(option-1);
     }
 
-    private State requestTaskState() {
-        Scanner input = new Scanner(System.in);
-        ArrayList<State> allStates = State.getAllStates();
-        System.out.println("Choose a state from the following list of their respective titles:\n");
-        for(int i = 0; i < allStates.size(); i++){
-            System.out.println((i+1) + "- "+allStates.get(i));
-        }
-
-        int option = 0;
-        while(true){
-            try{
-                System.out.println("Choose a number corresponding to a state.");
-                option = Integer.parseInt(input.nextLine());
-                if(option <= 0 || option > allStates.size()){
-                    System.out.println("Error: Invalid option.");
-                    continue;
-                }
-                break;
-            }catch(Exception e){
-                System.out.println("Error: Selected option must be a number.");
-            }
-        }
-        return allStates.get(option-1);
-    }
-
     public String requestDate(){
         Scanner input = new Scanner(System.in);
         System.out.println("Date (YYYY/MM/DD, with leading zeros): ");
         return input.nextLine();
+    }
+
+    public String requestTime(){
+        Scanner input = new Scanner(System.in);
+        System.out.println("Starting hour (00-23, with leading zeros): ");
+        return input.nextLine()+":00";
     }
 }

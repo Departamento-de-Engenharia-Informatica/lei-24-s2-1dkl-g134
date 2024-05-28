@@ -44,4 +44,8 @@ public class AssignTeamToTaskController {
     public Optional<TaskEntry> assignTeamToTask(Team team, TaskEntry taskEntry) throws IOException {
         return agendaRepository.assignTeamToTask(taskEntry, team);
     }
+
+    public boolean isTeamAvailable(Team team, TaskEntry taskEntry){
+        return agendaRepository.isTeamAvailable(team, taskEntry);
+    }
 }

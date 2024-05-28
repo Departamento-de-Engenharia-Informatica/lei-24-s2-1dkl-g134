@@ -2,6 +2,7 @@ package pt.ipp.isep.dei.esoft.project.ui;
 
 import pt.ipp.isep.dei.esoft.project.repository.Repositories;
 import pt.ipp.isep.dei.esoft.project.ui.console.menu.MainMenuUI;
+import pt.ipp.isep.dei.esoft.project.ui.console.utils.Utils;
 
 public class Main {
 
@@ -10,7 +11,7 @@ public class Main {
         Runtime.getRuntime().addShutdownHook(new Thread(() -> {
             try{
                 Repositories.save();
-                System.out.println("Serialization successful.");
+                System.out.println("\nSerialization successful.");
             }catch(Exception e){
                 System.out.println("Serialization failed.");
                 System.out.println(e.getMessage());
@@ -32,10 +33,18 @@ public class Main {
         }
 
         try {
+
+            /*if(Utils.confirm("Do you wish to boot into GUI mode? (Only Sprint C content will be available!) (s or n)")){
+                //GUI boot here.
+            }else{
+                MainMenuUI menu = new MainMenuUI();
+                menu.run();
+            }*/
+
             MainMenuUI menu = new MainMenuUI();
             menu.run();
         } catch (Exception e) {
-            System.out.println("A fatal error occurred!");
+            System.out.println("\nA fatal error occurred!");
             System.out.println(e.getMessage());
             System.out.println("Attempting serialization...");
             try{
