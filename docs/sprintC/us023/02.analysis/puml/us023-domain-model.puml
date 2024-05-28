@@ -2,9 +2,7 @@
 skinparam monochrome true
 skinparam packageStyle rectangle
 skinparam shadowing false
-
 skinparam classAttributeIconSize 0
-
 hide circle
 hide methods
 
@@ -25,7 +23,11 @@ class GreenSpace {
 }
 
 class Entry {
-
+  taskTitle
+  taskDescription
+  urgencyLevel
+  state
+  duration
 }
 
 class GreenSpaceManager {
@@ -41,9 +43,10 @@ class Agenda{
 class ToDoList{
 
 }
+
 class Team{
-teamMembers
-teamSkills
+    teamMembers
+    teamSkills
 }
 
 
