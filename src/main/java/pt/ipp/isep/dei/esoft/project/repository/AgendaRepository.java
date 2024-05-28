@@ -49,6 +49,24 @@ public class AgendaRepository implements Serializable {
         return Optional.of(currentTasks);
     }
 
+    public Optional<ArrayList<TaskEntry>> getPlannedAndPostponedTasksBelongingToCurrentUser() throws InvalidRoleException, CollaboratorNotFoundException {
+        ArrayList<TaskEntry> collaboratorTasks = new ArrayList<>();
+        Optional<ArrayList<TaskEntry>> plannedAndPostponedTasks = getPlannedAndPostponedTasks();
+        Optional<Collaborator> currentCollaborator = Repositories.getInstance().getCollaboratorRepository().getCurrentUserCollaborator();
+        if (currentCollaborator.isEmpty()) {
+            throw new CollaboratorNotFoundException("No collaborator corresponding to your email and name was found in the system.");
+        }
+        for(TaskEntry taskEntry : plannedAndPostponedTasks.get()){
+            if(taskEntry.getAssignedTeam().contains(currentCollaborator)){
+                collaboratorTasks.add(taskEntry);
+            }
+        }
+        if(collaboratorTasks.isEmpty()){
+            return Optional.empty();
+        }
+        return Optional.of(collaboratorTasks);
+    }
+
     public Optional<ArrayList<Vehicle>> assignVehiclesToTask(TaskEntry taskEntry, ArrayList<Vehicle> vehicles) {
         if(taskEntry == null){
             throw new IllegalArgumentException("Null fields not allowed.");
@@ -94,6 +112,12 @@ public class AgendaRepository implements Serializable {
         if (foundTasks.isEmpty()) {
             return Optional.empty();
         } else return Optional.of(foundTasks);
+    }
+    public Optional<TaskEntry> completeTask(TaskEntry taskEntry){
+        if(taskEntry == null){
+            throw new IllegalArgumentException("Null fields not allowed");
+        }
+        return agenda.get(agenda.indexOf(taskEntry)).completeTask();
     }
 
     public boolean isTeamAvailable(Team team, TaskEntry taskEntry) {
