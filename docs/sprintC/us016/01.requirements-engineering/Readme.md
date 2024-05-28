@@ -22,7 +22,7 @@ polynomial regression, determine the best line that fits the data
 
 ### 1.3. Acceptance Criteria
 
-* **AC1:** The pie chart is successfully created, accurately represents the registered data, and is presented to the user.
+* **AC1:** --
 
 ### 1.4. Found out Dependencies
 
@@ -36,7 +36,7 @@ polynomial regression, determine the best line that fits the data
 
 **Output Data:**
 
-* Pie chart representing, in percentage, the data available in the EquipmentUsed.csv file.
+* --
 
 ### 1.6. System Sequence Diagram (SSD)
 
