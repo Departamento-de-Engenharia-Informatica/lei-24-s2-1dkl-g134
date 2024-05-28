@@ -159,6 +159,14 @@ public class TaskEntry implements Serializable {
             return Optional.of(this);
         }
     }
+    public Optional<TaskEntry> completeTask() {
+        if (state == State.COMPLETED) {
+            return Optional.empty();
+        } else {
+            state = State.COMPLETED;
+            return Optional.of(this);
+        }
+    }
 
 
 }

@@ -17,6 +17,5 @@ public class CancelTaskController {
     public Optional<TaskEntry> cancelTask(TaskEntry taskEntry) {
         return agendaRepository.cancelTask(taskEntry);
 }
-    public Optional<ArrayList<TaskEntry>> getPlannedAndPostponedTasks() {
-        return agendaRepository.getPlannedAndPostponedTasks();
-    } }
+
+    }

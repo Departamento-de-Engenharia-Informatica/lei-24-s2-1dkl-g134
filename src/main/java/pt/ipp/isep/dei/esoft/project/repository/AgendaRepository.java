@@ -80,4 +80,8 @@ public class AgendaRepository implements Serializable {
             return Optional.empty();
         } else return Optional.of(foundTasks);
     }
+    public Optional<TaskEntry> getCompletedTask(TaskEntry taskEntry){
+        return agenda.get(agenda.indexOf(taskEntry)).completeTask();
+
+    }
 }
