@@ -1,0 +1,45 @@
+@startuml
+skinparam packageStyle rectangle
+skinparam shadowing false
+skinparam linetype polyline
+skinparam classAttributeIconSize 0
+
+class GreenSpace {
+    + getName(): String
+    + getAddress(): String
+    + getArea(): int
+    + getType(): GreenSpaceType
+
+}
+
+
+
+class RegisterGreenSpaceController {
+    - GreenSpaceRepository: GreenSpaceRepository
+    + RegisterGreenSpaceController()
+    + registerGreenSpace(String, String, int, GreenSpaceType): Optional<GreenSpace>
+}
+
+class GreenSpaceRepository {
+    + add(String, String, int, GreenSpaceType): Optional<GreenSpace>
+}
+
+class Repositories {
+    + getInstance(): Repositories
+    + getGreenSpaceRepository(): GreenSpaceRepository
+}
+
+class RegisterGreenSpaceUI {
+
+    - registerGreenSpaceController: RegisterGreenSpaceController
+
+    + getRegisterGreenSpaceController(): RegisterGreenSpaceController
+
+}
+
+RegisterGreenSpaceController --> GreenSpaceRepository
+RegisterGreenSpaceController --> GreenSpace
+GreenSpaceRepository --> GreenSpace
+RegisterGreenSpaceController ..> Repositories
+RegisterGreenSpaceUI --> RegisterGreenSpaceController
+@enduml

@@ -9,19 +9,24 @@ autonumber
 actor "Green Space \nManager" as ADM
 participant ":AddTaskEntryUI" as UI
 participant ":AddTaskEntryController" as CTRL
-participant ":Repositories" as RepositorySingleton
-participant ":repositories\n:Repositories" as PLAT
-
-participant ":UrgencyLevelRepository" as URG
+participant "Repositories" as RepositorySingleton
+participant "repositories\n:Repositories" as PLAT
+participant ":GreenSpaceMapper" as MAP
+participant "greenSpaceDTOList\n :GreenSpaceDTOList" as DTO
+participant ":GreenSpaceRepository" as URG
+participant "objDto: GreenSpaceDto" as GDTO
 participant ":ToDoListRepository" as TDR
 participant "taskEntry\n:TaskEntry" as TASK
+participant ":TaskEntryMapper" as TMAP
+
+
 
 activate ADM
 
     ADM -> UI : asks to add a new entry to the To-Do List
     activate UI
-
-        UI -> CTRL : getUrgencyLevelList()
+        UI -> CTRL : create
+        UI -> CTRL : getGreenSpaces()
         activate CTRL
 
             CTRL -> RepositorySingleton : getInstance()
@@ -30,40 +35,59 @@ activate ADM
                 RepositorySingleton --> CTRL : repositories
             deactivate RepositorySingleton
 
-            CTRL -> PLAT : getUrgencyLevelRepository()
+            CTRL -> PLAT : getGreenSpaceRepository()
             activate PLAT
 
-                PLAT --> CTRL : UrgencyLevelRepository
+                PLAT --> CTRL : GreenSpaceRepository
             deactivate PLAT
 
-            CTRL -> URG : getUrgencyLevelList()
+            CTRL -> URG : getGreenSpaces()
             activate URG
 
-                URG --> CTRL : UrgencyLevelList
+                URG --> CTRL : GreenSpacesList
             deactivate URG
 
-            CTRL --> UI : UrgencyLevelList
+            CTRL -> MAP : ToDTOList(GreenSpacesList)
+            activate MAP
+                MAP -> DTO: Create()
+                loop for each green space in the green space list
+                MAP -> URG: greenSpace = get(i)
+                activate URG
+                deactivate URG
+                MAP -> MAP: greenSpaceDTO = toDTO(greenSpace)
+                activate MAP
+                MAP -> GDTO: create(...)
+                deactivate MAP
+                MAP -> DTO: add(greenSpaceDto)
+
+                activate DTO
+                deactivate DTO
+                end
+                MAP -> CTRL: greenSpaceDtoList
+            deactivate MAP
+
+            CTRL --> UI : greenSpacesDTO
         deactivate CTRL
 
-        UI --> ADM : shows a list of degrees of urgency and asks to select one (UrgencyLevelList)
+        UI --> ADM : shows a list of green spaces
     deactivate UI
 
-    ADM -> UI : selects a urgency level
+    ADM -> UI : selects a green space
     activate UI
 
-        UI --> ADM : requests data (taskDescription, taskDuration)
+        UI --> ADM : requests data (taskTitle, taskDuration, duration, urgency level)
     deactivate UI
 
     ADM -> UI : types data
     activate UI
 
-        UI --> ADM : shows all data and requests confirmation (taskDescription, taskDuration, UrgencyLevel)
+        UI --> ADM : shows all data and requests confirmation (taskTitle, taskDuration, duration, urgency level)
     deactivate UI
 
     ADM -> UI : confirms data
     activate UI
 
-        UI -> CTRL : addTask(taskDescription, taskDuration, UrgencyLevel)
+        UI -> CTRL : addTaskEntry(Dto)
         activate CTRL
 
             CTRL -> PLAT : getToDoListRepository()
@@ -71,17 +95,34 @@ activate ADM
 
                 PLAT --> CTRL : toDoListRepository
             deactivate PLAT
+                            CTRL ->TMAP : DtoToAttributes(Dto)
+                            activate TMAP
+                            TMAP ->CTRL : attributes
+                                            Deactivate TMAP
 
-            CTRL -> TDR : addTask(taskDescription, taskDuration, UrgencyLevel)
+            CTRL -> TDR : addTask(taskTitle, taskDuration, duration, urgency level)
             activate TDR
 
-                TDR -> TASK** : createTask(taskDescription, taskDuration, UrgencyLevel)
+
+
+
+
+                TDR -> TASK** : createTask(taskTitle, taskDuration, duration, urgency level)
                 TDR --> TDR : validateEntry(entry)
+                activate TDR
                 TDR --> TDR : saveEntry(entry)
-                TDR --> CTRL : boolean
+                activate TDR
+                TDR --> TDR
+                deactivate TDR
+                TDR --> TDR
+                deactivate TDR
+
+
+                TDR --> CTRL : TaskEntry
+
             deactivate TDR
 
-            CTRL --> UI : boolean
+            CTRL --> UI : TaskEntry
         deactivate CTRL
 
         UI --> ADM : displays operation success

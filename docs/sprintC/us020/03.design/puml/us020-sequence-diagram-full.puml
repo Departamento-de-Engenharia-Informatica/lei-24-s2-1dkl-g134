@@ -1,0 +1,57 @@
+@startuml
+skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+
+autonumber
+
+'hide footbox
+actor "Fleet Manager" as FM
+participant "GenerateMaintenanceReportUI" as UI
+participant "GenerateMaintenanceReportController" as CTRL
+participant "vehicleRepository\n:VehicleRepository" as VR
+participant "Repositories" as RepositorySingleton
+participant "repositories\n:Repositories" as PLAT
+
+
+activate FM
+
+        FM -> UI : requests to list vehicles in need of checkup
+
+        activate UI
+
+'            UI --> ADM : requests data (reference, description,  informal \n description, technical description, duration, cost)
+            'create CTRL
+
+            UI -> CTRL** : create vehicle
+
+            UI -> CTRL : getVehiclesRequiringCheckup()
+            activate CTRL
+
+                |||
+                    CTRL -> RepositorySingleton: getInstance()
+                    activate RepositorySingleton
+
+                    RepositorySingleton --> CTRL: repositories
+                    deactivate RepositorySingleton
+
+                    CTRL -> PLAT: getVehicleRepository()
+                    activate PLAT
+
+                        PLAT --> CTRL: vehicleRepository
+                    deactivate PLAT
+
+                CTRL -> VR: getListOfVehiclesRequiringCheckup()
+                activate VR
+
+                VR --> CTRL: vehicleList
+                deactivate VR
+
+                CTRL --> UI :vehicleList
+            deactivate CTRL
+
+            UI --> FM :  shows list of vehicles requiring check-up
+        deactivate UI
+
+
+@enduml

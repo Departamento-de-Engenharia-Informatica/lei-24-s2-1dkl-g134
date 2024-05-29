@@ -66,6 +66,7 @@ AddTaskEntryController ..> TaskEntry : task
 TaskEntry ..> ToDoListRepository : exists in >
 AddTaskEntryUI ..> AddTaskEntryController
 
+
 AddTaskEntryController ..> Repositories : repositories
 
 GreenSpaceController ..> Repositories : repositories
