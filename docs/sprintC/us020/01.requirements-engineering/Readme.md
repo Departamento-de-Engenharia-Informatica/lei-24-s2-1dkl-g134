@@ -5,26 +5,26 @@
 
 ### 1.1. User Story Description
 
-As a Green Space Manager, I want to know which piece(s) of equipment is/are used in each day.
+As a Green Space Manager, I want to a new green space
 
 ### 1.2. Customer Specifications and Clarifications 
 
 **From the specifications document:**
+> The Green Space Manager should be able to input the name, type (garden, medium-sized park, or large-sized park), and area of each green space into the system.
 
-> Consider that the park has the following equipment: walking paths, children’s playground, picnic area, and exercise machines (gymnastics equipment). At the park exit there is an electronic device with a list of all the equipment, in which the user(s) must indicate the equipment they used that day.
-
-> In the file ”EquipmentUsed.csv” the choices of 1000 users are recorded. Make a pie chart representing, in percentage, the use of each piece of equipment.
+> The system should store this information and confirm the successful registration of the green space..
 
 **From the client clarifications:**
 
-> **Question:** None.
+> **Question:**
+To register a green space, what is the criteria needed to classify it as a medium-sized park or a large-sized park?
 >
-> **Answer:** None.
+> **Answer:** It's a GSM responsability to decide the classification.
 
 ### 1.3. Acceptance Criteria
 
-* **AC1:** The pie chart is successfully created, accurately represents the registered data, and is presented to the user.
-
+* **AC1:** The green space information (name, type, and area) is successfully stored in the system.
+* **AC2:** A confirmation message is displayed upon successful registration of the green space.
 ### 1.4. Found out Dependencies
 
 * None.
@@ -33,15 +33,17 @@ As a Green Space Manager, I want to know which piece(s) of equipment is/are used
 
 **Input Data:**
 
-* None
+* Green Space Name
+* Green Space Type
+* Green Space Area
 
 **Output Data:**
 
-* Pie chart representing, in percentage, the data available in the EquipmentUsed.csv file.
+* Confirmation message indicating successful registration of the green space
 
 ### 1.6. System Sequence Diagram (SSD)
 
-![System Sequence Diagram](svg/us010-system-sequence-diagram-main-solution.svg)
+![System Sequence Diagram](svg/us020-system-sequence-diagram-main-solution.svg)
 
 ### 1.7 Other Relevant Remarks
 
