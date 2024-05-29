@@ -4,6 +4,7 @@ import pt.ipp.isep.dei.esoft.project.application.controller.GetGreenSpacesManage
 import pt.ipp.isep.dei.esoft.project.application.session.ApplicationSession;
 import pt.ipp.isep.dei.esoft.project.domain.GreenSpace;
 import pt.ipp.isep.dei.esoft.project.domain.Vehicle;
+import pt.ipp.isep.dei.esoft.project.dto.GreenSpaceDTO;
 
 import java.util.*;
 
@@ -19,7 +20,7 @@ public class GetGreenSpacesManagedByUserUI implements Runnable {
         System.out.println("Your email is: "+ ApplicationSession.getInstance().getCurrentSession().getUserEmail());
 
 
-        Optional<ArrayList<GreenSpace>> greenSpaces = controller.getGreenSpacesManagedByCurrentUser();
+        Optional<ArrayList<GreenSpaceDTO>> greenSpaces = controller.getGreenSpacesManagedByCurrentUser();
 
         if (greenSpaces.isEmpty()) {
             System.out.println("You do not manage any green spaces.");
@@ -43,8 +44,8 @@ public class GetGreenSpacesManagedByUserUI implements Runnable {
 
             System.out.println("NAME | ADDRESS | AREA | TYPE");
 
-            for (GreenSpace greenSpace : greenSpaces.get()) {
-                System.out.println(greenSpace.getName() + " | " +greenSpace.getAddress() + " | "+ greenSpace.getArea() + " | "+greenSpace.getType());
+            for (GreenSpaceDTO greenSpace : greenSpaces.get()) {
+                System.out.println(greenSpace.name + " | " +greenSpace.address + " | "+ greenSpace.area + " | "+greenSpace.type);
             }
             Scanner in = new Scanner(System.in);
             System.out.println("\nPress ENTER to continue.");
@@ -52,15 +53,15 @@ public class GetGreenSpacesManagedByUserUI implements Runnable {
         }
     }
 
-    private void defaultSort(ArrayList<GreenSpace> greenSpaces){
-        greenSpaces.sort(Comparator.comparing(GreenSpace::getArea, Comparator.reverseOrder()));
+    private void defaultSort(ArrayList<GreenSpaceDTO> greenSpaces){
+        greenSpaces.sort(Comparator.comparingInt((GreenSpaceDTO o) -> o.area).reversed());
     }
 
-    private ArrayList<GreenSpace> bubbleSort(ArrayList<GreenSpace> greenSpaces){
+    private ArrayList<GreenSpaceDTO> bubbleSort(ArrayList<GreenSpaceDTO> greenSpaces){
         for(int i = 0; i < greenSpaces.size(); i++){
             for(int j = 0; j < greenSpaces.size()-i; j++){
-                if(greenSpaces.get(j).getArea() < greenSpaces.get(j+1).getArea()){
-                    GreenSpace temp = greenSpaces.get(j+1);
+                if(greenSpaces.get(j).area < greenSpaces.get(j+1).area){
+                    GreenSpaceDTO temp = greenSpaces.get(j+1);
                     greenSpaces.set(j+1, greenSpaces.get(j));
                     greenSpaces.set(j, temp);
                 }

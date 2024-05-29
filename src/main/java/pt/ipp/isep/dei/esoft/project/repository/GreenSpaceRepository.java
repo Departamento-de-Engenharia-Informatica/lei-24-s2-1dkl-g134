@@ -2,6 +2,8 @@ package pt.ipp.isep.dei.esoft.project.repository;
 import pt.ipp.isep.dei.esoft.project.application.session.ApplicationSession;
 import pt.ipp.isep.dei.esoft.project.domain.GreenSpace;
 import pt.ipp.isep.dei.esoft.project.domain.GreenSpaceType;
+import pt.ipp.isep.dei.esoft.project.dto.GreenSpaceDTO;
+import pt.ipp.isep.dei.esoft.project.dto.GreenSpaceMapper;
 
 
 import java.io.Serializable;
@@ -15,7 +17,7 @@ public class GreenSpaceRepository implements Serializable {
 
     public Optional<GreenSpace> add(String name, String address, int area, GreenSpaceType type){
 
-        GreenSpace greenSpace=new GreenSpace(name,address,area,type);
+        GreenSpace greenSpace=new GreenSpace(name, address, area, type);
 
         if(greenSpaces.contains(greenSpace)){
             return Optional.empty();

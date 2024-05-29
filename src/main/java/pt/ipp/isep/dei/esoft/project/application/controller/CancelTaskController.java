@@ -1,6 +1,8 @@
 package pt.ipp.isep.dei.esoft.project.application.controller;
 
 import pt.ipp.isep.dei.esoft.project.domain.TaskEntry;
+import pt.ipp.isep.dei.esoft.project.dto.TaskEntryDTO;
+import pt.ipp.isep.dei.esoft.project.dto.TaskEntryMapper;
 import pt.ipp.isep.dei.esoft.project.repository.AgendaRepository;
 import pt.ipp.isep.dei.esoft.project.repository.Repositories;
 
@@ -18,6 +20,6 @@ public class CancelTaskController {
         return agendaRepository.cancelTask(taskEntry);
 }
 
-    public Optional<ArrayList<TaskEntry>> getPlannedAndPostponedTasks(){return agendaRepository.getPlannedAndPostponedTasks();}
+    public Optional<ArrayList<TaskEntryDTO>> getPlannedAndPostponedTasks(){return TaskEntryMapper.getMapper().objectListToDTOList(agendaRepository.getPlannedAndPostponedTasks());}
 
     }

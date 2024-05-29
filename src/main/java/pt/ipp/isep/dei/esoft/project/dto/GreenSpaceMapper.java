@@ -4,6 +4,7 @@ import pt.ipp.isep.dei.esoft.project.domain.GreenSpace;
 import pt.ipp.isep.dei.esoft.project.domain.GreenSpaceType;
 
 import java.util.ArrayList;
+import java.util.Optional;
 
 public class GreenSpaceMapper {
     public GreenSpaceDTO objectToDTO(GreenSpace greenSpace) {
@@ -20,29 +21,15 @@ public class GreenSpaceMapper {
         return greenSpaceDTO.attachedGreenSpace;
     }
 
-    public GreenSpaceDTO inputToDTO(String name, String address, int area, GreenSpaceType type) {
-        GreenSpaceDTO greenSpaceDTO = new GreenSpaceDTO();
-        greenSpaceDTO.name = name;
-        greenSpaceDTO.address = address;
-        greenSpaceDTO.area = area;
-        greenSpaceDTO.type = type;
-        return greenSpaceDTO;
-    }
-
-    public ArrayList<GreenSpaceDTO> objectListToDTOList(ArrayList<GreenSpace> greenSpaceList) {
+    public Optional<ArrayList<GreenSpaceDTO>> objectListToDTOList(Optional<ArrayList<GreenSpace>> greenSpaceList) {
+        if(greenSpaceList.isEmpty()) {
+            return Optional.empty();
+        }
         ArrayList<GreenSpaceDTO> greenSpaceDTOList = new ArrayList<>();
-        for (GreenSpace greenSpace : greenSpaceList) {
+        for (GreenSpace greenSpace : greenSpaceList.get()) {
             greenSpaceDTOList.add(objectToDTO(greenSpace));
         }
-        return greenSpaceDTOList;
-    }
-
-    public ArrayList<GreenSpace> DTOListToObjectList(ArrayList<GreenSpaceDTO> greenSpaceDTOArrayList){
-        ArrayList<GreenSpace> greenSpaces = new ArrayList<>();
-        for(GreenSpaceDTO greenSpaceDTO : greenSpaceDTOArrayList){
-            greenSpaces.add(DTOToObject(greenSpaceDTO));
-        }
-        return greenSpaces;
+        return Optional.of(greenSpaceDTOList);
     }
 
     public static GreenSpaceMapper getMapper(){

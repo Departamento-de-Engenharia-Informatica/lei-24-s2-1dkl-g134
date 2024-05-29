@@ -5,6 +5,7 @@ import pt.ipp.isep.dei.esoft.project.domain.Collaborator;
 import pt.ipp.isep.dei.esoft.project.domain.Job;
 import pt.ipp.isep.dei.esoft.project.domain.State;
 import pt.ipp.isep.dei.esoft.project.domain.TaskEntry;
+import pt.ipp.isep.dei.esoft.project.dto.TaskEntryDTO;
 import pt.ipp.isep.dei.esoft.project.ui.console.utils.Utils;
 
 import java.util.ArrayList;
@@ -42,7 +43,11 @@ public class AssignTaskToAgendaUI implements Runnable {
     }
     public void submitData(){
         try{
-            Optional<TaskEntry> assignedTask = assignTaskToAgendaController.assignTaskToAgenda(taskEntry,date,time);
+            TaskEntryDTO taskEntryDTO = new TaskEntryDTO();
+            taskEntryDTO.attachedTaskEntry = taskEntry;
+            taskEntryDTO.startDateStringForm = date;
+            taskEntryDTO.startTimeStringForm = time;
+            Optional<TaskEntry> assignedTask = assignTaskToAgendaController.assignTaskToAgenda(taskEntryDTO);
             if(assignedTask.isEmpty()){
                 System.out.println("Failed to assign task to Agenda!");
             }else{
@@ -56,14 +61,14 @@ public class AssignTaskToAgendaUI implements Runnable {
 
     private TaskEntry requestTaskEntry(){
         Scanner input = new Scanner(System.in);
-        Optional<ArrayList<TaskEntry>> taskEntries = assignTaskToAgendaController.getPendingTasks();
+        Optional<ArrayList<TaskEntryDTO>> taskEntries = assignTaskToAgendaController.getPendingTasks();
         if(taskEntries.isEmpty()){
             System.out.println("Error: No pending tasks entries. Task assignment to Agenda aborted.");
             return null;
         }
         System.out.println("Choose a task from the following list:\n");
         for(int i = 0; i < taskEntries.get().size(); i++){
-            System.out.println((i+1) + "- "+taskEntries.get().get(i).toString());
+            System.out.println((i+1) + "- "+taskEntries.get().get(i).attachedTaskEntry.toString());
         }
         int option = 0;
         while(true){
@@ -79,7 +84,7 @@ public class AssignTaskToAgendaUI implements Runnable {
                 System.out.println("Error: Selected option must be a number.");
             }
         }
-        return taskEntries.get().get(option-1);
+        return taskEntries.get().get(option-1).attachedTaskEntry;
     }
 
     public String requestDate(){

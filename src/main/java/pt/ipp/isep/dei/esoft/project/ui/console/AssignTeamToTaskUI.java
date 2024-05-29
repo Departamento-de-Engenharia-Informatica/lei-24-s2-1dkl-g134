@@ -3,6 +3,8 @@ package pt.ipp.isep.dei.esoft.project.ui.console;
 import pt.ipp.isep.dei.esoft.project.application.controller.AssignTeamToTaskController;
 import pt.ipp.isep.dei.esoft.project.domain.TaskEntry;
 import pt.ipp.isep.dei.esoft.project.domain.Team;
+import pt.ipp.isep.dei.esoft.project.dto.TaskEntryDTO;
+import pt.ipp.isep.dei.esoft.project.dto.TeamDTO;
 import pt.ipp.isep.dei.esoft.project.ui.console.utils.Utils;
 
 import java.util.ArrayList;
@@ -44,14 +46,14 @@ public class AssignTeamToTaskUI {
      */
     private TaskEntry requestTaskEntry(){
         Scanner input = new Scanner(System.in);
-        Optional<ArrayList<TaskEntry>> taskEntries = controller.getPlannedAndPostponedTasks();
+        Optional<ArrayList<TaskEntryDTO>> taskEntries = controller.getPlannedAndPostponedTasks();
         if(taskEntries.isEmpty()){
             System.out.println("Error: No tasks. Team assignment aborted.");
             return null;
         }
         System.out.println("Choose a task from the following list (Title | Description):\n");
         for(int i = 0; i < taskEntries.get().size(); i++){
-            System.out.println((i+1) + "- "+taskEntries.get().get(i).toString());
+            System.out.println((i+1) + "- "+taskEntries.get().get(i).attachedTaskEntry.toString());
         }
         int option = 0;
         while(true){
@@ -67,7 +69,7 @@ public class AssignTeamToTaskUI {
                 System.out.println("Error: Selected option must be a number.");
             }
         }
-        return taskEntries.get().get(option-1);
+        return taskEntries.get().get(option-1).attachedTaskEntry;
     }
 
     /**
@@ -76,19 +78,19 @@ public class AssignTeamToTaskUI {
      */
     private Team requestTeam(){
         Scanner input = new Scanner(System.in);
-        Optional<ArrayList<Team>> teams = controller.getTeamList();
+        Optional<ArrayList<TeamDTO>> teams = controller.getTeamList();
         if(teams.isEmpty()){
             System.out.println("Error: No teams. Team assignment aborted.");
             return null;
         }
-        for(Team team : teams.get()){
-            if(!controller.isTeamAvailable(team, taskEntry)){
+        for(TeamDTO team : teams.get()){
+            if(!controller.isTeamAvailable(team.attachedTeam, taskEntry)){
                 teams.get().remove(teams.get().indexOf(team));
             }
         }
         System.out.println("Choose a team from the following list (Title | Description):\n");
         for(int i = 0; i < teams.get().size(); i++){
-            System.out.println((i+1) + "-\n "+teams.get().get(i).toString());
+            System.out.println((i+1) + "-\n "+teams.get().get(i).attachedTeam.toString());
         }
         int option = 0;
         while(true){
@@ -104,7 +106,7 @@ public class AssignTeamToTaskUI {
                 System.out.println("Error: Selected option must be a number.");
             }
         }
-        return teams.get().get(option-1);
+        return teams.get().get(option-1).attachedTeam;
     }
 
     /**

@@ -3,6 +3,7 @@ package pt.ipp.isep.dei.esoft.project.ui.console;
 import pt.ipp.isep.dei.esoft.project.application.controller.RegisterGreenSpaceController;
 import pt.ipp.isep.dei.esoft.project.domain.GreenSpace;
 import pt.ipp.isep.dei.esoft.project.domain.GreenSpaceType;
+import pt.ipp.isep.dei.esoft.project.dto.GreenSpaceDTO;
 import pt.ipp.isep.dei.esoft.project.ui.console.utils.Utils;
 
 import java.util.ArrayList;
@@ -51,7 +52,12 @@ public class RegisterGreenSpaceUI implements Runnable {
 
     private void submitData() {
         try {
-            Optional<GreenSpace> newGreenSpace = getRegisterGreenSpaceController().registerGreenSpace(name, address, area, type);
+            GreenSpaceDTO greenSpaceDTO = new GreenSpaceDTO();
+            greenSpaceDTO.name = name;
+            greenSpaceDTO.address = address;
+            greenSpaceDTO.area = area;
+            greenSpaceDTO.type = type;
+            Optional<GreenSpace> newGreenSpace = getRegisterGreenSpaceController().registerGreenSpace(greenSpaceDTO);
             if (newGreenSpace.isEmpty()) {
                 System.out.println("Failled to add new Green Space!");
             } else {

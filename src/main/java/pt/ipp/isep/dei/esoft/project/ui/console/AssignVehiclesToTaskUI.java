@@ -4,6 +4,8 @@ import pt.ipp.isep.dei.esoft.project.application.controller.AssignVehiclesToTask
 import pt.ipp.isep.dei.esoft.project.domain.TaskEntry;
 import pt.ipp.isep.dei.esoft.project.domain.Team;
 import pt.ipp.isep.dei.esoft.project.domain.Vehicle;
+import pt.ipp.isep.dei.esoft.project.dto.TaskEntryDTO;
+import pt.ipp.isep.dei.esoft.project.dto.VehicleDTO;
 import pt.ipp.isep.dei.esoft.project.ui.console.utils.Utils;
 
 import java.util.ArrayList;
@@ -45,14 +47,14 @@ public class AssignVehiclesToTaskUI implements Runnable {
      */
     private TaskEntry requestTaskEntry(){
         Scanner input = new Scanner(System.in);
-        Optional<ArrayList<TaskEntry>> taskEntries = controller.getPlannedAndPostponedTasks();
+        Optional<ArrayList<TaskEntryDTO>> taskEntries = controller.getPlannedAndPostponedTasks();
         if(taskEntries.isEmpty()){
             System.out.println("Error: No tasks. Vehicle assignment aborted.");
             return null;
         }
         System.out.println("Choose a task from the following list (Title | Description):\n");
         for(int i = 0; i < taskEntries.get().size(); i++){
-            System.out.println((i+1) + "- "+taskEntries.get().get(i).toString());
+            System.out.println((i+1) + "- "+taskEntries.get().get(i).attachedTaskEntry.toString());
         }
         int option = 0;
         while(true){
@@ -68,7 +70,7 @@ public class AssignVehiclesToTaskUI implements Runnable {
                 System.out.println("Error: Selected option must be a number.");
             }
         }
-        return taskEntries.get().get(option-1);
+        return taskEntries.get().get(option-1).attachedTaskEntry;
     }
 
     /**
@@ -78,13 +80,13 @@ public class AssignVehiclesToTaskUI implements Runnable {
     private ArrayList<Vehicle> requestVehicles(){
         ArrayList<Vehicle> userVehicleSelection = new ArrayList<>();
         Scanner input = new Scanner(System.in);
-        Optional<ArrayList<Vehicle>> vehicles = controller.getVehicleList();
+        Optional<ArrayList<VehicleDTO>> vehicles = controller.getVehicleList();
         if(vehicles.isEmpty()){
             System.out.println("Error: No Vehicles. Vehicle assignment aborted.");
             return null;
         }
-        for(Vehicle vehicle : vehicles.get()){
-            if(!controller.isVehicleAvailable(vehicle, taskEntry)){
+        for(VehicleDTO vehicle : vehicles.get()){
+            if(!controller.isVehicleAvailable(vehicle.attachedVehicle, taskEntry)){
                 vehicles.get().remove(vehicles.get().indexOf(vehicle));
             }
         }
@@ -92,9 +94,9 @@ public class AssignVehiclesToTaskUI implements Runnable {
             System.out.println("Choose vehicles from the following list (to remove a selected vehicle, choose it again):\n");
             for(int i = 0; i < vehicles.get().size(); i++){
                 if(userVehicleSelection.contains(vehicles.get().get(i))){
-                    System.out.println((i+1) + "- "+vehicles.get().get(i).toString()+" (Selected)");
+                    System.out.println((i+1) + "- "+vehicles.get().get(i).attachedVehicle.toString()+" (Selected)");
                 }else{
-                    System.out.println((i+1) + "- "+vehicles.get().get(i).toString());
+                    System.out.println((i+1) + "- "+vehicles.get().get(i).attachedVehicle.toString());
                 }
             }
             int option = 0;
@@ -115,10 +117,10 @@ public class AssignVehiclesToTaskUI implements Runnable {
             if(option == 0){
                 return userVehicleSelection;
             }
-            if(userVehicleSelection.contains(vehicles.get().get(option-1))){
-                userVehicleSelection.remove(vehicles.get().get(option-1));
+            if(userVehicleSelection.contains(vehicles.get().get(option-1).attachedVehicle)){
+                userVehicleSelection.remove(vehicles.get().get(option-1).attachedVehicle);
             }else{
-                userVehicleSelection.add(vehicles.get().get(option-1));
+                userVehicleSelection.add(vehicles.get().get(option-1).attachedVehicle);
             }
         }
     }

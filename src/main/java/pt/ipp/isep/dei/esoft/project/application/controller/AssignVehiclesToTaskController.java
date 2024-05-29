@@ -4,6 +4,10 @@ import pt.ipp.isep.dei.esoft.project.domain.Collaborator;
 import pt.ipp.isep.dei.esoft.project.domain.Skill;
 import pt.ipp.isep.dei.esoft.project.domain.TaskEntry;
 import pt.ipp.isep.dei.esoft.project.domain.Vehicle;
+import pt.ipp.isep.dei.esoft.project.dto.TaskEntryDTO;
+import pt.ipp.isep.dei.esoft.project.dto.TaskEntryMapper;
+import pt.ipp.isep.dei.esoft.project.dto.VehicleDTO;
+import pt.ipp.isep.dei.esoft.project.dto.VehicleMapper;
 import pt.ipp.isep.dei.esoft.project.repository.*;
 
 import java.util.ArrayList;
@@ -26,16 +30,16 @@ public class AssignVehiclesToTaskController {
      * Gets the full list of collaborators.
      * @return The list of all collaborators.
      */
-    public Optional<ArrayList<TaskEntry>> getPlannedAndPostponedTasks(){
-        return agendaRepository.getPlannedAndPostponedTasks();
+    public Optional<ArrayList<TaskEntryDTO>> getPlannedAndPostponedTasks(){
+        return TaskEntryMapper.getMapper().objectListToDTOList(agendaRepository.getPlannedAndPostponedTasks());
     }
 
     /**
      * Gets the full list of skills.
      * @return The list of all skills.
      */
-    public Optional<ArrayList<Vehicle>> getVehicleList(){
-        return vehicleRepository.getVehicleList();
+    public Optional<ArrayList<VehicleDTO>> getVehicleList(){
+        return VehicleMapper.getMapper().objectListToDTOList(vehicleRepository.getVehicleList());
     }
 
 

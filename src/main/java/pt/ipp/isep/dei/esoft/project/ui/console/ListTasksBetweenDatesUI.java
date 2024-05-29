@@ -6,6 +6,7 @@ import pt.ipp.isep.dei.esoft.project.domain.GreenSpace;
 import pt.ipp.isep.dei.esoft.project.domain.State;
 import pt.ipp.isep.dei.esoft.project.domain.TaskEntry;
 
+import pt.ipp.isep.dei.esoft.project.dto.TaskEntryDTO;
 import pt.ipp.isep.dei.esoft.project.repository.AgendaRepository;
 import pt.ipp.isep.dei.esoft.project.repository.Repositories;
 import pt.ipp.isep.dei.esoft.project.ui.console.utils.Utils;
@@ -39,7 +40,7 @@ public class ListTasksBetweenDatesUI implements Runnable {
             break;
         }
         try {
-            Optional<ArrayList<TaskEntry>> taskList = controller.getCurrentUserTasksBetweenTwoDates(firstDate, secondDate);
+            Optional<ArrayList<TaskEntryDTO>> taskList = controller.getCurrentUserTasksBetweenTwoDates(firstDate, secondDate);
             if (taskList.isEmpty()) {
                 System.out.println("No tasks found for you between these dates.");
                 return;
@@ -51,9 +52,9 @@ public class ListTasksBetweenDatesUI implements Runnable {
             while(option != 0){
                 System.out.println("Tasks found between " + firstDate + " and " + secondDate + "\n");
                 System.out.println("TITLE | DESCRIPTION | URGENCY | STATE | GREEN SPACE | DURATION | START DATE");
-                for (TaskEntry taskEntry : taskList.get()) {
-                    if(stateFilters.isEmpty() || stateFilters.contains(taskEntry.getState())){
-                        System.out.println(taskEntry.getTaskTitle()+" | "+ taskEntry.getTaskDescription()+" | "+taskEntry.getUrgencyLevel()+ " | "+taskEntry.getState()+ " | "+taskEntry.getGreenSpace()+" | "+taskEntry.getDuration()+" | "+taskEntry.getStartDate());
+                for (TaskEntryDTO taskEntry : taskList.get()) {
+                    if(stateFilters.isEmpty() || stateFilters.contains(taskEntry.state)){
+                        System.out.println(taskEntry.taskTitle+" | "+ taskEntry.taskDescription+" | "+taskEntry.urgencyLevel+ " | "+taskEntry.state+ " | "+taskEntry.greenSpace.toString()+" | "+taskEntry.duration+" | "+taskEntry.startDate.toString());
                     }
                 }
                 Scanner in = new Scanner(System.in);
@@ -111,11 +112,11 @@ public class ListTasksBetweenDatesUI implements Runnable {
     }
 
 
-    private ArrayList<TaskEntry> sortTasks(ArrayList<TaskEntry> taskEntries){
+    private ArrayList<TaskEntryDTO> sortTasks(ArrayList<TaskEntryDTO> taskEntries){
         for(int i = 0; i < taskEntries.size(); i++){
             for(int j = 0; j < taskEntries.size()-i; j++){
-                if(taskEntries.get(j).getStartDate().isAfterDate(taskEntries.get(j+1).getStartDate())){
-                    TaskEntry temp = taskEntries.get(j+1);
+                if(taskEntries.get(j).startDate.isAfterDate(taskEntries.get(j+1).startDate)){
+                    TaskEntryDTO temp = taskEntries.get(j+1);
                     taskEntries.set(j+1, taskEntries.get(j));
                     taskEntries.set(j, temp);
                 }

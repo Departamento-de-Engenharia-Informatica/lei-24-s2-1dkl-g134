@@ -3,6 +3,8 @@ package pt.ipp.isep.dei.esoft.project.application.controller;
 import pt.ipp.isep.dei.esoft.project.customexceptions.CollaboratorNotFoundException;
 import pt.ipp.isep.dei.esoft.project.customexceptions.InvalidRoleException;
 import pt.ipp.isep.dei.esoft.project.domain.TaskEntry;
+import pt.ipp.isep.dei.esoft.project.dto.TaskEntryDTO;
+import pt.ipp.isep.dei.esoft.project.dto.TaskEntryMapper;
 import pt.ipp.isep.dei.esoft.project.repository.AgendaRepository;
 import pt.ipp.isep.dei.esoft.project.repository.Repositories;
 
@@ -19,7 +21,7 @@ public class CompleteTaskController {
     public Optional<TaskEntry> completeTask(TaskEntry taskEntry){
         return agendaRepository.completeTask(taskEntry);
     }
-    public Optional<ArrayList<TaskEntry>> getPlannedAndPostponedTasksBelongingToCurrentUser() throws CollaboratorNotFoundException, InvalidRoleException {
-        return agendaRepository.getPlannedAndPostponedTasksBelongingToCurrentUser();
+    public Optional<ArrayList<TaskEntryDTO>> getPlannedAndPostponedTasksBelongingToCurrentUser() throws CollaboratorNotFoundException, InvalidRoleException {
+        return TaskEntryMapper.getMapper().objectListToDTOList(agendaRepository.getPlannedAndPostponedTasksBelongingToCurrentUser());
     }
 }

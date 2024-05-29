@@ -2,6 +2,8 @@ package pt.ipp.isep.dei.esoft.project.ui.console;
 
 import pt.ipp.isep.dei.esoft.project.application.controller.AddTaskEntryController;
 import pt.ipp.isep.dei.esoft.project.domain.*;
+import pt.ipp.isep.dei.esoft.project.dto.GreenSpaceDTO;
+import pt.ipp.isep.dei.esoft.project.dto.TaskEntryDTO;
 import pt.ipp.isep.dei.esoft.project.ui.console.utils.Utils;
 
 import java.util.ArrayList;
@@ -61,7 +63,13 @@ public class AddTaskEntryUI implements Runnable {
         return Utils.confirm("Do you wish to proceed? (s or n)");
     }
     private void submitData() {
-        Optional<TaskEntry> taskEntry = getController().addTaskEntry(taskTitle, taskDescription, urgencyLevel, duration, greenSpace);
+        TaskEntryDTO taskEntryDTO = new TaskEntryDTO();
+        taskEntryDTO.taskTitle = taskTitle;
+        taskEntryDTO.taskDescription = taskDescription;
+        taskEntryDTO.urgencyLevel = urgencyLevel;
+        taskEntryDTO.duration = duration;
+        taskEntryDTO.greenSpace = greenSpace;
+        Optional<TaskEntry> taskEntry = getController().addTaskEntry(taskEntryDTO);
 
         if (taskEntry.isPresent()) {
             System.out.println("\nTask Entry successfully created!");
@@ -116,16 +124,15 @@ public class AddTaskEntryUI implements Runnable {
 
     private GreenSpace requestGreenSpaceManagedByUser() {
         Scanner input = new Scanner(System.in);
-        Optional<ArrayList<GreenSpace>> greenSpacesManagedByUser = controller.getGreenSpacesManagedByCurrentUser();
+        Optional<ArrayList<GreenSpaceDTO>> greenSpacesManagedByUser = controller.getGreenSpacesManagedByCurrentUser();
         if(greenSpacesManagedByUser.isEmpty()){
             System.out.println("No green spaces managed by you were found. Task creation aborted..");
             return null;
         }
         System.out.println("Choose a green space from the following list of their respective titles:\n");
         for(int i = 0; i < greenSpacesManagedByUser.get().size(); i++){
-            System.out.println((i+1) + "- "+greenSpacesManagedByUser.get().get(i));
+            System.out.println((i+1) + "- "+greenSpacesManagedByUser.get().get(i).attachedGreenSpace.toString());
         }
-
         int option = 0;
         while(true){
             try{
@@ -140,7 +147,7 @@ public class AddTaskEntryUI implements Runnable {
                 System.out.println("Error: Selected option must be a number.");
             }
         }
-        return greenSpacesManagedByUser.get().get(option-1);
+        return greenSpacesManagedByUser.get().get(option-1).attachedGreenSpace;
     }
 
 }
