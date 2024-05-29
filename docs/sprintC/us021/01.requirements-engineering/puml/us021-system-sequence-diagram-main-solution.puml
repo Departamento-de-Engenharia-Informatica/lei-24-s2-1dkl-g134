@@ -8,20 +8,22 @@ title System Sequence Diagram (SSD) - Main Solution
 autonumber
 
 actor "Green Space\nManager" as Employee
-participant ":System" as System
-
-activate Employee
-
-    Employee -> System : Ask to add a new entry to the To-Do List
+ GSM -> System : asks to add a new Task entry to the To-Do List
     activate System
 
-        System --> Employee : requests data (i.e description, urgency, duration, green space)
+        System --> GSM : displays list of green spaces
     deactivate System
 
-    Employee -> System : inputs requested data
+    GSM -> System : selects a green space
     activate System
 
-        System --> Employee : processes input, records the new entry, and\ndisplays operation success message
+        System --> GSM : requests the details of the task
+    deactivate System
+
+    GSM -> System : provides task details
+    activate System
+
+        System --> GSM : adds task to the To-Do List and displays operation success
     deactivate System
 
 @enduml

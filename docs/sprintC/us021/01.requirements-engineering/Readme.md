@@ -1,4 +1,4 @@
-# US021 - Add New Entry to the To-do-list
+# US021 - Add new Entry to the To-do-list
 
 
 ## 1. Requirements Engineering
