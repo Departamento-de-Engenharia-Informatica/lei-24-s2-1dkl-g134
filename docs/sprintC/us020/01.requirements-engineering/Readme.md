@@ -1,4 +1,4 @@
-# US020 - Register Green Space
+# US020 - Register Green Space and  respective area.
 
 
 ## 1. Requirements Engineering
@@ -25,6 +25,7 @@ To register a green space, what is the criteria needed to classify it as a mediu
 
 * **AC1:** The green space information (name, type, and area) is successfully stored in the system.
 * **AC2:** A confirmation message is displayed upon successful registration of the green space.
+
 ### 1.4. Found out Dependencies
 
 * None.
@@ -33,13 +34,10 @@ To register a green space, what is the criteria needed to classify it as a mediu
 
 **Input Data:**
 
-* Green Space Name
-* Green Space Type
-* Green Space Area
-
+*Green space details for the new registration
 **Output Data:**
 
-* Confirmation message indicating successful registration of the green space
+* Confirmation of the new green space registered.
 
 ### 1.6. System Sequence Diagram (SSD)
 
