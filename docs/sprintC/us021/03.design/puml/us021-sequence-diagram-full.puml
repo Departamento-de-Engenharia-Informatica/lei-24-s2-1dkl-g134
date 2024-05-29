@@ -95,20 +95,27 @@ activate ADM
 
                 PLAT --> CTRL : toDoListRepository
             deactivate PLAT
+                            CTRL ->TMAP : DtoToAttributes(Dto)
+                            activate TMAP
+                            TMAP ->CTRL : attributes
+                                            Deactivate TMAP
 
-            CTRL -> TDR : addTask(Dto)
+            CTRL -> TDR : addTask(taskTitle, taskDuration, duration, urgency level)
             activate TDR
 
 
 
 
-                TDR ->TMAP : DtoToAttributes(Dto)
-                activate TMAP
-                TMAP ->TDR : attributes
-                                Deactivate TMAP
+
                 TDR -> TASK** : createTask(taskTitle, taskDuration, duration, urgency level)
                 TDR --> TDR : validateEntry(entry)
+                activate TDR
                 TDR --> TDR : saveEntry(entry)
+                activate TDR
+                TDR --> TDR
+                deactivate TDR
+                TDR --> TDR
+                deactivate TDR
 
 
                 TDR --> CTRL : TaskEntry
