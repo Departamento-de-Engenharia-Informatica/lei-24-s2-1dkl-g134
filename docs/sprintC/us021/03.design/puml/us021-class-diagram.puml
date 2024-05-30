@@ -27,8 +27,8 @@ class "AddTaskEntryController" {
 
 class "ToDoListRepository" {
     -entries
-    + addTaskEntry(toDoList: ToDoList)
-    + getTaskEntry(toDoList: ToDoList)
+    + addTaskEntry(taskEntry: TaskEntry)
+    + getTaskEntry(taskEntry: TaskEntry)
 }
 
 class "AddTaskEntryUI" {

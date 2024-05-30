@@ -5,15 +5,16 @@
 
 ### 1.1. User Story Description
 
-As a Green Space Manager, I want to know which piece(s) of equipment is/are used in each day.
-
+As a GSM, I want to Postpone an entry in the Agenda to a specific future date.
 ### 1.2. Customer Specifications and Clarifications 
 
 **From the specifications document:**
 
-> Consider that the park has the following equipment: walking paths, children’s playground, picnic area, and exercise machines (gymnastics equipment). At the park exit there is an electronic device with a list of all the equipment, in which the user(s) must indicate the equipment they used that day.
+> The Agenda is made up of entries that relate to a task (which was previously in the To-Do List), the team that will carry out the task, the vehicles/equipment assigned to
+the task, expected duration, and the status (Planned, Postponed, Canceled,
+Done).
 
-> In the file ”EquipmentUsed.csv” the choices of 1000 users are recorded. Make a pie chart representing, in percentage, the use of each piece of equipment.
+
 
 **From the client clarifications:**
 
@@ -23,25 +24,25 @@ As a Green Space Manager, I want to know which piece(s) of equipment is/are used
 
 ### 1.3. Acceptance Criteria
 
-* **AC1:** The pie chart is successfully created, accurately represents the registered data, and is presented to the user.
+* **AC1:** To postpone a task, it must have one of the following statuses: "Planned" or "Postponed".
 
 ### 1.4. Found out Dependencies
 
-* None.
+* There is a dependency on "US22 - Add New Entry in the Agenda"
 
 ### 1.5 Input and Output Data
 
 **Input Data:**
 
-* None
+* Typed data: Task to postpone, new date, new time.
 
 **Output Data:**
 
-* Pie chart representing, in percentage, the data available in the EquipmentUsed.csv file.
+* Confirmation that the task was postponed.
 
 ### 1.6. System Sequence Diagram (SSD)
 
-![System Sequence Diagram](svg/us010-system-sequence-diagram-main-solution.svg)
+![System Sequence Diagram](svg/us024-system-sequence-diagram-main-solution.svg)
 
 ### 1.7 Other Relevant Remarks
 

@@ -1,0 +1,117 @@
+@startuml
+skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+
+autonumber
+
+'hide footbox
+actor "Green Space \n Manager" as ADM
+participant ":PostponeTaskUI" as UI
+participant ":PostponeTaskController" as CTRL
+participant "Repositories" as RepositorySingleton
+participant "repositories\n:Repositories" as PLAT
+participant ":TaskEntryMapper" as MAP
+participant ":AgendaRepository" as URG
+participant "taskEntryDTOList\n :TaskEntryDTOList" as DTO
+
+participant "taskEntry\n:TaskEntry" as TASK
+participant "objDto: TaskEntryDto" as GDTO
+
+
+activate ADM
+
+    ADM -> UI : asks to postpone a task entry
+    activate UI
+        UI -> CTRL : create
+        UI -> CTRL : getPlannedAndPostponedTask()
+        activate CTRL
+
+            CTRL -> RepositorySingleton : getInstance()
+            activate RepositorySingleton
+
+                RepositorySingleton --> CTRL : repositories
+            deactivate RepositorySingleton
+
+            CTRL -> PLAT : getAgendaRepository()
+            activate PLAT
+
+                PLAT --> CTRL : AgendaRepository
+            deactivate PLAT
+
+            CTRL -> URG : getPlannedAndPostponedTask()
+            activate URG
+
+                URG --> CTRL : TaskEntryList
+            deactivate URG
+
+            CTRL -> MAP : ToDTOList(TaskEntryList)
+            activate MAP
+                MAP -> DTO: Create()
+                loop for each green space in the green space list
+                MAP -> URG: taskEntry = get(i)
+                activate URG
+                deactivate URG
+                MAP -> MAP: TaskEntryDTO = toDTO(taskEntry)
+                activate MAP
+                MAP -> GDTO: create(...)
+                deactivate MAP
+                MAP -> DTO: add(taskEntryDto)
+
+                activate DTO
+                deactivate DTO
+                end
+                MAP -> CTRL: TaskEntryDtoList
+            deactivate MAP
+
+            CTRL --> UI : TaskEntryDTO
+        deactivate CTRL
+
+        UI --> ADM : shows a list of tasks
+    deactivate UI
+ADM -> UI : selects a task
+    activate UI
+
+        UI --> ADM : requests data (new date, new time)
+    deactivate UI
+
+    ADM -> UI : types data
+    activate UI
+
+        UI --> ADM : shows all data and requests confirmation (new date, new time)
+    deactivate UI
+
+    ADM -> UI : confirms data
+    activate UI
+     UI -> CTRL : save updated task
+            activate CTRL
+
+                CTRL -> PLAT : getAgendaRepository()
+                activate PLAT
+
+                    PLAT --> CTRL : AgendaRepository
+                deactivate PLAT
+
+                CTRL -> URG : save updated task
+
+                activate URG
+
+                           URG -> TASK** : updatedTask(new date, new time)
+                           URG --> URG : validatePostponement(postponement)
+                           activate URG
+                           URG --> URG : savePostponement(postponement)
+                           activate URG
+                           URG --> URG
+                           deactivate URG
+                           URG --> URG
+                           deactivate URG
+                           URG --> CTRL : TaskEntry
+                           deactivate URG
+        CTRL --> UI : TaskEntry
+            deactivate CTRL
+
+                UI --> ADM : displays operation success
+            deactivate UI
+        deactivate ADM
+
+@enduml
