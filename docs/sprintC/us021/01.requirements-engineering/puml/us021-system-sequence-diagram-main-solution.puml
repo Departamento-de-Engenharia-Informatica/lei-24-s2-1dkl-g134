@@ -7,7 +7,9 @@ title System Sequence Diagram (SSD) - Main Solution
 
 autonumber
 
-actor "Green Space\nManager" as Employee
+actor "Green Space\nManager" as GSM
+
+activate GSM
  GSM -> System : asks to add a new Task entry to the To-Do List
     activate System
 
