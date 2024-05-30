@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.Optional;
 import java.util.Scanner;
 
-public class AssignTeamToTaskUI {
+public class AssignTeamToTaskUI implements Runnable {
     private TaskEntry taskEntry = null;
     private Team selectedTeam= null;
     private AssignTeamToTaskController controller = new AssignTeamToTaskController();

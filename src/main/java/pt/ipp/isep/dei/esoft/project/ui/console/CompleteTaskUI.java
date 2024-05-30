@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.Optional;
 import java.util.Scanner;
 
-public class CompleteTaskUI {
+public class CompleteTaskUI implements Runnable {
     private TaskEntry taskEntry = null;
     private CompleteTaskController completeTaskController = new CompleteTaskController();
 

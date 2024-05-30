@@ -49,6 +49,6 @@ public class AssignTeamToTaskController {
     }
 
     public boolean isTeamAvailable(Team team, TaskEntry taskEntry){
-        return agendaRepository.isTeamAvailable(team, taskEntry);
+        return agendaRepository.isTeamAvailable(team.getTeamMembers(), taskEntry);
     }
 }

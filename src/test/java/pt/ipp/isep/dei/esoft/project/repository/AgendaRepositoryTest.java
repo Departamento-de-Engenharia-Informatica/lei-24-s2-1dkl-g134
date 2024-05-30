@@ -295,49 +295,49 @@ public class AgendaRepositoryTest {
         Team team = new Team(collaborators, skills);
         agendaRepository.assignTeamToTask(taskEntry1, team);
 
-        assertTrue(agendaRepository.isTeamAvailable(team, taskEntry2));
+        assertTrue(agendaRepository.isTeamAvailable(team.getTeamMembers(), taskEntry2));
 
         TaskEntry taskPending3 = new TaskEntry("Yes", "Yes", urgencyLevel.MEDIUM, 50, greenSpace);
         TaskEntry taskEntry3 = agendaRepository.add(taskPending3, "2005/01/19", "11:00").get();
 
-        assertFalse(agendaRepository.isTeamAvailable(team, taskEntry3));
+        assertFalse(agendaRepository.isTeamAvailable(team.getTeamMembers(), taskEntry3));
 
         TaskEntry taskPending4 = new TaskEntry("Maybe", "Maybe", urgencyLevel.MEDIUM, 50, greenSpace);
         TaskEntry taskEntry4 = agendaRepository.add(taskPending4, "2005/01/21", "11:00").get();
 
-        assertFalse(agendaRepository.isTeamAvailable(team, taskEntry4));
+        assertFalse(agendaRepository.isTeamAvailable(team.getTeamMembers(), taskEntry4));
 
         TaskEntry taskPending5 = new TaskEntry("Perhaps", "Perhaps", urgencyLevel.MEDIUM, 3, greenSpace);
         TaskEntry taskEntry5 = agendaRepository.add(taskPending5, "2006/01/21", "11:00").get();
 
-        assertTrue(agendaRepository.isTeamAvailable(team, taskEntry5));
+        assertTrue(agendaRepository.isTeamAvailable(team.getTeamMembers(), taskEntry5));
 
         agendaRepository.assignTeamToTask(taskEntry5, team);
 
         TaskEntry taskPending6 = new TaskEntry("Stop it", "Just stop", urgencyLevel.MEDIUM, 1, greenSpace);
         TaskEntry taskEntry6 = agendaRepository.add(taskPending6, "2006/01/21", "09:00").get();
 
-        assertTrue(agendaRepository.isTeamAvailable(team, taskEntry6));
+        assertTrue(agendaRepository.isTeamAvailable(team.getTeamMembers(), taskEntry6));
 
         TaskEntry taskPending7 = new TaskEntry("I hate", "Unit tests", urgencyLevel.MEDIUM, 1, greenSpace);
         TaskEntry taskEntry7 = agendaRepository.add(taskPending7, "2006/01/21", "15:00").get();
 
-        assertTrue(agendaRepository.isTeamAvailable(team, taskEntry7));
+        assertTrue(agendaRepository.isTeamAvailable(team.getTeamMembers(), taskEntry7));
 
         TaskEntry taskPending8 = new TaskEntry("I want them", "to die", urgencyLevel.MEDIUM, 1, greenSpace);
         TaskEntry taskEntry8 = agendaRepository.add(taskPending8, "2006/01/21", "12:00").get();
 
-        assertFalse(agendaRepository.isTeamAvailable(team, taskEntry8));
+        assertFalse(agendaRepository.isTeamAvailable(team.getTeamMembers(), taskEntry8));
 
         TaskEntry taskPending9 = new TaskEntry("Why did I make", "that field unique", urgencyLevel.MEDIUM, 3, greenSpace);
         TaskEntry taskEntry9 = agendaRepository.add(taskPending9, "2006/01/21", "11:00").get();
 
-        assertFalse(agendaRepository.isTeamAvailable(team, taskEntry9));
+        assertFalse(agendaRepository.isTeamAvailable(team.getTeamMembers(), taskEntry9));
 
         TaskEntry taskPending10 = new TaskEntry("The grand", "finale", urgencyLevel.MEDIUM, 50, greenSpace);
         TaskEntry taskEntry10 = agendaRepository.add(taskPending10, "2005/01/20", "11:00").get();
 
-        assertFalse(agendaRepository.isTeamAvailable(team, taskEntry10));
+        assertFalse(agendaRepository.isTeamAvailable(team.getTeamMembers(), taskEntry10));
     }
 
     @Test

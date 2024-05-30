@@ -17,14 +17,8 @@ public class CollabUI implements Runnable {
 
     public void run() {
         List<MenuItem> options = new ArrayList<MenuItem>();
-        options.add(new MenuItem("Register Skill", new RegisterSkillUI()));
-        options.add(new MenuItem("Register Job", new RegisterJobUI()));
-        options.add(new MenuItem("Register Collaborator", new RegisterCollaboratorUI()));
-        options.add(new MenuItem("Assign Skills To Collaborator", new AssignSkillsToCollaboratorUI()));
-        options.add(new MenuItem("Generate Teams", new GenerateTeamUI()));
-        options.add(new MenuItem("Register Vehicle", new RegisterVehicleUI()));
-        options.add(new MenuItem("Register Vehicle Checkup", new RegisterVehicleCheckupUI()));
-        options.add(new MenuItem("List Vehicles Requiring Checkup", new GenerateMaintenanceReportUI()));
+        options.add(new MenuItem("View Tasks assigned to you between two dates", new ListTasksBetweenDatesUI()));
+        options.add(new MenuItem("Mark Task as completed", new CompleteTaskUI()));
 
         int option = 0;
         do {

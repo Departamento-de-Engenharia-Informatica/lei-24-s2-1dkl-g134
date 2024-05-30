@@ -33,6 +33,20 @@ public class AgendaRepository implements Serializable {
         if(taskEntry == null){
             throw new IllegalArgumentException("Null fields not allowed.");
         }
+        TaskEntry testTaskEntry = new TaskEntry(taskEntry.getTaskTitle(), taskEntry.getTaskDescription(), taskEntry.getUrgencyLevel(), taskEntry.getDuration(), taskEntry.getGreenSpaceObject());
+        testTaskEntry.addAgendaData(date, time);
+        if(!taskEntry.getAssignedVehicles().isEmpty()){
+            for(Vehicle vehicle : taskEntry.getAssignedVehicles()){
+                if(!isVehicleAvailable(vehicle, testTaskEntry)){
+                    throw new IllegalArgumentException("One or more vehicles assigned to this task would not be available if it was postponed to this date and time!");
+                }
+            }
+        }
+        if(!taskEntry.getAssignedTeam().isEmpty()){
+            if(!isTeamAvailable(taskEntry.getAssignedTeam(), testTaskEntry)){
+                throw new IllegalArgumentException("The team assigned to this task would not be available if it was postponed to this date and time!");
+            }
+        }
         return taskEntry.postponeTask(date, time);
     }
 
@@ -52,12 +66,15 @@ public class AgendaRepository implements Serializable {
     public Optional<ArrayList<TaskEntry>> getPlannedAndPostponedTasksBelongingToCurrentUser() throws InvalidRoleException, CollaboratorNotFoundException {
         ArrayList<TaskEntry> collaboratorTasks = new ArrayList<>();
         Optional<ArrayList<TaskEntry>> plannedAndPostponedTasks = getPlannedAndPostponedTasks();
+        if(plannedAndPostponedTasks.isEmpty()){
+            return Optional.empty();
+        }
         Optional<Collaborator> currentCollaborator = Repositories.getInstance().getCollaboratorRepository().getCurrentUserCollaborator();
         if (currentCollaborator.isEmpty()) {
             throw new CollaboratorNotFoundException("No collaborator corresponding to your email and name was found in the system.");
         }
         for(TaskEntry taskEntry : plannedAndPostponedTasks.get()){
-            if(taskEntry.getAssignedTeam().contains(currentCollaborator)){
+            if(taskEntry.getAssignedTeam().contains(currentCollaborator.get())){
                 collaboratorTasks.add(taskEntry);
             }
         }
@@ -103,7 +120,7 @@ public class AgendaRepository implements Serializable {
             throw new CollaboratorNotFoundException("No collaborator corresponding to your email and name was found in the system.");
         }
         for (TaskEntry taskEntry : agenda) {
-            if (taskEntry.getAssignedTeam().contains(currentCollaborator)) {
+            if (taskEntry.getAssignedTeam().contains(currentCollaborator.get())) {
                 if (taskEntry.getStartDate().isAfterDate(start) && !taskEntry.getStartDate().isAfterDate(end)) {
                     foundTasks.add(taskEntry);
                 }
@@ -120,7 +137,7 @@ public class AgendaRepository implements Serializable {
         return agenda.get(agenda.indexOf(taskEntry)).completeTask();
     }
 
-    public boolean isTeamAvailable(Team team, TaskEntry taskEntry) {
+    public boolean isTeamAvailable(ArrayList<Collaborator> team, TaskEntry taskEntry) {
         if(taskEntry == null || team == null){
             throw new IllegalArgumentException("Null fields not allowed.");
         }
@@ -138,7 +155,7 @@ public class AgendaRepository implements Serializable {
             if(taskToCompare.equals(taskEntry) || taskToCompare.getState() == State.CANCELED || taskToCompare.getState() == State.COMPLETED){
                 continue;
             }
-            if(taskToCompare.isSameTeam(team.getTeamMembers())){
+            if(taskToCompare.isSameTeam(team)){
                 if((taskToCompare.getStartDate().isAfterDate(taskEntry.getEndDate()) && !taskToCompare.getStartDate().equals(taskEntry.getEndDate()) || !taskToCompare.getEndDate().isAfterDate(taskEntry.getStartDate()))){
                     continue;
                 }

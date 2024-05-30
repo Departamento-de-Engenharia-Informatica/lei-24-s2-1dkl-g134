@@ -222,6 +222,10 @@ public class TaskEntry implements Serializable {
         return greenSpace.toString();
     }
 
+    public GreenSpace getGreenSpaceObject() {
+        return greenSpace;
+    }
+
     public boolean isSameTeam(ArrayList<Collaborator> otherTeam){
         if(assignedTeam == null){
             return false;

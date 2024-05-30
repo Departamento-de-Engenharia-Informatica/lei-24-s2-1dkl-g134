@@ -25,6 +25,14 @@ public class AdminUI implements Runnable {
         options.add(new MenuItem("Register Vehicle", new RegisterVehicleUI()));
         options.add(new MenuItem("Register Vehicle Checkup", new RegisterVehicleCheckupUI()));
         options.add(new MenuItem("List Vehicles Requiring Checkup", new GenerateMaintenanceReportUI()));
+        options.add(new MenuItem("Register Green Space", new RegisterGreenSpaceUI()));
+        options.add(new MenuItem("List Green Spaces managed by you", new GetGreenSpacesManagedByUserUI()));
+        options.add(new MenuItem("Add Task to To-Do List", new AddTaskEntryUI()));
+        options.add(new MenuItem("Add Task to Agenda", new AssignTaskToAgendaUI()));
+        options.add(new MenuItem("Assign Vehicles to Task", new AssignVehiclesToTaskUI()));
+        options.add(new MenuItem("Assign Team to Task", new AssignTeamToTaskUI()));
+        options.add(new MenuItem("Postpone Task", new PostponeTaskUI()));
+        options.add(new MenuItem("Cancel Task", new CancelTaskUI()));
 
         int option = 0;
         do {
