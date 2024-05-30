@@ -1,0 +1,54 @@
+@startuml
+'skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+skinparam linetype polyline
+'skinparam linetype orto
+
+skinparam classAttributeIconSize 0
+
+'left to right direction
+
+class PostponeTaskUI{
+}
+
+
+class PostponeTaskController{
+
+
+
+    +getVehiclesRequiringCheckup()
+ }
+
+class Repositories {
+    - Repositories(): Repositories
+    + getInstance() : Repositories
+    + getVehicleRepository() : Repositories
+}
+
+
+class VehicleRepository {
+    + register()
+
+}
+
+class  Vehicle{
+   -plate : String
+       -brand : String
+       -model : String
+       -currentKms : int
+       +Vehicle()
+}
+
+
+PostponeTaskUI .>  PostponeTaskController
+ PostponeTaskController ...r> Repositories : repositories
+Repositories ---> "1" VehicleRepository
+Repositories -> Repositories : instance
+Repositories "1" --> "*" Vehicle
+
+VehicleRepository --> "*" Vehicle
+
+ PostponeTaskController ......>  Vehicle : Vehicle
+ PostponeTaskController ...> "1" VehicleRepository : VehicleRepository
+@enduml
