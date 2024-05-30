@@ -14,41 +14,56 @@ class PostponeTaskUI{
 
 
 class PostponeTaskController{
-
-
-
-    +getVehiclesRequiringCheckup()
+-AgendaRepository agendaRepository
+    + PostponeTaskController(agendaRepository)
+    + getPlannedAndPostponedTask()
  }
 
 class Repositories {
     - Repositories(): Repositories
     + getInstance() : Repositories
-    + getVehicleRepository() : Repositories
+    + getAgendaRepository() : Repositories
 }
 
 
-class VehicleRepository {
-    + register()
+class AgendaRepository {
+    + getPlannedAndPostponedTask()
 
 }
 
-class  Vehicle{
-   -plate : String
-       -brand : String
-       -model : String
-       -currentKms : int
-       +Vehicle()
+class  TaskEntry{
+        -title
+        -description
+        -urgencyLevel
+        -expectedDuration
+        -state
+        -greenSpace
+
+}
+
+class TaskEntryMapper{
++TaskEntryDto  toDTO(TaskEntry)
+}
+class TaskEntryDto{
++TaskEntry
++Date
++Time
 }
 
 
 PostponeTaskUI .>  PostponeTaskController
- PostponeTaskController ...r> Repositories : repositories
-Repositories ---> "1" VehicleRepository
+PostponeTaskController ...r> Repositories : repositories
+PostponeTaskController ...> TaskEntryMapper : Mapper
+TaskEntryMapper ...> TaskEntryDto: TaskEntryDto
+TaskEntryMapper ...> TaskEntry
+PostponeTaskUI .> TaskEntryDto
+PostponeTaskController ..> TaskEntryDto
+Repositories ---> "1" AgendaRepository
 Repositories -> Repositories : instance
-Repositories "1" --> "*" Vehicle
+Repositories "1" --> "*" TaskEntry
 
-VehicleRepository --> "*" Vehicle
+AgendaRepository --> "*" TaskEntry: contains
 
- PostponeTaskController ......>  Vehicle : Vehicle
- PostponeTaskController ...> "1" VehicleRepository : VehicleRepository
+ PostponeTaskController ......>  TaskEntry : TaskEntry
+ PostponeTaskController ...> "1" AgendaRepository : AgendaRepository
 @enduml
