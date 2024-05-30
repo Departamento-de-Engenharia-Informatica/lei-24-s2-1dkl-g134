@@ -98,7 +98,19 @@ public class Collaborator implements Serializable {
             throw new IllegalArgumentException("Email address has an invalid syntax.");
         }
         this.identificationDocumentType = identificationDocumentType;
+        char[] idCharacters = identificationNumber.toCharArray();
+        for(char c : idCharacters){
+            if(!Character.isDigit(c)){
+                throw new IllegalArgumentException("Identification number can only contain numerical digits.");
+            }
+        }
         this.identificationNumber = identificationNumber;
+        char[] taxpayerCharacters = taxpayerNumber.toCharArray();
+        for(char c : taxpayerCharacters){
+            if(!Character.isDigit(c)){
+                throw new IllegalArgumentException("Taxpayer number can only contain numerical digits.");
+            }
+        }
         this.taxpayerNumber = taxpayerNumber;
         this.job = job;
         collaboratorSkills = new ArrayList<>();

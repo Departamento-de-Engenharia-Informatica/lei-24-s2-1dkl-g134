@@ -64,6 +64,10 @@ public class Vehicle implements Serializable {
             throw new IllegalArgumentException("Dates must not be in the future.");
         }
         this.checkUpFrequency = checkUpFrequency;
+        String platePattern = "\\d{2}-\\d{2}-[A-Z]{2}$";
+        if(!plateNumber.matches(platePattern)){
+            throw new IllegalArgumentException("Invalid plate format. Please use 'NN-NN-LL': Two numbers, two numbers, and two uppercase letters.");
+        }
         this.plateNumber = plateNumber;
         this.type = type;
     }
