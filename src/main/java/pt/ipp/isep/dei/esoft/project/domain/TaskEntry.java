@@ -25,6 +25,17 @@ public class TaskEntry implements Serializable {
     private CustomDate startDate = null, endDate = null;
     private CustomTime startTime = null, endTime = null;
 
+    /**
+     * Constructor for a new TaskEntry object. Any new TaskEntry object's state will be defined
+     * as "PENDING" until any method that changes it is performed.
+     * This method will throw an IllegalArgumentException if any field is null or blank, or if
+     * the duration is below or equal to zero.
+     * @param taskTitle The String representation of the new task's title.
+     * @param taskDescription The String representation of the new task's description.
+     * @param urgencyLevel The urgency level of this task, expressed with an urgencyLevel enumerator.
+     * @param duration An int representing the duration of this task, in hours.
+     * @param greenSpace The GreenSpace object associated with this task.
+     */
     public TaskEntry(String taskTitle, String taskDescription, urgencyLevel urgencyLevel, int duration, GreenSpace greenSpace) {
         if(taskTitle == null || taskDescription == null || urgencyLevel == null || greenSpace == null){
             throw new IllegalArgumentException("Null fields not allowed.");
@@ -47,6 +58,15 @@ public class TaskEntry implements Serializable {
         assignedTeam = null;
     }
 
+    /**
+     * Adds the necessary data to put this task in the Agenda. This method will change the
+     * task's state to "PLANNED".
+     * This method will throw an IllegalArgumentException if it receives any null or blank
+     * values, or for any reason outlined in the CustomDate and CustomTime constructors.
+     * @param date The String representation of this task's start date.
+     * @param time The String representation of this task's start time.
+     * @return This TaskEntry object, updated with the agenda data.
+     */
     public TaskEntry addAgendaData(String date, String time){
         if(date == null || time == null){
             throw new IllegalArgumentException("Null fields not allowed.");
@@ -63,6 +83,12 @@ public class TaskEntry implements Serializable {
         return this;
     }
 
+    /**
+     * Checks if this TaskEntry object is equal to another.
+     * Two TaskEntries are considered equal if they have the same title.
+     * @param o The TaskEntry to compare against.
+     * @return A boolean value representing if the tasks are the same.
+     */
     @Override
     public boolean equals(Object o) {
         if (!(o instanceof TaskEntry)) {
@@ -72,11 +98,26 @@ public class TaskEntry implements Serializable {
         return taskTitle.equalsIgnoreCase(taskEntry.getTaskTitle());
     }
 
+    /**
+     * Returns the String representation of this task.
+     * @return The String representation of this task.
+     */
     @Override
     public String toString(){
         return taskTitle + " | " + taskDescription;
     }
 
+    /**
+     * Postpones this task to a new start date and time. Also changed the task's state to
+     * "POSTPONED".
+     * This method will throw an IllegalArgument exception if this task is currently not in
+     * the agenda (more formally, if the task's state is "PENDING"), if it receives any null
+     * or blank fields, if the new start date is after the current date, or for any
+     * reason outlined in the CustomDate and CustomTime constructors.
+     * @param date The String representation of the new start date.
+     * @param time The String representation of the new start time.
+     * @return An Optional object containing this task, with its values updated.
+     */
     public Optional<TaskEntry> postponeTask(String date, String time){
         if(this.state == State.PENDING){
             throw new IllegalArgumentException("Cannot postpone task not in agenda.");
@@ -103,6 +144,15 @@ public class TaskEntry implements Serializable {
         return Optional.of(this);
     }
 
+    /**
+     * Assigns a list of vehicles to this task, if the vehicle in question isn't already
+     * assigned to the task.
+     * This method will throw an IllegalArgumentException if it receives a null value, or
+     * if the list of vehicles is empty.
+     * @param vehicles The list of vehicles to assign to this task.
+     * @return An Optional object containing a list of all vehicles actually assigned to the
+     * task. If no vehicles were assigned, an empty Optional object.
+     */
     public Optional<ArrayList<Vehicle>> assignVehicles(ArrayList<Vehicle> vehicles){
         if(vehicles == null){
             throw new IllegalArgumentException("Null fields not allowed.");
@@ -125,10 +175,32 @@ public class TaskEntry implements Serializable {
         return Optional.empty();
     }
 
+    /**
+     * Checks if the vehicle in question
+     * @param vehicle The vehicle to search for.
+     * @return A boolean value representing if this task has this vehicle assigned to it.
+     */
     public boolean hasVehicle(Vehicle vehicle) {
+        if(vehicle == null){
+            throw new IllegalArgumentException("Null fields not allowed");
+        }
         return assignedVehicles.contains(vehicle);
     }
 
+    /**
+     * Assigns a team to this task, if the team's list of members is different from the
+     * list of currently assigned collaborators to the task.
+     * Should the team really be assigned to the task, each of the team's members will also
+     * receive an e-mail (sent to the e-mail addressed registered on each team member's
+     * Collaborator object) informing them of the assignment. In this proof-of-concept program,
+     * this e-mail is nothing more than a text file created in an "emailSimulations" folder.
+     * This method will throw an IllegalArgumentException if it receives any null fields, or
+     * if the e-mail address from which to send the notification messages from isn't configured
+     * in the config.properties file.
+     * @param team The team to assign to this task.
+     * @return An Optional object containing this task, if the team was actually assigned to it.
+     * If the team ended up not being assigned, an empty Optional object instead.
+     */
     public Optional<TaskEntry> assignTeam(Team team) throws IOException {
         if(team == null){
             throw new IllegalArgumentException("Null fields not allowed.");
@@ -188,45 +260,111 @@ public class TaskEntry implements Serializable {
 
         return Optional.of(this);
     }
+
+    /**
+     * Gets this task's description.
+     * @return The String representation of this task's description.
+     */
     public String getTaskDescription() {return taskDescription;}
 
+    /**
+     * Gets this task's urgency level.
+     * @return This task's urgency level, expressed with an urgencyLevel enumerator.
+     */
     public urgencyLevel getUrgencyLevel() {return urgencyLevel;}
 
+    /**
+     * Gets this task's state.
+     * @return This task's state, expressed with a State enumerator.
+     */
     public State getState() {return state;}
 
+    /**
+     * Gets this task's duration in hours.
+     * @return An int representing this task's duration in hours.
+     */
     public int getDuration() {return duration;}
 
+    /**
+     * Gets this task's title.
+     * @return A String representing this task's title.
+     */
     public String getTaskTitle() {return taskTitle;}
 
+    /**
+     * Gets this task's assigned team.
+     * @return The list of Collaborators that make up this task's team.
+     */
     public ArrayList<Collaborator> getAssignedTeam() { return assignedTeam; }
 
+    /**
+     * Gets this task's assigned vehicles.
+     * @return The list of Vehicles assigned to this task.
+     */
     public ArrayList<Vehicle> getAssignedVehicles() { return assignedVehicles; }
 
+    /**
+     * Gets this task's start date.
+     * @return The CustomDate object representing this task's start date.
+     */
     public CustomDate getStartDate() {
         return startDate;
     }
 
+    /**
+     * Gets this task's end date.
+     * @return The CustomDate object representing this task's end date.
+     */
     public CustomDate getEndDate() {
         return endDate;
     }
 
+    /**
+     * Gets this task's start time.
+     * @return The CustomDate object representing this task's start time.
+     */
     public CustomTime getStartTime() {
         return startTime;
     }
 
+    /**
+     * Gets this task's end time.
+     * @return The CustomDate object representing this task's end time.
+     */
     public CustomTime getEndTime() {
         return endTime;
     }
 
+    /**
+     * Gets the String representation of this task's green space.
+     * @return The String representation of this task's green space.
+     */
     public String getGreenSpace() {
         return greenSpace.toString();
     }
 
+    /**
+     * Gets the GreenSpace object associated with this task.
+     * @return The GreenSpace representation of this task's green space.
+     */
     public GreenSpace getGreenSpaceObject() {
         return greenSpace;
     }
 
+    /**
+     * Checks if the list of collaborators assigned to this task is the same as another list.
+     * This method will throw an IllegalArgumentException if the passed list is null or empty.
+     * @param otherTeam The list of collaborators to compare against.
+     * @return A boolean value representing if the list of collaborators currently assigned
+     * to the task is the same as the list passed to this method.
+     */
     public boolean isSameTeam(ArrayList<Collaborator> otherTeam){
+        if(otherTeam == null){
+            throw new IllegalArgumentException("Null fields not allowed.");
+        }
+        if(otherTeam.isEmpty()){
+            throw new IllegalArgumentException("Other team is empty.");
+        }
         if(assignedTeam == null){
             return false;
         }
@@ -241,6 +379,11 @@ public class TaskEntry implements Serializable {
         return true;
     }
 
+    /**
+     * Cancels this task. All this does is change this task's state to "CANCELED".
+     * @return An Optional object containing this task, with its updated state. If no
+     * update was made, an empty Optional object instead.
+     */
     public Optional<TaskEntry> cancelTask() {
         if (state == State.CANCELED) {
             return Optional.empty();
@@ -249,6 +392,12 @@ public class TaskEntry implements Serializable {
             return Optional.of(this);
         }
     }
+
+    /**
+     * Marks this task as completed. All this does is change the task's state to "COMPLETED".
+     * @return An Optional object containing this task, with its updated state. If no
+     * update was made, an empty Optional object instead.
+     */
     public Optional<TaskEntry> completeTask() {
         if (state == State.COMPLETED) {
             return Optional.empty();

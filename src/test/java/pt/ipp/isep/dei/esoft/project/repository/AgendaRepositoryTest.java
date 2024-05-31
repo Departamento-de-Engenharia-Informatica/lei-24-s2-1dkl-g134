@@ -91,11 +91,11 @@ public class AgendaRepositoryTest {
                 () -> agendaRepository.assignVehiclesToTask(null, null));
 
         Vehicle vehicle1 = new Vehicle("Ford", "T", 5000, 2500.0,3000,
-                "2010/04/25", "2009/04/25", 500, "H3LL0", "Car");
+                "2010/04/25", "2009/04/25", 500, "45-50-LL", "Car");
         Vehicle vehicle2 = new Vehicle("Ford", "X", 5000, 2500.0,1000,
-                "2010/04/25", "2009/04/25", 750, "G00DBY3", "Truck");
+                "2010/04/25", "2009/04/25", 750, "46-51-DL", "Truck");
         Vehicle vehicle3 = new Vehicle("The USSR", "Stalin", 5000, 2500.0,1000,
-                "2010/04/25", "2009/04/25", 1010, "CCCP", "Tank");
+                "2010/04/25", "2009/04/25", 1010, "47-52-XL", "Tank");
 
         vehicles.add(vehicle1);
         vehicles.add(vehicle2);
@@ -214,7 +214,7 @@ public class AgendaRepositoryTest {
         TaskEntry taskEntry2 = agendaRepository.add(taskPending2, "2004/12/10", "11:00").get();
 
         Vehicle vehicle = new Vehicle("Ford", "T", 5000, 2500.0,3000,
-                "2010/04/25", "2009/04/25", 500, "H3LL0", "Car");
+                "2010/04/25", "2009/04/25", 500, "45-50-LL", "Car");
         ArrayList<Vehicle> vehicles = new ArrayList<>();
         vehicles.add(vehicle);
         agendaRepository.assignVehiclesToTask(taskEntry1, vehicles);

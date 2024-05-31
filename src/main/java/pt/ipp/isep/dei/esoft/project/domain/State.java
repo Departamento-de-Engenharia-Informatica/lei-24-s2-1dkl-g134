@@ -9,13 +9,4 @@ public enum State implements Serializable {
     POSTPONED,
     COMPLETED,
     CANCELED;
-
-    public static ArrayList<State> getAllStates(){
-        ArrayList<State> allStates = new ArrayList<>();
-        allStates.add(State.PLANNED);
-        allStates.add(State.POSTPONED);
-        allStates.add(State.COMPLETED);
-        allStates.add(State.CANCELED);
-        return allStates;
-    }
 }

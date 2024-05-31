@@ -60,7 +60,7 @@ public class PostponeTaskUI implements Runnable{
 
     private String requestDate(){
         Scanner input = new Scanner(System.in);
-        System.out.print("New date (YYYY/MM/DD, with leading zeros): ");
+        System.out.print("New start date (YYYY/MM/DD, with leading zeros): ");
         return input.nextLine();
     }
 

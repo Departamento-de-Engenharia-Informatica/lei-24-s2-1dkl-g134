@@ -215,11 +215,11 @@ public class TaskEntryTest {
                 () -> taskEntry.assignVehicles(null));
 
         Vehicle vehicle1 = new Vehicle("Ford", "T", 5000, 2500.0,3000,
-                "2010/04/25", "2009/04/25", 500, "H3LL0", "Car");
+                "2010/04/25", "2009/04/25", 500, "45-50-DL", "Car");
         Vehicle vehicle2 = new Vehicle("Ford", "X", 5000, 2500.0,1000,
-                "2010/04/25", "2009/04/25", 750, "G00DBY3", "Truck");
+                "2010/04/25", "2009/04/25", 750, "44-51-LL", "Truck");
         Vehicle vehicle3 = new Vehicle("The USSR", "Stalin", 5000, 2500.0,1000,
-                "2010/04/25", "2009/04/25", 1010, "CCCP", "Tank");
+                "2010/04/25", "2009/04/25", 1010, "40-55-SS", "Tank");
 
         vehicles.add(vehicle1);
         vehicles.add(vehicle2);
@@ -250,12 +250,12 @@ public class TaskEntryTest {
         ArrayList<Vehicle> vehicles = new ArrayList<>();
 
         assertThrows(IllegalArgumentException.class,
-                () -> taskEntry.assignVehicles(vehicles));
+                () -> taskEntry.hasVehicle(null));
 
         Vehicle vehicle1 = new Vehicle("Ford", "T", 5000, 2500.0,3000,
-                "2010/04/25", "2009/04/25", 500, "H3LL0", "Car");
+                "2010/04/25", "2009/04/25", 500, "45-50-LL", "Car");
         Vehicle vehicle2 = new Vehicle("Ford", "X", 5000, 2500.0,1000,
-                "2010/04/25", "2009/04/25", 750, "G00DBY3", "Truck");
+                "2010/04/25", "2009/04/25", 750, "46-51-DL", "Truck");
 
         vehicles.add(vehicle1);
         vehicles.add(vehicle2);
@@ -280,9 +280,9 @@ public class TaskEntryTest {
                 () -> taskEntry.assignVehicles(vehicles));
 
         Vehicle vehicle1 = new Vehicle("Ford", "T", 5000, 2500.0,3000,
-                "2010/04/25", "2009/04/25", 500, "H3LL0", "Car");
+                "2010/04/25", "2009/04/25", 500, "45-50-LL", "Car");
         Vehicle vehicle2 = new Vehicle("Ford", "X", 5000, 2500.0,1000,
-                "2010/04/25", "2009/04/25", 750, "G00DBY3", "Truck");
+                "2010/04/25", "2009/04/25", 750, "46-51-DL", "Truck");
 
         vehicles.add(vehicle1);
         vehicles.add(vehicle2);
@@ -354,6 +354,8 @@ public class TaskEntryTest {
         taskEntry.addAgendaData("2005/01/20", "11:00");
 
         assertNull(taskEntry.getAssignedTeam());
+        assertThrows(IllegalArgumentException.class,
+                () -> taskEntry.isSameTeam(null));
 
         Job job = new Job("Member");
         Collaborator collaborator1 = new Collaborator("Roger", "2005/05/22", "2023/05/22", "His house, duh",
@@ -362,6 +364,9 @@ public class TaskEntryTest {
                 "960144802", "emily@is.real", "CC", "15017808", "256", job);
         Skill skill = new Skill("Skill");
         ArrayList<Collaborator> collaborators = new ArrayList<>();
+        ArrayList<Collaborator> finalCollaborators = collaborators;
+        assertThrows(IllegalArgumentException.class,
+                () -> taskEntry.isSameTeam(finalCollaborators));
         ArrayList<Skill> skills = new ArrayList<>();
         collaborators.add(collaborator1);
         collaborators.add(collaborator2);

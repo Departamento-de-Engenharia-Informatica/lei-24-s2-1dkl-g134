@@ -17,7 +17,7 @@ class CheckupRepositoryTest {
     void ensureNewCheckupSuccessfullyAdded() {
         CheckupRepository CheckupRepository = new CheckupRepository();
         Vehicle vehicle = new Vehicle("Ford", "T", 5000, 2500.0,750,
-                "2010/04/25", "2009/04/25", 500, "H3LL0", "Car");
+                "2010/04/25", "2009/04/25", 500, "45-50-LL", "Car");
         assertTrue(CheckupRepository.add(vehicle, 1000, "2020/04/25").isPresent());
     }
 
@@ -46,9 +46,9 @@ class CheckupRepositoryTest {
         CheckupRepository CheckupRepository = new CheckupRepository();
         VehicleRepository VehicleRepository = Repositories.getInstance().getVehicleRepository();
         VehicleRepository.add("The US", "F1", 5000, 2500.0,2000,
-                "2010/04/25", "2009/04/25", 5000, "0407", "Jet");
+                "2010/04/25", "2009/04/25", 5000, "45-50-LL", "Jet");
         Vehicle vehicle = VehicleRepository.add("The USSR", "Stalin", 5000, 2500.0,1000,
-                "2010/04/25", "2009/04/25", 1010, "CCCP", "Tank").get();
+                "2010/04/25", "2009/04/25", 1010, "46-51-DL", "Tank").get();
         CheckupRepository.add(vehicle, 1500, "2020/03/15");
         return CheckupRepository.getVehiclesRequiringCheckUp().isEmpty();
     }
@@ -57,11 +57,11 @@ class CheckupRepositoryTest {
         CheckupRepository CheckupRepository = new CheckupRepository();
         VehicleRepository VehicleRepository = Repositories.getInstance().getVehicleRepository();
         Vehicle vehicleOne = VehicleRepository.add("Ford", "T", 5000, 2500.0,495,
-        "2010/04/25", "2009/04/25", 500, "H3LL0", "Car").get();
+        "2010/04/25", "2009/04/25", 500, "48-55-AL", "Car").get();
         Vehicle vehicleTwo = VehicleRepository.add("Ford", "X", 5000, 2500.0,1000,
-        "2010/04/25", "2009/04/25", 750, "G00DBY3", "Truck").get();
+        "2010/04/25", "2009/04/25", 750, "42-49-ZL", "Truck").get();
         Vehicle vehicleThree = VehicleRepository.add("Ford", "Y", 5000, 2500.0,600,
-        "2010/04/25", "2009/04/25", 500, "Y35N0", "Lorry").get();
+        "2010/04/25", "2009/04/25", 500, "47-52-XL", "Lorry").get();
         CheckupRepository.add(vehicleThree, 50, "2020/03/15");
         ArrayList<Vehicle> vehicles = new ArrayList<>();
         vehicles.add(vehicleOne);
@@ -83,7 +83,7 @@ class CheckupRepositoryTest {
     void ensureGetLatestCheckupOfVehicleReturnsEmptyWithNoCheckups(){
         CheckupRepository CheckupRepository = new CheckupRepository();
         Vehicle vehicle = new Vehicle("Ford", "T", 5000, 2500.0,750,
-        "2010/04/25", "2009/04/25", 500, "H3LL0", "Car");
+        "2010/04/25", "2009/04/25", 500, "45-50-LL", "Car");
         assertTrue(CheckupRepository.getLatestCheckUpOfVehicle(vehicle).isEmpty());
     }
 
@@ -92,7 +92,7 @@ class CheckupRepositoryTest {
         //Arrange
         CheckupRepository CheckupRepository = new CheckupRepository();
         Vehicle vehicle = new Vehicle("Ford", "T", 5000, 2500.0,750,
-        "2010/04/25", "2009/04/25", 500, "H3LL0", "Car");
+        "2010/04/25", "2009/04/25", 500, "45-50-LL", "Car");
         //Add the first task
         Optional<CheckUp> olderCheckUp = CheckupRepository.add(vehicle, 900, "2020/03/25");
         Optional<CheckUp> oldCheckUp = CheckupRepository.add(vehicle, 1000, "2021/03/22");
@@ -107,7 +107,7 @@ class CheckupRepositoryTest {
         //Arrange
         CheckupRepository CheckupRepository = new CheckupRepository();
         Vehicle vehicle = new Vehicle("Ford", "T", 5000, 2500.0,750,
-        "2010/04/25", "2009/04/25", 500, "H3LL0", "Car");
+        "2010/04/25", "2009/04/25", 500, "45-50-LL", "Car");
         //Add the first task
         CheckupRepository.add(vehicle, 1000, "2020/04/25");
 
@@ -127,7 +127,7 @@ class CheckupRepositoryTest {
         //Arrange
         CheckupRepository CheckupRepository = new CheckupRepository();
         Vehicle vehicle = new Vehicle("Ford", "T", 5000, 2500.0,750,
-        "2010/04/25", "2009/04/25", 500, "H3LL0", "Car");
+        "2010/04/25", "2009/04/25", 500, "45-50-LL", "Car");
         //Add the first task
         CheckupRepository.add(vehicle, 1000, "2020/04/25");
 

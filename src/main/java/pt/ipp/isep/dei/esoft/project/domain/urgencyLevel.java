@@ -8,6 +8,11 @@ public enum urgencyLevel implements Serializable {
     MEDIUM,
     LOW;
 
+    /**
+     * Gets a list of every existing level of urgency.
+     * @return An ArrayList of urgencyLevel enumerators, each representing a possible value
+     * for urgency levels.
+     */
     public static ArrayList<urgencyLevel> getAllUrgencyLevels(){
         ArrayList<urgencyLevel> allUrgencyLevels = new ArrayList<>();
         allUrgencyLevels.add(urgencyLevel.HIGH);

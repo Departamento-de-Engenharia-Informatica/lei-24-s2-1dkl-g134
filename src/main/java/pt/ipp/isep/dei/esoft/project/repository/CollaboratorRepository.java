@@ -331,7 +331,7 @@ public class CollaboratorRepository implements Serializable {
      * Searches for, and returns, the collaborator object associated with the currently
      * logged-in user. This method uses the current user session's e-mail and name as
      * identifiers, and checks every collaborator for one with an identical e-mail and equal
-     * (not case-sensitive) name. This method will throw a generic exception if the current user
+     * (not case-sensitive) name. This method will throw an InvalidRoleException if the current user
      * session is not a collaborator, and will return an empty Optional object if no matching
      * collaborator is found.
      * @return The Collaborator object corresponding to the current user session. If none is

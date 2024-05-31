@@ -26,8 +26,9 @@ public class Collaborator implements Serializable {
      * indicates that the new collaborator is a legal minor, the admission date indicates that the
      * new collaborator was admitted as a legal minor, the admission date is in the future, the
      * email has an invalid syntax, the phone number has an invalid syntax (not a 9-digit number,
-     * unless it contains an international calling code), or for any reason outlined in the
-     * CustomDate constructor.
+     * unless it contains an international calling code), the name contains digits or special characters,
+     * the identification number or taxpayer number contain letters or special characters, or for any
+     * reason outlined in the CustomDate constructor.
      * @param name A String representing the collaborator's name
      * @param birthDate A String representing the collaborator's birthdate.
      * @param admissionDate A String representing the collaborator's admission date.

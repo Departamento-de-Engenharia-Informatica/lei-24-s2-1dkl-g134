@@ -17,8 +17,9 @@ public class Vehicle implements Serializable {
     /**
      * Constructor for a new Vehicle object.
      * This method will throw an IllegalArgumentExcpetion if any field is blank, any numerical field
-     * is below or equal to 0, the register date occurs before the acquisition date, any dates are
-     * in the future, or for any reason outlined in the CustomDate constructor.
+     * is below or equal to 0, the register date occurs before the acquisition date, the plate number
+     * does not match the pattern of "00-00-AA" (replacing 0 with any number and A with any uppercase
+     * letter, any dates are in the future, or for any reason outlined in the CustomDate constructor.
      * @param brand A String representing this vehicle's brand.
      * @param model A String representing this vehicle's model.
      * @param tare An int representing this vehicle's tare weight.

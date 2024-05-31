@@ -13,8 +13,15 @@ public class GreenSpace implements Serializable {
     private GreenSpaceType type;
     private String creatorName, creatorEmail;
 
-
-
+    /**
+     * Constructor for a new GreenSpace object.
+     * This method will throw an IllegalArgumentException if any field is null or blank
+     * or the area is below or equal to zero.
+     * @param name The String representation of the green space's name.
+     * @param address The String representation of the green space's address.
+     * @param area An int representing the green space's area in hectares.
+     * @param type The type of the green space, expressed with a GreenSpaceType enumerator.
+     */
     public GreenSpace(String name, String address, int area, GreenSpaceType type) {
         if(name == null || address == null || type == null){
             throw new IllegalArgumentException("Null fields not allowed.");
@@ -40,6 +47,12 @@ public class GreenSpace implements Serializable {
         }
     }
 
+    /**
+     * Checks if this green space is equal to another.
+     * Two green spaces are considered the same if their name or address is the same.
+     * @param o The green space to compare against.
+     * @return A boolean value representing if the green spaces are the same.
+     */
     @Override
     public boolean equals(Object o){
         if (!(o instanceof GreenSpace)){
@@ -52,27 +65,54 @@ public class GreenSpace implements Serializable {
         }return false;
     }
 
+    /**
+     * Gets the green space's type.
+     * @return A GreenSpaceType enumerator representing this green space's type.
+     */
     public GreenSpaceType getType() {
         return type;
     }
 
+    /**
+     * Gets the green space's area in hectares.
+     * @return An int value representing this green space's area.
+     */
     public int getArea() {
         return area;
     }
 
+    /**
+     * Gets the green space's name.
+     * @return A String representing this green space's name.
+     */
     public String getName() {
         return name;
     }
 
+    /**
+     * Gets the green space's address.
+     * @return A String representing this green space's address.
+     */
     public String getAddress() {
         return address;
     }
 
+    /**
+     * Retuns the String representation of this green space.
+     * @return The String representation of this green space.
+     */
     @Override
     public String toString() {
         return name;
     }
 
+    /**
+     * Checks if this green space was registered on the platform (and therefore is managed by)
+     * the user identified using the name and email parameters.
+     * @param name The name of the user to check for.
+     * @param email The email of the user to check for.
+     * @return A boolean value representing if the green space is managed by the specified user.
+     */
     public boolean isCreatedBy(String name, String email) {
         if(name.equalsIgnoreCase(creatorName) && email.equalsIgnoreCase(creatorEmail)){
             return true;

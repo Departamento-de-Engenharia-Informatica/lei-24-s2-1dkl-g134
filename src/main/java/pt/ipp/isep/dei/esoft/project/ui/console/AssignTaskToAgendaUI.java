@@ -89,7 +89,7 @@ public class AssignTaskToAgendaUI implements Runnable {
 
     public String requestDate(){
         Scanner input = new Scanner(System.in);
-        System.out.println("Date (YYYY/MM/DD, with leading zeros): ");
+        System.out.println("Start date (YYYY/MM/DD, with leading zeros): ");
         return input.nextLine();
     }
 

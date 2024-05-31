@@ -14,7 +14,7 @@ class VehicleRepositoryTest {
     void ensureNewVehicleSuccessfullyAdded() {
         VehicleRepository VehicleRepository = new VehicleRepository();
         assertTrue(VehicleRepository.add("Ford", "T", 5000, 2500.0,750,
-                "2010/04/25", "2009/04/25", 500, "H3LL0", "Car").isPresent());
+                "2010/04/25", "2009/04/25", 500, "45-50-DL", "Car").isPresent());
     }
 
     @Test
@@ -28,9 +28,9 @@ class VehicleRepositoryTest {
         //Arrange
         VehicleRepository VehicleRepository = new VehicleRepository();
         Vehicle Vehicle = new Vehicle("Ford", "T", 5000, 2500.0,750,
-                "2010/04/25", "2009/04/25", 500, "H3LL0", "Car");
+                "2010/04/25", "2009/04/25", 500, "45-50-DL", "Car");
         VehicleRepository.add("Ford", "T", 5000, 2500.0,750,
-                "2010/04/25", "2009/04/25", 500, "H3LL0", "Car");
+                "2010/04/25", "2009/04/25", 500, "45-50-DL", "Car");
         int expectedSize = 1;
 
         //Act
@@ -47,11 +47,11 @@ class VehicleRepositoryTest {
         VehicleRepository VehicleRepository = new VehicleRepository();
         //Add the first task
         VehicleRepository.add("Ford", "T", 5000, 2500.0,750,
-                "2010/04/25", "2009/04/25", 500, "H3LL0", "Car");
+                "2010/04/25", "2009/04/25", 500, "45-50-DL", "Car");
 
         //Act
         Optional<Vehicle> duplicateVehicle = VehicleRepository.add("Ford", "T", 5000, 2500.0,750,
-                "2010/04/25", "2009/04/25", 500, "H3LL0", "Car");
+                "2010/04/25", "2009/04/25", 500, "45-50-DL", "Car");
 
         //Assert
         assertTrue(duplicateVehicle.isEmpty());
@@ -63,11 +63,11 @@ class VehicleRepositoryTest {
         VehicleRepository VehicleRepository = new VehicleRepository();
         //Add the first task
         VehicleRepository.add("Ford", "T", 5000, 2500.0,750,
-                "2010/04/25", "2009/04/25", 500, "H3LL0", "Car");
+                "2010/04/25", "2009/04/25", 500, "45-50-DL", "Car");
 
         //Act
         Optional<Vehicle> result = VehicleRepository.add("Ford", "X", 5000, 2500.0,1000,
-                "2010/04/25", "2009/04/25", 750, "G00DBY3", "Truck");
+                "2010/04/25", "2009/04/25", 750, "46-51-LL", "Truck");
 
         //Assert
         assertTrue(result.isPresent());
