@@ -5,43 +5,45 @@
 
 ### 1.1. User Story Description
 
-As a Green Space Manager, I want to know which piece(s) of equipment is/are used in each day.
-
+As a GSM, I want to assign one or more vehicles to an entry in the Agenda.
 ### 1.2. Customer Specifications and Clarifications 
 
 **From the specifications document:**
 
-> Consider that the park has the following equipment: walking paths, children’s playground, picnic area, and exercise machines (gymnastics equipment). At the park exit there is an electronic device with a list of all the equipment, in which the user(s) must indicate the equipment they used that day.
-
-> In the file ”EquipmentUsed.csv” the choices of 1000 users are recorded. Make a pie chart representing, in percentage, the use of each piece of equipment.
+> The Agenda is made
+up of entries that relate to a task (which was previously in the To-Do List),
+the team that will carry out the task, the vehicles/equipment assigned to
+the task, expected duration, and the status (Planned, Postponed, Canceled,
+Done).
 
 **From the client clarifications:**
 
-> **Question:** None.
+> **Question:** should each GSM only be able to assign vehicles to its own entries or every GSM can assign vehicles to every entry, even if the green space associated with the task is not registered with their email?
 >
-> **Answer:** None.
+> **Answer:** For the sake of simplicity, you can assume that GSM will only manage its Agenda Entries.
 
 ### 1.3. Acceptance Criteria
 
-* **AC1:** The pie chart is successfully created, accurately represents the registered data, and is presented to the user.
+* **AC1:** None.
 
 ### 1.4. Found out Dependencies
 
-* None.
+* There is a dependency on the US22 -Add New Entry in the Agenda and on the US006 - Register a Vehicle
 
 ### 1.5 Input and Output Data
 
 **Input Data:**
 
-* None
+* Selected Data:
+    * Vehicle
+    * Task
 
 **Output Data:**
 
-* Pie chart representing, in percentage, the data available in the EquipmentUsed.csv file.
-
+* Success or failure message indicating the outcome of the assignment operation.
 ### 1.6. System Sequence Diagram (SSD)
 
-![System Sequence Diagram](svg/us010-system-sequence-diagram-main-solution.svg)
+![System Sequence Diagram](svg/us026-system-sequence-diagram-main-solution.svg)
 
 ### 1.7 Other Relevant Remarks
 

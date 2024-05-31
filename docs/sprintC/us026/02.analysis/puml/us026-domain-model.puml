@@ -1,0 +1,44 @@
+@startuml
+skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+
+left to right direction
+skinparam classAttributeIconSize 0
+
+hide circle
+hide methods
+
+
+class GreenSpace{
+    local
+    address
+    area
+}
+
+class "TaskEntry" {
+    -title
+    -description
+    -urgencyLevel
+    -expectedDuration
+    -state
+    -greenSpace
+}
+class GreenSpaceManager {
+    name
+    email
+    phone
+}
+
+class vehicle{
+    -plate
+    -model
+    -brand
+}
+
+
+GreenSpace "1" -- "*" "TaskEntry" : has >
+GreenSpaceManager "1" - "*" GreenSpace : manages >
+GreenSpace "1" -- "*" vehicle : has >
+"TaskEntry" "1" -- "*" vehicle : needs >
+@enduml
