@@ -1,5 +1,6 @@
 package pt.ipp.isep.dei.esoft.project.repository;
 
+import pt.ipp.isep.dei.esoft.project.application.session.ApplicationSession;
 import pt.ipp.isep.dei.esoft.project.customexceptions.CollaboratorNotFoundException;
 import pt.ipp.isep.dei.esoft.project.customexceptions.InvalidRoleException;
 import pt.ipp.isep.dei.esoft.project.domain.*;
@@ -79,14 +80,15 @@ public class AgendaRepository implements Serializable {
     }
 
     /**
-     * Gets the list of all tasks currently in a "PLANNED" or "POSTPONED" state.
+     * Gets the list of all tasks currently in a "PLANNED" or "POSTPONED" state whose
+     * assigned green space is managed by the current logged-in user.
      * @return An Optional object containing the list of all tasks in a "PLANNED" or "POSTPONED"
-     * state. If none is found, an empty Optional object instead.
+     * state managed by the user. If none is found, an empty Optional object instead.
      */
     public Optional<ArrayList<TaskEntry>> getPlannedAndPostponedTasks() {
         ArrayList<TaskEntry> currentTasks = new ArrayList<>();
         for (TaskEntry taskEntry : agenda) {
-            if (taskEntry.getState() == State.PLANNED || taskEntry.getState() == State.POSTPONED) {
+            if ((taskEntry.getState() == State.PLANNED || taskEntry.getState() == State.POSTPONED) && taskEntry.getGreenSpaceObject().isCreatedBy(ApplicationSession.getInstance().getCurrentSession().getUserName(), ApplicationSession.getInstance().getCurrentSession().getUserEmail())) {
                 currentTasks.add(taskEntry);
             }
         }
@@ -184,7 +186,8 @@ public class AgendaRepository implements Serializable {
      * CollaboratorRepository.getCurrentUserCollaborator() method, and throws a
      * CollaboratorNotFound exception if no collaborator associated with the current logged-in
      * user account is found. It also throws an IllegalArgumentException if it receives any null
-     * fields or if the second date is before the first date.
+     * fields or if the second date is before the first date, or for any reason outlined in the
+     * CustomDate constructor.
      * @param firstDate The former of the two dates to limit the search by.
      * @param secondDate The latter of the two dates to limit the search by.
      * @return An Optional object containing the list of all tasks that fit the criteria of this method.

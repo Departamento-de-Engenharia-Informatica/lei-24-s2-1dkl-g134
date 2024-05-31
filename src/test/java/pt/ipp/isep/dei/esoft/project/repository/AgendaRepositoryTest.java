@@ -18,6 +18,13 @@ public class AgendaRepositoryTest {
     variable in Bootstrap to 9 and the workHoursEnd variable to 17.
      */
 
+    /*
+    ---------------------- NOTE ----------------------------
+    Some functions are not being tested. This is because the functions omitted from this file
+    require session information that is not available during unit tests, and are thus impossible
+    to run on a unit test format.
+     */
+
     @Test
     void ensureTaskAddedSuccessfully(){
         AgendaRepository agendaRepository = new AgendaRepository();

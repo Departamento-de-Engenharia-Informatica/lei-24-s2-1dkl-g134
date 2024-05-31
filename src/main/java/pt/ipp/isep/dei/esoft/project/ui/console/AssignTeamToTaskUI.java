@@ -41,14 +41,14 @@ public class AssignTeamToTaskUI implements Runnable {
     }
 
     /**
-     * Requests the collaborator to assign skills to.
-     * @return The collaborator to assign skills to.
+     * Requests the task to assign a team to.
+     * @return The selected task.
      */
     private TaskEntry requestTaskEntry(){
         Scanner input = new Scanner(System.in);
         Optional<ArrayList<TaskEntryDTO>> taskEntries = controller.getPlannedAndPostponedTasks();
         if(taskEntries.isEmpty()){
-            System.out.println("Error: No tasks. Team assignment aborted.");
+            System.out.println("Error: No tasks in the agenda for a green space managed by you. Team assignment aborted.");
             return null;
         }
         System.out.println("Choose a task from the following list (Title | Description):\n");
@@ -73,8 +73,8 @@ public class AssignTeamToTaskUI implements Runnable {
     }
 
     /**
-     * Requests the list of skills to assign.
-     * @return The list of skills to assign.
+     * Requests the team to assign.
+     * @return The team to assign.
      */
     private Team requestTeam(){
         Scanner input = new Scanner(System.in);

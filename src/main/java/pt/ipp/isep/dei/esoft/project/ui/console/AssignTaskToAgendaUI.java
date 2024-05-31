@@ -17,6 +17,9 @@ public class AssignTaskToAgendaUI implements Runnable {
     private String date, time;
     private AssignTaskToAgendaController assignTaskToAgendaController = new AssignTaskToAgendaController();
 
+    /**
+     * Runs this functionality.
+     */
     public void run(){
         System.out.println("\n >>>>>>>>>> ASSIGN TASK TO AGENDA <<<<<<<<<< \n");
 
@@ -28,19 +31,32 @@ public class AssignTaskToAgendaUI implements Runnable {
             break;
         }
     }
+
+    /**
+     * Requests all data and assigns it to its respective variables.
+     */
     public void requestData(){
         taskEntry = requestTaskEntry();
         if(taskEntry == null){return;}
         date = requestDate();
         time = requestTime();
     }
+
+    /**
+     * Confirm user inputs and selections.
+     * @return A boolean value describing if the user confirms their selection.
+     */
     public boolean confirmData(){
         System.out.println("\n>>>>>>>>>> ASSIGNMENT INFORMATION <<<<<<<<<< \n");
         System.out.println("Task: "+ taskEntry.toString());
-        System.out.println("Date: "+ date);
-        System.out.println("Time: "+ time);
+        System.out.println("Start Date: "+ date);
+        System.out.println("Start Time: "+ time);
         return Utils.confirm("Do you wish to proceed? (s or n)");
     }
+
+    /**
+     * Submits the inputted data and provides the respective feedback.
+     */
     public void submitData(){
         try{
             TaskEntryDTO taskEntryDTO = new TaskEntryDTO();
@@ -59,11 +75,15 @@ public class AssignTaskToAgendaUI implements Runnable {
         }
     }
 
+    /**
+     * Requests the task to assign to the agenda.
+     * @return The selected task.
+     */
     private TaskEntry requestTaskEntry(){
         Scanner input = new Scanner(System.in);
         Optional<ArrayList<TaskEntryDTO>> taskEntries = assignTaskToAgendaController.getPendingTasks();
         if(taskEntries.isEmpty()){
-            System.out.println("Error: No pending tasks entries. Task assignment to Agenda aborted.");
+            System.out.println("Error: No pending tasks for a green space managed by you. Task assignment to Agenda aborted.");
             return null;
         }
         System.out.println("Choose a task from the following list:\n");
@@ -87,15 +107,33 @@ public class AssignTaskToAgendaUI implements Runnable {
         return taskEntries.get().get(option-1).attachedTaskEntry;
     }
 
+    /**
+     * Requests the task's start date.
+     * @return The task's start date.
+     */
     public String requestDate(){
         Scanner input = new Scanner(System.in);
         System.out.println("Start date (YYYY/MM/DD, with leading zeros): ");
         return input.nextLine();
     }
 
+    /**
+     * Requests the task's start time.
+     * @return The task's start time.
+     */
     public String requestTime(){
         Scanner input = new Scanner(System.in);
-        System.out.println("Starting hour (00-23, with leading zeros): ");
-        return input.nextLine()+":00";
+        while(true){
+            try{
+                System.out.println("Starting hour (00-23, with leading zeros): ");
+                String hour = input.nextLine();
+                int hourInt = Integer.parseInt(hour);
+                return hour+":00";
+            }catch(Exception e){
+                System.out.println("Hour value must be a number.");
+            }
+        }
+
+
     }
 }

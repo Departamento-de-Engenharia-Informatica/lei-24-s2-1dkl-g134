@@ -8,4 +8,9 @@ import java.util.ArrayList;
 public class TeamDTO {
     public ArrayList<Collaborator> teamMembers;
     public Team attachedTeam;
+
+    @Override
+    public boolean equals(Object o) {
+        return attachedTeam.equals(o);
+    }
 }

@@ -19,4 +19,9 @@ public class TaskEntryDTO {
     public CustomTime startTime = null, endTime = null;
     public String startDateStringForm = null, startTimeStringForm = null;
     public TaskEntry attachedTaskEntry = null;
+
+    @Override
+    public boolean equals(Object o) {
+        return attachedTaskEntry.equals(o);
+    }
 }

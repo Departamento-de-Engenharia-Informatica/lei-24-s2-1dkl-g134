@@ -42,14 +42,14 @@ public class AssignVehiclesToTaskUI implements Runnable {
     }
 
     /**
-     * Requests the collaborator to assign skills to.
-     * @return The collaborator to assign skills to.
+     * Requests the task to assign vehicles to.
+     * @return The selected task.
      */
     private TaskEntry requestTaskEntry(){
         Scanner input = new Scanner(System.in);
         Optional<ArrayList<TaskEntryDTO>> taskEntries = controller.getPlannedAndPostponedTasks();
         if(taskEntries.isEmpty()){
-            System.out.println("Error: No tasks. Vehicle assignment aborted.");
+            System.out.println("Error: No tasks in the agenda for a green space managed by you. Vehicle assignment aborted.");
             return null;
         }
         System.out.println("Choose a task from the following list (Title | Description):\n");
@@ -74,8 +74,8 @@ public class AssignVehiclesToTaskUI implements Runnable {
     }
 
     /**
-     * Requests the list of skills to assign.
-     * @return The list of skills to assign.
+     * Requests the list of vehicles to assign.
+     * @return The list of vehicles to assign.
      */
     private ArrayList<Vehicle> requestVehicles(){
         ArrayList<Vehicle> userVehicleSelection = new ArrayList<>();
@@ -93,7 +93,7 @@ public class AssignVehiclesToTaskUI implements Runnable {
         while(true){
             System.out.println("Choose vehicles from the following list (to remove a selected vehicle, choose it again):\n");
             for(int i = 0; i < vehicles.get().size(); i++){
-                if(userVehicleSelection.contains(vehicles.get().get(i))){
+                if(userVehicleSelection.contains(vehicles.get().get(i).attachedVehicle)){
                     System.out.println((i+1) + "- "+vehicles.get().get(i).attachedVehicle.toString()+" (Selected)");
                 }else{
                     System.out.println((i+1) + "- "+vehicles.get().get(i).attachedVehicle.toString());

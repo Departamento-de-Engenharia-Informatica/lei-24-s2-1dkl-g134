@@ -9,4 +9,9 @@ public class GreenSpaceDTO {
     public int area;
     public GreenSpaceType type;
     public GreenSpace attachedGreenSpace;
+
+    @Override
+    public boolean equals(Object o) {
+        return attachedGreenSpace.equals(o);
+    }
 }

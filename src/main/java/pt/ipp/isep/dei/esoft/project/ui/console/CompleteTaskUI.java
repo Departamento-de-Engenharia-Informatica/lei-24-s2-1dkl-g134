@@ -13,6 +13,9 @@ public class CompleteTaskUI implements Runnable {
     private TaskEntry taskEntry = null;
     private CompleteTaskController completeTaskController = new CompleteTaskController();
 
+    /**
+     * Runs this functionality.
+     */
     public void run() {
         System.out.println("\n >>>>>>>>>> COMPLETE TASK <<<<<<<<<< \n");
 
@@ -28,17 +31,25 @@ public class CompleteTaskUI implements Runnable {
             break;
         }
     }
+
+    /**
+     * Requests all data and assigns it to its respective variables.
+     */
     private void requestData() {
         taskEntry = requestTaskEntry();
     }
 
+    /**
+     * Requests the task to complete.
+     * @return The selected task.
+     */
     private TaskEntry requestTaskEntry() {
         Scanner input = new Scanner(System.in);
         Optional<ArrayList<TaskEntryDTO>> taskEntries = null;
         try{
             taskEntries = completeTaskController.getPlannedAndPostponedTasksBelongingToCurrentUser();
         }catch(Exception e){
-            System.out.println("Error encountered. Task completion aborted.");
+            System.out.println("Error on getting your assigned tasks. Task completion aborted.");
             System.out.println(e.getMessage());
         }
         if (taskEntries.isEmpty()) {
@@ -66,12 +77,19 @@ public class CompleteTaskUI implements Runnable {
         return taskEntries.get().get(option - 1).attachedTaskEntry;
     }
 
+    /**
+     * Confirm user inputs and selections.
+     * @return A boolean value describing if the user confirms their selection.
+     */
     private boolean confirmData() {
         System.out.println("\n>>>>>>>>>> ASSIGNMENT INFORMATION <<<<<<<<<< \n");
         System.out.println("\nComplete the task " + taskEntry.toString());
         return Utils.confirm("Do you wish to proceed? (s or n)");
     }
 
+    /**
+     * Submits the inputted data and provides the respective feedback.
+     */
     private void submitData() {
         try {
             Optional<TaskEntry> completedTask = completeTaskController.completeTask(taskEntry);

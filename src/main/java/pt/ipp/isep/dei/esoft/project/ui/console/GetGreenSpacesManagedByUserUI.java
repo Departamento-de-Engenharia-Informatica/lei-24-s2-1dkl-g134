@@ -12,6 +12,9 @@ public class GetGreenSpacesManagedByUserUI implements Runnable {
 
     private GetGreenSpacesManagedByUserController controller = new GetGreenSpacesManagedByUserController();
 
+    /**
+     * Runs this functionality.
+     */
     @Override
     public void run() {
         System.out.println("\n >>>>>>>>>> LIST OF GREEN SPACES MANAGED BY YOU <<<<<<<<<< \n");
@@ -19,14 +22,26 @@ public class GetGreenSpacesManagedByUserUI implements Runnable {
         System.out.println("Your name is: "+ ApplicationSession.getInstance().getCurrentSession().getUserName());
         System.out.println("Your email is: "+ ApplicationSession.getInstance().getCurrentSession().getUserEmail());
 
-
-        Optional<ArrayList<GreenSpaceDTO>> greenSpaces = controller.getGreenSpacesManagedByCurrentUser();
+        Optional<ArrayList<GreenSpaceDTO>> greenSpaces = Optional.empty();
+        try{
+            greenSpaces = controller.getGreenSpacesManagedByCurrentUser();
+        }catch(Exception e){
+            System.out.println("Error on getting green spaces managed by you!");
+            System.out.println(e.getMessage());
+            return;
+        }
 
         if (greenSpaces.isEmpty()) {
             System.out.println("You do not manage any green spaces.");
         } else {
-
-            String sortingAlgorithm = ApplicationSession.getInstance().getProperties().getProperty("Sorting.Algorithm");
+            String sortingAlgorithm = "";
+            try{
+                sortingAlgorithm = ApplicationSession.getInstance().getProperties().getProperty("Sorting.Algorithm");
+            }catch(Exception e){
+                System.out.println("Error on getting the sorting algorithm defined in the configuration file!");
+                System.out.println(e.getMessage());
+                return;
+            }
             if(sortingAlgorithm == null){
                 System.out.println("Error: Sorting algorithm not defined.");
                 System.out.println("Cannot list green spaces without a sorting algorithm. Aborting list.");
@@ -53,10 +68,20 @@ public class GetGreenSpacesManagedByUserUI implements Runnable {
         }
     }
 
+    /**
+     * Performs the default java collections sort method on a list of green spaces,
+     * sorting them in reverse order by their area.
+     * @param greenSpaces The list of green spaces to sort.
+     */
     private void defaultSort(ArrayList<GreenSpaceDTO> greenSpaces){
         greenSpaces.sort(Comparator.comparingInt((GreenSpaceDTO o) -> o.area).reversed());
     }
 
+    /**
+     * Performs a reverse bubble sort by area on the provided list of green spaces.
+     * @param greenSpaces The list of green spaces to sort.
+     * @return The sorted list of green spaces.
+     */
     private ArrayList<GreenSpaceDTO> bubbleSort(ArrayList<GreenSpaceDTO> greenSpaces){
         for(int i = 0; i < greenSpaces.size(); i++){
             for(int j = 0; j < greenSpaces.size()-i; j++){

@@ -19,8 +19,15 @@ public class AddTaskEntryUI implements Runnable {
     private int duration;
     private GreenSpace greenSpace;
 
+    /**
+     * Gets the controller for this functionality.
+     * @return This functionality's controller.
+     */
     public AddTaskEntryController getController() {return controller;}
 
+    /**
+     * Runs this functionality.
+     */
     public void run() {
         System.out.println("\n >>>>>>>>>> ADD TASK ENTRY <<<<<<<<<< \n");
 
@@ -35,6 +42,9 @@ public class AddTaskEntryUI implements Runnable {
         }
     }
 
+    /**
+     * Requests all data and assigns it to its respective variables.
+     */
     private void requestData() {
 
         greenSpace = requestGreenSpaceManagedByUser();
@@ -52,7 +62,10 @@ public class AddTaskEntryUI implements Runnable {
 
     }
 
-
+    /**
+     * Confirm user inputs and selections.
+     * @return A boolean value describing if the user confirms their selection.
+     */
     private boolean confirmData(){
         System.out.println("\n>>>>>>>>>> TASK ENTRY INFORMATION <<<<<<<<<< \n");
         System.out.println("Title: " + taskTitle);
@@ -62,38 +75,58 @@ public class AddTaskEntryUI implements Runnable {
         System.out.println("Duration: "+ duration+" hours");
         return Utils.confirm("Do you wish to proceed? (s or n)");
     }
-    private void submitData() {
-        TaskEntryDTO taskEntryDTO = new TaskEntryDTO();
-        taskEntryDTO.taskTitle = taskTitle;
-        taskEntryDTO.taskDescription = taskDescription;
-        taskEntryDTO.urgencyLevel = urgencyLevel;
-        taskEntryDTO.duration = duration;
-        taskEntryDTO.greenSpace = greenSpace;
-        Optional<TaskEntry> taskEntry = getController().addTaskEntry(taskEntryDTO);
 
-        if (taskEntry.isPresent()) {
-            System.out.println("\nTask Entry successfully created!");
-        } else {
-            System.out.println("\nTask Entry not created!");
+    /**
+     * Submits the inputted data and provides the respective feedback.
+     */
+    private void submitData() {
+        try{
+            TaskEntryDTO taskEntryDTO = new TaskEntryDTO();
+            taskEntryDTO.taskTitle = taskTitle;
+            taskEntryDTO.taskDescription = taskDescription;
+            taskEntryDTO.urgencyLevel = urgencyLevel;
+            taskEntryDTO.duration = duration;
+            taskEntryDTO.greenSpace = greenSpace;
+            Optional<TaskEntry> taskEntry = getController().addTaskEntry(taskEntryDTO);
+            if (taskEntry.isPresent()) {
+                System.out.println("\nTask Entry successfully created!");
+            } else {
+                System.out.println("\nTask Entry not created!");
+            }
+        }catch(Exception e){
+            System.out.println("Failed to create the task!");
+            System.out.println(e.getMessage());
         }
+
     }
 
-
+    /**
+     * Requests the task's title.
+     * @return The task's title.
+     */
     private String requestTaskTitle() {
         Scanner input = new Scanner(System.in);
         System.out.print("Task Title: ");
         return input.nextLine();
     }
 
+    /**
+     * Requests the task's description.
+     * @return The task's description.
+     */
     private String requestTaskDescription() {
         Scanner input = new Scanner(System.in);
         System.out.print("Task Description: ");
         return input.nextLine();
     }
 
+    /**
+     * Requests the task's urgency level.
+     * @return The task's urgency level.
+     */
     private urgencyLevel requestUrgencyLevel() {
         Scanner input = new Scanner(System.in);
-        ArrayList<urgencyLevel> allUrgencyLevels = urgencyLevel.getAllUrgencyLevels();
+        ArrayList<urgencyLevel> allUrgencyLevels = pt.ipp.isep.dei.esoft.project.domain.urgencyLevel.getAllUrgencyLevels();
         System.out.println("Choose a urgency level from the following list of their respective titles:\n");
         for(int i = 0; i < allUrgencyLevels.size(); i++){
             System.out.println((i+1) + "- "+allUrgencyLevels.get(i));
@@ -116,12 +149,27 @@ public class AddTaskEntryUI implements Runnable {
         return allUrgencyLevels.get(option-1);
     }
 
+    /**
+     * Requests the task's duration.
+     * @return The task's duration.
+     */
     private int requestTaskDuration() {
         Scanner input = new Scanner(System.in);
-        System.out.print("Task Duration (in hours): ");
-        return input.nextInt();
+        while(true){
+            try{
+                System.out.println("Task Duration (in hours): ");
+                return Integer.parseInt(input.nextLine());
+            }catch(Exception e){
+                System.out.println("Task Duration value must be a number.");
+            }
+        }
     }
 
+    /**
+     * Requests the task's green space, from a list of green spaces managed by the current
+     * logged-in user.
+     * @return The task's green space.
+     */
     private GreenSpace requestGreenSpaceManagedByUser() {
         Scanner input = new Scanner(System.in);
         Optional<ArrayList<GreenSpaceDTO>> greenSpacesManagedByUser = controller.getGreenSpacesManagedByCurrentUser();

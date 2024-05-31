@@ -40,15 +40,14 @@ public class CancelTaskUI implements Runnable {
     }
 
     /**
-     * Requests the collaborator to assign skills to.
-     *
-     * @return The collaborator to assign skills to.
+     * Requests the task to cancel.
+     * @return The selected task.
      */
     private TaskEntry requestTaskEntry() {
         Scanner input = new Scanner(System.in);
         Optional<ArrayList<TaskEntryDTO>> taskEntries = controller.getPlannedAndPostponedTasks();
         if (taskEntries.isEmpty()) {
-            System.out.println("Error: No tasks. Task cancellation aborted.");
+            System.out.println("Error: No tasks in the agenda for a green space managed by you. Task cancellation aborted.");
             return null;
         }
         System.out.println("Choose a task from the following list (Title | Description):\n");
@@ -74,7 +73,6 @@ public class CancelTaskUI implements Runnable {
 
     /**
      * Confirm user inputs and selections.
-     *
      * @return A boolean value describing if the user confirms their selection.
      */
     private boolean confirmData() {

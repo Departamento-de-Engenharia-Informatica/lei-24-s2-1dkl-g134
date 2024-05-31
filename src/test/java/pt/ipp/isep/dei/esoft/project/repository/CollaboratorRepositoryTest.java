@@ -12,6 +12,12 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class CollaboratorRepositoryTest {
 
+    /*
+    ----------------------------------- NOTE -----------------------------------------
+    The getCurrentUserCollaborator() method is not being tested as it requires session information
+    that would be unavailable in a unit test format.
+     */
+
     @Test
     void ensureNewCollaboratorSuccessfullyAdded() {
         CollaboratorRepository CollaboratorRepository = new CollaboratorRepository();

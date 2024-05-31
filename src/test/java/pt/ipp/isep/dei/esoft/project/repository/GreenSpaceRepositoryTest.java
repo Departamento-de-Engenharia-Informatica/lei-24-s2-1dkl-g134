@@ -10,6 +10,12 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class GreenSpaceRepositoryTest {
 
+    /*
+    ---------------------------- NOTE ------------------------------
+    The getGreenSpacesManagedByUser() method is not being tested, as it requires session
+    information that would be unavailable in a unit test format.
+     */
+
     @Test
     void ensureNewGreenSpaceSuccessfullyAdded() {
         GreenSpaceRepository greenSpaceRepository = new GreenSpaceRepository();

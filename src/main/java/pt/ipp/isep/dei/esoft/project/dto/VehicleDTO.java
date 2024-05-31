@@ -12,4 +12,9 @@ public class VehicleDTO {
     public String plateNumber;
     public String type;
     public Vehicle attachedVehicle;
+
+    @Override
+    public boolean equals(Object o) {
+        return attachedVehicle.equals(o);
+    }
 }

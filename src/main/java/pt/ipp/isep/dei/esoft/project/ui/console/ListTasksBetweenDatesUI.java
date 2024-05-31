@@ -24,6 +24,9 @@ public class ListTasksBetweenDatesUI implements Runnable {
     private ArrayList<State> stateFilters = new ArrayList<>();
     private ArrayList<State> stateList = new ArrayList<>();
 
+    /**
+     * Runs this functionality.
+     */
     public void run() {
         System.out.println("\n >>>>>>>>>>  LIST TASKS BETWEEN DATES <<<<<<<<<< \n");
 
@@ -95,15 +98,21 @@ public class ListTasksBetweenDatesUI implements Runnable {
         }
     }
 
+    /**
+     * Requests all data and assigns it to its respective variables.
+     */
     private void requestData() {
         Scanner input = new Scanner(System.in);
         System.out.print("First Date (YYYY/MM/DD, with leading zeros): ");
         firstDate = input.nextLine();
-        Scanner input2 = new Scanner(System.in);
         System.out.println("Second Date (YYYY/MM/DD, with leading zeros):");
         secondDate = input.nextLine();
     }
 
+    /**
+     * Confirm user inputs and selections.
+     * @return A boolean value describing if the user confirms their selection.
+     */
     private boolean confirmData() {
         System.out.println("\n >>>>>>>>>>  LIST INFORMATION <<<<<<<<<< \n");
         System.out.println("First Date: " + firstDate);
@@ -111,7 +120,11 @@ public class ListTasksBetweenDatesUI implements Runnable {
         return Utils.confirm("Do you wish to proceed? (s or n)");
     }
 
-
+    /**
+     * Sorts a list of task by their dates.
+     * @param taskEntries The list of tasks to sort.
+     * @return The sorted list of tasks.
+     */
     private ArrayList<TaskEntryDTO> sortTasks(ArrayList<TaskEntryDTO> taskEntries){
         for(int i = 0; i < taskEntries.size(); i++){
             for(int j = 0; j < taskEntries.size()-i; j++){
