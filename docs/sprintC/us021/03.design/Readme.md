@@ -17,7 +17,7 @@ _**Note that SSD - Alternative One is adopted.**_
 | Step 4 		      | ...displaying the form for the user to imput data?    | AddTaskEntryUI         | IE:Is responsible for interacting with the actor.                                                             |
 | Step 5		  	    | ...saving all data?                                   | TaskEntry              | IE: Has its own data.                                                                                         |
 | 			  	         | 	... validating all data (local validation)?          | TaskEntry              | IE: owns all its data.                                                                                        |
-| 			  	         | 	... validating all data (global validation)?         | ToDoListRepository     | IE: knows all tasks entries.                                                                                  |	| 	... saving the Created Check-up?                     | T                        | IE: owns all check-ups.                                                                                         |
+| 			  	         | 	... validating all data (global validation)?         | ToDoListRepository     | IE: knows all tasks entries.                                                                                  |
 | Step 6  		     | 	... informing operation success?                     | AddTaskEntryUI         | IE: is responsible for user interactions.                                                                     |
 ### Systematization ##
 
