@@ -12,6 +12,7 @@ public class Bootstrap implements Runnable {
     public static int workHoursStart = 9;
     public static int workHoursEnd = 17;
     public static int dailyWorkHours = workHoursEnd - workHoursStart;
+    public static String APP_TITLE = "GreenGuardian";
 
     //Add some task categories to the repository as bootstrap
     public void run() {
@@ -184,12 +185,12 @@ public class Bootstrap implements Runnable {
         VehicleRepository vehicleRepository = Repositories.getInstance().getVehicleRepository();
         CheckupRepository checkupRepository = Repositories.getInstance().getCheckupRepository();
         Vehicle vehicle = vehicleRepository.add("Ford", "T", 5000, 2500.0,3000,
-        "2010/04/25", "2009/04/25", 500, "H3LL0", "Car").get();
+        "2010/04/25", "2009/04/25", 500, "45-50-DL", "Car").get();
         vehicleRepository.add("Ford", "X", 5000, 2500.0,1000,
-        "2010/04/25", "2009/04/25", 750, "G00DBY3", "Truck");
+        "2010/04/25", "2009/04/25", 750, "46-51-LL", "Truck");
         vehicleRepository.add("The USSR", "Stalin", 5000, 2500.0,1000,
-        "2010/04/25", "2009/04/25", 1010, "CCCP", "Tank");
+        "2010/04/25", "2009/04/25", 1010, "44-49-XL", "Tank");
         vehicleRepository.add("The US", "F1", 5000, 2500.0,2000,
-        "2010/04/25", "2009/04/25", 5000, "0407", "Jet");
+        "2010/04/25", "2009/04/25", 5000, "04-07-US", "Jet");
     }
 }
