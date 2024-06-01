@@ -8,36 +8,27 @@ skinparam linetype orto
 
 
 class "GreenSpace" {
-    -name : String
-    -address : String
-    -area : int
-    -type : GreenSpaceType
-    -creatorName : String
-    -creatorEmail : String
-    +GreenSpace(name : String, address : String, area : int, type : GreenSpaceType)
-    +getType() : GreenSpaceType
-    +getArea() : int
-    +getName() : String
-    +getAddress() : String
-    +toString() : String
-    +isCreatedBy(name : String, email : String) : boolean
+    -name
+    -address
+    -area
+    -type
+
 }
 
 class "GreenSpaceType" {
     GARDEN
     MEDIUM_SIZE
     LARGE_SIZE
-    +getAllTypes() : ArrayList<GreenSpaceType>
 }
 
 class "RegisterGreenSpaceController" {
     -GreenSpaceRepository : GreenSpaceRepository
     +RegisterGreenSpaceController()
-    +registerGreenSpace(name : String, address : String, area : int, type : GreenSpaceType) : Optional<GreenSpace>
+    +registerGreenSpace(name,address ,area ,int,type )
 }
 
 class "GreenSpaceRepository" {
-    -greenSpaces : ArrayList<GreenSpace>
+
     +GreenSpaceRepository()
     +add(name : String, address : String, area : int, type : GreenSpaceType) : Optional<GreenSpace>
     +getGreenSpacesManagedByUser() : Optional<ArrayList<GreenSpace>>
@@ -52,32 +43,17 @@ class "GreenSpaceDTO" {
     +equals(Object o) : boolean
 }
 
-class "GreenSpaceMapper" {
-    +objectToDTO(greenSpace : GreenSpace) : GreenSpaceDTO
-    +DTOToObject(greenSpaceDTO : GreenSpaceDTO) : GreenSpace
-    +objectListToDTOList(greenSpaceList : Optional<ArrayList<GreenSpace>>) : Optional<ArrayList<GreenSpaceDTO>>
-    +getMapper() : GreenSpaceMapper
-}
+
 
 class "RegisterGreenSpaceUI" {
-    -name : String
-    -address : String
-    -area : int
-    -type : GreenSpaceType
+    -name
+    -address
+    -area
+    -type
     -registerGreenSpaceController : RegisterGreenSpaceController
     +getRegisterGreenSpaceController() : RegisterGreenSpaceController
 
 }
-
-RegisterGreenSpaceController ..> GreenSpaceRepository : greenSpaceRepository
-RegisterGreenSpaceController ..> GreenSpace : greenSpace
-GreenSpace ..> GreenSpaceRepository : exists in >
-RegisterGreenSpaceUI ..> RegisterGreenSpaceController : controller
-RegisterGreenSpaceUI ..> GreenSpaceDTO : greenSpaceDTO
-GreenSpaceMapper ..> GreenSpaceDTO : greenSpaceDTO
-GreenSpaceDTO ..> GreenSpaceMapper : mapper
-GreenSpaceMapper ..> GreenSpace : greenSpace
-GreenSpace ..> GreenSpaceMapper : mapper
 
 
 
@@ -89,8 +65,14 @@ class RegisterGreenSpaceUI {
 
 }
 
-RegisterGreenSpaceController --> GreenSpaceRepository
+
+RegisterGreenSpaceController ..> GreenSpace : greenSpace
+GreenSpace ..> GreenSpaceRepository : exists in >
+RegisterGreenSpaceUI ..> RegisterGreenSpaceController : owns
+RegisterGreenSpaceUI ..> GreenSpaceDTO : greenSpaceDTO
+GreenSpace ..> GreenSpaceType : owns
 RegisterGreenSpaceController --> GreenSpace
 GreenSpaceRepository --> GreenSpace
 RegisterGreenSpaceUI --> RegisterGreenSpaceController
+
 @enduml
