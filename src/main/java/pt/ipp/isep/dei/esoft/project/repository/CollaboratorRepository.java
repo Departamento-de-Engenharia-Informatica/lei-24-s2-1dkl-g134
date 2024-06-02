@@ -329,9 +329,9 @@ public class CollaboratorRepository implements Serializable {
 
     /**
      * Searches for, and returns, the collaborator object associated with the currently
-     * logged-in user. This method uses the current user session's e-mail and name as
-     * identifiers, and checks every collaborator for one with an identical e-mail and equal
-     * (not case-sensitive) name. This method will throw an InvalidRoleException if the current user
+     * logged-in user. This method uses the current user session's e-mail as an
+     * identifier, and checks every collaborator for one with an identical e-mail.
+     * This method will throw an InvalidRoleException if the current user
      * session is not a collaborator, and will return an empty Optional object if no matching
      * collaborator is found.
      * @return The Collaborator object corresponding to the current user session. If none is
@@ -341,10 +341,9 @@ public class CollaboratorRepository implements Serializable {
         if(!ApplicationSession.getInstance().getCurrentSession().isLoggedInWithRole(AuthenticationController.ROLE_COLLAB)){
             throw new InvalidRoleException("Attempting to search for current collaborator with non-collaborator account");
         }
-        String username = ApplicationSession.getInstance().getCurrentSession().getUserName();
         String useremail = ApplicationSession.getInstance().getCurrentSession().getUserEmail();
         for(Collaborator collaborator : collaborators){
-            if(username.equalsIgnoreCase(collaborator.getName()) && useremail.equals(collaborator.getEmail())){
+            if(useremail.equals(collaborator.getEmail())){
                 return Optional.of(collaborator);
             }
         }

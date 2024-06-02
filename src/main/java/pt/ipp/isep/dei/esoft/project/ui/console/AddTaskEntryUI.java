@@ -174,7 +174,7 @@ public class AddTaskEntryUI implements Runnable {
         Scanner input = new Scanner(System.in);
         Optional<ArrayList<GreenSpaceDTO>> greenSpacesManagedByUser = controller.getGreenSpacesManagedByCurrentUser();
         if(greenSpacesManagedByUser.isEmpty()){
-            System.out.println("No green spaces managed by you were found. Task creation aborted..");
+            System.out.println("No green spaces managed by you were found. Task creation aborted.");
             return null;
         }
         System.out.println("Choose a green space from the following list of their respective titles:\n");

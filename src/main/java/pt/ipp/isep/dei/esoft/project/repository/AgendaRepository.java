@@ -88,7 +88,7 @@ public class AgendaRepository implements Serializable {
     public Optional<ArrayList<TaskEntry>> getPlannedAndPostponedTasks() {
         ArrayList<TaskEntry> currentTasks = new ArrayList<>();
         for (TaskEntry taskEntry : agenda) {
-            if ((taskEntry.getState() == State.PLANNED || taskEntry.getState() == State.POSTPONED) && taskEntry.getGreenSpaceObject().isCreatedBy(ApplicationSession.getInstance().getCurrentSession().getUserName(), ApplicationSession.getInstance().getCurrentSession().getUserEmail())) {
+            if ((taskEntry.getState() == State.PLANNED || taskEntry.getState() == State.POSTPONED) && taskEntry.getGreenSpaceObject().isCreatedBy(ApplicationSession.getInstance().getCurrentSession().getUserEmail())) {
                 currentTasks.add(taskEntry);
             }
         }
@@ -110,16 +110,18 @@ public class AgendaRepository implements Serializable {
      */
     public Optional<ArrayList<TaskEntry>> getPlannedAndPostponedTasksBelongingToCurrentUser() throws InvalidRoleException, CollaboratorNotFoundException {
         ArrayList<TaskEntry> collaboratorTasks = new ArrayList<>();
-        Optional<ArrayList<TaskEntry>> plannedAndPostponedTasks = getPlannedAndPostponedTasks();
-        if(plannedAndPostponedTasks.isEmpty()){
+        if(agenda.isEmpty()){
             return Optional.empty();
         }
         Optional<Collaborator> currentCollaborator = Repositories.getInstance().getCollaboratorRepository().getCurrentUserCollaborator();
         if (currentCollaborator.isEmpty()) {
             throw new CollaboratorNotFoundException("No collaborator corresponding to your email and name was found in the system.");
         }
-        for(TaskEntry taskEntry : plannedAndPostponedTasks.get()){
-            if(taskEntry.getAssignedTeam().contains(currentCollaborator.get())){
+        for(TaskEntry taskEntry : agenda){
+            if(taskEntry.getAssignedTeam() == null){
+                continue;
+            }
+            if(taskEntry.getAssignedTeam().contains(currentCollaborator.get()) && (taskEntry.getState() == State.PLANNED || taskEntry.getState() == State.POSTPONED)){
                 collaboratorTasks.add(taskEntry);
             }
         }
@@ -208,6 +210,9 @@ public class AgendaRepository implements Serializable {
             throw new CollaboratorNotFoundException("No collaborator corresponding to your email and name was found in the system.");
         }
         for (TaskEntry taskEntry : agenda) {
+            if(taskEntry.getAssignedTeam() == null){
+                continue;
+            }
             if (taskEntry.getAssignedTeam().contains(currentCollaborator.get())) {
                 if (taskEntry.getStartDate().isAfterDate(start) && !taskEntry.getStartDate().isAfterDate(end)) {
                     foundTasks.add(taskEntry);

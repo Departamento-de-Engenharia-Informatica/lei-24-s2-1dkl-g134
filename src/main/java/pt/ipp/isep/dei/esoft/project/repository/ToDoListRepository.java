@@ -43,7 +43,7 @@ public class ToDoListRepository implements Serializable {
 
     /**
      * Gets the list of all tasks currently not part of the agenda assigned to a green space
-     * managed by the current logged-in user
+     * managed by the current logged-in user.
      * More formally, this is the list of all tasks fitting the criteria above whose state
      * is "PENDING".
      * @return An Optional object containing the list of all pending tasks managed by the user.
@@ -52,7 +52,7 @@ public class ToDoListRepository implements Serializable {
     public Optional<ArrayList<TaskEntry>> getPendingTasks(){
         ArrayList<TaskEntry> pendingTasks = new ArrayList<>();
         for(TaskEntry taskEntry : toDoList){
-            if(taskEntry.getState() == State.PENDING && taskEntry.getGreenSpaceObject().isCreatedBy(ApplicationSession.getInstance().getCurrentSession().getUserName(), ApplicationSession.getInstance().getCurrentSession().getUserEmail())){
+            if(taskEntry.getState() == State.PENDING && taskEntry.getGreenSpaceObject().isCreatedBy(ApplicationSession.getInstance().getCurrentSession().getUserEmail())){
                 pendingTasks.add(taskEntry);
             }
         }

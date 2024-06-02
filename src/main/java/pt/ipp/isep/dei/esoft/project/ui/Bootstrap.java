@@ -110,11 +110,11 @@ public class Bootstrap implements Runnable {
         Collaborator collaborator3 = collaboratorRepository.add("Exas", "2005/05/22", "2023/05/22", "Their house, duh",
         "960144802", "exas@is.real", "CC", "15017809", "256", job).get();
         Collaborator collaborator4 = collaboratorRepository.add("Stanley", "2005/05/22", "2023/05/22", "The bucket",
-        "960144802", "the@stanley.parable", "CC", "427", "256", job).get();
+        "960144802", "collab1@this.app", "CC", "427", "256", job).get();
         Collaborator collaborator5 = collaboratorRepository.add("Narrator", "2005/05/22", "2023/05/22", "Stanley",
         "960144802", "will@never.end", "CC", "8888", "256", job).get();
         Collaborator collaborator6 = collaboratorRepository.add("Bucket", "2005/05/22", "2023/05/22", "The universe",
-        "960144802", "the@reassurance.bucket", "CC", "3", "256", job).get();
+        "960144802", "collab2@this.app", "CC", "3", "256", job).get();
         Collaborator collaborator7 = collaboratorRepository.add("Coleman", "2005/05/22", "2023/05/22", "The girls and the gays",
         "960144802", "coleslaw@poeslaw.coleman", "CC", "1337", "256", job).get();
         Collaborator collaborator8 = collaboratorRepository.add("Daniel", "2005/05/22", "2023/05/22", "The Irish Casino",

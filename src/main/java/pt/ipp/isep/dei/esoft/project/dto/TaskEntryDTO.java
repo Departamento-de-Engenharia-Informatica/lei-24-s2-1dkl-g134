@@ -22,6 +22,6 @@ public class TaskEntryDTO {
 
     @Override
     public boolean equals(Object o) {
-        return attachedTaskEntry.equals(o);
+        return attachedTaskEntry.equals(((TaskEntryDTO)o).attachedTaskEntry);
     }
 }

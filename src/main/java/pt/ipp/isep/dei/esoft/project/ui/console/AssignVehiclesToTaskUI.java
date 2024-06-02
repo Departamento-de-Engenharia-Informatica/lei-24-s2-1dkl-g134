@@ -81,15 +81,21 @@ public class AssignVehiclesToTaskUI implements Runnable {
         ArrayList<Vehicle> userVehicleSelection = new ArrayList<>();
         Scanner input = new Scanner(System.in);
         Optional<ArrayList<VehicleDTO>> vehicles = controller.getVehicleList();
+        ArrayList<VehicleDTO> availableVehicles = new ArrayList<>();
         if(vehicles.isEmpty()){
             System.out.println("Error: No Vehicles. Vehicle assignment aborted.");
             return null;
         }
         for(VehicleDTO vehicle : vehicles.get()){
-            if(!controller.isVehicleAvailable(vehicle.attachedVehicle, taskEntry)){
-                vehicles.get().remove(vehicles.get().indexOf(vehicle));
+            if(controller.isVehicleAvailable(vehicle.attachedVehicle, taskEntry)){
+                availableVehicles.add(vehicle);
             }
         }
+        if(availableVehicles.isEmpty()){
+            System.out.println("Error: No available vehicles. Vehicle assignment aborted.");
+            return null;
+        }
+        vehicles = Optional.of(availableVehicles);
         while(true){
             System.out.println("Choose vehicles from the following list (to remove a selected vehicle, choose it again):\n");
             for(int i = 0; i < vehicles.get().size(); i++){

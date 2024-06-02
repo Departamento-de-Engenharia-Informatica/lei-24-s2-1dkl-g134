@@ -25,6 +25,7 @@ public class TaskEntryMapper {
         taskEntryDTO.endTime = taskEntry.getEndTime();
         taskEntryDTO.duration = taskEntry.getDuration();
         taskEntryDTO.greenSpaceDomainReturn = taskEntry.getGreenSpace();
+        taskEntryDTO.greenSpace = taskEntry.getGreenSpaceObject();
         taskEntryDTO.assignedTeam = taskEntry.getAssignedTeam();
         taskEntryDTO.assignedVehicles = taskEntry.getAssignedVehicles();
         return taskEntryDTO;

@@ -15,6 +15,6 @@ public class VehicleDTO {
 
     @Override
     public boolean equals(Object o) {
-        return attachedVehicle.equals(o);
+        return attachedVehicle.equals(((VehicleDTO)o).attachedVehicle);
     }
 }

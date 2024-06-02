@@ -11,6 +11,7 @@ import javafx.scene.control.Alert;
 import javafx.stage.Stage;
 import pt.ipp.isep.dei.esoft.project.application.controller.authorization.AuthenticationController;
 import pt.ipp.isep.dei.esoft.project.ui.Bootstrap;
+import pt.isep.lei.esoft.auth.mappers.dto.UserRoleDTO;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -27,12 +28,29 @@ public class LoginUI implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
     }
 
+    /**
+     * Attempts a login with the currently inserted username and password.
+     * Will show the user an alert if the credentials are invalid or if the user's role does not
+     * permit access to the GUI.
+     * Will redirect the user to the appropriate role's GUI otherwise.
+     */
     @FXML
     private void attemptLogin() {
         if(ctrl.doLogin(username.getText(), password.getText())) {
+            UserRoleDTO role = ctrl.getUserRoles().get(0);
+            if(!role.getId().equalsIgnoreCase(AuthenticationController.ROLE_GSM) && !role.getId().equalsIgnoreCase(AuthenticationController.ROLE_COLLAB) && !role.getId().equalsIgnoreCase(AuthenticationController.ROLE_ADMIN)){
+                AlertUI.createAlert(Alert.AlertType.ERROR, Bootstrap.APP_TITLE, "Error on login!",
+                        "Your account's role does not grant access to GUI functionalities!").show();
+                return;
+            }
             try{
                 Stage mainStage = new Stage();
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/MainMenu.fxml"));
+                FXMLLoader loader = null;
+                if(role.getId().equalsIgnoreCase(AuthenticationController.ROLE_COLLAB)){
+                    loader = new FXMLLoader(getClass().getResource("/fxml/MainMenuCollaborator.fxml"));
+                }else{
+                    loader = new FXMLLoader(getClass().getResource("/fxml/MainMenuGSM.fxml"));
+                }
                 Parent root = loader.load();
                 Scene scene = new Scene(root);
                 mainStage.setScene(scene);

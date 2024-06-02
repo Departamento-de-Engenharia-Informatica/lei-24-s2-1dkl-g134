@@ -11,7 +11,7 @@ public class GreenSpace implements Serializable {
     private String address;
     private int area;
     private GreenSpaceType type;
-    private String creatorName, creatorEmail;
+    private String creatorEmail;
 
     /**
      * Constructor for a new GreenSpace object.
@@ -39,10 +39,8 @@ public class GreenSpace implements Serializable {
         this.area = area;
         this.type = type;
         if(ApplicationSession.getInstance().getCurrentSession().getUserID() == null){
-            creatorName = null;
             creatorEmail = null;
         }else{
-            creatorName = ApplicationSession.getInstance().getCurrentSession().getUserName();
             creatorEmail = ApplicationSession.getInstance().getCurrentSession().getUserEmail();
         }
     }
@@ -108,13 +106,12 @@ public class GreenSpace implements Serializable {
 
     /**
      * Checks if this green space was registered on the platform (and therefore is managed by)
-     * the user identified using the name and email parameters.
-     * @param name The name of the user to check for.
+     * the user identified using the email parameter.
      * @param email The email of the user to check for.
      * @return A boolean value representing if the green space is managed by the specified user.
      */
-    public boolean isCreatedBy(String name, String email) {
-        if(name.equalsIgnoreCase(creatorName) && email.equalsIgnoreCase(creatorEmail)){
+    public boolean isCreatedBy(String email) {
+        if(email.equalsIgnoreCase(creatorEmail)){
             return true;
         }
         return false;

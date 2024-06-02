@@ -44,14 +44,14 @@ public class GreenSpaceRepository implements Serializable {
 
     /**
      * Gets the list of all green spaces that are managed by the current logged-in user.
-     * This method uses the name and email of the current logged-in user account as identifiers.
+     * This method uses the email of the current logged-in user account as an identifier.
      * @return An Optional object containing the list of all green spaces managed by the
      * current logged-in user. If none are found, an empty Optional object instead.
      */
     public Optional<ArrayList<GreenSpace>> getGreenSpacesManagedByUser(){
         ArrayList<GreenSpace> greenSpacesManagedByUser = new ArrayList<>();
          for (GreenSpace greenSpace : greenSpaces){
-             if(greenSpace.isCreatedBy(ApplicationSession.getInstance().getCurrentSession().getUserName(), ApplicationSession.getInstance().getCurrentSession().getUserEmail())){
+             if(greenSpace.isCreatedBy(ApplicationSession.getInstance().getCurrentSession().getUserEmail())){
                  greenSpacesManagedByUser.add(greenSpace);
              }
          }
