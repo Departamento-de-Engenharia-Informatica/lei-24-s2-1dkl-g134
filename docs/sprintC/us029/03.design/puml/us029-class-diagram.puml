@@ -1,0 +1,69 @@
+@startuml
+'skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+skinparam linetype polyline
+'skinparam linetype orto
+
+skinparam classAttributeIconSize 0
+
+'left to right direction
+
+class CompleteTaskUI{
+}
+
+
+class CompleteTaskController{
+-AgendaRepository agendaRepository
+    + CompleteTaskController(agendaRepository)
+    + completeTask(taskEntryDto)
+    + getPlannedAndPostponedTasksBelongingToCurrentUser()
+ }
+
+class Repositories {
+    - Repositories(): Repositories
+    + getInstance() : Repositories
+    + getAgendaRepository() : Repositories
+}
+
+
+class AgendaRepository {
+    + getPlannedAndPostponedTasksBelongingToCurrentUser()
+    + completeTask(taskEntry)
+
+}
+
+class  TaskEntry{
+        -title
+        -description
+        -urgencyLevel
+        -expectedDuration
+        -state
+        -greenSpace
+
+}
+
+class TaskEntryMapper{
++TaskEntryDto  toDTO(TaskEntry)
+}
+class TaskEntryDto{
++TaskEntry
+}
+
+
+CompleteTaskUI .>  CompleteTaskController
+CompleteTaskController ...r> Repositories : repositories
+CompleteTaskController ...> TaskEntryMapper : Mapper
+TaskEntryMapper ...> TaskEntryDto: TaskEntryDto
+TaskEntryMapper ...> TaskEntry
+CompleteTaskUI .> TaskEntryDto
+CompleteTaskController ..> TaskEntryDto
+Repositories ---> "1" AgendaRepository
+Repositories -> Repositories : instance
+Repositories "1" --> "*" TaskEntry
+
+AgendaRepository --> "*" TaskEntry: contains
+
+ CompleteTaskController ......>  TaskEntry : TaskEntry
+ CompleteTaskController ...> "1" AgendaRepository : AgendaRepository
+@enduml
