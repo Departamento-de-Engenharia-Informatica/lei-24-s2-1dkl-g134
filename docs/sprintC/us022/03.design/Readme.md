@@ -6,14 +6,19 @@
 
 _**Note that SSD - Alternative One is adopted.**_
 
-| Interaction ID  | Question: Which class is responsible for...          | Answer                              | Justification (with patterns)                                                                                 |
-|:----------------|:-----------------------------------------------------|:------------------------------------|:--------------------------------------------------------------------------------------------------------------|
-| Step 1  		      | 	... interacting with the actor?                     | GenerateMaintenanceReportUI         | Pure Fabrication: there is no reason to assign this responsibility to any existing class in the Domain Model. |
-| 			             | 	... coordinating the US?                            | GenerateMaintenanceReportController | Controller                                                                                                    |
-|                 | ...knowing the vehicles needing maintenance?         | VehicleRepository                   | IE: Knows all vehicle data and has methods to retrieve vehicles needing maintenance.                          |
-| 	               | 	...formatting the report data?                      | GenerateMaintenanceReportUI         | Pure Fabrication: there is no reason to assign this responsibility to any existing class in the Domain Model. |
-| 	        Step 2 | 	...generating the list vehicles in need of checkup? | VehicleRepository                   | IE: Knows all vehicles and respective data.                                                                   |
-|                 | 	... displaying the generated list                   | GenerateMaintenanceReportUI         | Pure Fabrication: there is no reason to assign this responsibility to any existing class in the Domain Model. |
+| Interaction ID | Question: Which class is responsible for...           | Answer                       | Justification (with patterns)                                                                                 |
+|:---------------|:------------------------------------------------------|:-----------------------------|:--------------------------------------------------------------------------------------------------------------|
+| Step 1  		     | 	... interacting with the actor?                      | AssignTaskToAgendaUI         | Pure Fabrication: there is no reason to assign this responsibility to any existing class in the Domain Model. |
+| 			            | 	... coordinating the US?                             | AssignTaskToAgendaController | Controller                                                                                                    |
+| Step 2  		     | ...Knowing the list of green spaces?                  | GreenSpaceRepository         | IE: Green spaces are recorded by the green space manager                                                      |
+| 		             | 	...displaying all the data?                          | AssignTaskToAgendaUI         | IE: Keeps all information before submission.                                                                  |
+| Step 3 	    	  | 	...temporarily saving the inputted data?             | AssignTaskToAgendaUI         | IE: Is responsible for saving the imputed data temporarily.                                                   |
+| 		             | 	...requesting confirmation?                          | AssignTaskToAgendaUI                | IE: Is responsible for user interactions.                                                                     |
+| Step 4 		      | ...displaying the form for the user to imput data?    | AssignTaskToAgendaUI                | IE:Is responsible for interacting with the actor.                                                             |
+| Step 5		  	    | ...saving all data?                                   | TaskEntry                    | IE: Has its own data.                                                                                         |
+| 			  	         | 	... validating all data (local validation)?          | TaskEntry                    | IE: owns all its data.                                                                                        |
+| 			  	         | 	... validating all data (global validation)?         | ToDoListRepository           | IE: knows all tasks entries.                                                                                  |
+| Step 6  		     | 	... informing operation success?                     | AssignTaskToAgendaUI                | IE: is responsible for user interactions.                                                                     |
 
 ### Systematization ##
 
