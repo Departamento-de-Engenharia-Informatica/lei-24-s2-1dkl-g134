@@ -48,7 +48,8 @@ activate ADM
             CTRL -> MAP : ToDTOList(TaskEntryList)
             activate MAP
                 MAP -> DTO: Create()
-                loop for each green space in the green space list
+                loop for each task in the list
+                    MAP -> MAP: TaskEntryDTO = toDTO(taskEntry)
                 MAP -> URG: taskEntry = get(i)
                 activate URG
                 deactivate URG
