@@ -312,6 +312,14 @@ public class TaskEntry implements Serializable {
     }
 
     /**
+     * Gets this task's start date in string form.
+     * @return The String object representing this task's start date.
+     */
+    public String getStartDateString() {
+        return startDate.toString();
+    }
+
+    /**
      * Gets this task's end date.
      * @return The CustomDate object representing this task's end date.
      */
