@@ -1,0 +1,26 @@
+@startuml
+skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+
+title System Sequence Diagram (SSD) - Main Solution
+
+autonumber
+actor "Collaborator" as Collaborator
+participant "System" as System
+
+activate Collaborator
+
+
+    Collaborator -> System : requests list of assigned tasks\nbetween two dates, with optional status filter
+    activate System
+
+        System -> System : retrieves list of tasks assigned to the Collaborator\nbetween the specified dates
+        System -> System : filters tasks by the specified status (if provided)
+        System -> System : sorts tasks by date
+        System --> Collaborator : presents sorted list of tasks
+    deactivate System
+
+deactivate Collaborator
+
+@enduml
