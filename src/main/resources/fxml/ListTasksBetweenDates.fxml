@@ -33,6 +33,7 @@
 -->
 
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
@@ -63,7 +64,7 @@
                   <Font size="30.0" />
                </font>
             </Label>
-            <Button layoutX="477.0" layoutY="279.0" mnemonicParsing="false" onAction="#getTaskList" prefHeight="54.0" prefWidth="141.0" text="Get Task List">
+            <Button layoutX="477.0" layoutY="306.0" mnemonicParsing="false" onAction="#getTaskList" prefHeight="54.0" prefWidth="141.0" text="Get Task List">
                <font>
                   <Font size="20.0" />
                </font>
@@ -73,19 +74,26 @@
                   <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
                </columnResizePolicy>
             </TableView>
-            <TextField fx:id="firstDate" layoutX="477.0" layoutY="175.0" prefHeight="25.0" prefWidth="141.0" />
-            <Label layoutX="477.0" layoutY="149.0" prefHeight="25.0" prefWidth="91.0" text="First Date">
+            <TextField fx:id="firstDate" layoutX="477.0" layoutY="162.0" prefHeight="25.0" prefWidth="141.0" />
+            <Label layoutX="477.0" layoutY="136.0" prefHeight="25.0" prefWidth="91.0" text="First Date">
                <font>
                   <Font size="17.0" />
                </font>
             </Label>
-            <TextField fx:id="secondDate" layoutX="477.0" layoutY="234.0" prefHeight="25.0" prefWidth="141.0" />
-            <Label layoutX="477.0" layoutY="208.0" prefHeight="26.0" prefWidth="101.0" text="Second Date">
+            <TextField fx:id="secondDate" layoutX="477.0" layoutY="221.0" prefHeight="25.0" prefWidth="141.0" />
+            <Label layoutX="477.0" layoutY="195.0" prefHeight="26.0" prefWidth="101.0" text="Second Date">
                <font>
                   <Font size="17.0" />
                </font>
             </Label>
-            <Label alignment="TOP_CENTER" layoutX="468.0" layoutY="14.0" prefHeight="122.0" prefWidth="160.0" text="On the left is a table of tasks. Please input two dates below and press the button to display all tasks assigned to you that start between those dates. (Excludes the very last day)" textAlignment="CENTER" wrapText="true" />
+            <Label alignment="TOP_CENTER" layoutX="468.0" layoutY="8.0" prefHeight="128.0" prefWidth="160.0" text="On the left is a table of tasks. Please input two dates below and press the button to display all tasks assigned to you that start between those dates (excludes the very last day). Use the checkboxes to filter results by state." textAlignment="CENTER" wrapText="true">
+               <font>
+                  <Font size="11.0" />
+               </font></Label>
+            <CheckBox fx:id="planned" layoutX="477.0" layoutY="254.0" mnemonicParsing="false" onAction="#refreshTableView" text="Planned" />
+            <CheckBox fx:id="postponed" layoutX="477.0" layoutY="280.0" mnemonicParsing="false" onAction="#refreshTableView" text="Postponed" />
+            <CheckBox fx:id="completed" layoutX="556.0" layoutY="254.0" mnemonicParsing="false" onAction="#refreshTableView" text="Completed" />
+            <CheckBox fx:id="cancelled" layoutX="556.0" layoutY="280.0" mnemonicParsing="false" onAction="#refreshTableView" text="Cancelled" />
       </children>
     </AnchorPane>
   </children>

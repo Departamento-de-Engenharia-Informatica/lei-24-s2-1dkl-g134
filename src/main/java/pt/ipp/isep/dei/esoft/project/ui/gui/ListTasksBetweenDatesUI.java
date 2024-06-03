@@ -26,8 +26,17 @@ public class ListTasksBetweenDatesUI implements Initializable {
     private TextField firstDate;
     @FXML
     private TextField secondDate;
+    @FXML
+    private CheckBox planned;
+    @FXML
+    private CheckBox postponed;
+    @FXML
+    private CheckBox completed;
+    @FXML
+    private CheckBox cancelled;
 
     private ListTasksBetweenDatesController ctrl = new ListTasksBetweenDatesController();
+    private Optional<ArrayList<TaskEntryDTO>> tasks = Optional.empty();
 
     /**
      * Initializes this functionality and prepares the creates the appropriate columns for
@@ -58,13 +67,12 @@ public class ListTasksBetweenDatesUI implements Initializable {
 
     /**
      * Attempts to get all tasks assigned to the current collaborator between the two dates inserted by
-     * the user. Provides the appropriate feedback should anything go wrong, and populates the TableView
-     * if nothing is wrong.
+     * the user. Provides the appropriate feedback should anything go wrong. Calls the refreshTableView
+     * method should it work.
      */
     @FXML
     private void getTaskList(){
         taskList.getItems().clear();
-        Optional<ArrayList<TaskEntryDTO>> tasks = Optional.empty();
         try {
             tasks = ctrl.getCurrentUserTasksBetweenTwoDates(firstDate.getText(), secondDate.getText());
         } catch (Exception e) {
@@ -77,8 +85,33 @@ public class ListTasksBetweenDatesUI implements Initializable {
                     , "No tasks found between these dats for you!").show();
             return;
         }
+        refreshTableView();
+    }
+
+    /**
+     * Attempts to refresh the table view and applies the appropriate filters.
+     */
+    @FXML
+    private void refreshTableView(){
+        taskList.getItems().clear();
+        if(tasks.isEmpty()){
+            return;
+        }
         for(TaskEntryDTO taskEntry : tasks.get()){
-            taskList.getItems().add(taskEntry.attachedTaskEntry);
+            if(!planned.isSelected() && !postponed.isSelected() && !completed.isSelected() && !cancelled.isSelected()){
+                taskList.getItems().add(taskEntry.attachedTaskEntry);
+                continue;
+            }
+            switch(taskEntry.state){
+                case PLANNED: if(planned.isSelected()){taskList.getItems().add(taskEntry.attachedTaskEntry);}
+                    break;
+                case POSTPONED: if(postponed.isSelected()){taskList.getItems().add(taskEntry.attachedTaskEntry);}
+                    break;
+                case COMPLETED: if(completed.isSelected()){taskList.getItems().add(taskEntry.attachedTaskEntry);}
+                    break;
+                case CANCELED: if(cancelled.isSelected()){taskList.getItems().add(taskEntry.attachedTaskEntry);}
+                    break;
+            }
         }
     }
 
