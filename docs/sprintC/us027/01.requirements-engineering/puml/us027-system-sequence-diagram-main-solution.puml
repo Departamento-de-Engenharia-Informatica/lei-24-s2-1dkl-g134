@@ -1,0 +1,23 @@
+@startuml
+skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+
+title System Sequence Diagram (SSD) - Main Solution
+
+autonumber
+actor "Green Space\nManager" as Manager
+participant ":System" as System
+
+ GSM -> System : requests list of managed green spaces
+    activate System
+
+        System -> System : reads sorting algorithm from configuration file
+
+        System -> System : retrieves list of green spaces managed by GSM
+
+        System -> System : sorts green spaces by size in descending order using the specified sorting algorithm
+
+        System --> GSM : presents sorted list of green spaces
+    deactivate System
+    @enduml
