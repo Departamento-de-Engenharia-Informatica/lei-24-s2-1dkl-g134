@@ -51,7 +51,7 @@ class "RegisterGreenSpaceUI" {
     -area
     -type
     -registerGreenSpaceController : RegisterGreenSpaceController
-    +getRegisterGreenSpaceController() : RegisterGreenSpaceController
+
 
 }
 
