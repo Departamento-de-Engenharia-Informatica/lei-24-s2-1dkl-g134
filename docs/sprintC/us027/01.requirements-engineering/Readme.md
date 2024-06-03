@@ -5,25 +5,24 @@
 
 ### 1.1. User Story Description
 
-As a Green Space Manager, I want to know which piece(s) of equipment is/are used in each day.
+As a Green Space Manager (GSM), I need to list all green spaces managed by me
 
 ### 1.2. Customer Specifications and Clarifications 
 
 **From the specifications document:**
 
-> Consider that the park has the following equipment: walking paths, children’s playground, picnic area, and exercise machines (gymnastics equipment). At the park exit there is an electronic device with a list of all the equipment, in which the user(s) must indicate the equipment they used that day.
-
-> In the file ”EquipmentUsed.csv” the choices of 1000 users are recorded. Make a pie chart representing, in percentage, the use of each piece of equipment.
+>The list of green spaces must be sorted by size in descending order (area in hectares should be used).
+>The sorting algorithm to be used by the application must be defined through a configuration file. At least two sorting algorithms should be available.
 
 **From the client clarifications:**
 
-> **Question:** None.
->
-> **Answer:** None.
+> **Question:**Dear client, which info about Green Spaces do you want the GSM see when listing? only the name ?
+
+> **Answer:**Each de team can decide about the aspects related to UX/UI.
 
 ### 1.3. Acceptance Criteria
 
-* **AC1:** The pie chart is successfully created, accurately represents the registered data, and is presented to the user.
+* **AC1:** The list of green spaces must be sorted by size in descending order using the specified sorting algorithm from the configuration file.
 
 ### 1.4. Found out Dependencies
 
@@ -33,15 +32,15 @@ As a Green Space Manager, I want to know which piece(s) of equipment is/are used
 
 **Input Data:**
 
-* None
+* Sorting algorithm specified in the configuration file
 
 **Output Data:**
 
-* Pie chart representing, in percentage, the data available in the EquipmentUsed.csv file.
-
+* List of green spaces managed by the GSM, sorted by size in descending order.
+* 
 ### 1.6. System Sequence Diagram (SSD)
 
-![System Sequence Diagram](svg/us010-system-sequence-diagram-main-solution.svg)
+![System Sequence Diagram](svg/us027-system-sequence-diagram-main-solution.svg)
 
 ### 1.7 Other Relevant Remarks
 
