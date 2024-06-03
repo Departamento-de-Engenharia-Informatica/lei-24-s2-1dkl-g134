@@ -3,19 +3,30 @@ skinparam monochrome true
 skinparam packageStyle rectangle
 skinparam shadowing false
 
-title System Sequence Diagram (SSD) - Main Solution
+title System Sequence Diagram (SSD) - Cancel Task in Agenda
 
 autonumber
 
-actor "Fleet\nManager" as Manager
+actor "Green Space\nManager" as Manager
 participant ":System" as System
 
-activate Manager
+activate GSM
 
-    Manager -> System : asks to view data relative to the usage of park\nequipments
-    activate System
+GSM -> System : requests to view planned and postponed tasks
+activate System
 
-        System --> Manager : presents pie chart representing, in percentage,\nthe amount that each equipment is used
-    deactivate System
+    System --> GSM : displays list of planned and postponed tasks
+deactivate System
 
+GSM -> System : selects a task to cancel
+activate System
+
+    System --> GSM : confirms task cancellation
+deactivate System
+
+GSM -> System : confirms cancellation
+activate System
+
+    System --> GSM : displays task cancellation success
+deactivate System
 @enduml
