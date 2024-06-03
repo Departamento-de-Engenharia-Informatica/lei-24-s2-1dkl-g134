@@ -6,9 +6,9 @@ skinparam shadowing false
 autonumber
 
 'hide footbox
-actor "Green Space \n Manager" as ADM
-participant ":PostponeTaskUI" as UI
-participant ":PostponeTaskController" as CTRL
+actor "Collaborator" as ADM
+participant ":CompleteTaskUI" as UI
+participant ":CompleteTaskController" as CTRL
 participant "Repositories" as RepositorySingleton
 participant "repositories\n:Repositories" as PLAT
 participant ":TaskEntryMapper" as MAP
@@ -21,10 +21,10 @@ participant "objDto: TaskEntryDto" as GDTO
 
 activate ADM
 
-    ADM -> UI : asks to postpone a task entry
+    ADM -> UI : asks to record the completion of a task.
     activate UI
         UI -> CTRL : create
-        UI -> CTRL : getPlannedAndPostponedTask()
+        UI -> CTRL : getPlannedAndPostponedTasksBelongingToCurrentUser()
         activate CTRL
 
             CTRL -> RepositorySingleton : getInstance()
@@ -39,7 +39,7 @@ activate ADM
                 PLAT --> CTRL : AgendaRepository
             deactivate PLAT
 
-            CTRL -> URG : getPlannedAndPostponedTask()
+            CTRL -> URG :getPlannedAndPostponedTasksBelongingToCurrentUser()
             activate URG
 
                 URG --> CTRL : TaskEntryList
@@ -71,15 +71,10 @@ activate ADM
         UI --> ADM : shows a list of tasks
     deactivate UI
 ADM -> UI : selects a task
+
     activate UI
 
-        UI --> ADM : requests data (new date, new time)
-    deactivate UI
-
-    ADM -> UI : types data
-    activate UI
-
-        UI --> ADM : shows all data and requests confirmation (new date, new time)
+        UI --> ADM : shows all data and requests confirmation(new state)
     deactivate UI
 
     ADM -> UI : confirms data
@@ -97,10 +92,10 @@ ADM -> UI : selects a task
 
                 activate URG
 
-                           URG -> TASK** : updatedTask(new date, new time)
-                           URG --> URG : validatePostponement(postponement)
+                           URG -> TASK** : updatedTask(new state)
+                           URG --> URG : validateCompletion(completion)
                            activate URG
-                           URG --> URG : savePostponement(postponement)
+                           URG --> URG : saveCompletion(completion)
                            activate URG
                            URG --> URG
                            deactivate URG

@@ -79,15 +79,21 @@ public class AssignTeamToTaskUI implements Runnable {
     private Team requestTeam(){
         Scanner input = new Scanner(System.in);
         Optional<ArrayList<TeamDTO>> teams = controller.getTeamList();
+        ArrayList<TeamDTO> availableTeams = new ArrayList<>();
         if(teams.isEmpty()){
             System.out.println("Error: No teams. Team assignment aborted.");
             return null;
         }
         for(TeamDTO team : teams.get()){
-            if(!controller.isTeamAvailable(team.attachedTeam, taskEntry)){
-                teams.get().remove(teams.get().indexOf(team));
+            if(controller.isTeamAvailable(team.attachedTeam, taskEntry)){
+                availableTeams.add(team);
             }
         }
+        if(availableTeams.isEmpty()){
+            System.out.println("Error: No available teams. Team assignment aborted.");
+            return null;
+        }
+        teams = Optional.of(availableTeams);
         System.out.println("Choose a team from the following list (Title | Description):\n");
         for(int i = 0; i < teams.get().size(); i++){
             System.out.println((i+1) + "-\n "+teams.get().get(i).attachedTeam.toString());

@@ -12,6 +12,7 @@ public class Bootstrap implements Runnable {
     public static int workHoursStart = 9;
     public static int workHoursEnd = 17;
     public static int dailyWorkHours = workHoursEnd - workHoursStart;
+    public static String APP_TITLE = "GreenGuardian";
 
     //Add some task categories to the repository as bootstrap
     public void run() {
@@ -109,11 +110,11 @@ public class Bootstrap implements Runnable {
         Collaborator collaborator3 = collaboratorRepository.add("Exas", "2005/05/22", "2023/05/22", "Their house, duh",
         "960144802", "exas@is.real", "CC", "15017809", "256", job).get();
         Collaborator collaborator4 = collaboratorRepository.add("Stanley", "2005/05/22", "2023/05/22", "The bucket",
-        "960144802", "the@stanley.parable", "CC", "427", "256", job).get();
+        "960144802", "collab1@this.app", "CC", "427", "256", job).get();
         Collaborator collaborator5 = collaboratorRepository.add("Narrator", "2005/05/22", "2023/05/22", "Stanley",
         "960144802", "will@never.end", "CC", "8888", "256", job).get();
         Collaborator collaborator6 = collaboratorRepository.add("Bucket", "2005/05/22", "2023/05/22", "The universe",
-        "960144802", "the@reassurance.bucket", "CC", "3", "256", job).get();
+        "960144802", "collab2@this.app", "CC", "3", "256", job).get();
         Collaborator collaborator7 = collaboratorRepository.add("Coleman", "2005/05/22", "2023/05/22", "The girls and the gays",
         "960144802", "coleslaw@poeslaw.coleman", "CC", "1337", "256", job).get();
         Collaborator collaborator8 = collaboratorRepository.add("Daniel", "2005/05/22", "2023/05/22", "The Irish Casino",
@@ -184,12 +185,12 @@ public class Bootstrap implements Runnable {
         VehicleRepository vehicleRepository = Repositories.getInstance().getVehicleRepository();
         CheckupRepository checkupRepository = Repositories.getInstance().getCheckupRepository();
         Vehicle vehicle = vehicleRepository.add("Ford", "T", 5000, 2500.0,3000,
-        "2010/04/25", "2009/04/25", 500, "H3LL0", "Car").get();
+        "2010/04/25", "2009/04/25", 500, "45-50-DL", "Car").get();
         vehicleRepository.add("Ford", "X", 5000, 2500.0,1000,
-        "2010/04/25", "2009/04/25", 750, "G00DBY3", "Truck");
+        "2010/04/25", "2009/04/25", 750, "46-51-LL", "Truck");
         vehicleRepository.add("The USSR", "Stalin", 5000, 2500.0,1000,
-        "2010/04/25", "2009/04/25", 1010, "CCCP", "Tank");
+        "2010/04/25", "2009/04/25", 1010, "44-49-XL", "Tank");
         vehicleRepository.add("The US", "F1", 5000, 2500.0,2000,
-        "2010/04/25", "2009/04/25", 5000, "0407", "Jet");
+        "2010/04/25", "2009/04/25", 5000, "04-07-US", "Jet");
     }
 }

@@ -11,6 +11,7 @@ public class TeamDTO {
 
     @Override
     public boolean equals(Object o) {
-        return attachedTeam.equals(o);
+
+        return attachedTeam.equals(((TeamDTO)o).attachedTeam);
     }
 }

@@ -12,6 +12,6 @@ public class GreenSpaceDTO {
 
     @Override
     public boolean equals(Object o) {
-        return attachedGreenSpace.equals(o);
+        return attachedGreenSpace.equals(((GreenSpaceDTO)o).attachedGreenSpace);
     }
 }

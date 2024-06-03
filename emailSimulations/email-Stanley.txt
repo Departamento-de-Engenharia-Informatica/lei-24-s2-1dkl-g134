@@ -1,6 +1,6 @@
 From: musgosublime@isep.ipp.pt;
-To: Emily
-Address: emily@is.real
+To: Stanley
+Address: collab1@this.app
 Subject: Assignment to task 'what'
 Message:
 

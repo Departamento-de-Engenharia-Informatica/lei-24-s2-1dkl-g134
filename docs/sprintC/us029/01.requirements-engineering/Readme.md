@@ -50,11 +50,11 @@ Done).
 
 **Input Data:**
 
-* None
+* none.
 
 **Output Data:**
 
-* Pie chart representing, in percentage, the data available in the EquipmentUsed.csv file.
+* Confirmation that the task was registered as completed.
 
 ### 1.6. System Sequence Diagram (SSD)
 

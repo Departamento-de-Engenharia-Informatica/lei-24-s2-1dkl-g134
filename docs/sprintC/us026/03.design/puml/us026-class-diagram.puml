@@ -1,0 +1,103 @@
+@startuml
+'skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+skinparam linetype polyline
+'skinparam linetype orto
+
+skinparam classAttributeIconSize 0
+
+'left to right direction
+
+class AssignVehiclesToTaskUI{
+}
+
+
+class AssignVehiclesToTaskController{
+-AgendaRepository agendaRepository
+-VehicleRepository vehicleRepository
+    + AssignVehiclesToTaskController(agendaRepository, vehicleRepository)
+    + getPlannedAndPostponedTask()
+    + getVehicleList()
+    + assignVehiclesToTask()
+    + isVehicleAvailable()
+ }
+
+class Repositories {
+-Repositories() : Repositories
+    + getInstance() : Repositories
+    + getAgendaRepository() : Repositories
+}
+
+
+class AgendaRepository {
+    + assignVehiclesToTask()
+    + isVehicleAvailable()
+    + getPlannedAndPostponedTask()
+
+}
+
+class VehicleRepository {
+    + getVehicleList()
+}
+
+class  TaskEntry{
+        -title
+        -description
+        -urgencyLevel
+        -expectedDuration
+        -state
+        -greenSpace
+}
+
+class Vehicle{
+    -plate
+    -brand
+    -model
+    -year
+}
+
+class VehicleMapper{
++VehicleDto  toDTO(Vehicle)
+}
+
+class TaskEntryMapper{
++TaskEntryDto  toDTO(TaskEntry)
+}
+
+class VehicleDto{
++Vehicle
+}
+
+class TaskEntryDto{
++TaskEntry
++Date
++Time
+}
+
+
+AssignVehiclesToTaskUI .>  AssignVehiclesToTaskController
+AssignVehiclesToTaskController ..> VehicleRepository : VehicleRepository
+
+AssignVehiclesToTaskController ...r> Repositories : repositories
+AssignVehiclesToTaskController ...> TaskEntryMapper : Mapper
+AssignVehiclesToTaskController ...> VehicleMapper : Mapper
+TaskEntryMapper ...> TaskEntryDto: TaskEntryDto
+TaskEntryMapper ...> TaskEntry
+
+VehicleMapper ...> VehicleDto: VehicleDto
+VehicleMapper ...> Vehicle: Vehicle
+AssignVehiclesToTaskUI .> VehicleDto
+AssignVehiclesToTaskUI .> TaskEntryDto
+
+AssignVehiclesToTaskController ..> TaskEntryDto
+AssignVehiclesToTaskController ..> VehicleDto
+Repositories ---> "1" AgendaRepository
+Repositories ---> "1" VehicleRepository
+Repositories -> Repositories : instance
+
+AgendaRepository --> "*" TaskEntry: contains
+VehicleRepository --> "*" Vehicle: contains
+
+ AssignVehiclesToTaskController ...> "1" AgendaRepository : AgendaRepository
+@enduml

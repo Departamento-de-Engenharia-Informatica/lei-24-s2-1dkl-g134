@@ -79,10 +79,10 @@ public class ListTasksBetweenDatesUI implements Runnable {
                             System.out.println("Error: The inputted number must be between 0 and 4.");
                             continue;
                         }else if(option != 0){
-                            if(stateFilters.contains(stateList.get(option))){
-                                stateFilters.remove(stateFilters.indexOf(stateList.get(option)));
+                            if(stateFilters.contains(stateList.get(option-1))){
+                                stateFilters.remove(stateFilters.indexOf(stateList.get(option-1)));
                             }else{
-                                stateFilters.add(stateList.get(option));
+                                stateFilters.add(stateList.get(option-1));
                             }
                         }
                         break;
@@ -127,10 +127,10 @@ public class ListTasksBetweenDatesUI implements Runnable {
      */
     private ArrayList<TaskEntryDTO> sortTasks(ArrayList<TaskEntryDTO> taskEntries){
         for(int i = 0; i < taskEntries.size(); i++){
-            for(int j = 0; j < taskEntries.size()-i; j++){
-                if(taskEntries.get(j).startDate.isAfterDate(taskEntries.get(j+1).startDate)){
-                    TaskEntryDTO temp = taskEntries.get(j+1);
-                    taskEntries.set(j+1, taskEntries.get(j));
+            for(int j = 1; j < taskEntries.size()-i; j++){
+                if(taskEntries.get(j-1).startDate.isAfterDate(taskEntries.get(j).startDate)){
+                    TaskEntryDTO temp = taskEntries.get(j-1);
+                    taskEntries.set(j-1, taskEntries.get(j));
                     taskEntries.set(j, temp);
                 }
             }

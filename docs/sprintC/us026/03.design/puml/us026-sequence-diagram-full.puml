@@ -1,0 +1,176 @@
+@startuml
+skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+
+autonumber
+
+'hide footbox
+actor "Green Space \n Manager" as ADM
+participant ":AssignVehiclesToTaskUI" as UI
+participant ":AssignVehiclesToTaskController" as CTRL
+participant "Repositories" as RepositorySingleton
+participant "repositories\n:Repositories" as PLAT
+participant ":TaskEntryMapper" as MAP
+participant ":VehicleMapper" as VMAP
+participant ":AgendaRepository" as URG
+participant ":VehicleRepository" as VREP
+participant "taskEntryDTOList\n :TaskEntryDTOList" as DTO
+participant "vehicleDTOList\n :VehicleDTOList" as VLDTO
+
+participant "taskEntry\n:TaskEntry" as TASK
+participant "objDto: TaskEntryDto" as GDTO
+participant "objDto: VehicleDto" as VDTO
+
+
+activate ADM
+
+    ADM -> UI : asks to postpone a task entry
+    activate UI
+        UI -> CTRL : create
+        UI -> CTRL : getPlannedAndPostponedTask()
+        activate CTRL
+
+            CTRL -> RepositorySingleton : getInstance()
+            activate RepositorySingleton
+
+                RepositorySingleton --> CTRL : repositories
+            deactivate RepositorySingleton
+
+            CTRL -> PLAT : getAgendaRepository()
+            activate PLAT
+
+                PLAT --> CTRL : AgendaRepository
+            deactivate PLAT
+
+            CTRL -> URG : getPlannedAndPostponedTask()
+            activate URG
+
+                URG --> CTRL : TaskEntryList
+            deactivate URG
+
+            CTRL -> MAP : ToDTOList(TaskEntryList)
+            activate MAP
+                MAP -> DTO: Create()
+                loop for each task in the task entry list
+                MAP -> URG: taskEntry = get(i)
+                activate URG
+                deactivate URG
+                MAP -> MAP: TaskEntryDTO = toDTO(taskEntry)
+                activate MAP
+                MAP -> GDTO: create(...)
+                deactivate MAP
+                MAP -> DTO: add(taskEntryDto)
+
+                activate DTO
+                deactivate DTO
+                end
+                MAP -> CTRL: TaskEntryDtoList
+            deactivate MAP
+
+            CTRL --> UI : TaskEntryDTO
+        deactivate CTRL
+
+        UI --> ADM : shows taks list\n to assign vehicle/s
+    deactivate UI
+ADM -> UI : selects a task
+    activate UI
+
+    UI -> CTRL : getVehicleList()
+            activate CTRL
+
+                CTRL -> PLAT : getVehicleRepository()
+                activate PLAT
+
+                    PLAT --> CTRL : VehicleRepository
+                deactivate PLAT
+
+                CTRL -> VREP : getVehicleList()
+                activate VREP
+
+                    VREP --> CTRL : VehicleList
+                deactivate VREP
+
+                CTRL -> VMAP : ToDTOList(VehicleList)
+                activate VMAP
+                    VMAP -> VLDTO: Create()
+                    loop for each vehicle in the vehicle list
+                    VMAP -> VREP: Vehicle = get(i)
+                    activate VREP
+                    deactivate VREP
+                    VMAP -> VMAP: VehicleDTO = toDTO(vehicle)
+                    activate VMAP
+                    VMAP -> VDTO: create(...)
+                    deactivate VMAP
+                    VMAP -> VLDTO: add(vehicleDto)
+
+                    activate VLDTO
+                    deactivate VLDTO
+                    end
+                    VMAP -> CTRL: VehicleDtoList
+                deactivate VMAP
+
+                CTRL --> UI : VehicleDTO
+            deactivate CTRL
+
+        UI --> ADM : shows vehicle list
+    deactivate UI
+
+loop while user wants to add another vehicle
+        ADM -> UI : choose a vehicles to assign to the task
+        activate UI
+
+            UI -> CTRL : assignVehiclesToTask(vehicles, task)
+            activate CTRL
+
+                CTRL -> TASK : assignVehiclesToTask(vehicles)
+                activate TASK
+
+                    TASK --> CTRL : success
+                deactivate TASK
+
+                CTRL --> UI : success
+            deactivate CTRL
+
+            UI --> ADM : displays operation success
+
+        UI --> ADM : asks if wants to add another vehicle
+        deactivate UI
+
+        ADM -> UI : responds if wants to add another skill
+
+        end
+
+     ADM -> UI : confirms data
+     activate UI
+      UI -> CTRL : save updated task
+             activate CTRL
+
+                 CTRL -> PLAT : getAgendaRepository()
+                 activate PLAT
+
+                     PLAT --> CTRL : AgendaRepository
+                 deactivate PLAT
+
+                 CTRL -> URG : save updated task
+
+                 activate URG
+
+                            URG -> TASK** : updatedTask(vehicle)
+                            URG --> URG : validateAssignment(assignment)
+                            activate URG
+                            URG --> URG : saveAssignment(assignment)
+                            activate URG
+                            URG --> URG
+                            deactivate URG
+                            URG --> URG
+                            deactivate URG
+                            URG --> CTRL : TaskEntry
+                            deactivate URG
+         CTRL --> UI : TaskEntry
+             deactivate CTRL
+
+                 UI --> ADM : displays operation success
+             deactivate UI
+         deactivate ADM
+@enduml

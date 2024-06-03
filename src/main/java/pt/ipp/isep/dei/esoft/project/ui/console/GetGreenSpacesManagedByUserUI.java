@@ -5,6 +5,8 @@ import pt.ipp.isep.dei.esoft.project.application.session.ApplicationSession;
 import pt.ipp.isep.dei.esoft.project.domain.GreenSpace;
 import pt.ipp.isep.dei.esoft.project.domain.Vehicle;
 import pt.ipp.isep.dei.esoft.project.dto.GreenSpaceDTO;
+import pt.ipp.isep.dei.esoft.project.repository.AuthenticationRepository;
+import pt.ipp.isep.dei.esoft.project.repository.Repositories;
 
 import java.util.*;
 
@@ -19,7 +21,6 @@ public class GetGreenSpacesManagedByUserUI implements Runnable {
     public void run() {
         System.out.println("\n >>>>>>>>>> LIST OF GREEN SPACES MANAGED BY YOU <<<<<<<<<< \n");
 
-        System.out.println("Your name is: "+ ApplicationSession.getInstance().getCurrentSession().getUserName());
         System.out.println("Your email is: "+ ApplicationSession.getInstance().getCurrentSession().getUserEmail());
 
         Optional<ArrayList<GreenSpaceDTO>> greenSpaces = Optional.empty();
@@ -84,10 +85,10 @@ public class GetGreenSpacesManagedByUserUI implements Runnable {
      */
     private ArrayList<GreenSpaceDTO> bubbleSort(ArrayList<GreenSpaceDTO> greenSpaces){
         for(int i = 0; i < greenSpaces.size(); i++){
-            for(int j = 0; j < greenSpaces.size()-i; j++){
-                if(greenSpaces.get(j).area < greenSpaces.get(j+1).area){
-                    GreenSpaceDTO temp = greenSpaces.get(j+1);
-                    greenSpaces.set(j+1, greenSpaces.get(j));
+            for(int j = 1; j < greenSpaces.size()-i; j++){
+                if(greenSpaces.get(j-1).area < greenSpaces.get(j).area){
+                    GreenSpaceDTO temp = greenSpaces.get(j-1);
+                    greenSpaces.set(j-1, greenSpaces.get(j));
                     greenSpaces.set(j, temp);
                 }
             }
