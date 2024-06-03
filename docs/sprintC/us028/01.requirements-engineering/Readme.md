@@ -5,25 +5,27 @@
 
 ### 1.1. User Story Description
 
-As a Green Space Manager, I want to know which piece(s) of equipment is/are used in each day.
+As a Collaborator, I wish to consult the tasks assigned to me between two dates.
 
 ### 1.2. Customer Specifications and Clarifications 
 
 **From the specifications document:**
 
-> Consider that the park has the following equipment: walking paths, children’s playground, picnic area, and exercise machines (gymnastics equipment). At the park exit there is an electronic device with a list of all the equipment, in which the user(s) must indicate the equipment they used that day.
+> The list of tasks spaces must be sorted by date.
 
-> In the file ”EquipmentUsed.csv” the choices of 1000 users are recorded. Make a pie chart representing, in percentage, the use of each piece of equipment.
+> The Collaborator should be able to filter the results by the status of the task.
 
 **From the client clarifications:**
 
-> **Question:** None.
->
-> **Answer:** None.
+> **Question:**
+When a collaborator is registered, they are given an account with the registered email and a password? This allows them to log in and view their tasks later on. What should be the password for this collaborator's account?.
+
+> **Answer:** Yes, it makes sense. About the password, not important in this stage of the project.
 
 ### 1.3. Acceptance Criteria
 
-* **AC1:** The pie chart is successfully created, accurately represents the registered data, and is presented to the user.
+* **AC1:** The list of tasks must be sorted by date.
+* **AC2:** The Collaborator should be able to filter the results by the status of the task.
 
 ### 1.4. Found out Dependencies
 
@@ -33,11 +35,13 @@ As a Green Space Manager, I want to know which piece(s) of equipment is/are used
 
 **Input Data:**
 
-* None
+* Start date
+* End date
+
 
 **Output Data:**
 
-* Pie chart representing, in percentage, the data available in the EquipmentUsed.csv file.
+* List of tasks assigned to the Collaborator between the specified dates, sorted by date, optionally filtered by task status.
 
 ### 1.6. System Sequence Diagram (SSD)
 
