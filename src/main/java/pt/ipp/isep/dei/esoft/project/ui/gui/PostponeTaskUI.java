@@ -32,7 +32,7 @@ public class PostponeTaskUI implements Initializable {
     private Optional<ArrayList<TaskEntryDTO>> tasks = Optional.empty();
 
     /**
-     * Initializes this functionality and prepares the creates the appropriate columns for
+     * Initializes this functionality and prepares and creates the appropriate columns for
      * the TableView in use, calling refreshTableView() at the end.
      */
     @Override
@@ -64,7 +64,7 @@ public class PostponeTaskUI implements Initializable {
             selectedTask = tasks.get().get(taskList.getSelectionModel().getSelectedIndex());
         }catch(Exception e){
             AlertUI.createAlert(Alert.AlertType.ERROR, Bootstrap.APP_TITLE, "Invalid task selection!"
-                    , e.getMessage()).show();
+                    , "Select a task to postpone!").show();
             return;
         }
         try{

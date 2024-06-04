@@ -32,22 +32,25 @@
   OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 -->
 
+<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox prefHeight="453.0" prefWidth="686.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="package pt.ipp.isep.dei.esoft.project.ui.gui.MainAdminUI">
+<VBox prefHeight="453.0" prefWidth="686.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pt.ipp.isep.dei.esoft.project.ui.gui.RegisterGreenSpaceUI">
   <children>
     <MenuBar VBox.vgrow="NEVER">
       <menus>
         <Menu mnemonicParsing="false" text="Menus...">
           <items>
-            <MenuItem mnemonicParsing="false" text="Start" />
-            <MenuItem mnemonicParsing="false" onAction="#toUS20" text="Register Green Space" />
+            <MenuItem fx:id="toStart" mnemonicParsing="false" text="Start" />
+            <MenuItem mnemonicParsing="false" text="Register Green Space" />
             <MenuItem mnemonicParsing="false" onAction="#toUS27" text="List Green Spaces managed by you" />
             <MenuItem mnemonicParsing="false" onAction="#toUS21" text="Add Task to To-Do List" />
             <MenuItem mnemonicParsing="false" onAction="#toUS22" text="Add Task to Agenda" />
@@ -61,18 +64,46 @@
     </MenuBar>
     <AnchorPane maxHeight="-1.0" maxWidth="-1.0" prefHeight="-1.0" prefWidth="-1.0" VBox.vgrow="ALWAYS">
          <children>
-            <Label fx:id="title" layoutX="97.0" layoutY="62.0" prefHeight="85.0" prefWidth="492.0" text="Welcome to GreenGuardian!">
+            <Label layoutX="28.0" layoutY="27.0" prefHeight="46.0" prefWidth="502.0" text="Register a new Green Space">
                <font>
-                  <Font size="39.0" />
+                  <Font size="30.0" />
                </font>
             </Label>
-            <Label alignment="CENTER" layoutX="219.0" layoutY="161.0" prefHeight="53.0" prefWidth="248.0" text="Administrator Menu" textAlignment="CENTER">
+            <Button layoutX="421.0" layoutY="341.0" mnemonicParsing="false" onAction="#registerGreenSpace" prefHeight="46.0" prefWidth="219.0" text="Register Green Space">
                <font>
-                  <Font size="22.0" />
+                  <Font size="20.0" />
+               </font>
+            </Button>
+            <Label layoutX="436.0" layoutY="278.0" prefHeight="63.0" prefWidth="188.0" text="Fill out every field, select a green space type, then press the button below to register it." wrapText="true" />
+            <TextField fx:id="name" layoutX="130.0" layoutY="137.0" prefHeight="25.0" prefWidth="203.0" />
+            <Label alignment="CENTER_RIGHT" layoutX="56.0" layoutY="131.0" prefHeight="37.0" prefWidth="64.0" text="Name" textAlignment="RIGHT">
+               <font>
+                  <Font size="20.0" />
                </font>
             </Label>
-            <Label alignment="TOP_CENTER" layoutX="102.0" layoutY="250.0" prefHeight="122.0" prefWidth="209.0" text="Here you will find various functionalities that will aid you in the performance of your duties as an Administrator or Manager in the maintenance and management of green spaces that fall under your responsibility." textAlignment="CENTER" wrapText="true" />
-            <Label alignment="TOP_CENTER" layoutX="380.0" layoutY="250.0" prefHeight="94.0" prefWidth="209.0" text="Press the &quot;Menus...&quot; button on the top bar to view all available functionalities. Press each option to be taken to that window to perform that function." textAlignment="CENTER" wrapText="true" />
+            <TextField fx:id="address" layoutX="130.0" layoutY="202.0" prefHeight="25.0" prefWidth="203.0" />
+            <Label alignment="CENTER_RIGHT" layoutX="38.0" layoutY="196.0" prefHeight="37.0" prefWidth="82.0" text="Address" textAlignment="RIGHT">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Label>
+            <TextField fx:id="area" layoutX="130.0" layoutY="266.0" prefHeight="25.0" prefWidth="203.0" />
+            <Label alignment="CENTER_RIGHT" layoutX="56.0" layoutY="260.0" prefHeight="37.0" prefWidth="64.0" text="Area" textAlignment="RIGHT">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Label>
+            <Label layoutX="333.0" layoutY="266.0" prefHeight="25.0" prefWidth="64.0" text="hectares">
+               <font>
+                  <Font size="13.0" />
+               </font>
+            </Label>
+            <ListView fx:id="types" editable="true" layoutX="436.0" layoutY="118.0" prefHeight="142.0" prefWidth="151.0" />
+            <Label layoutX="436.0" layoutY="88.0" prefHeight="25.0" prefWidth="64.0" text="Type" textAlignment="RIGHT">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Label>
          </children>
     </AnchorPane>
   </children>

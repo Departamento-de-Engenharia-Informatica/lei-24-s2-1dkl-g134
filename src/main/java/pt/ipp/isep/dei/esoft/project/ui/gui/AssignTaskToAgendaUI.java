@@ -5,14 +5,11 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.SelectionMode;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
-import pt.ipp.isep.dei.esoft.project.application.controller.CancelTaskController;
-import pt.ipp.isep.dei.esoft.project.application.controller.CompleteTaskController;
+import pt.ipp.isep.dei.esoft.project.application.controller.AssignTaskToAgendaController;
+import pt.ipp.isep.dei.esoft.project.application.controller.PostponeTaskController;
 import pt.ipp.isep.dei.esoft.project.domain.TaskEntry;
 import pt.ipp.isep.dei.esoft.project.dto.TaskEntryDTO;
 import pt.ipp.isep.dei.esoft.project.ui.Bootstrap;
@@ -23,11 +20,15 @@ import java.util.ArrayList;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
-public class CancelTaskUI implements Initializable {
+public class AssignTaskToAgendaUI implements Initializable {
     @FXML
     private TableView taskList;
+    @FXML
+    private TextField date;
+    @FXML
+    private TextField time;
 
-    private CancelTaskController ctrl = new CancelTaskController();
+    private AssignTaskToAgendaController ctrl = new AssignTaskToAgendaController();
     private Optional<ArrayList<TaskEntryDTO>> tasks = Optional.empty();
 
     /**
@@ -40,52 +41,62 @@ public class CancelTaskUI implements Initializable {
         TableColumn<TaskEntry, String> column1 = new TableColumn<>("Title");
         column1.setCellValueFactory(new PropertyValueFactory<>("taskTitle"));
         taskList.getColumns().add(column1);
-        TableColumn<TaskEntry, String> column2 = new TableColumn<>("Description");
-        column2.setCellValueFactory(new PropertyValueFactory<>("taskDescription"));
+        TableColumn<TaskEntry, String> column2 = new TableColumn<>("Urgency Level");
+        column2.setCellValueFactory(new PropertyValueFactory<>("urgencyLevel"));
         taskList.getColumns().add(column2);
+        TableColumn<TaskEntry, String> column3 = new TableColumn<>("Green Space");
+        column3.setCellValueFactory(new PropertyValueFactory<>("greenSpace"));
+        taskList.getColumns().add(column3);
+        TableColumn<TaskEntry, String> column4 = new TableColumn<>("Duration in Hours");
+        column4.setCellValueFactory(new PropertyValueFactory<>("duration"));
+        taskList.getColumns().add(column4);
         refreshTableView();
     }
 
     /**
-     * Attempts to mark the task selected in the table as cancelled and provides the appropriate feedback.
+     * Attempts to assign the selected task to the agenda and provides the appropriate feedback.
      * Also calls refreshTableView() in the event of success.
      */
     @FXML
-    private void cancelTask() {
+    private void assignTaskToAgenda() {
         TaskEntryDTO selectedTask = null;
         try{
             selectedTask = tasks.get().get(taskList.getSelectionModel().getSelectedIndex());
         }catch(Exception e){
             AlertUI.createAlert(Alert.AlertType.ERROR, Bootstrap.APP_TITLE, "Invalid task selection!"
-                    , "Select a task to cancel!").show();
+                    , "Select a task to assign to the Agenda!").show();
             return;
         }
         try{
-            Optional<TaskEntry> completedTask = ctrl.cancelTask(selectedTask.attachedTaskEntry);
+            TaskEntryDTO task = new TaskEntryDTO();
+            task.startDateStringForm = date.getText();
+            task.startTimeStringForm = time.getText()+":00";
+            task.attachedTaskEntry = selectedTask.attachedTaskEntry;
+            Optional<TaskEntry> completedTask = ctrl.assignTaskToAgenda(task);
             if(completedTask.isEmpty()){
-                AlertUI.createAlert(Alert.AlertType.ERROR, Bootstrap.APP_TITLE, "Error on cancelling task!"
-                        , "Are you sure this isn't a duplicate cancellation?").show();
+                AlertUI.createAlert(Alert.AlertType.ERROR, Bootstrap.APP_TITLE, "Error on assigning task to Agenda!"
+                        , "Are you sure this isn't a duplicate assignment?").show();
             }else{
                 AlertUI.createAlert(Alert.AlertType.INFORMATION, Bootstrap.APP_TITLE, "Success!"
-                        , "Task successfully cancelling!").show();
+                        , "Task successfully assigned!").show();
                 refreshTableView();
             }
         }catch(Exception e){
-            AlertUI.createAlert(Alert.AlertType.ERROR, Bootstrap.APP_TITLE, "Error on cancelling task!"
+            AlertUI.createAlert(Alert.AlertType.ERROR, Bootstrap.APP_TITLE, "Error on assigning task to Agenda!"
                     , e.getMessage()).show();
         }
     }
 
     /**
      * Attempts to get all tasks on a green space managed by the current user currently in a
-     * planned or postponed state.
+     * pending state.
      * Provides the appropriate feedback should anything go wrong, and populates the TableView
      * if nothing is wrong.
      */
     private void refreshTableView(){
         taskList.getItems().clear();
         try {
-            tasks = ctrl.getPlannedAndPostponedTasks();
+            tasks = ctrl.getPendingTasks();
         } catch (Exception e) {
             AlertUI.createAlert(Alert.AlertType.ERROR, Bootstrap.APP_TITLE, "Failed to get tasks on your green spaces!"
                     , e.getMessage()).show();
@@ -93,7 +104,7 @@ public class CancelTaskUI implements Initializable {
         }
         if(tasks.isEmpty()){
             AlertUI.createAlert(Alert.AlertType.WARNING, Bootstrap.APP_TITLE, "Failed to get tasks on your green spaces!"
-                    , "No tasks found!").show();
+                    , "No pending tasks found!").show();
             return;
         }
         for(TaskEntryDTO taskEntry : tasks.get()){
@@ -126,12 +137,12 @@ public class CancelTaskUI implements Initializable {
     }
 
     /**
-     * Switches to the AssignTaskToAgendaUI scene.
+     * Switches to the PostponeTaskUI scene.
      */
     @FXML
-    public void toUS22() throws IOException {
+    public void toUS24() throws IOException {
         Stage stage = (Stage) taskList.getScene().getWindow();
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/AssignTaskToAgenda.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/PostponeTask.fxml"));
         Parent root = loader.load();
         Scene scene = new Scene(root);
         stage.setScene(scene);
@@ -153,9 +164,9 @@ public class CancelTaskUI implements Initializable {
      * Switches to the PostponeTaskUI scene.
      */
     @FXML
-    public void toUS24() throws IOException {
+    public void toUS25() throws IOException {
         Stage stage = (Stage) taskList.getScene().getWindow();
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/PostponeTask.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/CancelTask.fxml"));
         Parent root = loader.load();
         Scene scene = new Scene(root);
         stage.setScene(scene);

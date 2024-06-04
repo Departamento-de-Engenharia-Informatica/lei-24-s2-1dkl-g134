@@ -39,7 +39,7 @@ public class ListTasksBetweenDatesUI implements Initializable {
     private Optional<ArrayList<TaskEntryDTO>> tasks = Optional.empty();
 
     /**
-     * Initializes this functionality and prepares the creates the appropriate columns for
+     * Initializes this functionality and prepares and creates the appropriate columns for
      * the TableView in use.
      */
     @Override

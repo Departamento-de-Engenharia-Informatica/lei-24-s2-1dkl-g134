@@ -32,24 +32,27 @@
   OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 -->
 
+<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox prefHeight="453.0" prefWidth="686.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="package pt.ipp.isep.dei.esoft.project.ui.gui.MainAdminUI">
+<VBox prefHeight="453.0" prefWidth="686.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pt.ipp.isep.dei.esoft.project.ui.gui.AddTaskEntryUI">
   <children>
     <MenuBar VBox.vgrow="NEVER">
       <menus>
         <Menu mnemonicParsing="false" text="Menus...">
           <items>
-            <MenuItem mnemonicParsing="false" text="Start" />
+            <MenuItem fx:id="toStart" mnemonicParsing="false" text="Start" />
             <MenuItem mnemonicParsing="false" onAction="#toUS20" text="Register Green Space" />
             <MenuItem mnemonicParsing="false" onAction="#toUS27" text="List Green Spaces managed by you" />
-            <MenuItem mnemonicParsing="false" onAction="#toUS21" text="Add Task to To-Do List" />
+            <MenuItem mnemonicParsing="false" text="Add Task to To-Do List" />
             <MenuItem mnemonicParsing="false" onAction="#toUS22" text="Add Task to Agenda" />
             <MenuItem mnemonicParsing="false" onAction="#toUS23" text="Assign Team to Task" />
             <MenuItem mnemonicParsing="false" onAction="#toUS26" text="Assign Vehicles to Task" />
@@ -61,18 +64,52 @@
     </MenuBar>
     <AnchorPane maxHeight="-1.0" maxWidth="-1.0" prefHeight="-1.0" prefWidth="-1.0" VBox.vgrow="ALWAYS">
          <children>
-            <Label fx:id="title" layoutX="97.0" layoutY="62.0" prefHeight="85.0" prefWidth="492.0" text="Welcome to GreenGuardian!">
+            <Button layoutX="523.0" layoutY="368.0" mnemonicParsing="false" onAction="#addTaskEntry" prefHeight="46.0" prefWidth="116.0" text="Add Task">
                <font>
-                  <Font size="39.0" />
+                  <Font size="20.0" />
+               </font>
+            </Button>
+            <Label layoutX="14.0" layoutY="14.0" prefHeight="46.0" prefWidth="443.0" text="Add a new Task to the To-Do List">
+               <font>
+                  <Font size="30.0" />
                </font>
             </Label>
-            <Label alignment="CENTER" layoutX="219.0" layoutY="161.0" prefHeight="53.0" prefWidth="248.0" text="Administrator Menu" textAlignment="CENTER">
+            <Label layoutX="487.0" layoutY="296.0" prefHeight="72.0" prefWidth="188.0" text="Fill out every field, select an urgency level, an associated green space, then press the button below to add it." wrapText="true" />
+            <ListView fx:id="urgencyLevels" editable="true" layoutX="165.0" layoutY="304.0" prefHeight="87.0" prefWidth="164.0" />
+            <Label layoutX="165.0" layoutY="274.0" prefHeight="30.0" prefWidth="131.0" text="Urgency Level" textAlignment="RIGHT">
                <font>
-                  <Font size="22.0" />
+                  <Font size="20.0" />
                </font>
             </Label>
-            <Label alignment="TOP_CENTER" layoutX="102.0" layoutY="250.0" prefHeight="122.0" prefWidth="209.0" text="Here you will find various functionalities that will aid you in the performance of your duties as an Administrator or Manager in the maintenance and management of green spaces that fall under your responsibility." textAlignment="CENTER" wrapText="true" />
-            <Label alignment="TOP_CENTER" layoutX="380.0" layoutY="250.0" prefHeight="94.0" prefWidth="209.0" text="Press the &quot;Menus...&quot; button on the top bar to view all available functionalities. Press each option to be taken to that window to perform that function." textAlignment="CENTER" wrapText="true" />
+            <ListView fx:id="greenSpaces" editable="true" layoutX="487.0" layoutY="108.0" prefHeight="159.0" prefWidth="164.0" />
+            <Label layoutX="487.0" layoutY="78.0" prefHeight="30.0" prefWidth="131.0" text="Green Spaces" textAlignment="RIGHT">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Label>
+            <TextField fx:id="title" layoutX="165.0" layoutY="95.0" prefHeight="25.0" prefWidth="164.0" />
+            <TextField fx:id="description" layoutX="165.0" layoutY="165.0" prefHeight="25.0" prefWidth="164.0" />
+            <TextField fx:id="duration" layoutX="165.0" layoutY="232.0" prefHeight="25.0" prefWidth="164.0" />
+            <Label layoutX="330.0" layoutY="230.0" prefHeight="30.0" prefWidth="29.0" text="h" textAlignment="RIGHT">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+            <Label alignment="CENTER_RIGHT" layoutX="101.0" layoutY="93.0" prefHeight="30.0" prefWidth="64.0" text="Title">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Label>
+            <Label alignment="CENTER_RIGHT" layoutX="49.0" layoutY="162.0" prefHeight="30.0" prefWidth="116.0" text="Description">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Label>
+            <Label alignment="CENTER_RIGHT" layoutX="49.0" layoutY="230.0" prefHeight="30.0" prefWidth="116.0" text="Duration">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Label>
          </children>
     </AnchorPane>
   </children>

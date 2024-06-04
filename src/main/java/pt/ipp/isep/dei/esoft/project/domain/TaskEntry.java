@@ -85,7 +85,9 @@ public class TaskEntry implements Serializable {
 
     /**
      * Checks if this TaskEntry object is equal to another.
-     * Two TaskEntries are considered equal if they have the same title.
+     * Two TaskEntries are considered equal if they have the same title and are on the same green space.
+     * For information on how two green spaces being the same is verified, check the documentation of
+     * GreenSpace.equals().
      * @param o The TaskEntry to compare against.
      * @return A boolean value representing if the tasks are the same.
      */
@@ -95,7 +97,7 @@ public class TaskEntry implements Serializable {
             return false;
         }
         TaskEntry taskEntry = (TaskEntry) o;
-        return taskTitle.equalsIgnoreCase(taskEntry.getTaskTitle());
+        return taskTitle.equalsIgnoreCase(taskEntry.getTaskTitle()) && greenSpace.equals(taskEntry.getGreenSpace());
     }
 
     /**
