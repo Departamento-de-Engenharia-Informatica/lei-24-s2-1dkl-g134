@@ -25,7 +25,7 @@ public class CustomTime implements Serializable {
         time = time.trim();
         String timePattern = "\\d{2}:\\d{2}";
         if(!time.matches(timePattern)){
-            throw new IllegalArgumentException("Invalid date format. Please use 'HH:MM', with leading zeros.");
+            throw new IllegalArgumentException("Invalid time format. Please use a single hour number between 00 and 23, with leading zeros.");
         }
         String[] components = time.split(":");
         hour = Integer.parseInt(components[0]);

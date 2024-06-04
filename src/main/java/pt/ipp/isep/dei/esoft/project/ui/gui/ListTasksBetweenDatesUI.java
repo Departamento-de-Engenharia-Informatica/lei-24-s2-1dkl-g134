@@ -89,7 +89,7 @@ public class ListTasksBetweenDatesUI implements Initializable {
     }
 
     /**
-     * Attempts to refresh the table view and applies the appropriate filters.
+     * Attempts to refresh the table view, sorted by dates, and applies the appropriate filters.
      */
     @FXML
     private void refreshTableView(){
@@ -97,6 +97,7 @@ public class ListTasksBetweenDatesUI implements Initializable {
         if(tasks.isEmpty()){
             return;
         }
+        tasks = Optional.of(sortTasks(tasks.get()));
         for(TaskEntryDTO taskEntry : tasks.get()){
             if(!planned.isSelected() && !postponed.isSelected() && !completed.isSelected() && !cancelled.isSelected()){
                 taskList.getItems().add(taskEntry.attachedTaskEntry);
@@ -137,5 +138,23 @@ public class ListTasksBetweenDatesUI implements Initializable {
         Parent root = loader.load();
         Scene scene = new Scene(root);
         stage.setScene(scene);
+    }
+
+    /**
+     * Sorts a list of tasks by their dates.
+     * @param taskEntries The list of tasks to sort.
+     * @return The sorted list of tasks.
+     */
+    private ArrayList<TaskEntryDTO> sortTasks(ArrayList<TaskEntryDTO> taskEntries){
+        for(int i = 0; i < taskEntries.size(); i++){
+            for(int j = 1; j < taskEntries.size()-i; j++){
+                if(taskEntries.get(j-1).startDate.isAfterDate(taskEntries.get(j).startDate)){
+                    TaskEntryDTO temp = taskEntries.get(j-1);
+                    taskEntries.set(j-1, taskEntries.get(j));
+                    taskEntries.set(j, temp);
+                }
+            }
+        }
+        return taskEntries;
     }
 }

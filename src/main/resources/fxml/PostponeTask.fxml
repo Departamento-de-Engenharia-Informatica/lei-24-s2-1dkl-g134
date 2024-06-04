@@ -32,28 +32,31 @@
   OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 -->
 
+<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox prefHeight="453.0" prefWidth="686.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pt.ipp.isep.dei.esoft.project.ui.gui.MainAdminUI">
+<VBox prefHeight="453.0" prefWidth="686.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pt.ipp.isep.dei.esoft.project.ui.gui.PostponeTaskUI">
   <children>
     <MenuBar VBox.vgrow="NEVER">
       <menus>
         <Menu mnemonicParsing="false" text="Menus...">
           <items>
-            <MenuItem mnemonicParsing="false" text="Start" />
+            <MenuItem mnemonicParsing="false" onAction="#toStart" text="Start" />
             <MenuItem mnemonicParsing="false" onAction="#toUS20" text="Register Green Space" />
             <MenuItem mnemonicParsing="false" onAction="#toUS27" text="List Green Spaces managed by you" />
             <MenuItem mnemonicParsing="false" onAction="#toUS21" text="Add Task to To-Do List" />
             <MenuItem mnemonicParsing="false" onAction="#toUS22" text="Add Task to Agenda" />
             <MenuItem mnemonicParsing="false" onAction="#toUS23" text="Assign Team to Task" />
             <MenuItem mnemonicParsing="false" onAction="#toUS26" text="Assign Vehicles to Task" />
-            <MenuItem mnemonicParsing="false" onAction="#toUS24" text="Postpone Task" />
+            <MenuItem mnemonicParsing="false" text="Postpone Task" />
                   <MenuItem mnemonicParsing="false" onAction="#toUS25" text="Cancel Task" />
           </items>
         </Menu>
@@ -61,18 +64,36 @@
     </MenuBar>
     <AnchorPane maxHeight="-1.0" maxWidth="-1.0" prefHeight="-1.0" prefWidth="-1.0" VBox.vgrow="ALWAYS">
          <children>
-            <Label fx:id="title" layoutX="97.0" layoutY="60.0" prefHeight="85.0" prefWidth="492.0" text="Welcome to GreenGuardian!">
+            <Label layoutX="30.0" layoutY="35.0" prefHeight="46.0" prefWidth="313.0" text="Postpone Task">
                <font>
-                  <Font size="39.0" />
+                  <Font size="30.0" />
                </font>
             </Label>
-            <Label alignment="CENTER" layoutX="219.0" layoutY="161.0" prefHeight="53.0" prefWidth="248.0" text="Administrator Menu" textAlignment="CENTER">
+            <TableView fx:id="taskList" editable="true" layoutX="30.0" layoutY="98.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="308.0" prefWidth="447.0">
+               <columnResizePolicy>
+                  <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+               </columnResizePolicy>
+            </TableView>
+            <Button layoutX="500.0" layoutY="339.0" mnemonicParsing="false" onAction="#postponeTask" prefHeight="54.0" prefWidth="160.0" text="Postpone Task">
                <font>
-                  <Font size="22.0" />
+                  <Font size="20.0" />
+               </font>
+            </Button>
+            <Label alignment="TOP_CENTER" layoutX="500.0" layoutY="29.0" prefHeight="138.0" prefWidth="160.0" text="On the left is a list of tasks assigned to your green spaces currently in a planned or postponed state. Please select an option from the list and fill out the date and hour fields below to postpone that task." textAlignment="CENTER" wrapText="true" />
+            <TextField fx:id="date" layoutX="506.0" layoutY="206.0" />
+            <TextField fx:id="time" layoutX="506.0" layoutY="274.0" />
+            <Label layoutX="506.0" layoutY="181.0" prefHeight="25.0" prefWidth="111.0" text="New Start Date">
+               <font>
+                  <Font size="16.0" />
                </font>
             </Label>
-            <Label alignment="TOP_CENTER" layoutX="102.0" layoutY="250.0" prefHeight="122.0" prefWidth="209.0" text="Here you will find various functionalities that will aid you in the performance of your duties as an Administrator or Manager in the maintenance and management of green spaces that fall under your responsibility." textAlignment="CENTER" wrapText="true" />
-            <Label alignment="TOP_CENTER" layoutX="380.0" layoutY="250.0" prefHeight="94.0" prefWidth="209.0" text="Press the &quot;Menus...&quot; button on the top bar to view all available functionalities. Press each option to be taken to that window to perform that function." textAlignment="CENTER" wrapText="true" />
+            <Label layoutX="506.0" layoutY="231.0" prefHeight="17.0" prefWidth="160.0" text="YYYY/MM/DD, leading zeros" />
+            <Label layoutX="506.0" layoutY="299.0" prefHeight="17.0" prefWidth="160.0" text="00-23, leading zeros" />
+            <Label layoutX="506.0" layoutY="252.0" prefHeight="25.0" prefWidth="111.0" text="New Start Hour">
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </Label>
          </children>
     </AnchorPane>
   </children>

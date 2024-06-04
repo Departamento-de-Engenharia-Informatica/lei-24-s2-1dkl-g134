@@ -75,11 +75,11 @@ public class TaskEntry implements Serializable {
         if(date.isBlank() || time.isBlank()){
             throw new IllegalArgumentException("Blank fields not allowed.");
         }
-        this.state = State.PLANNED;
         this.startDate = new CustomDate(date);
         this.startTime = new CustomTime(time);
         this.endTime = startTime.adjust(duration);
         this.endDate = startDate.adjust(duration / Bootstrap.dailyWorkHours);
+        this.state = State.PLANNED;
         return this;
     }
 
@@ -333,6 +333,14 @@ public class TaskEntry implements Serializable {
      */
     public CustomTime getStartTime() {
         return startTime;
+    }
+
+    /**
+     * Gets this task's start time in a String format.
+     * @return The String object representing this task's start time.
+     */
+    public String getStartTimeString() {
+        return startTime.toString();
     }
 
     /**
