@@ -5,53 +5,65 @@ skinparam shadowing false
 
 autonumber
 
-'hide footbox
-actor "Fleet Manager" as FM
-participant "GenerateMaintenanceReportUI" as UI
-participant "GenerateMaintenanceReportController" as CTRL
-participant "vehicleRepository\n:VehicleRepository" as VR
+actor "Green Space Manager" as GSM
+participant ":RegisterGreenSpaceUI" as UI
+participant ":RegisterGreenSpaceController" as CTRL
+participant ":GreenSpaceRepository" as REPO
+participant ":GreenSpaceMapper" as MAP
 participant "Repositories" as RepositorySingleton
-participant "repositories\n:Repositories" as PLAT
+participant "GreenSpaceDTO" as DTO
+participant "GreenSpace" as GS
+
+activate GSM
+    GSM -> "UI" : asks to register a new green space
+    activate System
 
 
-activate FM
+    UI --> GSM : request details of the green space(garden, medium-sized park or large-sized park)\n and respctive area
+    deactivate System
 
-        FM -> UI : requests to list vehicles in need of checkup
+    GSM -> UI : provides green space details
 
-        activate UI
 
-'            UI --> ADM : requests data (reference, description,  informal \n description, technical description, duration, cost)
-            'create CTRL
+UI -> GSM : requests data (name, address, area, type)
+deactivate UI
+UI -> CTRL : createGreenSpace(name, address, area, type)
+activate CTRL
 
-            UI -> CTRL** : create vehicle
+CTRL -> RepositorySingleton : getGreenSpaceRepository()
+activate RepositorySingleton
 
-            UI -> CTRL : getVehiclesRequiringCheckup()
-            activate CTRL
+RepositorySingleton --> CTRL : GreenSpaceRepository instance
+deactivate RepositorySingleton
 
-                |||
-                    CTRL -> RepositorySingleton: getInstance()
-                    activate RepositorySingleton
+CTRL -> MAP : objectToDTO(name, address, area, type)
+activate MAP
 
-                    RepositorySingleton --> CTRL: repositories
-                    deactivate RepositorySingleton
+MAP -> DTO : create(name, address, area, type)
+activate DTO
 
-                    CTRL -> PLAT: getVehicleRepository()
-                    activate PLAT
+DTO --> MAP : GreenSpaceDTO instance
+deactivate DTO
 
-                        PLAT --> CTRL: vehicleRepository
-                    deactivate PLAT
+MAP --> CTRL : GreenSpaceDTO
+deactivate MAP
 
-                CTRL -> VR: getListOfVehiclesRequiringCheckup()
-                activate VR
+CTRL -> REPO : add(GreenSpaceDTO)
+activate REPO
 
-                VR --> CTRL: vehicleList
-                deactivate VR
+REPO -> GS : create(GreenSpaceDTO)
+activate GS
+deactivate GS
 
-                CTRL --> UI :vehicleList
-            deactivate CTRL
+REPO --> CTRL : Optional<GreenSpace>
+deactivate REPO
 
-            UI --> FM :  shows list of vehicles requiring check-up
-        deactivate UI
+CTRL --> UI : registration result
+deactivate CTRL
 
+UI --> GSM : shows registration result
+deactivate UI
+
+deactivate GSM
 
 @enduml
