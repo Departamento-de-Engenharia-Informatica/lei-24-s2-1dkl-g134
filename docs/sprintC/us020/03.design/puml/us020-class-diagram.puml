@@ -6,12 +6,15 @@ skinparam linetype polyline
 skinparam linetype orto
 
 
-
 class "GreenSpace" {
-    -name
-    -address
-    -area
-    -type
+    -String name
+    -String address
+    -int area
+    -GreenSpaceType type
+    -String creatorEmail
+
+    +GreenSpace(String name, String address, int area, GreenSpaceType type)
+
 
 }
 
@@ -22,57 +25,47 @@ class "GreenSpaceType" {
 }
 
 class "RegisterGreenSpaceController" {
-    -GreenSpaceRepository : GreenSpaceRepository
+    -GreenSpaceRepository greenSpaceRepository
+
     +RegisterGreenSpaceController()
-    +registerGreenSpace(name,address ,area ,int,type )
+    +Optional<GreenSpace> registerGreenSpace(GreenSpaceDTO greenSpaceDTO)
 }
 
 class "GreenSpaceRepository" {
-
     +GreenSpaceRepository()
-    +add(name : String, address : String, area : int, type : GreenSpaceType) : Optional<GreenSpace>
-    +getGreenSpacesManagedByUser() : Optional<ArrayList<GreenSpace>>
+    +GreenSpace(String name, String address, int area, GreenSpaceType type)
+
 }
 
 class "GreenSpaceDTO" {
-    +name : String
-    +address : String
-    +area : int
-    +type : GreenSpaceType
-    +attachedGreenSpace : GreenSpace
-    +equals(Object o) : boolean
+    +String name
+    +String address
+    +int area
+    +GreenSpaceType type
+
 }
 
-
+class "GreenSpaceMapper" {
+    +GreenSpaceDTO objectToDTO(GreenSpace greenSpace) : GreenSpaceDTO
+    +GreenSpace DTOToObject(GreenSpaceDTO greenSpaceDTO) : GreenSpace
+    +static GreenSpaceMapper getMapper() : GreenSpaceMapper
+}
 
 class "RegisterGreenSpaceUI" {
-    -name
+    - name
     -address
-    -area
+    - area
     -type
-    -registerGreenSpaceController : RegisterGreenSpaceController
-
 
 }
 
-
-
-class RegisterGreenSpaceUI {
-
-    - registerGreenSpaceController: RegisterGreenSpaceController
-
-    + getRegisterGreenSpaceController(): RegisterGreenSpaceController
-
-}
-
-
-RegisterGreenSpaceController ..> GreenSpace : greenSpace
-GreenSpace ..> GreenSpaceRepository : exists in >
-RegisterGreenSpaceUI ..> RegisterGreenSpaceController : owns
-RegisterGreenSpaceUI ..> GreenSpaceDTO : greenSpaceDTO
-GreenSpace ..> GreenSpaceType : owns
-RegisterGreenSpaceController --> GreenSpace
-GreenSpaceRepository --> GreenSpace
-RegisterGreenSpaceUI --> RegisterGreenSpaceController
-
+GreenSpaceRepository --> "contains and manages" GreenSpace
+RegisterGreenSpaceController --> "has" GreenSpaceRepository
+RegisterGreenSpaceUI --> "uses" RegisterGreenSpaceController
+RegisterGreenSpaceUI --> "creates and uses" GreenSpaceDTO
+GreenSpace --> "contains a" GreenSpaceType
+GreenSpaceDTO --> "contains " GreenSpace
+GreenSpaceMapper --> "converts" GreenSpace
+GreenSpaceMapper --> "converts" GreenSpaceDTO
+RegisterGreenSpaceController --> "uses" GreenSpaceMapper
 @enduml
