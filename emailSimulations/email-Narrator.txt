@@ -1,0 +1,20 @@
+From: musgosublime@isep.ipp.pt;
+To: Narrator
+Address: will@never.end
+Subject: Assignment to task 'Task Entry 1'
+Message:
+
+Dear collaborator,
+As part of the team comprised of the members:
+Narrator | 8888
+Coleman | 1337
+You and your teammates have been assigned to the task 'Task Entry 1'.
+Task description: Task Entry One
+This task will take place in the following green space: Green Space
+The address of this green space is: Somewhere
+This task is scheduled to start on the following date and time: 2005/01/20 11:00
+And is scheduled to end on the following date and time: 2005/01/20 13:00
+This task is expected to have a duration of 2 hours.
+The urgency level of this task is: HIGH
+
+Thank you, and good work!

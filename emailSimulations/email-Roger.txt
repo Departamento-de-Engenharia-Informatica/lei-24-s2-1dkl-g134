@@ -1,7 +1,7 @@
 From: musgosublime@isep.ipp.pt;
 To: Roger
 Address: roger@is.real
-Subject: Assignment to task 'Task5'
+Subject: Assignment to task 'Task Entry 2'
 Message:
 
 Dear collaborator,
@@ -10,12 +10,12 @@ Roger | 15017807
 Emily | 15017808
 Exas | 15017809
 Stanley | 427
-You and your teammates have been assigned to the task 'Task5'.
-Task description: TaskFive
-This task will take place in the following green space: Cidade
-The address of this green space is: somewhere
-This task is scheduled to start on the following date and time: 2005/01/24 11:00
-And is scheduled to end on the following date and time: 2005/01/24 13:00
+You and your teammates have been assigned to the task 'Task Entry 2'.
+Task description: Task Entry Two
+This task will take place in the following green space: Green Space
+The address of this green space is: Somewhere
+This task is scheduled to start on the following date and time: 2005/01/21 11:00
+And is scheduled to end on the following date and time: 2005/01/21 13:00
 This task is expected to have a duration of 2 hours.
 The urgency level of this task is: MEDIUM
 

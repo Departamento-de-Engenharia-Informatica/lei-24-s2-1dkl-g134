@@ -97,7 +97,7 @@ public class TaskEntry implements Serializable {
             return false;
         }
         TaskEntry taskEntry = (TaskEntry) o;
-        return taskTitle.equalsIgnoreCase(taskEntry.getTaskTitle()) && greenSpace.equals(taskEntry.getGreenSpace());
+        return taskTitle.equalsIgnoreCase(taskEntry.getTaskTitle()) && greenSpace.equals(taskEntry.getGreenSpaceObject());
     }
 
     /**
