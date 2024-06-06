@@ -92,7 +92,7 @@
                   <Font size="22.0" />
                </font>
             </Label>
-            <Button layoutX="506.0" layoutY="346.0" mnemonicParsing="false" onAction="#assignTeamToTask" prefHeight="46.0" prefWidth="166.0" text="Assign Vehicles">
+            <Button layoutX="506.0" layoutY="346.0" mnemonicParsing="false" onAction="#assignTeamToTask" prefHeight="46.0" prefWidth="166.0" text="Assign Team">
                <font>
                   <Font size="20.0" />
                </font>
