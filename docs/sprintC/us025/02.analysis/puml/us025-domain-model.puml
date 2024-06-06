@@ -1,0 +1,43 @@
+@startuml
+skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+
+skinparam classAttributeIconSize 0
+
+hide circle
+hide methods
+
+
+class Organization {
+    name
+    vatNumber
+    website
+    phoneNumber
+    email
+}
+
+class GreenSpace{
+    local
+    address
+    area
+}
+
+class "Entry" {
+    title
+    description
+    urgencyLevel
+    expectedDuration
+    state
+    greenSpace
+}
+class GreenSpaceManager {
+    name
+    email
+    phone
+}
+
+Organization "1" -- "*" GreenSpaceManager : has >
+GreenSpace "1" -- "*" "Entry" : has >
+GreenSpaceManager "1" - "*" GreenSpace : manages >
+@enduml
