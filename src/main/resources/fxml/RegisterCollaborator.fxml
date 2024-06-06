@@ -43,14 +43,14 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox prefHeight="453.0" prefWidth="686.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pt.ipp.isep.dei.esoft.project.ui.gui.RegisterGreenSpaceUI">
+<VBox prefHeight="453.0" prefWidth="686.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pt.ipp.isep.dei.esoft.project.ui.gui.RegisterCollaboratorUI">
   <children>
     <MenuBar VBox.vgrow="NEVER">
       <menus>
         <Menu mnemonicParsing="false" text="Menus...">
           <items>
             <MenuItem mnemonicParsing="false" onAction="#toStart" text="Start" />
-            <MenuItem mnemonicParsing="false" text="Register Green Space" />
+            <MenuItem mnemonicParsing="false" onAction="#toUS20" text="Register Green Space" />
             <MenuItem mnemonicParsing="false" onAction="#toUS27" text="List Green Spaces managed by you" />
             <MenuItem mnemonicParsing="false" onAction="#toUS21" text="Add Task to To-Do List" />
             <MenuItem mnemonicParsing="false" onAction="#toUS22" text="Add Task to Agenda" />
@@ -60,7 +60,7 @@
                   <MenuItem mnemonicParsing="false" onAction="#toUS25" text="Cancel Task" />
                   <MenuItem mnemonicParsing="false" onAction="#toUS1" text="Register Skill" />
                   <MenuItem mnemonicParsing="false" onAction="#toUS2" text="Register Job" />
-                  <MenuItem mnemonicParsing="false" onAction="#toUS3" text="Register Collaborator" />
+                  <MenuItem mnemonicParsing="false" text="Register Collaborator" />
                   <MenuItem mnemonicParsing="false" onAction="#toUS4" text="Assign Skills to Collaborator" />
                   <MenuItem mnemonicParsing="false" onAction="#toUS5" text="Generate Teams" />
                   <MenuItem mnemonicParsing="false" onAction="#toUS6" text="Register Vehicle" />
@@ -72,42 +72,73 @@
     </MenuBar>
     <AnchorPane maxHeight="-1.0" maxWidth="-1.0" prefHeight="-1.0" prefWidth="-1.0" VBox.vgrow="ALWAYS">
          <children>
-            <Label layoutX="28.0" layoutY="27.0" prefHeight="46.0" prefWidth="502.0" text="Register a new Green Space">
-               <font>
-                  <Font size="30.0" />
-               </font>
-            </Label>
-            <Button layoutX="421.0" layoutY="341.0" mnemonicParsing="false" onAction="#registerGreenSpace" prefHeight="46.0" prefWidth="219.0" text="Register Green Space">
+            <Button layoutX="420.0" layoutY="368.0" mnemonicParsing="false" onAction="#registerCollaborator" prefHeight="46.0" prefWidth="219.0" text="Register Collaborator">
                <font>
                   <Font size="20.0" />
                </font>
             </Button>
-            <Label layoutX="436.0" layoutY="278.0" prefHeight="63.0" prefWidth="188.0" text="Fill out every field, select a green space type, then press the button below to register it." wrapText="true" />
-            <TextField fx:id="name" layoutX="130.0" layoutY="137.0" prefHeight="25.0" prefWidth="203.0" />
-            <Label alignment="CENTER_RIGHT" layoutX="56.0" layoutY="131.0" prefHeight="37.0" prefWidth="64.0" text="Name" textAlignment="RIGHT">
+            <Label layoutX="14.0" layoutY="14.0" prefHeight="46.0" prefWidth="443.0" text="Register a new Collaborator">
+               <font>
+                  <Font size="30.0" />
+               </font>
+            </Label>
+            <Label layoutX="436.0" layoutY="296.0" prefHeight="72.0" prefWidth="188.0" text="Fill out every field, select a job, then press the button below to add a new collaborator." wrapText="true" />
+            <ListView fx:id="jobs" editable="true" layoutX="448.0" layoutY="123.0" prefHeight="159.0" prefWidth="164.0" />
+            <Label layoutX="448.0" layoutY="93.0" prefHeight="30.0" prefWidth="131.0" text="Jobs" textAlignment="RIGHT">
                <font>
                   <Font size="20.0" />
                </font>
             </Label>
-            <TextField fx:id="address" layoutX="130.0" layoutY="202.0" prefHeight="25.0" prefWidth="203.0" />
-            <Label alignment="CENTER_RIGHT" layoutX="38.0" layoutY="196.0" prefHeight="37.0" prefWidth="82.0" text="Address" textAlignment="RIGHT">
+            <TextField fx:id="name" layoutX="178.0" layoutY="95.0" prefHeight="25.0" prefWidth="164.0" />
+            <TextField fx:id="birthdate" layoutX="178.0" layoutY="126.0" prefHeight="25.0" prefWidth="164.0" />
+            <Label alignment="CENTER_RIGHT" layoutX="114.0" layoutY="93.0" prefHeight="30.0" prefWidth="64.0" text="Name">
                <font>
                   <Font size="20.0" />
                </font>
             </Label>
-            <TextField fx:id="area" layoutX="130.0" layoutY="266.0" prefHeight="25.0" prefWidth="203.0" />
-            <Label alignment="CENTER_RIGHT" layoutX="56.0" layoutY="260.0" prefHeight="37.0" prefWidth="64.0" text="Area" textAlignment="RIGHT">
+            <Label alignment="CENTER_RIGHT" layoutX="62.0" layoutY="123.0" prefHeight="30.0" prefWidth="116.0" text="Birth Date">
                <font>
                   <Font size="20.0" />
                </font>
             </Label>
-            <Label layoutX="333.0" layoutY="266.0" prefHeight="25.0" prefWidth="64.0" text="hectares">
+            <TextField fx:id="admissiondate" layoutX="178.0" layoutY="156.0" prefHeight="25.0" prefWidth="164.0" />
+            <Label alignment="CENTER_RIGHT" layoutX="33.0" layoutY="153.0" prefHeight="30.0" prefWidth="145.0" text="Admission Date">
                <font>
-                  <Font size="13.0" />
+                  <Font size="20.0" />
                </font>
             </Label>
-            <ListView fx:id="types" editable="true" layoutX="436.0" layoutY="118.0" prefHeight="142.0" prefWidth="151.0" />
-            <Label layoutX="436.0" layoutY="88.0" prefHeight="25.0" prefWidth="64.0" text="Type" textAlignment="RIGHT">
+            <TextField fx:id="address" layoutX="178.0" layoutY="184.0" prefHeight="25.0" prefWidth="164.0" />
+            <Label alignment="CENTER_RIGHT" layoutX="33.0" layoutY="181.0" prefHeight="30.0" prefWidth="145.0" text="Address">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Label>
+            <TextField fx:id="phone" layoutX="178.0" layoutY="212.0" prefHeight="25.0" prefWidth="164.0" />
+            <Label alignment="CENTER_RIGHT" layoutX="33.0" layoutY="209.0" prefHeight="30.0" prefWidth="145.0" text="Phone Number">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Label>
+            <TextField fx:id="email" layoutX="178.0" layoutY="240.0" prefHeight="25.0" prefWidth="164.0" />
+            <Label alignment="CENTER_RIGHT" layoutX="33.0" layoutY="237.0" prefHeight="30.0" prefWidth="145.0" text="Email">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Label>
+            <TextField fx:id="idType" layoutX="178.0" layoutY="268.0" prefHeight="25.0" prefWidth="164.0" />
+            <Label alignment="CENTER_RIGHT" layoutX="33.0" layoutY="265.0" prefHeight="30.0" prefWidth="145.0" text="ID Type">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Label>
+            <TextField fx:id="idNumber" layoutX="178.0" layoutY="296.0" prefHeight="25.0" prefWidth="164.0" />
+            <Label alignment="CENTER_RIGHT" layoutX="33.0" layoutY="293.0" prefHeight="30.0" prefWidth="145.0" text="ID Number">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Label>
+            <TextField fx:id="taxpayerNumber" layoutX="178.0" layoutY="326.0" prefHeight="25.0" prefWidth="164.0" />
+            <Label alignment="CENTER_RIGHT" layoutX="14.0" layoutY="323.0" prefHeight="30.0" prefWidth="164.0" text="Taxpayer Number">
                <font>
                   <Font size="20.0" />
                </font>

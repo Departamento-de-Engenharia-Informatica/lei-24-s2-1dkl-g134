@@ -49,7 +49,7 @@
       <menus>
         <Menu mnemonicParsing="false" text="Menus...">
           <items>
-            <MenuItem fx:id="toStart" mnemonicParsing="false" text="Start" />
+            <MenuItem mnemonicParsing="false" onAction="#toStart" text="Start" />
             <MenuItem mnemonicParsing="false" onAction="#toUS20" text="Register Green Space" />
             <MenuItem mnemonicParsing="false" onAction="#toUS27" text="List Green Spaces managed by you" />
             <MenuItem mnemonicParsing="false" text="Add Task to To-Do List" />
@@ -58,6 +58,14 @@
             <MenuItem mnemonicParsing="false" onAction="#toUS26" text="Assign Vehicles to Task" />
             <MenuItem mnemonicParsing="false" onAction="#toUS24" text="Postpone Task" />
                   <MenuItem mnemonicParsing="false" onAction="#toUS25" text="Cancel Task" />
+                  <MenuItem mnemonicParsing="false" onAction="#toUS1" text="Register Skill" />
+                  <MenuItem mnemonicParsing="false" onAction="#toUS2" text="Register Job" />
+                  <MenuItem mnemonicParsing="false" onAction="#toUS3" text="Register Collaborator" />
+                  <MenuItem mnemonicParsing="false" onAction="#toUS4" text="Assign Skills to Collaborator" />
+                  <MenuItem mnemonicParsing="false" onAction="#toUS5" text="Generate Teams" />
+                  <MenuItem mnemonicParsing="false" onAction="#toUS6" text="Register Vehicle" />
+                  <MenuItem mnemonicParsing="false" onAction="#toUS7" text="Register Checkup" />
+                  <MenuItem mnemonicParsing="false" onAction="#toUS8" text="List Vehicles Requiring Checkup" />
           </items>
         </Menu>
       </menus>

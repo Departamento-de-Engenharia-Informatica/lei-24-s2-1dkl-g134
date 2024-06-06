@@ -57,6 +57,14 @@
             <MenuItem mnemonicParsing="false" text="Assign Vehicles to Task" />
             <MenuItem mnemonicParsing="false" onAction="#toUS24" text="Postpone Task" />
                   <MenuItem mnemonicParsing="false" onAction="#toUS25" text="Cancel Task" />
+                  <MenuItem mnemonicParsing="false" onAction="#toUS1" text="Register Skill" />
+                  <MenuItem mnemonicParsing="false" onAction="#toUS2" text="Register Job" />
+                  <MenuItem mnemonicParsing="false" onAction="#toUS3" text="Register Collaborator" />
+                  <MenuItem mnemonicParsing="false" onAction="#toUS4" text="Assign Skills to Collaborator" />
+                  <MenuItem mnemonicParsing="false" onAction="#toUS5" text="Generate Teams" />
+                  <MenuItem mnemonicParsing="false" onAction="#toUS6" text="Register Vehicle" />
+                  <MenuItem mnemonicParsing="false" onAction="#toUS7" text="Register Checkup" />
+                  <MenuItem mnemonicParsing="false" onAction="#toUS8" text="List Vehicles Requiring Checkup" />
           </items>
         </Menu>
       </menus>

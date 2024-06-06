@@ -34,7 +34,6 @@
 
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
@@ -43,14 +42,14 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox prefHeight="453.0" prefWidth="686.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pt.ipp.isep.dei.esoft.project.ui.gui.RegisterGreenSpaceUI">
+<VBox prefHeight="453.0" prefWidth="686.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pt.ipp.isep.dei.esoft.project.ui.gui.RegisterVehicleUI">
   <children>
     <MenuBar VBox.vgrow="NEVER">
       <menus>
         <Menu mnemonicParsing="false" text="Menus...">
           <items>
             <MenuItem mnemonicParsing="false" onAction="#toStart" text="Start" />
-            <MenuItem mnemonicParsing="false" text="Register Green Space" />
+            <MenuItem mnemonicParsing="false" onAction="#toUS20" text="Register Green Space" />
             <MenuItem mnemonicParsing="false" onAction="#toUS27" text="List Green Spaces managed by you" />
             <MenuItem mnemonicParsing="false" onAction="#toUS21" text="Add Task to To-Do List" />
             <MenuItem mnemonicParsing="false" onAction="#toUS22" text="Add Task to Agenda" />
@@ -63,7 +62,7 @@
                   <MenuItem mnemonicParsing="false" onAction="#toUS3" text="Register Collaborator" />
                   <MenuItem mnemonicParsing="false" onAction="#toUS4" text="Assign Skills to Collaborator" />
                   <MenuItem mnemonicParsing="false" onAction="#toUS5" text="Generate Teams" />
-                  <MenuItem mnemonicParsing="false" onAction="#toUS6" text="Register Vehicle" />
+                  <MenuItem mnemonicParsing="false" text="Register Vehicle" />
                   <MenuItem mnemonicParsing="false" onAction="#toUS7" text="Register Checkup" />
                   <MenuItem mnemonicParsing="false" onAction="#toUS8" text="List Vehicles Requiring Checkup" />
           </items>
@@ -72,46 +71,81 @@
     </MenuBar>
     <AnchorPane maxHeight="-1.0" maxWidth="-1.0" prefHeight="-1.0" prefWidth="-1.0" VBox.vgrow="ALWAYS">
          <children>
-            <Label layoutX="28.0" layoutY="27.0" prefHeight="46.0" prefWidth="502.0" text="Register a new Green Space">
-               <font>
-                  <Font size="30.0" />
-               </font>
-            </Label>
-            <Button layoutX="421.0" layoutY="341.0" mnemonicParsing="false" onAction="#registerGreenSpace" prefHeight="46.0" prefWidth="219.0" text="Register Green Space">
+            <Button layoutX="449.0" layoutY="315.0" mnemonicParsing="false" onAction="#registerVehicle" prefHeight="46.0" prefWidth="177.0" text="Register Vehicle">
                <font>
                   <Font size="20.0" />
                </font>
             </Button>
-            <Label layoutX="436.0" layoutY="278.0" prefHeight="63.0" prefWidth="188.0" text="Fill out every field, select a green space type, then press the button below to register it." wrapText="true" />
-            <TextField fx:id="name" layoutX="130.0" layoutY="137.0" prefHeight="25.0" prefWidth="203.0" />
-            <Label alignment="CENTER_RIGHT" layoutX="56.0" layoutY="131.0" prefHeight="37.0" prefWidth="64.0" text="Name" textAlignment="RIGHT">
+            <Label layoutX="14.0" layoutY="14.0" prefHeight="46.0" prefWidth="443.0" text="Register a new Vehicle">
+               <font>
+                  <Font size="30.0" />
+               </font>
+            </Label>
+            <Label layoutX="443.0" layoutY="259.0" prefHeight="72.0" prefWidth="188.0" text="Fill out every field, then press the button below to add a new vehicle." wrapText="true" />
+            <TextField fx:id="brand" layoutX="191.0" layoutY="94.0" prefHeight="25.0" prefWidth="164.0" />
+            <TextField fx:id="model" layoutX="191.0" layoutY="125.0" prefHeight="25.0" prefWidth="164.0" />
+            <Label alignment="CENTER_RIGHT" layoutX="127.0" layoutY="92.0" prefHeight="30.0" prefWidth="64.0" text="Brand">
                <font>
                   <Font size="20.0" />
                </font>
             </Label>
-            <TextField fx:id="address" layoutX="130.0" layoutY="202.0" prefHeight="25.0" prefWidth="203.0" />
-            <Label alignment="CENTER_RIGHT" layoutX="38.0" layoutY="196.0" prefHeight="37.0" prefWidth="82.0" text="Address" textAlignment="RIGHT">
+            <Label alignment="CENTER_RIGHT" layoutX="75.0" layoutY="122.0" prefHeight="30.0" prefWidth="116.0" text="Model">
                <font>
                   <Font size="20.0" />
                </font>
             </Label>
-            <TextField fx:id="area" layoutX="130.0" layoutY="266.0" prefHeight="25.0" prefWidth="203.0" />
-            <Label alignment="CENTER_RIGHT" layoutX="56.0" layoutY="260.0" prefHeight="37.0" prefWidth="64.0" text="Area" textAlignment="RIGHT">
+            <TextField fx:id="registerDate" layoutX="191.0" layoutY="155.0" prefHeight="25.0" prefWidth="164.0" />
+            <Label alignment="CENTER_RIGHT" layoutX="46.0" layoutY="152.0" prefHeight="30.0" prefWidth="145.0" text="Register Date">
                <font>
                   <Font size="20.0" />
                </font>
             </Label>
-            <Label layoutX="333.0" layoutY="266.0" prefHeight="25.0" prefWidth="64.0" text="hectares">
-               <font>
-                  <Font size="13.0" />
-               </font>
-            </Label>
-            <ListView fx:id="types" editable="true" layoutX="436.0" layoutY="118.0" prefHeight="142.0" prefWidth="151.0" />
-            <Label layoutX="436.0" layoutY="88.0" prefHeight="25.0" prefWidth="64.0" text="Type" textAlignment="RIGHT">
+            <TextField fx:id="acquisitionDate" layoutX="191.0" layoutY="183.0" prefHeight="25.0" prefWidth="164.0" />
+            <Label alignment="CENTER_RIGHT" layoutX="46.0" layoutY="180.0" prefHeight="30.0" prefWidth="145.0" text="Acquisition Date">
                <font>
                   <Font size="20.0" />
                </font>
             </Label>
+            <TextField fx:id="tare" layoutX="191.0" layoutY="211.0" prefHeight="25.0" prefWidth="164.0" />
+            <Label alignment="CENTER_RIGHT" layoutX="46.0" layoutY="208.0" prefHeight="30.0" prefWidth="145.0" text="Tare">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Label>
+            <TextField fx:id="grossWeight" layoutX="191.0" layoutY="239.0" prefHeight="25.0" prefWidth="164.0" />
+            <Label alignment="CENTER_RIGHT" layoutX="46.0" layoutY="236.0" prefHeight="30.0" prefWidth="145.0" text="Gross Weight">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Label>
+            <TextField fx:id="currentKM" layoutX="191.0" layoutY="267.0" prefHeight="25.0" prefWidth="164.0" />
+            <Label alignment="CENTER_RIGHT" layoutX="46.0" layoutY="264.0" prefHeight="30.0" prefWidth="145.0" text="Current KM">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Label>
+            <TextField fx:id="checkupFrequency" layoutX="191.0" layoutY="295.0" prefHeight="25.0" prefWidth="164.0" />
+            <Label alignment="CENTER_RIGHT" layoutX="14.0" layoutY="292.0" prefHeight="30.0" prefWidth="177.0" text="Checkup Frequency">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Label>
+            <TextField fx:id="plateNumber" layoutX="191.0" layoutY="325.0" prefHeight="25.0" prefWidth="164.0" />
+            <Label alignment="CENTER_RIGHT" layoutX="27.0" layoutY="322.0" prefHeight="30.0" prefWidth="164.0" text="Plate Number">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Label>
+            <TextField fx:id="type" layoutX="191.0" layoutY="355.0" prefHeight="25.0" prefWidth="164.0" />
+            <Label alignment="CENTER_RIGHT" layoutX="27.0" layoutY="352.0" prefHeight="30.0" prefWidth="164.0" text="Type">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Label>
+            <Label layoutX="355.0" layoutY="211.0" prefHeight="25.0" prefWidth="70.0" text="kg" />
+            <Label layoutX="355.0" layoutY="239.0" prefHeight="25.0" prefWidth="70.0" text="kg" />
+            <Label layoutX="355.0" layoutY="267.0" prefHeight="25.0" prefWidth="70.0" text="km" />
+            <Label layoutX="355.0" layoutY="295.0" prefHeight="25.0" prefWidth="70.0" text="km" />
          </children>
     </AnchorPane>
   </children>

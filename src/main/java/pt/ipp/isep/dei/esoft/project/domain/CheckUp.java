@@ -22,6 +22,12 @@ public class CheckUp implements Serializable {
     public int getCurrentKM() {return currentKM;}
 
     /**
+     * Returns the KMs after which a next checkup is required.
+     * @return An int value representing the KMs of the vehicle's next checkup.
+     */
+    public int getNextCheckupKM() {return currentKM+vehicle.getCheckUpFrequency();}
+
+    /**
      * Returns the date on which this checkup was performed
      * @return A CustomDate object describing the date on which this checkup was performed
      */
@@ -49,7 +55,7 @@ public class CheckUp implements Serializable {
     /**
      * Constructor for a new CheckUp object.
      * This method will throw an IllegalArgumentException if the date value is in the future,
-     * the currentKm valus is below or equal to 0, the date is null or blank, or for any reason
+     * the currentKm valus is below 0, the date is null or blank, or for any reason
      * outlined in the CustomDate constructor.
      * @param vehicle The Vehicle object to be associated with this checkup
      * @param currentKM The KMs of the vehicle as of the time of this checkup
@@ -69,7 +75,7 @@ public class CheckUp implements Serializable {
         if(this.date.isFuture()){
             throw new IllegalArgumentException("Date must not be in the future.");
         }
-        if(currentKM<=0){
+        if(currentKM<0){
             throw new IllegalArgumentException("Current KM value must be greater than 0");
         }
     }

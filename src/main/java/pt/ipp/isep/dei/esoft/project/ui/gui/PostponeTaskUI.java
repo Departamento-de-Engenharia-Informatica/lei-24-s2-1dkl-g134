@@ -203,4 +203,100 @@ public class PostponeTaskUI implements Initializable {
         Scene scene = new Scene(root);
         stage.setScene(scene);
     }
+
+    /**
+     * Switches to the RegisterSkillUI scene.
+     */
+    @FXML
+    public void toUS1() throws IOException {
+        Stage stage = (Stage) taskList.getScene().getWindow();
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/RegisterSkill.fxml"));
+        Parent root = loader.load();
+        Scene scene = new Scene(root);
+        stage.setScene(scene);
+    }
+
+    /**
+     * Switches to the RegisterJobUI scene.
+     */
+    @FXML
+    public void toUS2() throws IOException {
+        Stage stage = (Stage) taskList.getScene().getWindow();
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/RegisterJob.fxml"));
+        Parent root = loader.load();
+        Scene scene = new Scene(root);
+        stage.setScene(scene);
+    }
+
+    /**
+     * Switches to the RegisterCollaboratorUI scene.
+     */
+    @FXML
+    public void toUS3() throws IOException {
+        Stage stage = (Stage) taskList.getScene().getWindow();
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/RegisterCollaborator.fxml"));
+        Parent root = loader.load();
+        Scene scene = new Scene(root);
+        stage.setScene(scene);
+    }
+
+    /**
+     * Switches to the AssignSkillsToCollaboratorUI scene.
+     */
+    @FXML
+    public void toUS4() throws IOException {
+        Stage stage = (Stage) taskList.getScene().getWindow();
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/AssignSkillsToCollaborator.fxml"));
+        Parent root = loader.load();
+        Scene scene = new Scene(root);
+        stage.setScene(scene);
+    }
+
+    /**
+     * Switches to the GenerateTeamUI scene.
+     */
+    @FXML
+    public void toUS5() throws IOException {
+        Stage stage = (Stage) taskList.getScene().getWindow();
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/GenerateTeam.fxml"));
+        Parent root = loader.load();
+        Scene scene = new Scene(root);
+        stage.setScene(scene);
+    }
+
+    /**
+     * Switches to the RegisterVehicleUI scene.
+     */
+    @FXML
+    public void toUS6() throws IOException {
+        Stage stage = (Stage) taskList.getScene().getWindow();
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/RegisterVehicle.fxml"));
+        Parent root = loader.load();
+        Scene scene = new Scene(root);
+        stage.setScene(scene);
+    }
+
+    /**
+     * Switches to the RegisterCheckupUI scene.
+     */
+    @FXML
+    public void toUS7() throws IOException {
+        Stage stage = (Stage) taskList.getScene().getWindow();
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/RegisterCheckup.fxml"));
+        Parent root = loader.load();
+        Scene scene = new Scene(root);
+        stage.setScene(scene);
+    }
+
+    /**
+     * Switches to the ListVehiclesRequiringCheckupUI scene.
+     */
+    @FXML
+    public void toUS8() throws IOException {
+        Stage stage = (Stage) taskList.getScene().getWindow();
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/ListVehiclesRequiringCheckup.fxml"));
+        Parent root = loader.load();
+        Scene scene = new Scene(root);
+        stage.setScene(scene);
+    }
 }

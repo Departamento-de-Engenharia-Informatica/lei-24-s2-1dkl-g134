@@ -11,10 +11,9 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
-import pt.ipp.isep.dei.esoft.project.application.controller.CancelTaskController;
-import pt.ipp.isep.dei.esoft.project.application.controller.CompleteTaskController;
-import pt.ipp.isep.dei.esoft.project.domain.TaskEntry;
-import pt.ipp.isep.dei.esoft.project.dto.TaskEntryDTO;
+import pt.ipp.isep.dei.esoft.project.application.controller.GenerateMaintenanceReportController;
+import pt.ipp.isep.dei.esoft.project.domain.CheckUp;
+import pt.ipp.isep.dei.esoft.project.domain.Vehicle;
 import pt.ipp.isep.dei.esoft.project.ui.Bootstrap;
 
 import java.io.IOException;
@@ -23,81 +22,68 @@ import java.util.ArrayList;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
-public class CancelTaskUI implements Initializable {
+public class ListVehiclesRequiringCheckupUI implements Initializable {
     @FXML
-    private TableView taskList;
+    private TableView vehicles;
+    @FXML
+    private TableView prev;
 
-    private CancelTaskController ctrl = new CancelTaskController();
-    private Optional<ArrayList<TaskEntryDTO>> tasks = Optional.empty();
+    private GenerateMaintenanceReportController ctrl = new GenerateMaintenanceReportController();
 
     /**
-     * Initializes this functionality and prepares and creates the appropriate columns for
-     * the TableView in use, calling refreshTableView() at the end.
+     * Initializes this functionality and prepares and creates the appropriate columns for the
+     * TableViews in use. Then, gets all the vehicles currently requiring a checkup, and populates
+     * the TableView with them.
+     * Should any error arise in the process, provides feedback to the user.
      */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        taskList.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
-        TableColumn<TaskEntry, String> column1 = new TableColumn<>("Title");
-        column1.setCellValueFactory(new PropertyValueFactory<>("taskTitle"));
-        taskList.getColumns().add(column1);
-        TableColumn<TaskEntry, String> column2 = new TableColumn<>("Description");
-        column2.setCellValueFactory(new PropertyValueFactory<>("taskDescription"));
-        taskList.getColumns().add(column2);
-        refreshTableView();
-    }
+        prev.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
+        TableColumn<CheckUp, String> prevColumn = new TableColumn<>("Previous");
+        prevColumn.setCellValueFactory(new PropertyValueFactory<>("currentKM"));
+        prev.getColumns().add(prevColumn);
+        TableColumn<CheckUp, String> nextColumn = new TableColumn<>("Next");
+        nextColumn.setCellValueFactory(new PropertyValueFactory<>("nextCheckupKM"));
+        prev.getColumns().add(nextColumn);
 
-    /**
-     * Attempts to mark the task selected in the table as cancelled and provides the appropriate feedback.
-     * Also calls refreshTableView() in the event of success.
-     */
-    @FXML
-    private void cancelTask() {
-        TaskEntryDTO selectedTask = null;
+        vehicles.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
+        TableColumn<Vehicle, String> vehicleColumn1 = new TableColumn<>("Plate Number");
+        vehicleColumn1.setCellValueFactory(new PropertyValueFactory<>("plateNumber"));
+        vehicles.getColumns().add(vehicleColumn1);
+        TableColumn<Vehicle, String> vehicleColumn2 = new TableColumn<>("Brand");
+        vehicleColumn2.setCellValueFactory(new PropertyValueFactory<>("brand"));
+        vehicles.getColumns().add(vehicleColumn2);
+        TableColumn<Vehicle, String> vehicleColumn3 = new TableColumn<>("Model");
+        vehicleColumn3.setCellValueFactory(new PropertyValueFactory<>("model"));
+        vehicles.getColumns().add(vehicleColumn3);
+        TableColumn<Vehicle, String> vehicleColumn4 = new TableColumn<>("Current KM");
+        vehicleColumn4.setCellValueFactory(new PropertyValueFactory<>("currentKM"));
+        vehicles.getColumns().add(vehicleColumn4);
+        TableColumn<Vehicle, String> vehicleColumn5 = new TableColumn<>("Checkup Frequency");
+        vehicleColumn5.setCellValueFactory(new PropertyValueFactory<>("checkUpFrequency"));
+        vehicles.getColumns().add(vehicleColumn5);
+        Optional<ArrayList<Vehicle>> vehicleList = Optional.empty();
         try{
-            selectedTask = tasks.get().get(taskList.getSelectionModel().getSelectedIndex());
+            vehicleList = ctrl.getVehiclesRequiringCheckup();
         }catch(Exception e){
-            AlertUI.createAlert(Alert.AlertType.ERROR, Bootstrap.APP_TITLE, "Invalid task selection!"
-                    , "Select a task to cancel!").show();
+            AlertUI.createAlert(Alert.AlertType.ERROR, Bootstrap.APP_TITLE, "Failed to get vehicles requiring checkup!"
+                    , e.getMessage()).show();
             return;
         }
-        try{
-            Optional<TaskEntry> completedTask = ctrl.cancelTask(selectedTask.attachedTaskEntry);
-            if(completedTask.isEmpty()){
-                AlertUI.createAlert(Alert.AlertType.ERROR, Bootstrap.APP_TITLE, "Error on cancelling task!"
-                        , "Are you sure this isn't a duplicate cancellation?").show();
+        if(vehicleList.isEmpty()){
+            AlertUI.createAlert(Alert.AlertType.ERROR, Bootstrap.APP_TITLE, "Failed to get vehicles requiring checkup!"
+                    , "No vehicles requiring checkup found!").show();
+            return;
+        }
+
+        for(Vehicle vehicle : vehicleList.get()){
+            Optional<CheckUp> latestCheckup = ctrl.getLatestCheckUpOfVehicle(vehicle);
+            if(latestCheckup.isEmpty()){
+                prev.getItems().add(new CheckUp(vehicle, 0, "0001/01/01"));
             }else{
-                AlertUI.createAlert(Alert.AlertType.INFORMATION, Bootstrap.APP_TITLE, "Success!"
-                        , "Task successfully cancelling!").show();
-                refreshTableView();
+                prev.getItems().add(latestCheckup.get());
             }
-        }catch(Exception e){
-            AlertUI.createAlert(Alert.AlertType.ERROR, Bootstrap.APP_TITLE, "Error on cancelling task!"
-                    , e.getMessage()).show();
-        }
-    }
-
-    /**
-     * Attempts to get all tasks on a green space managed by the current user currently in a
-     * planned or postponed state.
-     * Provides the appropriate feedback should anything go wrong, and populates the TableView
-     * if nothing is wrong.
-     */
-    private void refreshTableView(){
-        taskList.getItems().clear();
-        try {
-            tasks = ctrl.getPlannedAndPostponedTasks();
-        } catch (Exception e) {
-            AlertUI.createAlert(Alert.AlertType.ERROR, Bootstrap.APP_TITLE, "Failed to get tasks on your green spaces!"
-                    , e.getMessage()).show();
-            return;
-        }
-        if(tasks.isEmpty()){
-            AlertUI.createAlert(Alert.AlertType.WARNING, Bootstrap.APP_TITLE, "Failed to get tasks on your green spaces!"
-                    , "No tasks found!").show();
-            return;
-        }
-        for(TaskEntryDTO taskEntry : tasks.get()){
-            taskList.getItems().add(taskEntry.attachedTaskEntry);
+            vehicles.getItems().add(vehicle);
         }
     }
 
@@ -106,7 +92,7 @@ public class CancelTaskUI implements Initializable {
      */
     @FXML
     public void toUS20() throws IOException {
-        Stage stage = (Stage) taskList.getScene().getWindow();
+        Stage stage = (Stage) vehicles.getScene().getWindow();
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/RegisterGreenSpace.fxml"));
         Parent root = loader.load();
         Scene scene = new Scene(root);
@@ -118,7 +104,7 @@ public class CancelTaskUI implements Initializable {
      */
     @FXML
     public void toUS21() throws IOException {
-        Stage stage = (Stage) taskList.getScene().getWindow();
+        Stage stage = (Stage) vehicles.getScene().getWindow();
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/AddTaskEntry.fxml"));
         Parent root = loader.load();
         Scene scene = new Scene(root);
@@ -130,7 +116,7 @@ public class CancelTaskUI implements Initializable {
      */
     @FXML
     public void toUS22() throws IOException {
-        Stage stage = (Stage) taskList.getScene().getWindow();
+        Stage stage = (Stage) vehicles.getScene().getWindow();
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/AssignTaskToAgenda.fxml"));
         Parent root = loader.load();
         Scene scene = new Scene(root);
@@ -142,7 +128,7 @@ public class CancelTaskUI implements Initializable {
      */
     @FXML
     public void toUS23() throws IOException {
-        Stage stage = (Stage) taskList.getScene().getWindow();
+        Stage stage = (Stage) vehicles.getScene().getWindow();
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/AssignTeamToTask.fxml"));
         Parent root = loader.load();
         Scene scene = new Scene(root);
@@ -154,7 +140,7 @@ public class CancelTaskUI implements Initializable {
      */
     @FXML
     public void toUS24() throws IOException {
-        Stage stage = (Stage) taskList.getScene().getWindow();
+        Stage stage = (Stage) vehicles.getScene().getWindow();
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/PostponeTask.fxml"));
         Parent root = loader.load();
         Scene scene = new Scene(root);
@@ -166,7 +152,7 @@ public class CancelTaskUI implements Initializable {
      */
     @FXML
     public void toStart() throws IOException {
-        Stage stage = (Stage) taskList.getScene().getWindow();
+        Stage stage = (Stage) vehicles.getScene().getWindow();
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/MainMenuGSM.fxml"));
         Parent root = loader.load();
         Scene scene = new Scene(root);
@@ -178,7 +164,7 @@ public class CancelTaskUI implements Initializable {
      */
     @FXML
     public void toUS26() throws IOException {
-        Stage stage = (Stage) taskList.getScene().getWindow();
+        Stage stage = (Stage) vehicles.getScene().getWindow();
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/AssignVehicleToTask.fxml"));
         Parent root = loader.load();
         Scene scene = new Scene(root);
@@ -186,12 +172,12 @@ public class CancelTaskUI implements Initializable {
     }
 
     /**
-     * Switches to the GetGreenSpacesManagedByUserUI scene.
+     * Switches to the CancelTaskUI scene.
      */
     @FXML
-    public void toUS27() throws IOException {
-        Stage stage = (Stage) taskList.getScene().getWindow();
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/GetGreenSpacesManagedByUser.fxml"));
+    public void toUS25() throws IOException {
+        Stage stage = (Stage) vehicles.getScene().getWindow();
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/CancelTask.fxml"));
         Parent root = loader.load();
         Scene scene = new Scene(root);
         stage.setScene(scene);
@@ -202,7 +188,7 @@ public class CancelTaskUI implements Initializable {
      */
     @FXML
     public void toUS1() throws IOException {
-        Stage stage = (Stage) taskList.getScene().getWindow();
+        Stage stage = (Stage) vehicles.getScene().getWindow();
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/RegisterSkill.fxml"));
         Parent root = loader.load();
         Scene scene = new Scene(root);
@@ -214,7 +200,7 @@ public class CancelTaskUI implements Initializable {
      */
     @FXML
     public void toUS2() throws IOException {
-        Stage stage = (Stage) taskList.getScene().getWindow();
+        Stage stage = (Stage) vehicles.getScene().getWindow();
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/RegisterJob.fxml"));
         Parent root = loader.load();
         Scene scene = new Scene(root);
@@ -226,7 +212,7 @@ public class CancelTaskUI implements Initializable {
      */
     @FXML
     public void toUS3() throws IOException {
-        Stage stage = (Stage) taskList.getScene().getWindow();
+        Stage stage = (Stage) vehicles.getScene().getWindow();
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/RegisterCollaborator.fxml"));
         Parent root = loader.load();
         Scene scene = new Scene(root);
@@ -238,7 +224,7 @@ public class CancelTaskUI implements Initializable {
      */
     @FXML
     public void toUS4() throws IOException {
-        Stage stage = (Stage) taskList.getScene().getWindow();
+        Stage stage = (Stage) vehicles.getScene().getWindow();
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/AssignSkillsToCollaborator.fxml"));
         Parent root = loader.load();
         Scene scene = new Scene(root);
@@ -250,7 +236,7 @@ public class CancelTaskUI implements Initializable {
      */
     @FXML
     public void toUS5() throws IOException {
-        Stage stage = (Stage) taskList.getScene().getWindow();
+        Stage stage = (Stage) vehicles.getScene().getWindow();
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/GenerateTeam.fxml"));
         Parent root = loader.load();
         Scene scene = new Scene(root);
@@ -262,7 +248,7 @@ public class CancelTaskUI implements Initializable {
      */
     @FXML
     public void toUS6() throws IOException {
-        Stage stage = (Stage) taskList.getScene().getWindow();
+        Stage stage = (Stage) vehicles.getScene().getWindow();
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/RegisterVehicle.fxml"));
         Parent root = loader.load();
         Scene scene = new Scene(root);
@@ -274,7 +260,7 @@ public class CancelTaskUI implements Initializable {
      */
     @FXML
     public void toUS7() throws IOException {
-        Stage stage = (Stage) taskList.getScene().getWindow();
+        Stage stage = (Stage) vehicles.getScene().getWindow();
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/RegisterCheckup.fxml"));
         Parent root = loader.load();
         Scene scene = new Scene(root);
@@ -282,12 +268,12 @@ public class CancelTaskUI implements Initializable {
     }
 
     /**
-     * Switches to the ListVehiclesRequiringCheckupUI scene.
+     * Switches to the GetGreenSpacesManagedByUserUI scene.
      */
     @FXML
-    public void toUS8() throws IOException {
-        Stage stage = (Stage) taskList.getScene().getWindow();
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/ListVehiclesRequiringCheckup.fxml"));
+    public void toUS27() throws IOException {
+        Stage stage = (Stage) vehicles.getScene().getWindow();
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/GetGreenSpacesManagedByUser.fxml"));
         Parent root = loader.load();
         Scene scene = new Scene(root);
         stage.setScene(scene);

@@ -5,12 +5,14 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.*;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ListView;
+import javafx.scene.control.SelectionMode;
+import javafx.scene.control.TextField;
 import javafx.stage.Stage;
-import pt.ipp.isep.dei.esoft.project.application.controller.RegisterGreenSpaceController;
-import pt.ipp.isep.dei.esoft.project.domain.GreenSpace;
-import pt.ipp.isep.dei.esoft.project.domain.GreenSpaceType;
-import pt.ipp.isep.dei.esoft.project.dto.GreenSpaceDTO;
+import pt.ipp.isep.dei.esoft.project.application.controller.RegisterCollaboratorController;
+import pt.ipp.isep.dei.esoft.project.domain.Collaborator;
+import pt.ipp.isep.dei.esoft.project.domain.Job;
 import pt.ipp.isep.dei.esoft.project.ui.Bootstrap;
 
 import java.io.IOException;
@@ -19,69 +21,84 @@ import java.util.ArrayList;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
-public class RegisterGreenSpaceUI implements Initializable {
+public class RegisterCollaboratorUI implements Initializable {
     @FXML
     private TextField name;
     @FXML
     private TextField address;
     @FXML
-    private TextField area;
+    private TextField birthdate;
     @FXML
-    private ListView types;
+    private TextField admissiondate;
+    @FXML
+    private TextField phone;
+    @FXML
+    private TextField email;
+    @FXML
+    private TextField idType;
+    @FXML
+    private TextField idNumber;
+    @FXML
+    private TextField taxpayerNumber;
+    @FXML
+    private ListView jobs;
 
-    private ArrayList<GreenSpaceType> allTypes;
+    private ArrayList<Job> allJobs;
 
-    private RegisterGreenSpaceController ctrl = new RegisterGreenSpaceController();
+    private RegisterCollaboratorController ctrl = new RegisterCollaboratorController();
 
     /**
      * Initializes this functionality and prepares and creates the appropriate columns for
-     * the ListView in use, and then populates it.
+     * the ListView in use, and then populates them.
      */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        allTypes = GreenSpaceType.getAllTypes();
-        types.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
-        for(GreenSpaceType type : allTypes){
-            types.getItems().add(type.toString());
+        jobs.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
+        Optional<ArrayList<Job>> jobList = Optional.empty();
+        try{
+            jobList = ctrl.getJobList();
+        }catch(Exception e){
+            AlertUI.createAlert(Alert.AlertType.ERROR, Bootstrap.APP_TITLE, "Failed to get jobs!"
+                    , e.getMessage()).show();
+            return;
+        }
+        if(jobList.isEmpty()){
+            AlertUI.createAlert(Alert.AlertType.ERROR, Bootstrap.APP_TITLE, "Failed to get jobs!"
+                    , "No jobs found!").show();
+            return;
+        }
+        allJobs = jobList.get();
+        for(Job job : jobList.get()){
+            jobs.getItems().add(job.toString());
         }
     }
 
     /**
-     * Attempts to register the green space into the system and provides the appropriate feedback
+     * Attempts to register the collaborator into the system and provides the appropriate feedback
      * to the user.
      */
     @FXML
-    private void registerGreenSpace() {
-        GreenSpaceType selectedType = null;
+    private void registerCollaborator() {
+        Job selectedJob = null;
         try{
-            selectedType = allTypes.get(types.getSelectionModel().getSelectedIndex());
+            selectedJob = allJobs.get(jobs.getSelectionModel().getSelectedIndex());
         }catch(Exception e){
-            AlertUI.createAlert(Alert.AlertType.ERROR, Bootstrap.APP_TITLE, "Invalid type selection!"
-                    , "Select a green space type to register a green space!").show();
+            AlertUI.createAlert(Alert.AlertType.ERROR, Bootstrap.APP_TITLE, "Invalid job selection!"
+                    , "Select a job to add a collaborator!").show();
             return;
         }
         try{
-            GreenSpaceDTO greenSpaceDTO = new GreenSpaceDTO();
-            greenSpaceDTO.name = name.getText();
-            greenSpaceDTO.address = address.getText();
-            try{
-                greenSpaceDTO.area = Integer.parseInt(area.getText());
-            }catch(Exception e){
-                AlertUI.createAlert(Alert.AlertType.ERROR, Bootstrap.APP_TITLE, "Error on registering green space!"
-                        , "The area must be a number!").show();
-                return;
-            }
-            greenSpaceDTO.type = selectedType;
-            Optional<GreenSpace> greenSpace = ctrl.registerGreenSpace(greenSpaceDTO);
-            if(greenSpace.isEmpty()){
-                AlertUI.createAlert(Alert.AlertType.ERROR, Bootstrap.APP_TITLE, "Error on registering green space!"
+            Optional<Collaborator> addedCollaborator = ctrl.createCollaborator(name.getText(), birthdate.getText(), admissiondate.getText(),
+                    address.getText(), phone.getText(), email.getText(), idType.getText(), idNumber.getText(), taxpayerNumber.getText(), selectedJob);
+            if(addedCollaborator.isEmpty()){
+                AlertUI.createAlert(Alert.AlertType.ERROR, Bootstrap.APP_TITLE, "Error on adding collaborator!"
                         , "Are you sure this isn't a duplicate registration?").show();
             }else{
                 AlertUI.createAlert(Alert.AlertType.INFORMATION, Bootstrap.APP_TITLE, "Success!"
-                        , "Green Space successfully registered!").show();
+                        , "Collaborator successfully registered!").show();
             }
         }catch(Exception e){
-            AlertUI.createAlert(Alert.AlertType.ERROR, Bootstrap.APP_TITLE, "Error on registering green space!"
+            AlertUI.createAlert(Alert.AlertType.ERROR, Bootstrap.APP_TITLE, "Error on adding collaborator!"
                     , e.getMessage()).show();
         }
     }
@@ -91,7 +108,7 @@ public class RegisterGreenSpaceUI implements Initializable {
      */
     @FXML
     public void toUS24() throws IOException {
-        Stage stage = (Stage) types.getScene().getWindow();
+        Stage stage = (Stage) jobs.getScene().getWindow();
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/PostponeTask.fxml"));
         Parent root = loader.load();
         Scene scene = new Scene(root);
@@ -99,12 +116,12 @@ public class RegisterGreenSpaceUI implements Initializable {
     }
 
     /**
-     * Switches to the AddTaskEntryUI scene.
+     * Switches to the RegisterGreenSpaceUI scene.
      */
     @FXML
-    public void toUS21() throws IOException {
-        Stage stage = (Stage) types.getScene().getWindow();
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/AddTaskEntry.fxml"));
+    public void toUS20() throws IOException {
+        Stage stage = (Stage) jobs.getScene().getWindow();
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/RegisterGreenSpace.fxml"));
         Parent root = loader.load();
         Scene scene = new Scene(root);
         stage.setScene(scene);
@@ -115,7 +132,7 @@ public class RegisterGreenSpaceUI implements Initializable {
      */
     @FXML
     public void toUS22() throws IOException {
-        Stage stage = (Stage) types.getScene().getWindow();
+        Stage stage = (Stage) jobs.getScene().getWindow();
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/AssignTaskToAgenda.fxml"));
         Parent root = loader.load();
         Scene scene = new Scene(root);
@@ -127,7 +144,7 @@ public class RegisterGreenSpaceUI implements Initializable {
      */
     @FXML
     public void toUS23() throws IOException {
-        Stage stage = (Stage) types.getScene().getWindow();
+        Stage stage = (Stage) jobs.getScene().getWindow();
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/AssignTeamToTask.fxml"));
         Parent root = loader.load();
         Scene scene = new Scene(root);
@@ -139,7 +156,7 @@ public class RegisterGreenSpaceUI implements Initializable {
      */
     @FXML
     public void toUS25() throws IOException {
-        Stage stage = (Stage) types.getScene().getWindow();
+        Stage stage = (Stage) jobs.getScene().getWindow();
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/CancelTask.fxml"));
         Parent root = loader.load();
         Scene scene = new Scene(root);
@@ -151,7 +168,7 @@ public class RegisterGreenSpaceUI implements Initializable {
      */
     @FXML
     public void toStart() throws IOException {
-        Stage stage = (Stage) types.getScene().getWindow();
+        Stage stage = (Stage) jobs.getScene().getWindow();
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/MainMenuGSM.fxml"));
         Parent root = loader.load();
         Scene scene = new Scene(root);
@@ -163,7 +180,7 @@ public class RegisterGreenSpaceUI implements Initializable {
      */
     @FXML
     public void toUS26() throws IOException {
-        Stage stage = (Stage) types.getScene().getWindow();
+        Stage stage = (Stage) jobs.getScene().getWindow();
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/AssignVehicleToTask.fxml"));
         Parent root = loader.load();
         Scene scene = new Scene(root);
@@ -175,7 +192,7 @@ public class RegisterGreenSpaceUI implements Initializable {
      */
     @FXML
     public void toUS27() throws IOException {
-        Stage stage = (Stage) types.getScene().getWindow();
+        Stage stage = (Stage) jobs.getScene().getWindow();
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/GetGreenSpacesManagedByUser.fxml"));
         Parent root = loader.load();
         Scene scene = new Scene(root);
@@ -187,7 +204,7 @@ public class RegisterGreenSpaceUI implements Initializable {
      */
     @FXML
     public void toUS1() throws IOException {
-        Stage stage = (Stage) types.getScene().getWindow();
+        Stage stage = (Stage) jobs.getScene().getWindow();
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/RegisterSkill.fxml"));
         Parent root = loader.load();
         Scene scene = new Scene(root);
@@ -199,7 +216,7 @@ public class RegisterGreenSpaceUI implements Initializable {
      */
     @FXML
     public void toUS2() throws IOException {
-        Stage stage = (Stage) types.getScene().getWindow();
+        Stage stage = (Stage) jobs.getScene().getWindow();
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/RegisterJob.fxml"));
         Parent root = loader.load();
         Scene scene = new Scene(root);
@@ -207,12 +224,12 @@ public class RegisterGreenSpaceUI implements Initializable {
     }
 
     /**
-     * Switches to the RegisterCollaboratorUI scene.
+     * Switches to the AddTaskEntryUI scene.
      */
     @FXML
-    public void toUS3() throws IOException {
-        Stage stage = (Stage) types.getScene().getWindow();
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/RegisterCollaborator.fxml"));
+    public void toUS21() throws IOException {
+        Stage stage = (Stage) jobs.getScene().getWindow();
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/AddTaskEntry.fxml"));
         Parent root = loader.load();
         Scene scene = new Scene(root);
         stage.setScene(scene);
@@ -223,7 +240,7 @@ public class RegisterGreenSpaceUI implements Initializable {
      */
     @FXML
     public void toUS4() throws IOException {
-        Stage stage = (Stage) types.getScene().getWindow();
+        Stage stage = (Stage) jobs.getScene().getWindow();
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/AssignSkillsToCollaborator.fxml"));
         Parent root = loader.load();
         Scene scene = new Scene(root);
@@ -235,7 +252,7 @@ public class RegisterGreenSpaceUI implements Initializable {
      */
     @FXML
     public void toUS5() throws IOException {
-        Stage stage = (Stage) types.getScene().getWindow();
+        Stage stage = (Stage) jobs.getScene().getWindow();
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/GenerateTeam.fxml"));
         Parent root = loader.load();
         Scene scene = new Scene(root);
@@ -247,7 +264,7 @@ public class RegisterGreenSpaceUI implements Initializable {
      */
     @FXML
     public void toUS6() throws IOException {
-        Stage stage = (Stage) types.getScene().getWindow();
+        Stage stage = (Stage) jobs.getScene().getWindow();
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/RegisterVehicle.fxml"));
         Parent root = loader.load();
         Scene scene = new Scene(root);
@@ -259,7 +276,7 @@ public class RegisterGreenSpaceUI implements Initializable {
      */
     @FXML
     public void toUS7() throws IOException {
-        Stage stage = (Stage) types.getScene().getWindow();
+        Stage stage = (Stage) jobs.getScene().getWindow();
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/RegisterCheckup.fxml"));
         Parent root = loader.load();
         Scene scene = new Scene(root);
@@ -271,7 +288,7 @@ public class RegisterGreenSpaceUI implements Initializable {
      */
     @FXML
     public void toUS8() throws IOException {
-        Stage stage = (Stage) types.getScene().getWindow();
+        Stage stage = (Stage) jobs.getScene().getWindow();
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/ListVehiclesRequiringCheckup.fxml"));
         Parent root = loader.load();
         Scene scene = new Scene(root);
