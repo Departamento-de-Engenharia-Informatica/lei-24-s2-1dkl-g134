@@ -76,4 +76,11 @@ public class GenerateTeamController {
     public Optional<Team> registerTeam(ArrayList<Collaborator> teamMembers, ArrayList<Skill> teamSkills){
         return teamRepository.add(teamMembers, teamSkills);
     }
+
+    /**
+     * Resets the temporary lists in the Collaborator Repository.
+     */
+    public void resetLists(){
+        collaboratorRepository.resetLists();
+    }
 }

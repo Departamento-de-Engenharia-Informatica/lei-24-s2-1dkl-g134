@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+  Copyright (c) 2015, 2019, Gluon and/or its affiliates.
+  All rights reserved. Use is subject to license terms.
+
+  This file is available and licensed under the following license:
+
+  Redistribution and use in source and binary forms, with or without
+  modification, are permitted provided that the following conditions
+  are met:
+
+  - Redistributions of source code must retain the above copyright
+    notice, this list of conditions and the following disclaimer.
+  - Redistributions in binary form must reproduce the above copyright
+    notice, this list of conditions and the following disclaimer in
+    the documentation and/or other materials provided with the distribution.
+  - Neither the name of Oracle Corporation nor the names of its
+    contributors may be used to endorse or promote products derived
+    from this software without specific prior written permission.
+
+  THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+  "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+  LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+  A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+  OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+  SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+  LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+  DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+  THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+  (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+  OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+-->
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<VBox prefHeight="453.0" prefWidth="686.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pt.ipp.isep.dei.esoft.project.ui.gui.GenerateTeamUI">
+  <children>
+    <MenuBar VBox.vgrow="NEVER">
+      <menus>
+        <Menu mnemonicParsing="false" text="Menus...">
+          <items>
+            <MenuItem mnemonicParsing="false" onAction="#toStart" text="Start" />
+            <MenuItem mnemonicParsing="false" onAction="#toUS20" text="Register Green Space" />
+            <MenuItem mnemonicParsing="false" onAction="#toUS27" text="List Green Spaces managed by you" />
+            <MenuItem mnemonicParsing="false" onAction="#toUS21" text="Add Task to To-Do List" />
+            <MenuItem mnemonicParsing="false" onAction="#toUS22" text="Add Task to Agenda" />
+            <MenuItem mnemonicParsing="false" onAction="#toUS23" text="Assign Team to Task" />
+            <MenuItem mnemonicParsing="false" onAction="#toUS26" text="Assign Vehicles to Task" />
+            <MenuItem mnemonicParsing="false" onAction="#toUS24" text="Postpone Task" />
+                  <MenuItem mnemonicParsing="false" onAction="#toUS25" text="Cancel Task" />
+                  <MenuItem mnemonicParsing="false" onAction="#toUS1" text="Register Skill" />
+                  <MenuItem mnemonicParsing="false" onAction="#toUS2" text="Register Job" />
+                  <MenuItem mnemonicParsing="false" onAction="#toUS3" text="Register Collaborator" />
+                  <MenuItem mnemonicParsing="false" onAction="#toUS4" text="Assign Skills to Collaborator" />
+                  <MenuItem mnemonicParsing="false" text="Generate Teams" />
+                  <MenuItem mnemonicParsing="false" onAction="#toUS6" text="Register Vehicle" />
+                  <MenuItem mnemonicParsing="false" onAction="#toUS7" text="Register Checkup" />
+                  <MenuItem mnemonicParsing="false" onAction="#toUS8" text="List Vehicles Requiring Checkup" />
+          </items>
+        </Menu>
+      </menus>
+    </MenuBar>
+    <AnchorPane maxHeight="-1.0" maxWidth="-1.0" prefHeight="-1.0" prefWidth="-1.0" VBox.vgrow="ALWAYS">
+         <children>
+            <Label layoutX="14.0" layoutY="14.0" prefHeight="45.0" prefWidth="240.0" text="Generate Teams">
+               <font>
+                  <Font size="32.0" />
+               </font>
+            </Label>
+            <Button layoutX="336.0" layoutY="323.0" mnemonicParsing="false" onAction="#generateTeam" prefHeight="64.0" prefWidth="110.0" text="Generate Team" textAlignment="CENTER" wrapText="true">
+               <font>
+                  <Font size="17.0" />
+               </font>
+            </Button>
+            <Button layoutX="580.0" layoutY="323.0" mnemonicParsing="false" onAction="#acceptTeam" prefHeight="64.0" prefWidth="97.0" text="Accept Team" textAlignment="CENTER" wrapText="true">
+               <font>
+                  <Font size="17.0" />
+               </font>
+            </Button>
+            <ListView fx:id="allSkills" layoutX="14.0" layoutY="89.0" prefHeight="200.0" prefWidth="150.0" />
+            <ListView fx:id="selectedSkills" layoutX="171.0" layoutY="89.0" prefHeight="200.0" prefWidth="150.0" />
+            <Label layoutX="14.0" layoutY="64.0" prefHeight="25.0" prefWidth="97.0" text="All Skills">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <Label layoutX="171.0" layoutY="64.0" prefHeight="27.0" prefWidth="119.0" text="Selected Skills">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <Button layoutX="41.0" layoutY="291.0" mnemonicParsing="false" onAction="#selectSkill" prefHeight="47.0" prefWidth="97.0" text="Add Skill to Selection" textAlignment="CENTER" wrapText="true" />
+            <Button layoutX="182.0" layoutY="291.0" mnemonicParsing="false" onAction="#removeSkill" prefHeight="47.0" prefWidth="129.0" text="Remove Skill from Selection" textAlignment="CENTER" wrapText="true" />
+            <TableView fx:id="teamSuggestion" layoutX="336.0" layoutY="45.0" prefHeight="269.0" prefWidth="341.0" />
+            <TextField fx:id="minSize" layoutX="172.0" layoutY="355.0" />
+            <TextField fx:id="maxSize" layoutX="172.0" layoutY="381.0" />
+            <Label alignment="CENTER_RIGHT" layoutX="41.0" layoutY="354.0" prefHeight="27.0" prefWidth="129.0" text="Min. Team Size" textAlignment="RIGHT">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <Label alignment="CENTER_RIGHT" layoutX="41.0" layoutY="379.0" prefHeight="27.0" prefWidth="129.0" text="Max. Team Size" textAlignment="RIGHT">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <Label layoutX="336.0" layoutY="14.0" prefHeight="27.0" prefWidth="129.0" text="Team Proposal">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <Label alignment="CENTER" layoutX="454.0" layoutY="317.0" prefHeight="104.0" prefWidth="119.0" text="Select some skills (duplicates allowed), define a max and min size, generate proposals and accept any of them." textAlignment="CENTER" wrapText="true" />
+         </children>
+    </AnchorPane>
+  </children>
+</VBox>

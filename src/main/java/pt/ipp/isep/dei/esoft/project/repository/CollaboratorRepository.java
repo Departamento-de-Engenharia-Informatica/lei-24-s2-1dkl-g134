@@ -89,7 +89,8 @@ public class CollaboratorRepository implements Serializable {
      * If not, an empty Optional object.
      */
     public Optional<ArrayList<Collaborator>> generateTeamProposal(int minTeamSize, int maxTeamSize, ArrayList<Skill> requiredSkills){
-        if(collaboratorWhitelist.isEmpty() && collaboratorBlacklist.isEmpty()){
+        if(collaboratorWhitelist.isEmpty()){
+            collaboratorBlacklist.clear();
             ArrayList<Skill> requiredSkillsNoDuplicates = new ArrayList<>();
             for(Skill skill : requiredSkills){
                 if(!requiredSkillsNoDuplicates.contains(skill)){
@@ -314,12 +315,15 @@ public class CollaboratorRepository implements Serializable {
      * @param blacklistedTeam The list of collaborators that form the team to be blacklisted.
      */
     public void blacklistTeamProposal(ArrayList<Collaborator> blacklistedTeam){
-        blacklistedTeamProposals.add(blacklistedTeam);
+        ArrayList<Collaborator> teamToBlacklist = new ArrayList<>();
+        teamToBlacklist.addAll(blacklistedTeam);
+        blacklistedTeamProposals.add(teamToBlacklist);
     }
 
     /**
      * Resets all temporary lists in this repository.
      * This is only done upon the abortion or completion of a team registration.
+     * Also done on the GUI after the skillset of the team changes.
      */
     public void resetLists(){
         blacklistedTeamProposals = new ArrayList<>();
