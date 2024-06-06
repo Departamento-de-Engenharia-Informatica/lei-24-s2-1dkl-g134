@@ -5,65 +5,117 @@ skinparam shadowing false
 
 autonumber
 
-actor "Green Space Manager" as GSM
+actor "GSM" as GSM
 participant ":RegisterGreenSpaceUI" as UI
-participant ":RegisterGreenSpaceController" as CTRL
-participant ":GreenSpaceRepository" as REPO
-participant ":GreenSpaceMapper" as MAP
-participant "Repositories" as RepositorySingleton
-participant "GreenSpaceDTO" as DTO
-participant "GreenSpace" as GS
+participant ":AuthenticationRepository" as AuthenticationRepository
+participant ":GreenSpaceController" as GreenSpaceController
+participant ":Repositories" as Repositories
+participant "repositories:\nRepositories" as RepositoriesInstance
+participant "greenSpaceRepository:\nGreenSpaceRepository" as GreenSpaceRepository
+participant "greenSpaceTypeRepository:\nGreenSpaceTypeRepository" as GreenSpaceTypeRepository
+participant "GreenSpace" as GreenSpace
+participant "Address" as Address
+participant "GreenSpaceDTO" as GreenSpaceDTO
+participant "GreenSpaceMapper" as GreenSpaceMapper
 
 activate GSM
-    GSM -> "UI" : asks to register a new green space
-    activate System
 
+    GSM -> UI : asks to register a new green space
+    activate UI
 
-    UI --> GSM : request details of the green space(garden, medium-sized park or large-sized park)\n and respctive area
-    deactivate System
+        UI --> GSM : requests details of the green space
 
-    GSM -> UI : provides green space details
+    deactivate UI
 
+    GSM -> UI : provides green space details (name, type, area, address)
+    activate UI
 
-UI -> GSM : requests data (name, address, area, type)
-deactivate UI
-UI -> CTRL : createGreenSpace(name, address, area, type)
-activate CTRL
+        UI -> GreenSpaceController : getGreenSpaceTypes()
+        activate GreenSpaceController
 
-CTRL -> RepositorySingleton : getGreenSpaceRepository()
-activate RepositorySingleton
+            GreenSpaceController -> Repositories : getInstance()
+            activate Repositories
 
-RepositorySingleton --> CTRL : GreenSpaceRepository instance
-deactivate RepositorySingleton
+                Repositories --> GreenSpaceController : instance
+            deactivate Repositories
 
-CTRL -> MAP : objectToDTO(name, address, area, type)
-activate MAP
+            GreenSpaceController -> RepositoriesInstance : getGreenSpaceTypeRepository()
+            activate RepositoriesInstance
 
-MAP -> DTO : create(name, address, area, type)
-activate DTO
+                RepositoriesInstance --> GreenSpaceController : greenSpaceTypeRepository
+            deactivate RepositoriesInstance
 
-DTO --> MAP : GreenSpaceDTO instance
-deactivate DTO
+            GreenSpaceController -> GreenSpaceTypeRepository : getGreenSpaceTypes()
+            activate GreenSpaceTypeRepository
 
-MAP --> CTRL : GreenSpaceDTO
-deactivate MAP
+                GreenSpaceTypeRepository --> GreenSpaceController : types
+            deactivate GreenSpaceTypeRepository
 
-CTRL -> REPO : add(GreenSpaceDTO)
-activate REPO
+            GreenSpaceController --> UI : types
+        deactivate GreenSpaceController
 
-REPO -> GS : create(GreenSpaceDTO)
-activate GS
-deactivate GS
+        UI --> GSM : displays types of green spaces
+    deactivate UI
 
-REPO --> CTRL : Optional<GreenSpace>
-deactivate REPO
+    GSM -> UI : selects type of green space
+    activate UI
 
-CTRL --> UI : registration result
-deactivate CTRL
+        UI --> GSM : asks for area of the park
+    deactivate UI
 
-UI --> GSM : shows registration result
-deactivate UI
+    GSM -> UI : provides area of the park
+    activate UI
 
-deactivate GSM
+        UI -> AuthenticationRepository : getCurrentUserSession().getUserId().getEmail()
+        activate AuthenticationRepository
 
+            AuthenticationRepository --> UI : email
+        deactivate AuthenticationRepository
+
+        UI -> GreenSpaceController : registerGreenSpace(name, type, area, email, address)
+        activate GreenSpaceController
+
+            GreenSpaceController -> Repositories : getInstance()
+            activate Repositories
+
+                Repositories --> GreenSpaceController : instance
+            deactivate Repositories
+
+            GreenSpaceController -> RepositoriesInstance : getGreenSpaceRepository()
+            activate RepositoriesInstance
+
+                RepositoriesInstance --> GreenSpaceController : greenSpaceRepository
+            deactivate RepositoriesInstance
+
+            GreenSpaceController -> GreenSpaceMapper : getMapper()
+            activate GreenSpaceMapper
+
+                GreenSpaceMapper --> GreenSpaceController : mapper
+            deactivate GreenSpaceMapper
+
+            GreenSpaceController -> "GreenSpaceMapper" : objectToDTO(name, type, area, email, address)
+            activate GreenSpaceMapper
+
+                "GreenSpaceMapper" --> GreenSpaceController : greenSpaceDTO
+            deactivate "GreenSpaceMapper"
+
+            GreenSpaceController -> GreenSpaceRepository : addGreenSpace(greenSpaceDTO)
+            activate GreenSpaceRepository
+
+                GreenSpaceRepository -> GreenSpace : registerGreenSpace(greenSpaceDTO)
+                activate GreenSpace
+                GreenSpace --> GreenSpace : addGreenSpace()
+                GreenSpace --> GreenSpace : validateGreenSpace()
+
+                    GreenSpace --> GreenSpaceRepository : greenSpace
+                deactivate GreenSpace
+                GreenSpaceRepository --> GreenSpaceController : greenSpace
+            deactivate GreenSpaceRepository
+
+            GreenSpaceController --> UI : greenSpace
+        deactivate GreenSpaceController
+
+        UI --> GSM : displays operation success
+    deactivate UI
+    deactivate GSM
 @enduml
