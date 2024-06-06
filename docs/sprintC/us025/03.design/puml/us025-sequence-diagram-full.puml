@@ -1,0 +1,112 @@
+@startuml
+skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+
+autonumber
+
+'hide footbox
+actor "Green Space \n Manager" as ADM
+participant ":CancelTaskUI" as UI
+participant ":CancelTaskController" as CTRL
+participant "Repositories" as RepositorySingleton
+participant "repositories\n:Repositories" as PLAT
+participant ":TaskEntryMapper" as MAP
+participant ":AgendaRepository" as URG
+participant "taskEntryDTOList\n :TaskEntryDTOList" as DTO
+
+participant "taskEntry\n:TaskEntry" as TASK
+participant "objDto: TaskEntryDto" as GDTO
+
+
+activate ADM
+
+    ADM -> UI : asks to cancel a task entry
+    activate UI
+        UI -> CTRL : create
+        UI -> CTRL : getPlannedAndPostponedTask()
+        activate CTRL
+
+            CTRL -> RepositorySingleton : getInstance()
+            activate RepositorySingleton
+
+                RepositorySingleton --> CTRL : repositories
+            deactivate RepositorySingleton
+
+            CTRL -> PLAT : getAgendaRepository()
+            activate PLAT
+
+                PLAT --> CTRL : AgendaRepository
+            deactivate PLAT
+
+            CTRL -> URG : getPlannedAndPostponedTask()
+            activate URG
+
+                URG --> CTRL : TaskEntryList
+            deactivate URG
+
+            CTRL -> MAP : ToDTOList(TaskEntryList)
+            activate MAP
+                MAP -> DTO: Create()
+                loop for each task in the list
+                    MAP -> MAP: TaskEntryDTO = toDTO(taskEntry)
+                MAP -> URG: taskEntry = get(i)
+                activate URG
+                deactivate URG
+                MAP -> MAP: TaskEntryDTO = toDTO(taskEntry)
+                activate MAP
+                MAP -> GDTO: create(...)
+                deactivate MAP
+                MAP -> DTO: add(taskEntryDto)
+
+                activate DTO
+                deactivate DTO
+                end
+                MAP -> CTRL: TaskEntryDtoList
+            deactivate MAP
+
+            CTRL --> UI : TaskEntryDTO
+        deactivate CTRL
+
+        UI --> ADM : shows a list of tasks
+    deactivate UI
+ADM -> UI : selects a task
+activate UI
+
+        UI --> ADM : shows task and request cancellation confirmation
+    deactivate UI
+
+    ADM -> UI : confirms cancellation
+    activate UI
+     UI -> CTRL : save updated task
+            activate CTRL
+
+                CTRL -> PLAT : getAgendaRepository()
+                activate PLAT
+
+                    PLAT --> CTRL : AgendaRepository
+                deactivate PLAT
+
+                CTRL -> URG : save updated task
+
+                activate URG
+
+                           URG -> TASK** : updatedTask(new state)
+                           URG --> URG : validatePostponement(cancelment)
+                           activate URG
+                           URG --> URG : savePostponement(cancelment)
+                           activate URG
+                           URG --> URG
+                           deactivate URG
+                           URG --> URG
+                           deactivate URG
+                           URG --> CTRL : TaskEntry
+                           deactivate URG
+        CTRL --> UI : TaskEntry
+            deactivate CTRL
+
+                UI --> ADM : displays operation success
+            deactivate UI
+        deactivate ADM
+
+@enduml
