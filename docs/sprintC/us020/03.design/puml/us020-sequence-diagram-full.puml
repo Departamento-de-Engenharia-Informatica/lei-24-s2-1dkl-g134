@@ -21,50 +21,19 @@ participant "GreenSpaceMapper" as GreenSpaceMapper
 activate GSM
 
     GSM -> UI : asks to register a new green space
-    activate UI
 
-        UI --> GSM : requests details of the green space
+        activate UI
 
-    deactivate UI
+            UI --> GSM : request details of the green space(garden, medium-sized park or large-sized park)\n and respctive area
+        deactivate System
 
-    GSM -> UI : provides green space details (name, type, area, address)
-    activate UI
+        GSM -> UI : provides green space details
 
-        UI -> GreenSpaceController : getGreenSpaceTypes()
-        activate GreenSpaceController
 
-            GreenSpaceController -> Repositories : getInstance()
-            activate Repositories
+           UI --> GSM : registers green spaces and their respective areas, displaying operation success.
 
-                Repositories --> GreenSpaceController : instance
-            deactivate Repositories
 
-            GreenSpaceController -> RepositoriesInstance : getGreenSpaceTypeRepository()
-            activate RepositoriesInstance
 
-                RepositoriesInstance --> GreenSpaceController : greenSpaceTypeRepository
-            deactivate RepositoriesInstance
-
-            GreenSpaceController -> GreenSpaceTypeRepository : getGreenSpaceTypes()
-            activate GreenSpaceTypeRepository
-
-                GreenSpaceTypeRepository --> GreenSpaceController : types
-            deactivate GreenSpaceTypeRepository
-
-            GreenSpaceController --> UI : types
-        deactivate GreenSpaceController
-
-        UI --> GSM : displays types of green spaces
-    deactivate UI
-
-    GSM -> UI : selects type of green space
-    activate UI
-
-        UI --> GSM : asks for area of the park
-    deactivate UI
-
-    GSM -> UI : provides area of the park
-    activate UI
 
         UI -> AuthenticationRepository : getCurrentUserSession().getUserId().getEmail()
         activate AuthenticationRepository
