@@ -32,7 +32,7 @@ According to the taken rationale, the conceptual classes promoted to software cl
 * GreenSpaceType
 * GreenSpace
 * GreenSpaceDTO
-
+ 
 Other software classes (i.e., Pure Fabrication) identified:
 
 * None
