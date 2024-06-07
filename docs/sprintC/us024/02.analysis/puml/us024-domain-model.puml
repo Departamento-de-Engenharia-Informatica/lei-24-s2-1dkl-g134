@@ -4,11 +4,39 @@ skinparam packageStyle rectangle
 skinparam shadowing false
 
 left to right direction
+
 skinparam classAttributeIconSize 0
 
 hide circle
 hide methods
 
+
+class GreenSpaceManager{
+    name
+    email
+    phone
+}
+
+class ToDoList {
+}
+
+class Task {
+    name
+    description
+}
+
+class TaskEntry{
+    urgencyLevel
+    expectedDuration
+    state
+}
+
+class Agenda{
+}
+
+class Team {
+    numberOfCollaborators
+}
 
 class GreenSpace{
     local
@@ -16,19 +44,22 @@ class GreenSpace{
     area
 }
 
-class "TaskEntry" {
-    -title
-    -description
-    -urgencyLevel
-    -expectedDuration
-    -state
-    -greenSpace
+class Vehicle {
+    plate number
+    brand
+    type
+    model
+    current km
+    checkup frequency
+    km at last checkup
 }
-class GreenSpaceManager {
-    name
-    email
-    phone
-}
-GreenSpace "1" -- "*" "TaskEntry" : has >
-GreenSpaceManager "1" - "*" GreenSpace : manages >
+
+"GreenSpaceManager" "1" -- "*" "TaskEntry" :  create >
+TaskEntry "1"--"1" Task : contains >
+TaskEntry "1"--"1" GreenSpace : to be executed in >
+Team "1"--"1" TaskEntry : to be assigned in >
+Agenda "1"--"0..*" TaskEntry : contains >
+ToDoList "1"--"0..*" TaskEntry : contains all >
+TaskEntry "1"--"0..*" Vehicle : contains >
+
 @enduml
