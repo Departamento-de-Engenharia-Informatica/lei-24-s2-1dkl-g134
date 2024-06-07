@@ -1,0 +1,61 @@
+@startuml
+skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+
+autonumber
+
+actor "GSM" as GSM
+participant ":ListGreenSpacesUI" as UI
+participant ":AuthenticationRepository" as AuthenticationRepository
+participant ":GreenSpaceController" as GreenSpaceController
+participant ":Repositories" as Repositories
+participant "repositories:\nRepositories" as RepositoriesInstance
+participant "greenSpaceRepository:\nGreenSpaceRepository" as GreenSpaceRepository
+participant "GreenSpace" as GreenSpace
+participant "GreenSpaceDTO" as GreenSpaceDTO
+participant "GreenSpaceMapper" as GreenSpaceMapper
+
+activate GSM
+
+GSM -> UI : requests to list green spaces managed by GSM
+
+activate UI
+
+UI -> AuthenticationRepository : getCurrentUserSession().getUserId().getEmail()
+activate AuthenticationRepository
+AuthenticationRepository --> UI : email
+deactivate AuthenticationRepository
+
+UI -> GreenSpaceController : listGreenSpaces(email)
+activate GreenSpaceController
+
+GreenSpaceController -> Repositories : getInstance()
+activate Repositories
+Repositories --> GreenSpaceController : instance
+deactivate Repositories
+
+GreenSpaceController -> RepositoriesInstance : getGreenSpaceRepository()
+activate RepositoriesInstance
+RepositoriesInstance --> GreenSpaceController : greenSpaceRepository
+deactivate RepositoriesInstance
+
+GreenSpaceController -> GreenSpaceRepository : findGreenSpacesByManager(email)
+activate GreenSpaceRepository
+GreenSpaceRepository --> GreenSpaceController : greenSpaces
+deactivate GreenSpaceRepository
+
+GreenSpaceController -> GreenSpaceMapper : GreenSpaceDTO
+activate GreenSpaceMapper
+GreenSpaceMapper --> GreenSpaceController : greenSpaceDTOs
+deactivate GreenSpaceMapper
+
+
+GreenSpaceController --> UI : sortedGreenSpaceDTOs
+deactivate GreenSpaceController
+
+UI --> GSM : displays sorted green spaces
+deactivate UI
+deactivate GSM
+
+@enduml
