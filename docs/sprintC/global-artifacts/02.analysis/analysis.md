@@ -169,6 +169,21 @@ To identify domain conceptual classes, start by making a list of candidate conce
 
 ---
 
+**To-do List**
+
+---
+
+**Agenda**
+
+---
+
+**Task Entry**
+
+* urgency level
+* expected duration
+* state
+
+---
 
 ## Rationale to identify associations between conceptual classes
 
@@ -196,6 +211,7 @@ An association is a relationship between instances of objects that indicates a r
 | Green Space Manager  	                      |      employs    		 	      |                            Fleet Manager |
 | Green Space Manager  	                      |      employs    		 	      |                  Human Resources Manager |
 | Green Space Manager  	                      |      employs    		 	      | Software Quality Assessment Team Manager |
+| Green Space Manager  	                      |      creates    		 	      |                               Task Entry |
 | Green Space User  	                         |       uses    		 	        |                              Green Space |
 | Vehicle  	                                  |     undergoes    		 	     |                                  Checkup |
 | Human Resources Manager  	                  |      manages    		 	      |                             Collaborator |
@@ -207,7 +223,7 @@ An association is a relationship between instances of objects that indicates a r
 | Collaborator  	                             |        has    		 	        |                                      Job |
 | Collaborator  	                             |        has    		 	        |                                       ID |
 | Collaborator  	                             |       form    		 	        |                                     Team |
-| Team  	                                     |    carries out    		 	    |                                     Task |
+| Team  	                                     |    is assigned   		 	     |                               Task Entry |
 | Team  	                                     | requires a set of    		 	 |                                    Skill |
 | Pipe  	                                     |       form    		 	        |                       Irrigation Network |
 | Algorithm  	                                |     generates    		 	     |                       Irrigation Network |
@@ -217,7 +233,10 @@ An association is a relationship between instances of objects that indicates a r
 | Green Space Manager  	                      |  checks results    		 	   |                              Info Survey |
 | Green Space Manager  	                      |  checks results    		 	   |                         Equipment Survey |
 | Green Space User  	                         |       uses    		 	        |                              User Portal |
-
+| Task Entry  	                               |        has    		 	        |                                     Task |
+| Task Entry  	                               |        has    		 	        |                                  Vehicle |
+| Agenda  	                                   |     contains    		 	      |                               Task Entry |
+| To-do list  	                               |    contains all  		 	     |                               Task Entry |
 
 
 ## Domain Model

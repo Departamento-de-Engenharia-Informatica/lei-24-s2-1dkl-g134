@@ -11,30 +11,55 @@ hide circle
 hide methods
 
 
-
-class "TaskEntry" {
-    -title
-    -description
-    -urgencyLevel
-    -expectedDuration
-    -state
-    -greenSpace
+class GreenSpaceManager{
+    name
+    email
+    phone
 }
 
-
-class "GreenSpaceManager"{
-        -name
-        -email
-        -phone
-
+class ToDoList {
 }
 
+class Task {
+    name
+    description
+}
 
-class "ToDoList" {
-    -entries
+class TaskEntry{
+    urgencyLevel
+    expectedDuration
+    state
+}
+
+class Agenda{
+}
+
+class Team {
+    numberOfCollaborators
+}
+
+class GreenSpace{
+    local
+    address
+    area
+}
+
+class Vehicle {
+    plate number
+    brand
+    type
+    model
+    current km
+    checkup frequency
+    km at last checkup
 }
 
 "GreenSpaceManager" "1" -- "*" "TaskEntry" :  create >
-TaskEntry "1" -- "0..*" ToDoList : exists in >
+TaskEntry "1"--"1" Task : contains >
+TaskEntry "1"--"1" GreenSpace : to be executed in >
+Team "1"--"1" TaskEntry : to be assigned in >
+Agenda "1"--"0..*" TaskEntry : contains >
+ToDoList "1"--"0..*" TaskEntry : contains all >
+TaskEntry "1"--"0..*" Vehicle : contains >
 
 @enduml

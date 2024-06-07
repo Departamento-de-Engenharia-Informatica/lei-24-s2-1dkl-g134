@@ -44,13 +44,20 @@ class Task {
     description
 }
 
+class TaskEntry {
+    urgencLevel
+    expectedDuration
+    state
+}
+
 Organization "1" - "1" HumanResourcesManager : has >
 Collaborator "*" - "1" Organization : has <
 HumanResourcesManager "1" - "*" Collaborator : manages >
 HumanResourcesManager "1" -- "*" Skill : registers >
 Collaborator "1" -- "*" Skill : has >
-Team "1" -- "1" Task : carries out >
+Team "1" -- "1" TaskEntry : to be assigned to >
 Team "1" -- "*" Skill : requires a set of >
 Collaborator "*" -- "1" Team : form >
+TaskEntry "1" -- "*" Task : contains >
 
 @enduml
