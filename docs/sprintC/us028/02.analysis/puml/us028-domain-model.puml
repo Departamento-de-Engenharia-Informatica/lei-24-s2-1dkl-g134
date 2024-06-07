@@ -1,0 +1,50 @@
+@startuml
+skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+
+skinparam classAttributeIconSize 0
+
+hide circle
+hide methods
+
+
+class Organization {
+    name
+    vatNumber
+    website
+    phoneNumber
+    email
+}
+
+class Collaborator {
+    name
+    birthdate
+    admission date
+    address
+    email
+    phone
+}
+
+class Task {
+    name
+    description
+}
+
+class TaskEntry{
+    urgencyLevel
+    expectedDuration
+    state
+}
+
+class Team {
+    numberOfCollaborators
+}
+
+Organization "1" - "*" Collaborator : has >
+TaskEntry "1"--"1" Task : contains >
+Team "1"--"1" TaskEntry : to be assigned in >
+Collaborator "*"--"1" Team : form >
+
+
+@enduml
