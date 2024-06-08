@@ -6,12 +6,12 @@ skinparam shadowing false
 autonumber
 
 actor "GSM" as GSM
-participant ":ListGreenSpacesUI" as UI
+participant ":GetGreenSpacesManagedByUserUI" as UI
 participant ":AuthenticationRepository" as AuthenticationRepository
 participant ":GreenSpaceController" as GreenSpaceController
-participant ":Repositories" as Repositories
-participant "repositories:\nRepositories" as RepositoriesInstance
-participant "greenSpaceRepository:\nGreenSpaceRepository" as GreenSpaceRepository
+participant ":GreenRepositories" as GreenSpaceRepositories
+participant "repositories:\nRepositoriesInstance" as RepositoriesInstance
+participant "GreenSpaceRepository:\nGreenSpaceRepository" as GreenSpaceRepository
 participant "GreenSpace" as GreenSpace
 participant "GreenSpaceDTO" as GreenSpaceDTO
 participant "GreenSpaceMapper" as GreenSpaceMapper
@@ -35,21 +35,22 @@ activate Repositories
 Repositories --> GreenSpaceController : instance
 deactivate Repositories
 
-GreenSpaceController -> RepositoriesInstance : getGreenSpaceRepository()
+GreenSpaceController -> RepositoriesInstance : GreenSpaceRepository()
 activate RepositoriesInstance
-RepositoriesInstance --> GreenSpaceController : greenSpaceRepository
+RepositoriesInstance --> GreenSpaceController : GreenSpaceRepository
 deactivate RepositoriesInstance
 
-GreenSpaceController -> GreenSpaceRepository : findGreenSpacesByManager(email)
+GreenSpaceController -> GreenSpaceRepository : GetGreenSpacesManagedByUserController
 activate GreenSpaceRepository
 GreenSpaceRepository --> GreenSpaceController : greenSpaces
 deactivate GreenSpaceRepository
 
-GreenSpaceController -> GreenSpaceMapper : GreenSpaceDTO
+GreenSpaceController -> GreenSpaceMapper : GreenSpaceDTO(greenSpaces)
 activate GreenSpaceMapper
-GreenSpaceMapper --> GreenSpaceController : greenSpaceDTOs
+GreenSpaceMapper --> GreenSpaceController : GreenSpaceDTOs
 deactivate GreenSpaceMapper
 
+GreenSpaceController -> GreenSpaceController : sortGreenSpacesBySizeDescending(GreenSpaceDTOs, "configFile")
 
 GreenSpaceController --> UI : sortedGreenSpaceDTOs
 deactivate GreenSpaceController
