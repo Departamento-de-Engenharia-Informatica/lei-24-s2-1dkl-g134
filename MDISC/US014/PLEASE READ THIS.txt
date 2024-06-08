@@ -1,0 +1,11 @@
+To the teacher correcting these results,
+
+We must note that the "Execution-Time-Table.csv" file was recorded on an execution of the asymptotic behaviour tests different from the one used for the benchmarking graph files.
+
+As such, you will notice that the results of these two files do not exactly match, and vary greatly towards the later files.
+
+This is to be expected. Do not be confused: These are just hardware differences playing into the execution time of the algorithm on the two different tests.
+
+Additionally, we must remind you that the Execution Time Table is formatted in a "Input Edge Amount ; Execution Time in Nanoseconds" format.
+
+- Team G123

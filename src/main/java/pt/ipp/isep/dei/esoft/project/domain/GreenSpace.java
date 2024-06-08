@@ -34,6 +34,12 @@ public class GreenSpace implements Serializable {
         if(area <= 0){
             throw new IllegalArgumentException("Area value must be a number greater than 0.");
         }
+        char[] nameCharacters = name.toCharArray();
+        for(char c : nameCharacters){
+            if(!Character.isLetter(c) && !Character.isWhitespace(c)){
+                throw new IllegalArgumentException("Green space name can only contain letters and whitespaces.");
+            }
+        }
         this.name = name;
         this.address=address;
         this.area = area;
