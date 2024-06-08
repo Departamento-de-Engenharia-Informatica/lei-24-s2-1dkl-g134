@@ -1,0 +1,149 @@
+@startuml
+skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+
+autonumber
+
+actor "GSM" as GSM
+participant ":AssignTeamToTaskUI" as UI
+participant "AssignTeamToTaskController" as CTRL
+participant ":Repositories" as Repositories
+participant "repositories:\nRepositories" as RepositoriesInstance
+participant ":TeamMapper" as MAP
+participant ":TaskEntryMapper" as TMAP
+participant "teamRepository:\nTeamRepository" as TeamRepository
+participant "agendaRepository:\nAgendaRepository" as AgendaRepository
+participant "taskEntryDTOList\n :TaskEntryDTOList" as TDTO
+participant "teamDTOList\n :TeamDTOList" as DTO
+participant "objDto: TeamDto" as GDTO
+participant "objDto: TaskEntryDto" as EDTO
+
+activate GSM
+
+    GSM -> UI : asks to assign a Team to an entry in the Agenda
+
+    activate UI
+
+        UI -> CTRL : getTeamList()
+        activate CTRL
+
+            CTRL -> Repositories : getInstance()
+            activate Repositories
+
+                Repositories --> CTRL : repositories
+            deactivate Repositories
+
+            CTRL -> RepositoriesInstance : getTeamRepository()
+            activate RepositoriesInstance
+
+                RepositoriesInstance --> CTRL : TeamRepository
+            deactivate RepositoriesInstance
+
+            CTRL -> TeamRepository : getTeams()
+            activate TeamRepository
+
+                TeamRepository --> CTRL : teamsList
+            deactivate TeamRepository
+
+            CTRL -> MAP : ToDTOList(teamList)
+                        activate MAP
+                            MAP -> DTO: Create()
+                            loop for each team in the list
+                                MAP -> MAP: TeamyDTO = toDTO(team)
+                            MAP -> TeamRepository: team = get(i)
+                            activate TeamRepository
+                            deactivate TeamRepository
+                            MAP -> MAP: TeamDTO = toDTO(team)
+                            activate MAP
+                            MAP -> GDTO: create(...)
+                            deactivate MAP
+                            MAP -> DTO: add(teamDto)
+
+                            activate DTO
+                            deactivate DTO
+                            end
+                            MAP -> CTRL: TeamDtoList
+                        deactivate MAP
+
+            CTRL --> UI : teams
+        deactivate CTRL
+
+        UI --> GSM : displays list of teams
+    deactivate UI
+
+    GSM -> UI : selects a team
+    activate UI
+
+        UI -> CTRL : getPlannedAndPostponedTask()
+        activate CTRL
+
+
+
+            CTRL -> RepositoriesInstance : getAgendaRepository()
+            activate RepositoriesInstance
+
+                RepositoriesInstance --> CTRL : agendaRepository
+            deactivate RepositoriesInstance
+
+            CTRL -> AgendaRepository : getPlannedAndPostponedTask()
+            activate AgendaRepository
+
+                AgendaRepository --> CTRL : TaskEntryList
+            deactivate AgendaRepository
+             CTRL -> TMAP : ToDTOList(TaskEntryList)
+                        activate TMAP
+                            TMAP -> TDTO: Create()
+                            loop for each task in the list
+                                TMAP -> TMAP: TaskEntryDTO = toDTO(taskEntry)
+                            TMAP -> AgendaRepository: taskEntry = get(i)
+                            activate AgendaRepository
+                            deactivate AgendaRepository
+                            TMAP -> TMAP: TaskEntryDTO = toDTO(taskEntry)
+                            activate TMAP
+                            TMAP -> EDTO: create(...)
+                            deactivate TMAP
+                            TMAP -> TDTO: add(taskEntryDto)
+
+                            activate TDTO
+                            deactivate TDTO
+                            end
+                            TMAP -> CTRL: TaskEntryDtoList
+                        deactivate TMAP
+
+            CTRL --> UI : TaskEntryDto
+        deactivate CTRL
+
+        UI --> GSM : displays list of task entries
+    deactivate UI
+
+    GSM -> UI : selects a task entry
+    activate UI
+
+        UI -> CTRL : assignTeamToTask()
+        activate CTRL
+
+
+    CTRL -> AgendaRepository : assignTeamToTask()
+    activate AgendaRepository
+
+
+    AgendaRepository -> TaskEntry : setTeam(team)
+    activate TaskEntry
+
+        TaskEntry --> AgendaRepository : success
+
+    deactivate TaskEntry
+
+    AgendaRepository -> CTRL : success
+        deactivate AgendaRepository
+
+            CTRL --> UI  : success
+        deactivate CTRL
+
+
+
+        UI --> GSM : displays operation success
+    deactivate UI
+    deactivate GSM
+@enduml

@@ -1,0 +1,83 @@
+@startuml
+'skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+skinparam linetype polyline
+'skinparam linetype orto
+
+skinparam classAttributeIconSize 0
+
+class "Team" {
+    -members: getTeamMembers()
+}
+
+class "AssignTeamToTaskController" {
+    - teamRepository: TeamRepository
+    - agendaRepository: AgendaRepository
+    + AssignTeamToTaskController()
+    + getPlannedAndPostponedTasks()
+    + getTeamList(): List<Team>
+    + assignTeamToTask(team: Team, task: Task)
+    + isTeamAvailable(team: Team, task: Task)
+}
+
+class "TeamRepository" {
+    + add(collaboratorList, skillList)
+    + getAllCollaboratorsInTeams()
+    + getTeamList()
+}
+
+
+class "AgendaRepository" {
++ getPlannedAndPostponedTask()
+
+}
+
+class "TaskEntry" {
+    -team: assignedTeam
+    +  assignTeam(Team team)
+}
+
+class "Repositories" {
+    + getInstance(): Repositories
+    + getTeamRepository(): TeamRepository
+    + getAgendaRepository(): AgendaRepository
+}
+
+class "AssignTeamToTaskUI" {
+}
+
+
+class TaskEntryMapper{
++TaskEntryDto  toDTO(TaskEntry)
+}
+
+class TaskEntryDto{
++TaskEntry
+}
+
+class TeamEntryMapper{
++TeamEntryDto  toDTO(Team)
+}
+
+class TeamEntryDto{
++Team
+}
+
+"AssignTeamToTaskController" ..> "TaskEntryMapper" : uses
+"TaskEntryMapper" --> "TaskEntryDto" : returns
+"TaskEntryDto" --> "TaskEntry" : returns
+"AssignTeamToTaskController" ..> "TeamEntryMapper" : uses
+"TeamEntryMapper" --> "TeamEntryDto" : returns
+"TeamEntryDto" --> "Team" : returns
+AssignTeamToTaskController ..> TeamRepository : teamRepository
+AssignTeamToTaskController ..> Repositories : repositories
+TeamRepository --> "*" Team
+AssignTeamToTaskController ..> AgendaRepository : agendaRepository
+AssignTeamToTaskController ..> Repositories : repositories
+AgendaRepository --> "*" TaskEntry
+TaskEntry --> "1" Team
+AssignTeamToTaskUI ..> AssignTeamToTaskController
+Repositories -> Repositories : instance
+
+@enduml

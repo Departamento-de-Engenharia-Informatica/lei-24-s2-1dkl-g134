@@ -120,6 +120,7 @@ activate ADM
 
                 TASK -> AR: add(task,date,time)
                 activate AR
+                deactivate AR
 
                 TASK --> TASK : validateEntry(entry)
 
