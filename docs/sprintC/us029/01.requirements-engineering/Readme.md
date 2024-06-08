@@ -44,17 +44,22 @@ Done).
 
 ### 1.4. Found out Dependencies
 
-* None.
+* There are dependencies for this US found in:
+   * US020 as there must be at least one green space registered to associate it to a Task;
+   * US021 as there must be at least one entry in the To-Do List to successfully add a new entry in the Agenda;
+   * US022 as there must be at least one entry in the Agenda;
+   * US023 as there must be at least one Team assigned to an entry in the Agenda
 
 ### 1.5 Input and Output Data
 
 **Input Data:**
 
-* none.
+* Selected data:
+   * An Agenda Entry
 
 **Output Data:**
 
-* Confirmation that the task was registered as completed.
+* (In)Sucess of the operation
 
 ### 1.6. System Sequence Diagram (SSD)
 
