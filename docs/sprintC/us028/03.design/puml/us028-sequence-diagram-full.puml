@@ -1,0 +1,137 @@
+@startuml
+skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+
+autonumber
+
+'hide footbox
+actor "Collaborator" as ADM
+participant ":ListTasksBetweenDatesUI" as UI
+participant ":ListTasksBetweenDatesController" as CTRL
+participant "Repositories" as RepositorySingleton
+participant "repositories\n:Repositories" as PLAT
+participant ":TaskEntryMapper" as MAP
+participant ":AgendaRepository" as URG
+participant ":CollaboratorRepository" as CollaboratorRepository
+participant "taskEntryDTOList\n :TaskEntryDTOList" as DTO
+
+participant "taskEntry\n:TaskEntry" as TASK
+participant "objDto: TaskEntryDto" as GDTO
+
+
+activate ADM
+
+    ADM -> UI : asks to consult tasks assigned to current user between two dates
+    activate UI
+        UI -> CTRL : create
+        UI -> CTRL : getPlannedAndPostponedTasksBelongingToCurrentUser()
+        activate CTRL
+
+            CTRL -> RepositorySingleton : getInstance()
+            activate RepositorySingleton
+
+                RepositorySingleton --> CTRL : repositories
+            deactivate RepositorySingleton
+
+            CTRL -> PLAT : getAgendaRepository()
+            activate PLAT
+
+                PLAT --> CTRL : AgendaRepository
+            deactivate PLAT
+
+            CTRL -> URG : getPlannedAndPostponedTasksBelongingToCurrentUser()
+            activate URG
+
+                URG --> CTRL : TaskEntryList
+            deactivate URG
+
+            CTRL -> MAP : ToDTOList(TaskEntryList)
+            activate MAP
+                MAP -> DTO: Create()
+                loop for each task in the list
+                    MAP -> MAP: TaskEntryDTO = toDTO(taskEntry)
+                MAP -> URG: taskEntry = get(i)
+                activate URG
+                deactivate URG
+                MAP -> MAP: TaskEntryDTO = toDTO(taskEntry)
+                activate MAP
+                MAP -> GDTO: create(...)
+                deactivate MAP
+                MAP -> DTO: add(taskEntryDto)
+
+                activate DTO
+                deactivate DTO
+                end
+                MAP -> CTRL: TaskEntryDtoList
+            deactivate MAP
+
+            CTRL --> UI : TaskEntryDTO
+        deactivate CTRL
+
+        UI --> ADM : shows a list of tasks
+    deactivate UI
+ADM -> UI : asks to show current user
+activate UI
+
+        UI --> ADM : request data(firstData,secondData)
+    deactivate UI
+
+    ADM -> UI : confirms data
+    activate UI
+     UI -> CTRL :getCurrentUserCollaborator()
+            activate CTRL
+
+             CTRL -> RepositorySingleton : getInstance()
+
+
+                CTRL -> PLAT : getCollaboratorRepository()
+                  activate PLAT
+                 PLAT --> CTRL : CollaboratorRepository
+                 deactivate PLAT
+
+                CTRL -> CollaboratorRepository : getCurrentUserCollaborator()
+                activate CollaboratorRepository
+
+                           CollaboratorRepository --> CTRL : Collaborator
+                           deactivate CollaboratorRepository
+        CTRL --> UI : Collaborator
+            deactivate CTRL
+
+                UI --> ADM : Collaborator
+            deactivate UI
+
+         ADM -> UI : asks to show tasks assigned to current user
+            activate UI
+            UI --> ADM: request data (firstDate,secondDate)
+            deactivate UI
+
+            ADM -> UI : confirms data
+                        activate UI
+
+
+             UI -> CTRL :getCurrentUserTasksBetweenTwoDates(firstDate,secondDate)
+                    activate CTRL
+
+                     CTRL -> RepositorySingleton : getInstance()
+
+
+                        CTRL -> PLAT : getAgendaRepository()
+                          activate PLAT
+                         PLAT --> CTRL :AgendaRepository
+                         deactivate PLAT
+
+                        CTRL -> URG : getCurrentUserTasksBetweenTwoDates(firstDate,secondDate)
+                        activate URG
+
+                                   URG --> CTRL : TaskEntry
+                                   deactivate URG
+                CTRL --> UI : TaskEntry
+                    deactivate CTRL
+
+                        UI --> ADM : displays operation success
+                    deactivate UI
+                deactivate ADM
+
+
+@enduml
