@@ -1,0 +1,59 @@
+@startuml
+'skinparam monochrome true
+skinparam packageStyle rectangle
+skinparam shadowing false
+skinparam linetype polyline
+'skinparam linetype orto
+
+skinparam classAttributeIconSize 0
+
+'left to right direction
+
+class GetGreenSpacesManagedByUserUI{
+}
+
+class GreenSpaceController{
+    - greenSpaceRepository: GreenSpaceRepository
+    - getGreenSpacesManagedByUserUI: GetGreenSpacesManagedByUserUI
+    + sortGreenSpacesBySizeDescending(greenSpaces(GreenSpaceDTO), configFile: String)
+}
+
+class Repositories {
+    - Repositories(): Repositories
+    + getInstance() : Repositories
+    + getGreenSpaceRepository() : GreenSpaceRepository
+}
+
+class GreenSpaceRepository {
+    + getGreenSpacesManagedByUser(email: String): List<GreenSpace>
+}
+
+class GreenSpace{
+    - name
+    - area
+    - address
+    - type
+}
+
+class GreenSpaceMapper{
+    + toDTO(greenSpace: GreenSpace): GreenSpaceDTO
+}
+
+class GreenSpaceDTO{
+    - name
+    - area
+    - address
+}
+
+GetGreenSpacesManagedByUserUI -> GreenSpaceController: Uses
+GreenSpaceController --> Repositories: Uses
+GreenSpaceController --> GreenSpaceMapper: Uses
+GreenSpaceMapper --> GreenSpaceDTO: Converts
+GreenSpaceMapper --> GreenSpace: Converts
+GetGreenSpacesManagedByUserUI --> GreenSpaceDTO: Receives
+Repositories --> GreenSpaceRepository: Obtains
+GreenSpaceController --> GreenSpace: Receives
+GreenSpaceController --> GreenSpaceRepository: Receives
+GreenSpaceDTO --> GreenSpace: Contains
+GreenSpaceRepository -->  GreenSpace: contains and manages
+@enduml
