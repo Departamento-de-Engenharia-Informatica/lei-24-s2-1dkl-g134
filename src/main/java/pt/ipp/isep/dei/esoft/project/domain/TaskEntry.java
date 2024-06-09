@@ -424,6 +424,4 @@ public class TaskEntry implements Serializable {
             return Optional.of(this);
         }
     }
-
-
 }
