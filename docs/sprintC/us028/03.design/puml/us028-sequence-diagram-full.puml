@@ -46,6 +46,12 @@ activate ADM
                 URG --> CTRL : TaskEntryList
             deactivate URG
 
+             CTRL -> URG :  sortTasks(taskEntries)
+                        activate URG
+
+                            URG --> CTRL : TaskEntryListSorted
+                        deactivate URG
+
             CTRL -> MAP : ToDTOList(TaskEntryList)
             activate MAP
                 MAP -> DTO: Create()

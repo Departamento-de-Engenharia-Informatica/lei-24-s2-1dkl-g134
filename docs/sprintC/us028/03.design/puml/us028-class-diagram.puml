@@ -15,9 +15,10 @@ class ListTasksBetweenDatesUI{
 
 class ListTasksBetweenDatesController{
 -AgendaRepository agendaRepository
-    + CompleteTaskController(agendaRepository)
-    + completeTask(taskEntryDto)
+    + ListTasksBetweenDatesController(agendaRepository)
+
     + getPlannedAndPostponedTasksBelongingToCurrentUser()
+
  }
 
 class Repositories {
@@ -31,6 +32,7 @@ class Repositories {
 class AgendaRepository {
     + getPlannedAndPostponedTasksBelongingToCurrentUser()
     + getCurrentUserTasksBetweenTwoDates(firstDate,secondDate)
+    + sortTasks(taskEntries)
 
 }
 class CollaboratorRepository {
