@@ -14,9 +14,9 @@ _**Note that SSD - Alternative One is adopted.**_
 | 		             | 	...sorting the task entry list?                   | AgendaRepository            | IE: Sorts all task entries                                                                                    |
 | Step 3 	    	  | 	... showing list of user's tasks?                 | ListTasksBetweenDatesUI            | IE: Is responsible for interacting with the actor.                                                            |
 | 		             | 	...requesting confirmation?                       | ListTasksBetweenDatesUI            | IE: Is responsible for user interactions.                                                                     |
-| 	              | ...displaying the form for the user to input data? | ListTasksBetweenDatesUI            | IE:Is responsible for interacting with the actor.                                                             |
+| Step 4         | ...displaying the form for the user to input data? | ListTasksBetweenDatesUI            | IE:Is responsible for interacting with the actor.                                                             |
 |                | 	... showing tasks assign to current user?         | AgendaRepository            |IE: Is responsible for interacting with the actor                                                                   |
-| Step 4  		     | 	... informing operation success?                  | ListTasksBetweenDatesUI            | IE: is responsible for user interactions.                                                                     |
+| Step 5  		     | 	... informing operation success?                  | ListTasksBetweenDatesUI            | IE: is responsible for user interactions.                                                                     |
 
 ### Systematization ##
 
