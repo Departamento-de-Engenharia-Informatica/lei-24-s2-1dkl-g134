@@ -1,9 +1,9 @@
 @startuml
-skinparam monochrome true
+'skinparam monochrome true
 skinparam packageStyle rectangle
 skinparam shadowing false
 skinparam linetype polyline
-skinparam linetype orto
+'skinparam linetype orto
 
 
 class "GreenSpace" {
