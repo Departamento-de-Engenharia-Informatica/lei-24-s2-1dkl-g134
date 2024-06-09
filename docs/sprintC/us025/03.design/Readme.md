@@ -1,4 +1,4 @@
-# US024 - Cancel Entry
+# US025 - Cancel Entry
 
 ## 3. Design - User Story Realization
 

@@ -1,4 +1,4 @@
-# US008 - List Vehicles Needing Check-up
+# US023 - Assign a Team to an Entry
 
 ## 3. Design - User Story Realization
 
